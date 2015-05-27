@@ -1,6 +1,8 @@
 <?php
 namespace OPHP\Test;
 
+use OPHP\OString;
+
 class OStringTest extends \PHPUnit_Framework_TestCase
 {
     /** @var \OPHP\Ostring */
@@ -8,7 +10,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->aString= new \OPHP\OString("foobar");
+        $this->aString= new OString("foobar");
     }
 
     /**
@@ -28,8 +30,8 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         return [
             ["checkString" => "oob", "expected" => true],
             ["checkString" => "baz", "expected" => false],
-            ["checkString" => new \OPHP\OString('oob'), "expected" => true],
-            ["checkString" => new \OPHP\OString('baz'), "expected" => false],
+            ["checkString" => new OString('oob'), "expected" => true],
+            ["checkString" => new OString('baz'), "expected" => false],
             ["checkString" => 42, "expected" => false],
 
         ];
@@ -53,9 +55,9 @@ class OStringTest extends \PHPUnit_Framework_TestCase
             ["checkString" => "oob", "expected" => 1],
             ["checkString" => "baz", "expected" => -1],
             ["checkString" => 42, "expected" => -1],
-            ["checkString" => new \OPHP\OString('oob'), "expected" => 1],
-            ["checkString" => new \OPHP\OString('baz'), "expected" => -1],
-            ["checkString" => new \OPHP\OString(42), "expected" => -1],
+            ["checkString" => new OString('oob'), "expected" => 1],
+            ["checkString" => new OString('baz'), "expected" => -1],
+            ["checkString" => new OString(42), "expected" => -1],
 
         ];
     }
@@ -77,7 +79,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ["babyString" => "baz", "expected" => "foobarbaz"],
-            ["babyString" => new \OPHP\OString('baz'), "expected" => "foobarbaz"],
+            ["babyString" => new OString('baz'), "expected" => "foobarbaz"],
         ];
     }
 

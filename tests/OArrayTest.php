@@ -1,6 +1,9 @@
 <?php
 namespace OPHP\Test;
 
+use OPHP\OArray;
+use OPHP\OString;
+
 class OArrayTest extends \PHPUnit_Framework_TestCase
 {
     /** @var  \OPHP\OArray */
@@ -10,8 +13,8 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->arrList = new \OPHP\OArray(array("apple", "bobble", "cobble", "dobble"));
-        $this->arrDict = new \OPHP\OArray(array("a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"));
+        $this->arrList = new OArray(array("apple", "bobble", "cobble", "dobble"));
+        $this->arrDict = new OArray(array("a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"));
     }
 
     /**
@@ -63,8 +66,8 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         return [
             ["checkThing" => "apple", "expected" => 0],
             ["checkThing" => "fobble", "expected" => -1],
-            ["checkThing" => new \OPHP\OString("apple"), "expected" => 0],
-            ["checkThing" => new \OPHP\OString("fobble"), "expected" => -1],
+            ["checkThing" => new OString("apple"), "expected" => 0],
+            ["checkThing" => new OString("fobble"), "expected" => -1],
         ];
     }
 
@@ -90,9 +93,9 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function appendProvider()
     {
         return [
-        ["type" => "list", "newThing" => "ebble", "expected" => new \OPHP\OArray(["apple", "bobble", "cobble",
+        ["type" => "list", "newThing" => "ebble", "expected" => new OArray(["apple", "bobble", "cobble",
             "dobble", "ebble"])],
-        ["type" => "dict", "newThing" => ["e" => "ebble"], "expected" => new \OPHP\OArray(["a" => "apple", "b" =>
+        ["type" => "dict", "newThing" => ["e" => "ebble"], "expected" => new OArray(["a" => "apple", "b" =>
             "bobble", "c" => "cobble", "d" => "dobble", ["e" => "ebble"]])],
         ];
     }
