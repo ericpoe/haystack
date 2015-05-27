@@ -1,0 +1,23 @@
+{
+  "name": "ericpoe/OPHP",
+  "description": "An imagining of PHP as if it were designed around objects.",
+  "version": "0.0.1",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Eric Poe",
+      "email": "eric.poe@gmail.com",
+      "homepage": "http://ericpoe.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {"OPHP\\": "lib"}
+  },
+  "autoload-dev": {
+    "psr-4": {"OPHP\\Tests\\": "tests"}
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.6"
+  }
+}
