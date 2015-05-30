@@ -1,6 +1,12 @@
 # OPHP
 An imagining of PHP as if it were designed around objects.
 
+## Running tests
+
+    $ git clone ...
+    $ composer install
+    $ vendor/bin/phpunit
+
 ## Background
 Trying to remember commonly-used PHP functions for strings and arrays in PHP is hard. Are array functions
 haystack-needle and string functions needle-haystack, or vice versa? Quick, without looking at documentation or using
