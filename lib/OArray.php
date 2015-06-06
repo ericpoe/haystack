@@ -66,6 +66,66 @@ class OArray extends \ArrayObject implements Container, SimpleMath
         }
     }
 
+    /**
+     * Inserts a $thing at a specified location; if no location is provided, $thing will be added to the back.
+     *
+     * @param          $thing
+     * @param int|null $key
+     * @return mixed
+     *
+     * @throws \ErrorException
+     */
+    public function insert($thing, $key = null)
+    {
+        if ($thing instanceof OArray) {
+            $thingArray = $thing->toArray();
+        } elseif ($thing instanceof OString) {
+                $thingArray = $thing->toString();
+        } elseif (is_array($thing) || is_scalar($thing) || is_string($thing)) {
+            $thingArray = $thing;
+        }
+
+        if (isset($key)) {
+            if (is_numeric($key)) {
+                list($array, $length) = $this->setSubarrayAndLengthForSequentialArray($key, $thingArray);
+            } elseif (is_string($key)) {
+                list($array, $length) = $this->setSubarrayAndLengthForAssociativeArray($key, $thingArray);
+            } else {
+                throw new \ErrorException("Invalid array key");
+            }
+        } else {
+            list($array, $length) = $this->setSubarrayAndLengthWhenNoKeyProvided($thingArray);
+        }
+
+        $first = $this->slice(0, $length)->toArray();
+        $lastStartingPoint = sizeof($this->arr) - sizeof($first);
+        $last =  $this->slice($length, $lastStartingPoint)->toArray();
+
+
+        return new OArray(array_merge_recursive($first, (array) $array, $last));
+    }
+
+    /**
+     * @param $thing
+     * @return mixed
+     */
+    public function remove($thing)
+    {
+        // TODO: Implement remove() method.
+    }
+
+    /**
+     * @param $start
+     * @param $length
+     * @return mixed
+     */
+    public function slice($start, $length = null)
+    {
+        $maintainIndices = false;
+        return new OArray(array_slice($this->arr, $start, $length, $maintainIndices));
+    }
+
+
     protected function getType($thing)
     {
         $type = gettype($thing);
@@ -73,5 +133,43 @@ class OArray extends \ArrayObject implements Container, SimpleMath
             $type = get_class($thing);
         }
         return $type;
+    }
+
+    /**
+     * @param $key
+     * @param $thingArray
+     * @return array
+     */
+    protected function setSubarrayAndLengthForSequentialArray($key, $thingArray)
+    {
+        $array = $thingArray;
+        $length = (int)$key;
+
+        return array($array, $length);
+    }
+
+    /**
+     * @param $key
+     * @param $thingArray
+     * @return array
+     */
+    protected function setSubarrayAndLengthForAssociativeArray($key, $thingArray)
+    {
+        $array = [$key => $thingArray];
+        $length = sizeof($this->arr);
+
+        return array($array, $length);
+    }
+
+    /**
+     * @param $thingArray
+     * @return array
+     */
+    protected function setSubarrayAndLengthWhenNoKeyProvided($thingArray)
+    {
+        $array = $thingArray;
+        $length = sizeof($this->arr);
+
+        return array($array, $length);
     }
 }

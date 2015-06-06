@@ -73,6 +73,54 @@ class OString implements Container, SimpleMath
         }
     }
 
+    /**
+     * Inserts a $thing at a specified location; if no location is provided, $thing will be added to the back.
+     *
+     * @param $thing
+     * @param int|null $key
+     * @return mixed
+     */
+    public function insert($thing, $key = null)
+    {
+        if (is_string($thing) || $thing instanceof OString) {
+            if (!isset ($key)) {
+                $key = strlen($this);
+            }
+
+            return new OString(substr_replace($this->string, $thing, $key, 0));
+        }
+    }
+
+    /**
+     * @param $thing
+     * @return mixed
+     */
+    public function remove($thing)
+    {
+        // TODO: Implement remove() method.
+    }
+
+    /**
+     * @param $start
+     * @param $length
+     * @return mixed
+     */
+    public function slice($start, $length = null)
+    {
+        if (isset($length)) {
+            if (is_int($start) && is_int($length)) {
+                return substr($this, $start, $length);
+            } else {
+                throw new \InvalidArgumentException("Start value and Length value must both be integers");
+            }
+        } elseif (is_int($start)) {
+            return substr($this, $start);
+        } else {
+            throw new \InvalidArgumentException("Start value must be an integer");
+        }
+    }
+
+
     protected function getType($thing)
     {
         $type = gettype($thing);

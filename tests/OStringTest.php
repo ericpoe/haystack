@@ -1,6 +1,7 @@
 <?php
 namespace OPHP\Test;
 
+use OPHP\OArray;
 use OPHP\OString;
 
 class OStringTest extends \PHPUnit_Framework_TestCase
@@ -83,10 +84,62 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testGetFirstPartOfTypesOfStringUsingSlice()
+    {
+        $substr1 = "foob";
+        $substr2 = new OString("foob");
+
+        $this->assertEquals($substr1, $this->aString->slice(0, 4));
+        $this->assertEquals($substr2, $this->aString->slice(0, 4));
+
+    }
+
+    public function testGetLastPartOfTypesOfStringUsingSlice()
+    {
+        $substr1 = "obar";
+        $substr2 = new OString("obar");
+
+        $this->assertEquals($substr1, $this->aString->slice(-4));
+        $this->assertEquals($substr2, $this->aString->slice(-4));
+    }
+
+    public function testGetMiddlePartOfTypesOfStringUsingSlice()
+    {
+        $substr1 = "ob";
+        $substr2 = new OString("ob");
+
+        $this->assertEquals($substr1, $this->aString->slice(-4, -2));
+        $this->assertEquals($substr2, $this->aString->slice(-4, -2));
+    }
+
+    /**
+     * @dataProvider stringInsertProvider()
+     *
+     * @param $babyString
+     * @param $location
+     * @param $expected
+     */
+    public function testTypesOfStringInsert($babyString, $location, $expected)
+    {
+        $newString = $this->aString->insert($babyString, $location);
+
+        $this->assertEquals(sprintf("%s", $expected), sprintf("%s", $newString));
+    }
+
+    public function stringInsertProvider()
+    {
+        return [
+            ["babyString" => "baz", "location" => "1", "expected" => "fbazoobar"],
+            ["babyString" => "baz", "location" => null, "expected" => "foobarbaz"],
+            ["babyString" => new OString("baz"), "location" => "1", "expected" => "fbazoobar"],
+            ["babyString" => new OString("baz"), "location" => null, "expected" => "foobarbaz"],
+        ];
+    }
+
     /**
      * @expectedException \ErrorException
      */
-    public function testDateTimeCannotBeAddedToFoobar()
+    public function testNonStringTypeCannotBeAddedToFoobar()
     {
         $newString = $this->aString->append(new \DateTime());
     }
