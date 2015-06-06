@@ -4,8 +4,6 @@ namespace OPHP;
 /**
  * Class OArray
  * @package OPHP
- *
- * todo: implement \IteratorAggregate, \ArrayAccess, \Serializable, \Countable
  */
 class OArray extends \ArrayObject implements Container, SimpleMath
 {
