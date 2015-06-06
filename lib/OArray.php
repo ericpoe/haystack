@@ -23,6 +23,11 @@ class OArray extends \ArrayObject implements Container, SimpleMath
         }
     }
 
+    public function toArray()
+    {
+        return $this->arr;
+    }
+
     public function contains($thing)
     {
         if (is_scalar($thing) || is_object($thing)) {

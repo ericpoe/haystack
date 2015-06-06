@@ -19,6 +19,11 @@ class OString implements Container, SimpleMath
         return sprintf($this->string);
     }
 
+    public function toString()
+    {
+        return $this->__toString();
+    }
+
     public function contains($thing)
     {
         if (is_scalar($thing)) {
