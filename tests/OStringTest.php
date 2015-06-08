@@ -143,4 +143,74 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         $newString = $this->aString->append(new \DateTime());
     }
+
+    public function testIteratorNext()
+    {
+        $this->aString->next();
+        $this->assertEquals("o", $this->aString->current());
+    }
+
+    public function testIteratorValid()
+    {
+        $this->aString->next();
+        $this->aString->next();
+        $this->aString->next();
+        $this->aString->next();
+        $this->aString->next();
+        $this->assertTrue($this->aString->valid());
+        $this->aString->next();
+        $this->assertFalse($this->aString->valid());
+    }
+
+    public function testIteratorRewind()
+    {
+        $this->aString->next(); // "o"
+        $this->aString->next(); // "o"
+        $this->aString->next(); // 'b"
+
+        $this->aString->rewind(); // back to "f"
+        $this->assertEquals("f", $this->aString->current());
+    }
+
+    public function testIteratorKey()
+    {
+        $this->aString->next(); // "o"
+        $this->aString->next(); // "o"
+        $this->aString->next(); // 'b"
+
+        $this->assertEquals(3, $this->aString->key());
+    }
+
+    public function testArrayStyleCount()
+    {
+        $this->assertEquals(6, $this->aString->count());
+    }
+
+    public function testArrayStyleOffsetExists()
+    {
+        $this->assertTrue(isset($this->aString[3]));
+        $this->assertFalse(isset($this->aString[30]));
+    }
+
+    public function testArrayStyleOffsetGet()
+    {
+        $this->assertEquals("b", $this->aString[3]);
+    }
+
+    public function testArrayStyleOffsetSet()
+    {
+        $this->aString[0] = "b";
+        $this->assertEquals(new OString("boobar"), $this->aString);
+    }
+
+    public function testArrayStyleOffsetUnset()
+    {
+        unset($this->aString[3]);
+        $this->assertEquals("\000", $this->aString[3]);
+    }
+
+    public function testArrayStyleAccess()
+    {
+        $this->assertEquals("o", $this->aString[1]);
+    }
 }

@@ -245,4 +245,10 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     {
         $newArray = $this->arrDict->insert("yobbo", new \DateTime());
     }
+
+    public function testArrayStyleAccess()
+    {
+        $this->assertEquals("bobble", $this->arrList[1]);
+        $this->assertEquals("bobble", $this->arrDict["b"]);
+    }
 }
