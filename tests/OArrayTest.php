@@ -151,14 +151,16 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      * @dataProvider middlePartOfArraySliceProvider
      *
      * @param $type
+     * @param $start
+     * @param $finish
      * @param $expected
      */
-    public function testGetMiddlePartOfTypesOfArrayUsingSlice($type, $expected)
+    public function testGetMiddlePartOfTypesOfArrayUsingSlice($type, $start, $finish, $expected)
     {
         if ("list" === $type) {
-            $subArray = $this->arrList->slice(-3, -1);
+            $subArray = $this->arrList->slice($start, $finish);
         } else {
-            $subArray = $this->arrDict->slice(-3, -1);
+            $subArray = $this->arrDict->slice($start, $finish);
         }
 
         $this->assertEquals($expected, $subArray);
@@ -167,8 +169,14 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function middlePartOfArraySliceProvider()
     {
         return [
-            ["type" => "list", "expected" => new OArray(["bobble", "cobble"])],
-            ["type" => "dict", "expected" => new OArray(["b"=> "bobble", "c" => "cobble"])],
+            ["type" => "list", "start" => "-3", "finish" => "-1", "expected" => new OArray(["bobble", "cobble"])],
+            ["type" => "list", "start" => "1", "finish" => "-1", "expected" => new OArray(["bobble", "cobble"])],
+            ["type" => "list", "start" => "1", "finish" => "2", "expected" => new OArray(["bobble", "cobble"])],
+            ["type" => "list", "start" => "1", "finish" => null, "expected" => new OArray(["bobble", "cobble", "dobble"])],
+            ["type" => "dict", "start" => "-3", "finish" => "-1", "expected" => new OArray(["b"=> "bobble", "c" => "cobble"])],
+            ["type" => "dict", "start" => "1", "finish" => "-1", "expected" => new OArray(["b"=> "bobble", "c" => "cobble"])],
+            ["type" => "dict", "start" => "1", "finish" => "2", "expected" => new OArray(["b"=> "bobble", "c" => "cobble"])],
+            ["type" => "dict", "start" => "1", "finish" => null, "expected" => new OArray(["b"=> "bobble", "c" => "cobble", "d" => "dobble"])],
         ];
     }
 
@@ -204,6 +212,12 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
                 "babyArray" => [new OString("foo")],
                 "key" => "1",
                 "expected" => new OArray(["apple", "foo", "bobble","cobble", "dobble"])
+            ],
+            [
+                "type" => "list",
+                "babyArray" => [new OString("foo")],
+                "key" => "-1",
+                "expected" => new OArray(["apple", "bobble","cobble", "foo", "dobble"])
             ],
             [
                 "type" => "dict",

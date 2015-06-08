@@ -103,13 +103,30 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($substr2, $this->aString->slice(-4));
     }
 
-    public function testGetMiddlePartOfTypesOfStringUsingSlice()
+    /**
+     * @dataProvider middlePartOfStringProvider
+     *
+     * @param $start
+     * @param $finish
+     * @param $expected
+     */
+    public function testGetMiddlePartOfTypesOfStringUsingSlice($start, $finish, $expected)
     {
-        $substr1 = "ob";
-        $substr2 = new OString("ob");
+        $substr1 = $expected;
+        $substr2 = new OString($expected);
 
-        $this->assertEquals($substr1, $this->aString->slice(-4, -2));
-        $this->assertEquals($substr2, $this->aString->slice(-4, -2));
+        $this->assertEquals($substr1, $this->aString->slice($start, $finish));
+        $this->assertEquals($substr2, $this->aString->slice($start, $finish));
+    }
+
+    public function middlePartOfStringProvider()
+    {
+        return [
+            ["start" => 2, "finish" => -2, "expected" => "ob"],
+            ["start" => -4, "finish" => -2, "expected" => "ob"],
+            ["start" => 2, "finish" => 2, "expected" => "ob"],
+            ["start" => 2, "finish" => null, "expected" => "obar"],
+        ];
     }
 
     /**
@@ -130,8 +147,10 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ["babyString" => "baz", "location" => "1", "expected" => "fbazoobar"],
+            ["babyString" => "baz", "location" => "-1", "expected" => "foobabazr"],
             ["babyString" => "baz", "location" => null, "expected" => "foobarbaz"],
             ["babyString" => new OString("baz"), "location" => "1", "expected" => "fbazoobar"],
+            ["babyString" => new OString("baz"), "location" => "-1", "expected" => "foobabazr"],
             ["babyString" => new OString("baz"), "location" => null, "expected" => "foobarbaz"],
         ];
     }
