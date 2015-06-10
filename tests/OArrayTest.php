@@ -17,6 +17,16 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         $this->arrDict = new OArray(array("a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"));
     }
 
+    public function testCreateEmptyArray()
+    {
+        $array = new OArray();
+        $this->assertEmpty($array);
+
+        $emptyArr = array();
+        $array = new OArray($emptyArr);
+        $this->assertEmpty($array);
+    }
+
     /**
      * @dataProvider arrayContainsProvider
      *

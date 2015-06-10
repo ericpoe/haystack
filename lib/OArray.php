@@ -10,11 +10,15 @@ class OArray extends \ArrayObject implements Container, SimpleMath
     /** @var OArray array */
     private $arr;
 
-    public function __construct($arr)
+    public function __construct($arr = null)
     {
-        parent::__construct($arr);
+        if (isset($arr)) {
+            parent::__construct($arr);
+        } else {
+            parent::__construct();
+        }
 
-        if (is_array($arr) || $arr instanceof OArray) {
+        if (is_null($arr) || is_array($arr) || $arr instanceof OArray) {
             $this->arr = $arr;
         } elseif (is_scalar($arr)) {
             $this->arr = [$arr];

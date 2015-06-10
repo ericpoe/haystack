@@ -6,11 +6,13 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     private $string;
     private $ptr; // pointer for iterating through $string
 
-    public function __construct($string)
+    public function __construct($string = null)
     {
         if (is_scalar($string)) {
             $this->string = (string) $string;
             $this->rewind();
+        } elseif (is_null($string)) {
+            $this->string = null;
         } else {
             throw new \ErrorException("$string is not a proper String");
         }

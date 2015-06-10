@@ -14,6 +14,18 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         $this->aString= new OString("foobar");
     }
 
+    public function testCreateEmptyString()
+    {
+        $emptyString = new OString();
+        $this->assertEmpty($emptyString);
+
+        $emptyString = new OString("");
+        $this->assertEmpty($emptyString);
+
+        $emptyLookingString = new OString(" ");
+        $this->assertNotEmpty($emptyLookingString);
+    }
+
     /**
      * @dataProvider stringContainsProvider
      *
@@ -225,7 +237,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function testArrayStyleOffsetUnset()
     {
         unset($this->aString[3]);
-        $this->assertEquals("\000", $this->aString[3]);
+        $this->assertEquals(chr(0x00), $this->aString[3]); // binary null
     }
 
     public function testArrayStyleAccess()
