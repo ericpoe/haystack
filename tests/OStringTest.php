@@ -255,4 +255,15 @@ class OStringTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals("FOOBAR", $newString);
     }
+
+    public function testStringWalk()
+    {
+        $capitalize = function($letter, $key) {
+            return $this->aString[$key] = strtoupper($letter);
+        };
+
+        $this->aString->walk($capitalize);
+
+        $this->assertEquals("FOOBAR", $this->aString->toString());
+    }
 }
