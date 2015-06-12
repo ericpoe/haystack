@@ -5,7 +5,7 @@ namespace OPHP;
  * Class OArray
  * @package OPHP
  */
-class OArray extends \ArrayObject implements Container, SimpleMath
+class OArray extends \ArrayObject implements Container, SimpleMath, BaseFunctional
 {
     /** @var OArray array */
     private $arr;
@@ -127,6 +127,11 @@ class OArray extends \ArrayObject implements Container, SimpleMath
     {
         $maintainIndices = false;
         return new OArray(array_slice($this->arr, $start, $length, $maintainIndices));
+    }
+
+    public function map(callable $func)
+    {
+        return new OArray(array_map($func, $this->arr));
     }
 
 

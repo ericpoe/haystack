@@ -1,7 +1,7 @@
 <?php
 namespace OPHP;
 
-class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Container, SimpleMath
+class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Container, SimpleMath, BaseFunctional
 {
     private $string;
     private $ptr; // pointer for iterating through $string
@@ -301,5 +301,19 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function rewind()
     {
         $this->ptr = 0;
+    }
+
+
+    /**
+     * @param callable $func
+     * @return \OPHP\OString
+     */
+    public function map(callable $func)
+    {
+        $newString = new OString($this->string);
+        for ($i = 0; $i < $this->count(); $i++) {
+            $newString[$i] = $func($this[$i]);
+        }
+        return $newString;
     }
 }

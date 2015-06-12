@@ -275,4 +275,15 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("bobble", $this->arrList[1]);
         $this->assertEquals("bobble", $this->arrDict["b"]);
     }
+
+    public function testArrayMap()
+    {
+        $capitalize = function ($word) {
+            return strtoupper($word);
+        };
+
+        $newArr = $this->arrList->map($capitalize);
+
+        $this->assertEquals("APPLE", $newArr[0]);
+    }
 }

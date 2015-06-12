@@ -244,4 +244,15 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals("o", $this->aString[1]);
     }
+
+    public function testStringMap()
+    {
+        $capitalize = function ($word) {
+            return strtoupper($word);
+        };
+
+        $newString = $this->aString->map($capitalize);
+
+        $this->assertEquals("FOOBAR", $newString);
+    }
 }
