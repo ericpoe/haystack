@@ -109,13 +109,31 @@ class OArray extends \ArrayObject implements Container, SimpleMath, BaseFunction
         return new OArray(array_merge_recursive($first, (array) $array, $last));
     }
 
+
     /**
      * @param $thing
-     * @return mixed
+     * @return \OPHP\OArray
+     * @throws \ErrorException
      */
     public function remove($thing)
     {
-        // TODO: Implement remove() method.
+        if (!$this->contains($thing)) {
+            throw new \ErrorException("$thing does not exist within the OArray");
+        }
+
+        $newArr = $this->arr;
+        $key = $this->locate($thing);
+
+
+        if (is_numeric($key)) {
+            unset($newArr[$key]);
+            return new OArray(array_values($newArr));
+        } elseif (is_string($key)) {
+            unset($newArr[$key]);
+            return new OArray($newArr);
+        } else {
+            throw new \ErrorException("Invalid array key");
+        }
     }
 
     /**

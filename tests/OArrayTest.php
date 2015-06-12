@@ -263,6 +263,44 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider arrayRemoveProvider
+     *
+     * @param $type
+     * @param $value
+     * @param $expected
+     * @throws \ErrorException
+     */
+    public function testArrayTypeRemove($type, $value, $expected, $message)
+    {
+        if ("list" === $type) {
+            $newArr = $this->arrList->remove($value);
+        } else {
+            $newArr = $this->arrDict->remove($value);
+        }
+
+        $this->assertEquals($expected, $newArr, $message);
+
+    }
+
+    public function arrayRemoveProvider()
+    {
+        return [
+            [
+                "type" => "list",
+                "value" => "bobble",
+                "expected" => new OArray(["apple", "cobble", "dobble"]),
+                "message" => "Basic list",
+            ],
+            [
+                "type" => "dict",
+                "value" => "bobble",
+                "expected" => new OArray(["a" => "apple", "c" => "cobble", "d" => "dobble"]),
+                "message" => "Basic dict",
+            ],
+        ];
+    }
+
+    /**
      * @expectedException \ErrorException
      */
     public function testObjectCannotBeUsedAsArrayKey()
