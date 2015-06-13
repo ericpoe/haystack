@@ -166,6 +166,12 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testTypesOfStringRemove()
+    {
+        $newString = $this->aString->remove("o");
+        $this->assertEquals(new OString("fobar"), $newString);
+    }
+
     /**
      * @expectedException \ErrorException
      */
