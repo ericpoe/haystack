@@ -1,7 +1,6 @@
 <?php
 namespace OPHP\Test;
 
-use OPHP\OArray;
 use OPHP\OString;
 
 class OStringTest extends \PHPUnit_Framework_TestCase

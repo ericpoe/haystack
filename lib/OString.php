@@ -113,25 +113,15 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     {
         if (isset($length)) {
             if (is_int($start) && is_int($length)) {
-                return substr($this, $start, $length);
+                return new OString(substr($this, $start, $length));
             } else {
                 throw new \InvalidArgumentException("Start value and Length value must both be integers");
             }
         } elseif (is_int($start)) {
-            return substr($this, $start);
+            return new OString(substr($this, $start));
         } else {
             throw new \InvalidArgumentException("Start value must be an integer");
         }
-    }
-
-
-    protected function getType($thing)
-    {
-        $type = gettype($thing);
-        if ('object' === $type) {
-            $type = get_class($thing);
-        }
-        return $type;
     }
 
     /**
@@ -331,5 +321,14 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         for ($i = 0; $i < $this->count(); $i++) {
             $this[$i] = $func($this[$i], $i);
         }
+    }
+
+    protected function getType($thing)
+    {
+        $type = gettype($thing);
+        if ('object' === $type) {
+            $type = get_class($thing);
+        }
+        return $type;
     }
 }
