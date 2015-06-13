@@ -5,7 +5,7 @@ namespace OPHP;
  * Class OArray
  * @package OPHP
  */
-class OArray extends \ArrayObject implements Container, SimpleMath, BaseFunctional
+class OArray extends \ArrayObject implements Container, BaseFunctional
 {
     /** @var OArray array */
     private $arr;

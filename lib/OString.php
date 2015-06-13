@@ -1,7 +1,7 @@
 <?php
 namespace OPHP;
 
-class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Container, SimpleMath, BaseFunctional
+class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Container, BaseFunctional
 {
     private $string;
     private $ptr; // pointer for iterating through $string
