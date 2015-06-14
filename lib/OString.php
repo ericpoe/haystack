@@ -23,6 +23,11 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         return sprintf($this->string);
     }
 
+    /**
+     * alias to __toString()
+     *
+     * @return string
+     */
     public function toString()
     {
         return $this->__toString();
