@@ -7,6 +7,9 @@ namespace OPHP;
  */
 class OArray extends \ArrayObject implements Container, BaseFunctional
 {
+    const USE_KEY = "key";
+    const USE_BOTH = "both";
+
     /** @var OArray array */
     private $arr;
 
@@ -170,6 +173,37 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
     public function walk(callable $func)
     {
         array_walk($this->arr, $func);
+    }
+
+    /**
+     * Iterates over each value in the array passing them to the callback function. If the callback function returns
+     * true, the current value from array is returned into the result array. Array keys are preserved.
+     *
+     * @param callable $func   - If no callback is supplied, all entries of array equal to FALSE will be removed.
+     * @param null     $flag   - Flag determining what arguments are sent to callback
+     *                         * USE_KEY - pass key as the only argument to callback instead of the value
+     *                         * USE_BOTH - pass both value and key as arguments to callback instead of the value
+     * @return OArray
+     *
+     * @throws \ErrorException
+     */
+    public function filter(callable $func = null, $flag = null)
+    {
+        if (is_null($func)) {
+            return new OArray(array_filter($this->arr));
+        } else {
+            if (is_null($flag)) {
+                return new OArray(array_filter($this->arr, $func));
+            } elseif ("key" === $flag || "both" === $flag) {
+                if ("key" === $flag) {
+                    return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_KEY));
+                } else {
+                    return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_BOTH));
+                }
+            } else {
+                    throw new \ErrorException("Bad flag name");
+            }
+        }
     }
 
 

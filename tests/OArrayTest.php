@@ -336,4 +336,50 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals("APPLE", $this->arrDict["a"]);
     }
+
+    public function testArrayFilter()
+    {
+        $vowel = function ($word) {
+            $vowels = new OString("aeiou");
+            return $vowels->contains($word[0]);
+        };
+
+        $vowel_key = function ($key) {
+            $vowels = new OString("aeoiu");
+
+            foreach ($vowels as $letter) {
+                if ($key === $letter) {
+                    return true;
+                }
+            } return false;
+        };
+
+        $vowel_both = function ($value, $key) {
+            $vowels = new OString("aeiou");
+
+            if ($vowels->contains($value[0])) {
+                return true;
+            } else {
+                foreach ($vowels as $letter) {
+                    if ($key === $letter) {
+                        return true;
+                    }
+                }
+            } return false;
+        };
+
+        $this->assertEquals(new OArray(["apple"]), $this->arrList->filter($vowel));
+        $this->assertEquals(new OArray(["a" => "apple"]), $this->arrDict->filter($vowel));
+
+        $arr = new OArray([0, 1, 2, 3]);
+        $this->assertEquals(new OArray([1 => 1, 2 => 2, 3 => 3]), $arr->filter());
+
+        $flag = OArray::USE_KEY;
+        $arr = new OArray(["a" => "bobble", "b" => "apple", "c" => "cobble"]);
+        $this->assertEquals(new OArray(["a" => "bobble"]), $arr->filter($vowel_key, $flag));
+
+        $flag = OArray::USE_BOTH;
+        $arr = new OArray(["a" => "bobble", "b" => "apple", "c" => "cobble"]);
+        $this->assertEquals(new OArray(["b" => "apple", "a" => "bobble"]), $arr->filter($vowel_both, $flag));
+    }
 }

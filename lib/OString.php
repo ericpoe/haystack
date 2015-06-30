@@ -335,6 +335,21 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         }
     }
 
+    /**
+     * Iterates over each value in the array passing them to the callback function. If the callback function returns
+     * true, the current value from array is returned into the result array. Array keys are preserved.
+     *
+     * @param callable $func   - If no callback is supplied, all entries of array equal to FALSE will be removed.
+     * @param null     $flag   - Flag determining what arguments are sent to callback
+     *                         * USE_KEY - pass key as the only argument to callback instead of the value
+     *                         * USE_BOTH - pass both value and key as arguments to callback instead of the value
+     * @return OString
+     */
+    public function filter(callable $func = null, $flag = null)
+    {
+        // TODO: Implement filter() method.
+    }
+
     protected function getType($thing)
     {
         $type = gettype($thing);
