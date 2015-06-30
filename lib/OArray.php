@@ -147,6 +147,12 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
         return new OArray(array_slice($this->arr, $start, $length, $maintainIndices));
     }
 
+    /**
+     * Applies the callback to the elements of the given array
+     *
+     * @param callable $func
+     * @return OArray
+     */
     public function map(callable $func)
     {
         return new OArray(array_map($func, $this->arr));
@@ -155,8 +161,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
     /**
      * Walk does an in-place update of items in the object.
      *
-     * Since the update is in-place, this breaks the immutablity of OPHP objects. This is useful for very large implementations
-     * of the OPHP where cloning the object would be memory intensive.
+     * Since the update is in-place, this breaks the immutablity of OPHP objects. This is useful for very large
+     * implementations of the OPHP where cloning the object would be memory intensive.
      *
      * @param callable $func
      * @return bool

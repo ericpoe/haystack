@@ -305,8 +305,10 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
 
     /**
+     * Applies the callback to the elements of the given array
+     *
      * @param callable $func
-     * @return \OPHP\OString
+     * @return OString
      */
     public function map(callable $func)
     {
