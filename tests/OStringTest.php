@@ -263,7 +263,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
 
     public function testStringWalk()
     {
-        $capitalize = function($letter, $key) {
+        $capitalize = function ($letter, $key) {
             return $this->aString[$key] = strtoupper($letter);
         };
 
