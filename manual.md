@@ -3,15 +3,14 @@
 ## How To Use
 You can start using OPHP right away, like so:
 
-```
-#!php
+```php
 $myArray = new OArray();
 $myArray = $myArray->insert("orange", "o");
 ```
 
 Or you can use OPHP later on, like so:
 
-``` php
+```php
 $existingArray = range(1, 10);
 ...
 $myArray = new OArray($existingArray);
@@ -31,7 +30,7 @@ The main classes of OPHP are `OArray` and `OString`
 
 **contains($thing)** - Checks to see if $thing is contained within the current OString or OArray. Returns boolean.
 
-``` php
+```php
 $myString = new OString("I am the very model of a modern major-general");
 $myArray = new OArray(["apple", "banana", "celery"]);
 
@@ -44,7 +43,7 @@ $myArray->contains("raspberry"); //false
 
 **locate($thing)** - Returns the array key of the first instance of $thing within the current OString or OArray. Returns a "-1" if not found.
 
-``` php
+```php
 $myString = new OString("I am the very model of a modern major-general");
 $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
@@ -58,7 +57,7 @@ $key = $myArray->locate("daikon"); // (int) -1
 
 **append($thing)** - Adds an element to the end of the collection.
 
-``` php
+```php
 $myString = new OString("I am the very model of a modern major-general");
 $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
