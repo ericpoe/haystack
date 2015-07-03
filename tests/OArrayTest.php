@@ -392,4 +392,16 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         $arr = new OArray(["a" => "bobble", "b" => "apple", "c" => "cobble"]);
         $this->assertEquals(new OArray(["b" => "apple", "a" => "bobble"]), $arr->filter($vowel_both, $flag));
     }
+
+    public function testArrayHead()
+    {
+        $this->assertEquals(new OArray(["apple"]), $this->arrList->head());
+        $this->assertEquals(new OArray(["a" => "apple"]), $this->arrDict->head());
+    }
+
+    public function testArrayTail()
+    {
+        $this->assertEquals(new OArray(["bobble", "cobble", "dobble"]), $this->arrList->tail());
+        $this->assertEquals(new OArray(["b" => "bobble", "c" => "cobble", "d" => "dobble"]), $this->arrDict->tail());
+    }
 }

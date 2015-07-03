@@ -219,6 +219,26 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
 
     }
 
+    /**
+     * Shows the first element of the collection
+     *
+     * @return mixed
+     */
+    public function head()
+    {
+        return $this->slice(0, 1);
+    }
+
+    /**
+     * Shows the collection that doesn't include the head
+     *
+     * @return mixed
+     */
+    public function tail()
+    {
+        return $this->slice(1);
+    }
+
 
     protected function getType($thing)
     {

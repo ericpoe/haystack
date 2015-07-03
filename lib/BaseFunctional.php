@@ -33,4 +33,18 @@ interface BaseFunctional
      * @return mixed
      */
     public function filter(callable $func = null, $flag = null);
+
+    /**
+     * Shows the first element of the collection
+     *
+     * @return mixed
+     */
+    public function head();
+
+    /**
+     * Shows the collection that doesn't include the head
+     *
+     * @return mixed
+     */
+    public function tail();
 }

@@ -309,4 +309,20 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         $funky = $this->aString->filter($thing_both, $flag);
         $this->assertEquals("fobr", $funky->toString());
     }
+
+    public function testStringHead()
+    {
+        $this->assertEquals("f", $this->aString->head()->toString());
+
+        $emptyString = new OString();
+        $this->assertEmpty(sprintf($emptyString->head()));
+    }
+
+    public function testStringTail()
+    {
+        $this->assertEquals("oobar", $this->aString->tail()->toString());
+
+        $emptyString = new OString();
+        $this->assertEmpty(sprintf($emptyString->tail()));
+    }
 }
