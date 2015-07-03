@@ -11,6 +11,9 @@
       "homepage": "http://ericpoe.com"
     }
   ],
+  "require": {
+    "php": " ~5.4"
+  },
   "autoload": {
     "psr-4": {"OPHP\\": "lib"}
   },
