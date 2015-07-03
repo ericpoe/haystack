@@ -3,6 +3,8 @@ namespace OPHP;
 
 class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Container, BaseFunctional
 {
+    const USE_KEY = "key";
+    const USE_BOTH = "both";
     private $string;
     private $ptr; // pointer for iterating through $string
 
@@ -343,11 +345,65 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @param null     $flag   - Flag determining what arguments are sent to callback
      *                         * USE_KEY - pass key as the only argument to callback instead of the value
      *                         * USE_BOTH - pass both value and key as arguments to callback instead of the value
+     *                                    - Requires PHP >= 5.6
      * @return OString
+     *
+     * @throws \ErrorException
      */
     public function filter(callable $func = null, $flag = null)
     {
-        // TODO: Implement filter() method.
+        $newString = new OString();
+
+        // Default
+        if (is_null($func)) {
+            foreach ($this as $letter) {
+                if ((bool) $letter) {
+                    $newString = $newString->insert($letter);
+                }
+            }
+            return $newString;
+        }
+
+        // No flags are passed
+        if (is_null($flag)) {
+            foreach ($this as $letter) {
+                if ($func($letter)) {
+                    $newString = $newString->insert($letter);
+                }
+            }
+            return $newString;
+        }
+
+        // Flag is passed
+        if ("key" === $flag || "both" === $flag) {
+            // Flag of "USE_KEY" is passed
+            if ("key" === $flag) {
+                foreach ($this as $letter) {
+                    if (true === (bool)$func($this->key())) {
+                        $newString = $newString->insert($letter);
+                    }
+                }
+                return $newString;
+            }
+
+            // Flag of "USE_BOTH is passed
+            if ("both" === $flag) {
+                if (5.6 <= substr(phpversion(), 0, 3)) {
+                    foreach ($this as $letter) {
+                        if ($func($letter, $this->key())) {
+                            $newString = $newString->insert($letter);
+                        } elseif (true === (bool)$func($letter, $this->key())) {
+                            $newString = $newString->insert($letter);
+                        }
+                    }
+                    return $newString;
+                } else {
+                    throw new \ErrorException('filter flag of "USE_BOTH" is not supported prior to PHP 5.6');
+                }
+            }
+        } else {
+            throw new \ErrorException("Bad flag name");
+        }
     }
 
     protected function getType($thing)
