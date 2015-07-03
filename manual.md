@@ -3,7 +3,8 @@
 ## How To Use
 You can start using OPHP right away, like so:
 
-``` php
+```
+#!php
 $myArray = new OArray();
 $myArray = $myArray->insert("orange", "o");
 ```
