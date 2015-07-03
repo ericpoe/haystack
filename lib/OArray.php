@@ -183,27 +183,40 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
      * @param null     $flag   - Flag determining what arguments are sent to callback
      *                         * USE_KEY - pass key as the only argument to callback instead of the value
      *                         * USE_BOTH - pass both value and key as arguments to callback instead of the value
+     *                                    - Requires PHP >= 5.6
+     *
      * @return OArray
      *
      * @throws \ErrorException
      */
     public function filter(callable $func = null, $flag = null)
     {
+        // Default
         if (is_null($func)) {
             return new OArray(array_filter($this->arr));
-        } else {
-            if (is_null($flag)) {
-                return new OArray(array_filter($this->arr, $func));
-            } elseif ("key" === $flag || "both" === $flag) {
-                if ("key" === $flag) {
-                    return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_KEY));
-                } else {
-                    return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_BOTH));
-                }
-            } else {
-                    throw new \ErrorException("Bad flag name");
-            }
         }
+
+        // No flags are passed
+        if (is_null($flag)) {
+            return new OArray(array_filter($this->arr, $func));
+        }
+
+        // Flags are USE_KEY or USE_BOTH
+        if ("key" === $flag || "both" === $flag) {
+            if ("key" === $flag) {
+                return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_KEY));
+            }
+            if ("both" === $flag) {
+                if (5.6 <= substr(phpversion(), 0, 3)) {
+                    return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_BOTH));
+                } else {
+                    throw new \ErrorException('filter flag of "USE_BOTH" is not supported prior to PHP 5.6');
+                }
+            }
+        } else {
+                throw new \ErrorException("Bad flag name");
+        }
+
     }
 
 

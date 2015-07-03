@@ -62,22 +62,32 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider arrayLocateProvider
      *
+     * @param $type
      * @param $checkThing
      * @param $expected
      */
-    public function testLocateStringTypeInOArray($checkThing, $expected)
+    public function testLocateStringTypeInOArray($type, $checkThing, $expected)
     {
-        $var = $this->arrList->locate($checkThing);
+        if ("list" === $type) {
+            $var = $this->arrList->locate($checkThing);
+        } else {
+            $var = $this->arrDict->locate($checkThing);
+        }
+
         $this->assertEquals($expected, $var);
     }
 
     public function arrayLocateProvider()
     {
         return [
-            ["checkThing" => "apple", "expected" => 0],
-            ["checkThing" => "fobble", "expected" => -1],
-            ["checkThing" => new OString("apple"), "expected" => 0],
-            ["checkThing" => new OString("fobble"), "expected" => -1],
+            ["type" => "list", "checkThing" => "apple", "expected" => 0],
+            ["type" => "list", "checkThing" => "fobble", "expected" => -1],
+            ["type" => "list", "checkThing" => new OString("apple"), "expected" => 0],
+            ["type" => "list", "checkThing" => new OString("fobble"), "expected" => -1],
+            ["type" => "dict", "checkThing" => "apple", "expected" => 'a'],
+            ["type" => "dict", "checkThing" => "fobble", "expected" => -1],
+            ["type" => "dict", "checkThing" => new OString("apple"), "expected" => 'a'],
+            ["type" => "dict", "checkThing" => new OString("fobble"), "expected" => -1],
         ];
     }
 
