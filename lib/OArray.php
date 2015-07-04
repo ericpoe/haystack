@@ -88,7 +88,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
             $thingArray = $thing->toArray();
         } elseif ($thing instanceof OString) {
                 $thingArray = $thing->toString();
-        } elseif (is_array($thing) || is_scalar($thing) || is_string($thing)) {
+        } elseif (is_array($thing) || is_scalar($thing)) {
             $thingArray = $thing;
         }
 

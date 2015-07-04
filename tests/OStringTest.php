@@ -92,6 +92,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         return [
             ["babyString" => "baz", "expected" => "foobarbaz"],
             ["babyString" => new OString('baz'), "expected" => "foobarbaz"],
+            ["babyString" => 5, "expected" => "foobar5"],
         ];
     }
 
@@ -160,9 +161,12 @@ class OStringTest extends \PHPUnit_Framework_TestCase
             ["babyString" => "baz", "location" => "1", "expected" => "fbazoobar"],
             ["babyString" => "baz", "location" => "-1", "expected" => "foobabazr"],
             ["babyString" => "baz", "location" => null, "expected" => "foobarbaz"],
+            ["babyString" => 0.0, "location" => 3, "expected" => "foo0bar"],
             ["babyString" => new OString("baz"), "location" => "1", "expected" => "fbazoobar"],
             ["babyString" => new OString("baz"), "location" => "-1", "expected" => "foobabazr"],
             ["babyString" => new OString("baz"), "location" => null, "expected" => "foobarbaz"],
+            ["babyString" => new OString("baz"), "location" => null, "expected" => "foobarbaz"],
+            ["babyString" => new OString(0), "location" => 3, "expected" => "foo0bar"],
         ];
     }
 
@@ -175,7 +179,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \ErrorException
      */
-    public function testNonStringTypeCannotBeAddedToFoobar()
+    public function testNonScalarTypeCannotBeAddedToFoobar()
     {
         $newString = $this->aString->append(new \DateTime());
     }
@@ -294,7 +298,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
             }
         };
 
-        $strangeString = $this->aString->insert("0", 3);
+        $strangeString = $this->aString->insert(0, 3);
         $default = $strangeString->filter();
         $this->assertEquals("foobar", $default->toString());
 

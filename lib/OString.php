@@ -77,7 +77,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function append($thing)
     {
-        if (is_string($thing) || $thing instanceof OString) {
+        if (is_scalar($thing) || $thing instanceof OString) {
             return new OString($this->string . $thing);
         } else {
             throw new \ErrorException("Cannot concatenate an OString with a {$this->getType($thing)}");
@@ -93,7 +93,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function insert($thing, $key = null)
     {
-        if (is_string($thing) || $thing instanceof OString) {
+        if (is_scalar($thing) || $thing instanceof OString) {
             if (!isset($key)) {
                 $key = strlen($this);
             }

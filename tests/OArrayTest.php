@@ -223,6 +223,12 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 "type" => "list",
+                "babyArray" => 5,
+                "key" => null,
+                "expected" => new OArray(["apple", "bobble","cobble", "dobble", 5])
+            ],
+            [
+                "type" => "list",
                 "babyArray" => ["foo"],
                 "key" => "1",
                 "expected" => new OArray(["apple", "foo", "bobble","cobble", "dobble"])
@@ -238,6 +244,12 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
                 "babyArray" => [new OString("foo")],
                 "key" => "-1",
                 "expected" => new OArray(["apple", "bobble","cobble", "foo", "dobble"])
+            ],
+            [
+                "type" => "dict",
+                "babyArray" => 5,
+                "key" => null,
+                "expected" => new OArray(["a" => "apple", "b" => "bobble", "c"=> "cobble", "d" => "dobble", 0 => 5])
             ],
             [
                 "type" => "dict",
