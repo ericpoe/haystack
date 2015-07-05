@@ -82,7 +82,7 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      * @param $checkThing
      * @param $expected
      */
-    public function testStringTypeInOArray($type, $checkThing, $expected)
+    public function testContainsStringTypeInOArray($type, $checkThing, $expected)
     {
         if ("list" == $type) {
             $bool = $this->arrList->contains($checkThing);
@@ -103,6 +103,28 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
             ["type" => "dict", "checkThing" => "cobble", "expected" => true],
             ["type" => "dict", "checkThing" => "fobble", "expected" => false],
             ["type" => "dict", "checkThing" => 3, "expected" => false],
+        ];
+    }
+
+    /**
+     * @dataProvider badArrayContainsProvider
+     *
+     * @param $type
+     * @param $item
+     * @param $exceptionMsg
+     */
+    public function testBadArrayContains($type, $item, $exceptionMsg)
+    {
+        $this->setExpectedException("ErrorException", $exceptionMsg);
+        $this->arrList->contains($item);
+        $this->getExpectedException();
+    }
+
+    public function badArrayContainsProvider()
+    {
+        return [
+            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be be contained within an OArray"],
+            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be be contained within an OArray" ],
         ];
     }
 

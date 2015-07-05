@@ -38,8 +38,10 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
 
     public function contains($thing)
     {
-        if (is_scalar($thing) || is_object($thing)) {
+        if ($this->canBeInArray($thing)) {
             return (in_array($thing, $this->arr));
+        } else {
+            throw new \ErrorException("{$this->getType($thing)} cannot be be contained within an OArray");
         }
     }
 
@@ -247,6 +249,16 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
             $type = get_class($thing);
         }
         return $type;
+    }
+
+    protected function canBeInArray($thing)
+    {
+        $possibility = is_array($thing)
+            || is_scalar($thing)
+            || $thing instanceof \ArrayObject
+            || $thing instanceof OString;
+
+        return $possibility;
     }
 
     /**
