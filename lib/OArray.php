@@ -15,18 +15,19 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
 
     public function __construct($arr = null)
     {
-        if (isset($arr)) {
-            parent::__construct($arr);
-        } else {
+        if (is_null($arr)) {
             parent::__construct();
-        }
-
-        if (is_null($arr) || is_array($arr) || $arr instanceof OArray) {
+        } elseif (is_array($arr) || $arr instanceof \ArrayObject) {
+            parent::__construct($arr);
+            $this->arr = $arr;
+        } elseif ($arr instanceof OString) {
+            parent::__construct();
             $this->arr = $arr;
         } elseif (is_scalar($arr)) {
+            parent::__construct();
             $this->arr = [$arr];
         } else {
-            throw new \ErrorException("$arr is of type $this->getType($arr) and cannot be instantiated as an OArray");
+            throw new \ErrorException("{$this->getType($arr)} cannot be instantiated as an OArray");
         }
     }
 
@@ -238,7 +239,6 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
     {
         return $this->slice(1);
     }
-
 
     protected function getType($thing)
     {

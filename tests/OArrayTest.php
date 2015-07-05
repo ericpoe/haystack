@@ -28,6 +28,54 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider goodArraysProvider
+     *
+     * @param $type
+     * @param $item
+     */
+    public function testCreateArrayOfThings($type, $item)
+    {
+        $goodArr = new OArray($item);
+        $this->assertArrayHasKey(0, $goodArr->toArray(), $type);
+    }
+
+    public function goodArraysProvider()
+    {
+        return [
+            ["type" => "bool - true", "item" => true],
+            ["type" => "bool - false", "item" => false],
+            ["type" => "integer", "item" => 5],
+            ["type" => "integer - 0", "item" => 0],
+            ["type" => "array", "item" => [1, 2, 3]],
+            ["type" => "ArrayObject", "item" => new \ArrayObject([0, 1, 2])],
+            ["type" => "string", "item" => "a"],
+            ["type" => "OString", "item" => new OString("a string")],
+        ];
+    }
+
+    /**
+     * @dataProvider badArraysProvider
+     * @param $type
+     * @param $item
+     * @param $exceptionMsg
+     */
+    public function testCannotCreateArrayOfBadThings($type, $item, $exceptionMsg)
+    {
+        $this->setExpectedException("ErrorException", $exceptionMsg);
+        $badArr = new OArray($item);
+        $this->getExpectedException();
+
+    }
+
+    public function badArraysProvider()
+    {
+        return [
+            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be instantiated as an OArray"],
+            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be instantiated as an OArray" ],
+        ];
+    }
+
+    /**
      * @dataProvider arrayContainsProvider
      *
      * @param $type
