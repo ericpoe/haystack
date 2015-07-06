@@ -356,53 +356,27 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
         // Default
         if (is_null($func)) {
-            foreach ($this as $letter) {
-                if ((bool) $letter) {
-                    $newString = $newString->insert($letter);
-                }
-            }
-            return $newString;
+            return $this->filterWithDefaults($newString);
         }
 
         // No flags are passed
         if (is_null($flag)) {
-            foreach ($this as $letter) {
-                if ($func($letter)) {
-                    $newString = $newString->insert($letter);
-                }
-            }
-            return $newString;
+            return $this->filterWithValue($func, $newString);
         }
 
         // Flag is passed
         if ("key" === $flag || "both" === $flag) {
             // Flag of "USE_KEY" is passed
             if ("key" === $flag) {
-                foreach ($this as $letter) {
-                    if (true === (bool)$func($this->key())) {
-                        $newString = $newString->insert($letter);
-                    }
-                }
-                return $newString;
+                return $this->filterWithKey($func, $newString);
             }
 
             // Flag of "USE_BOTH is passed
             if ("both" === $flag) {
-                if (5.6 <= substr(phpversion(), 0, 3)) {
-                    foreach ($this as $letter) {
-                        if ($func($letter, $this->key())) {
-                            $newString = $newString->insert($letter);
-                        } elseif (true === (bool)$func($letter, $this->key())) {
-                            $newString = $newString->insert($letter);
-                        }
-                    }
-                    return $newString;
-                } else {
-                    throw new \ErrorException('filter flag of "USE_BOTH" is not supported prior to PHP 5.6');
-                }
+                return $this->filterWithValueAndKey($func, $newString);
             }
         } else {
-            throw new \ErrorException("Bad flag name");
+            throw new \ErrorException("Invalid flag name");
         }
     }
 
@@ -434,5 +408,73 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             $type = get_class($thing);
         }
         return $type;
+    }
+
+    /**
+     * @param OString  $newString
+     * @return mixed
+     */
+    protected function filterWithDefaults(OString $newString)
+    {
+        foreach ($this as $letter) {
+            if ((bool) $letter) {
+                $newString = $newString->insert($letter);
+            }
+        }
+
+        return $newString;
+    }
+
+    /**
+     * @param callable $func
+     * @param OString  $newString
+     * @return mixed
+     */
+    protected function filterWithValue(callable $func, Ostring $newString)
+    {
+        foreach ($this as $letter) {
+            if ($func($letter)) {
+                $newString = $newString->insert($letter);
+            }
+        }
+
+        return $newString;
+    }
+
+    /**
+     * @param callable $func
+     * @param OString  $newString
+     * @return mixed
+     */
+    protected function filterWithKey(callable $func, Ostring $newString)
+    {
+        foreach ($this as $letter) {
+            if (true === (bool) $func($this->key())) {
+                $newString = $newString->insert($letter);
+            }
+        }
+
+        return $newString;
+    }
+
+    /**
+     * @param callable $func
+     * @param OString  $newString
+     * @return mixed
+     * @throws \ErrorException
+     */
+    protected function filterWithValueAndKey(callable $func, OString $newString)
+    {
+        if (5.6 <= substr(phpversion(), 0, 3)) {
+            foreach ($this as $letter) {
+                if (true === (bool) $func($letter, $this->key())) {
+                    $newString = $newString->insert($letter);
+                }
+            }
+
+            return $newString;
+        } else {
+            throw new \ErrorException('filter flag of "USE_BOTH" is not supported prior to PHP 5.6');
+        }
     }
 }
