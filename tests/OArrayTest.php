@@ -120,14 +120,6 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         $this->getExpectedException();
     }
 
-    public function badArrayContainsProvider()
-    {
-        return [
-            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be be contained within an OArray"],
-            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be be contained within an OArray" ],
-        ];
-    }
-
 
     /**
      * @dataProvider arrayLocateProvider
@@ -162,6 +154,28 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider badArrayContainsProvider
+     *
+     * @param $type
+     * @param $item
+     * @param $exceptionMsg
+     */
+    public function testLocateBadThingsInOArray($type, $item, $exceptionMsg)
+    {
+        $this->setExpectedException("ErrorException", $exceptionMsg);
+        $this->arrList->locate($item);
+        $this->getExpectedException();
+    }
+
+    public function badArrayContainsProvider()
+    {
+        return [
+            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be contained within an OArray"],
+            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be contained within an OArray" ],
+        ];
+    }
+
+    /**
      * @dataProvider appendProvider
      *
      * @param $type
@@ -183,7 +197,30 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ["type" => "list", "newThing" => "ebble", "expected" => new OArray(["apple", "bobble", "cobble", "dobble", "ebble"])],
+            ["type" => "list", "newThing" => ["ebble"], "expected" => new OArray(["apple", "bobble", "cobble", "dobble", ["ebble"]])],
             ["type" => "dict", "newThing" => ["e" => "ebble"], "expected" => new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", ["e" => "ebble"]])],
+        ];
+    }
+
+    /**
+     * @dataProvider badAppendProvider
+     *
+     * @param $type
+     * @param $item
+     * @param $exceptionMsg
+     */
+    public function testAppendBadThingsToArray($type, $item, $exceptionMsg)
+    {
+        $this->setExpectedException("ErrorException", $exceptionMsg);
+        $this->arrList->append($item);
+        $this->getExpectedException();
+    }
+
+    public function badAppendProvider()
+    {
+        return [
+            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be appended to an OArray"],
+            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be appended to an OArray" ],
         ];
     }
 
@@ -271,6 +308,35 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider badArraySliceProvider
+     * @param $type
+     * @param $start
+     * @param $finish
+     * @param $expectedMsg
+     */
+    public function testBadArraySlice($type, $start, $finish, $expectedMsg)
+    {
+        $this->setExpectedException("ErrorException", $expectedMsg);
+        if ("list" === $type) {
+            $subArray = $this->arrList->slice($start, $finish);
+        } else {
+            $subArray = $this->arrDict->slice($start, $finish);
+        }
+
+        $this->getExpectedException();
+    }
+
+    public function badArraySliceProvider()
+    {
+        return [
+            ["type" => "list", "start" => "b", "length" => "2", "expectedMsg" => 'Slice parameter 1, $start, must be an integer'],
+            ["type" => "dict", "start" => "b", "length" => "2", "expectedMsg" => 'Slice parameter 1, $start, must be an integer'],
+            ["type" => "list", "start" => "1", "length" => "b", "expectedMsg" => 'Slice parameter 2, $length, must be null or an integer'],
+            ["type" => "dict", "start" => "1", "length" => "b", "expectedMsg" => 'Slice parameter 2, $length, must be null or an integer'],
+        ];
+    }
+
+    /**
      * @dataProvider arrayInsertProvider
      * @param $type
      * @param $babyArray
@@ -300,6 +366,12 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
             [
                 "type" => "list",
                 "babyArray" => ["foo"],
+                "key" => "1",
+                "expected" => new OArray(["apple", "foo", "bobble","cobble", "dobble"])
+            ],
+            [
+                "type" => "list",
+                "babyArray" => new \ArrayObject(["foo"]),
                 "key" => "1",
                 "expected" => new OArray(["apple", "foo", "bobble","cobble", "dobble"])
             ],
@@ -347,10 +419,38 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 "type" => "dict",
+                "babyArray" => new \ArrayObject(["b" => "foo"]),
+                "key" => null,
+                "expected" => new OArray(["a" => "apple", "b" => ["bobble", "foo"], "c"=> "cobble", "d" => "dobble"]),
+            ],
+            [
+                "type" => "dict",
                 "babyArray" => new OString("foo"),
                 "key" => "b",
                 "expected" => new OArray(["a" => "apple", "b" => ["bobble", "foo"], "c"=> "cobble", "d" => "dobble"]),
             ],
+        ];
+    }
+
+    /**
+     * @dataProvider badArrayInsertProvider
+     *
+     * @param $type
+     * @param $item
+     * @param $exceptionMsg
+     */
+    public function testInsertBadThingsInOArray($type, $item, $exceptionMsg)
+    {
+        $this->setExpectedException("ErrorException", $exceptionMsg);
+        $this->arrList->insert($item);
+        $this->getExpectedException();
+    }
+
+    public function badArrayInsertProvider()
+    {
+        return [
+            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be contained within an OArray"],
+            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be contained within an OArray" ],
         ];
     }
 
@@ -384,20 +484,60 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
                 "message" => "Basic list",
             ],
             [
+                "type" => "list",
+                "value" => "zobble",
+                "expected" => new OArray(["apple", "bobble", "cobble", "dobble"]),
+                "message" => "Basic list - item not found"
+            ],
+            [
                 "type" => "dict",
                 "value" => "bobble",
                 "expected" => new OArray(["a" => "apple", "c" => "cobble", "d" => "dobble"]),
                 "message" => "Basic dict",
             ],
+            [
+                "type" => "dict",
+                "value" => "zobble",
+                "expected" => new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"]),
+                "message" => "Basic dict - item not found",
+            ],
         ];
     }
 
     /**
-     * @expectedException \ErrorException
+     * @dataProvider badRemoveProvider
      */
-    public function testObjectCannotBeUsedAsArrayKey()
+    public function testBadObjectCannotBeRemovedFromArray($type, $item, $exceptionMsg)
     {
-        $newArray = $this->arrDict->insert("yobbo", new \DateTime());
+        $this->setExpectedException("ErrorException", $exceptionMsg);
+        $newArray = $this->arrDict->remove($item);
+        $this->getExpectedException();
+    }
+
+    public function badRemoveProvider()
+    {
+        return [
+            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be contained within an OArray"],
+            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be contained within an OArray" ],
+        ];
+    }
+
+    /**
+     * @dataProvider badInsertKeyProvider
+     */
+    public function testObjectCannotBeUsedAsArrayKey($type, $key, $exceptionMsg)
+    {
+        $this->setExpectedException("ErrorException", $exceptionMsg);
+        $newArray = $this->arrDict->insert("yobbo", $key);
+        $this->getExpectedException();
+    }
+
+    public function badInsertKeyProvider()
+    {
+        return [
+            ["type" => "DateTime", "key" => new \DateTime(), "exceptionMsg" => "Invalid array key"],
+            ["type" => "SplDoublyLinkedList", "key" => new \SplDoublyLinkedList(), "exceptionMsg" => "Invalid array key" ],
+        ];
     }
 
     public function testArrayStyleAccess()
@@ -473,6 +613,39 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         $flag = OArray::USE_BOTH;
         $arr = new OArray(["a" => "bobble", "b" => "apple", "c" => "cobble"]);
         $this->assertEquals(new OArray(["b" => "apple", "a" => "bobble"]), $arr->filter($vowel_both, $flag));
+    }
+
+    public function testBadArrayFilterFlag()
+    {
+        $vowel = function ($word) {
+            $vowels = new OString("aeiou");
+            return $vowels->contains($word[0]);
+        };
+
+        $this->setExpectedException("ErrorException", "Invalid flag name");
+        $this->arrList->filter($vowel, "boooth");
+        $this->getExpectedException();
+    }
+
+    public function testFilterInvalidPhpVersion()
+    {
+        if (5.6 > substr(phpversion(), 0, 3)) {
+            $this->setExpectedException("ErrorException", 'filter flag of "USE_BOTH" is not supported prior to PHP 5.6');
+            $vowel_both = function ($value, $key) {
+                $vowels = new OString("aeiou");
+
+                if ($vowels->contains($value[0])) {
+                    return true;
+                } else {
+                    foreach ($vowels as $letter) {
+                        if ($key === $letter) {
+                            return true;
+                        }
+                    }
+                } return false;
+            };
+            $this->arrDict->filter($vowel_both, OArray::USE_BOTH);
+        }
     }
 
     public function testArrayHead()

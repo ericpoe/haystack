@@ -41,16 +41,18 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
         if ($this->canBeInArray($thing)) {
             return (in_array($thing, $this->arr));
         } else {
-            throw new \ErrorException("{$this->getType($thing)} cannot be be contained within an OArray");
+            throw new \ErrorException("{$this->getType($thing)} cannot be contained within an OArray");
         }
     }
 
     public function locate($thing)
     {
-        if (is_scalar($thing)  || is_object($thing)) {
+        if ($this->canBeInArray($thing)) {
             $key = array_search($thing, $this->arr);
 
             return (false !== $key) ? $key : -1;
+        } else {
+            throw new \ErrorException("{$this->getType($thing)} cannot be contained within an OArray");
         }
     }
 
@@ -63,16 +65,12 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
      */
     public function append($thing)
     {
-        if (is_scalar($thing)) {
+        if ($this->canBeInArray($thing)) {
             $array = new OArray($this);
             parent::append($thing);
             return $array;
-        } elseif (is_array($thing) || is_object($thing)) {
-            $array = new OArray($this);
-            $array->offsetSet(null, $thing);
-            return $array;
         } else {
-            throw new \ErrorException("Cannot concatenate an OArray with a {$this->getType($thing)}");
+            throw new \ErrorException("{$this->getType($thing)} cannot be appended to an OArray");
         }
     }
 
@@ -90,9 +88,11 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
         if ($thing instanceof OArray) {
             $thingArray = $thing->toArray();
         } elseif ($thing instanceof OString) {
-                $thingArray = $thing->toString();
-        } elseif (is_array($thing) || is_scalar($thing)) {
+            $thingArray = $thing->toString();
+        } elseif ($this->canBeInArray($thing)) {
             $thingArray = $thing;
+        } else {
+            throw new \ErrorException("{$this->getType($thing)} cannot be contained within an OArray");
         }
 
         if (isset($key)) {
@@ -123,34 +123,48 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
      */
     public function remove($thing)
     {
-        if (!$this->contains($thing)) {
-            throw new \ErrorException("$thing does not exist within the OArray");
-        }
+        if ($this->canBeInArray($thing)) {
+            if (!$this->contains($thing)) {
+                return new OArray($this->arr);
+            }
 
-        $newArr = $this->arr;
-        $key = $this->locate($thing);
+            $newArr = $this->arr;
+            $key = $this->locate($thing);
+        } else {
+            throw new \ErrorException("{$this->getType($thing)} cannot be contained within an OArray");
+        }
 
 
         if (is_numeric($key)) {
             unset($newArr[$key]);
             return new OArray(array_values($newArr));
-        } elseif (is_string($key)) {
-            unset($newArr[$key]);
-            return new OArray($newArr);
-        } else {
-            throw new \ErrorException("Invalid array key");
         }
+
+        // key is string
+        unset($newArr[$key]);
+        return new OArray($newArr);
     }
 
     /**
      * @param $start
      * @param $length
      * @return mixed
+     * @throws \ErrorException
      */
     public function slice($start, $length = null)
     {
+        if (!is_numeric($start)) {
+            throw new \ErrorException("Slice parameter 1, \$start, must be an integer");
+        }
+
+        if (!is_null($length) && !is_numeric($length)) {
+                throw new \ErrorException("Slice parameter 2, \$length, must be null or an integer");
+        }
+
         $maintainIndices = false;
+
         return new OArray(array_slice($this->arr, $start, $length, $maintainIndices));
+
     }
 
     /**
@@ -212,14 +226,12 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
             if ("both" === $flag) {
                 if (5.6 <= substr(phpversion(), 0, 3)) {
                     return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_BOTH));
-                } else {
-                    throw new \ErrorException('filter flag of "USE_BOTH" is not supported prior to PHP 5.6');
                 }
+                throw new \ErrorException('filter flag of "USE_BOTH" is not supported prior to PHP 5.6');
             }
         } else {
-                throw new \ErrorException("Bad flag name");
+            throw new \ErrorException("Invalid flag name");
         }
-
     }
 
     /**
