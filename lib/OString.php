@@ -10,13 +10,13 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     public function __construct($string = null)
     {
-        if (is_scalar($string)) {
-            $this->string = (string) $string;
+        if (is_scalar($string) || $string instanceof OString) {
+            $this->string = (string)$string;
             $this->rewind();
         } elseif (is_null($string)) {
             $this->string = null;
         } else {
-            throw new \ErrorException("$string is not a proper String");
+            throw new \ErrorException("{$this->getType($string)} is not a proper String");
         }
     }
 
@@ -38,34 +38,42 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function contains($thing)
     {
         if (is_scalar($thing)) {
-            $pos = strstr($this->string, (string) $thing);
+            $pos = strstr($this->string, (string)$thing);
+
             return (false !== $pos) ?: false;
         } elseif ($thing instanceof OString) {
             $pos = strstr($this->string, sprintf("%s", $thing));
+
             return (false !== $pos) ?: false;
         } else {
-            throw new \ErrorException("$thing is neither a proper String nor an OString");
+            throw new \ErrorException("{$this->getType($thing)} is neither a proper String nor an OString");
         }
     }
 
     /**
      * Finds the first location of $thing
+     *
      * @param $thing
      * @return int position of $thing, -1 if not found
      * @throws \ErrorException
      */
     public function locate($thing)
     {
-        if (is_scalar($thing)) {
-            $pos = strpos($this->string, (string) $thing);
-            return (false !== $pos) ? $pos : -1;
-        } elseif ($thing instanceof OString) {
-            $pos = strpos($this->string, sprintf("%s", $thing));
-            return (false !== $pos) ? $pos : -1;
-        } else {
-            throw new \ErrorException("$thing is neither a proper String nor an OString");
+        if ($this->contains($thing)) {
+            if (is_scalar($thing)) {
+                $pos = strpos($this->string, (string)$thing);
+
+                return $pos;
+            }
+
+            if ($thing instanceof OString) {
+                $pos = strpos($this->string, sprintf("%s", $thing));
+
+                return $pos;
+            }
         }
 
+        return -1;
     }
 
     /**
@@ -87,7 +95,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * Inserts a $thing at a specified location; if no location is provided, $thing will be added to the back.
      *
-     * @param $thing
+     * @param          $thing
      * @param int|null $key
      * @return mixed
      */
@@ -318,6 +326,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         for ($i = 0; $i < $this->count(); $i++) {
             $newString[$i] = $func($this[$i]);
         }
+
         return $newString;
     }
 
@@ -338,14 +347,16 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Iterates over each value in the array passing them to the callback function. If the callback function returns
-     * true, the current value from array is returned into the result array. Array keys are preserved.
+     * Iterates over each value in the container passing them to the callback function. If the callback function returns
+     * true, the current value from container is returned into the result container. Container keys are preserved.
      *
-     * @param callable $func   - If no callback is supplied, all entries of array equal to FALSE will be removed.
+     * @param callable $func   - If no callback is supplied, all entries of container equal to FALSE will be removed.
      * @param null     $flag   - Flag determining what arguments are sent to callback
-     *                         * USE_KEY - pass key as the only argument to callback instead of the value
-     *                         * USE_BOTH - pass both value and key as arguments to callback instead of the value
-     *                                    - Requires PHP >= 5.6
+     *                             - USE_KEY
+     *                                 - pass key as the only argument to callback instead of the value
+     *                             - USE_BOTH
+     *                                 - pass both value and key as arguments to callback instead of the value
+     *                                 - Requires PHP >= 5.6
      * @return OString
      *
      * @throws \ErrorException
@@ -407,17 +418,18 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         if ('object' === $type) {
             $type = get_class($thing);
         }
+
         return $type;
     }
 
     /**
-     * @param OString  $newString
+     * @param OString $newString
      * @return mixed
      */
     protected function filterWithDefaults(OString $newString)
     {
         foreach ($this as $letter) {
-            if ((bool) $letter) {
+            if ((bool)$letter) {
                 $newString = $newString->insert($letter);
             }
         }
@@ -449,7 +461,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     protected function filterWithKey(callable $func, Ostring $newString)
     {
         foreach ($this as $letter) {
-            if (true === (bool) $func($this->key())) {
+            if (true === (bool)$func($this->key())) {
                 $newString = $newString->insert($letter);
             }
         }
@@ -467,7 +479,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     {
         if (5.6 <= substr(phpversion(), 0, 3)) {
             foreach ($this as $letter) {
-                if (true === (bool) $func($letter, $this->key())) {
+                if (true === (bool)$func($letter, $this->key())) {
                     $newString = $newString->insert($letter);
                 }
             }

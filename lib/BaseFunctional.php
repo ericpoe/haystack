@@ -23,14 +23,19 @@ interface BaseFunctional
     public function walk(callable $func);
 
     /**
-     * Iterates over each value in the array passing them to the callback function. If the callback function returns
-     * true, the current value from array is returned into the result array. Array keys are preserved.
+     * Iterates over each value in the container passing them to the callback function. If the callback function returns
+     * true, the current value from container is returned into the result container. Container keys are preserved.
      *
-     * @param callable $func - If no callback is supplied, all entries of array equal to FALSE will be removed.
-     * @param null     $flag - Flag determining what arguments are sent to callback
-     *                         * USE_KEY - pass key as the only argument to callback instead of the value
-     *                         * USE_BOTH - pass both value and key as arguments to callback instead of the value
+     * @param callable $func   - If no callback is supplied, all entries of container equal to FALSE will be removed.
+     * @param null     $flag   - Flag determining what arguments are sent to callback
+     *                             - USE_KEY
+     *                                 - pass key as the only argument to callback instead of the value
+     *                             - USE_BOTH
+     *                                 - pass both value and key as arguments to callback instead of the value
+     *                                 - Requires PHP >= 5.6
      * @return mixed
+     *
+     * @throws \ErrorException
      */
     public function filter(callable $func = null, $flag = null);
 

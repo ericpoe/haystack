@@ -3,6 +3,7 @@ namespace OPHP;
 
 /**
  * Class OArray
+ *
  * @package OPHP
  */
 class OArray extends \ArrayObject implements Container, BaseFunctional
@@ -68,6 +69,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
         if ($this->canBeInArray($thing)) {
             $array = new OArray($this);
             parent::append($thing);
+
             return $array;
         } else {
             throw new \ErrorException("{$this->getType($thing)} cannot be appended to an OArray");
@@ -109,10 +111,9 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
 
         $first = $this->slice(0, $length)->toArray();
         $lastStartingPoint = sizeof($this->arr) - sizeof($first);
-        $last =  $this->slice($length, $lastStartingPoint)->toArray();
+        $last = $this->slice($length, $lastStartingPoint)->toArray();
 
-
-        return new OArray(array_merge_recursive($first, (array) $array, $last));
+        return new OArray(array_merge_recursive($first, (array)$array, $last));
     }
 
 
@@ -137,11 +138,13 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
 
         if (is_numeric($key)) {
             unset($newArr[$key]);
+
             return new OArray(array_values($newArr));
         }
 
         // key is string
         unset($newArr[$key]);
+
         return new OArray($newArr);
     }
 
@@ -158,7 +161,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
         }
 
         if (!is_null($length) && !is_numeric($length)) {
-                throw new \ErrorException("Slice parameter 2, \$length, must be null or an integer");
+            throw new \ErrorException("Slice parameter 2, \$length, must be null or an integer");
         }
 
         $maintainIndices = false;
@@ -193,14 +196,16 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
     }
 
     /**
-     * Iterates over each value in the array passing them to the callback function. If the callback function returns
-     * true, the current value from array is returned into the result array. Array keys are preserved.
+     * Iterates over each value in the container passing them to the callback function. If the callback function returns
+     * true, the current value from container is returned into the result container. Container keys are preserved.
      *
-     * @param callable $func   - If no callback is supplied, all entries of array equal to FALSE will be removed.
+     * @param callable $func   - If no callback is supplied, all entries of container equal to FALSE will be removed.
      * @param null     $flag   - Flag determining what arguments are sent to callback
-     *                         * USE_KEY - pass key as the only argument to callback instead of the value
-     *                         * USE_BOTH - pass both value and key as arguments to callback instead of the value
-     *                                    - Requires PHP >= 5.6
+     *                             - USE_KEY
+     *                                 - pass key as the only argument to callback instead of the value
+     *                             - USE_BOTH
+     *                                 - pass both value and key as arguments to callback instead of the value
+     *                                 - Requires PHP >= 5.6
      *
      * @return OArray
      *
@@ -260,6 +265,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
         if ('object' === $type) {
             $type = get_class($thing);
         }
+
         return $type;
     }
 

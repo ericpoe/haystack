@@ -5,6 +5,7 @@ interface Container
 {
     /**
      * Determines if a $thing is in the current object.
+     *
      * @param $thing
      * @return boolean
      */
@@ -12,6 +13,7 @@ interface Container
 
     /**
      * Finds the location of $thing in the current object. If it does not exist, the user will be notified
+     *
      * @param $thing
      * @return int - array-notation location of $thing in current object; "-1" if not found
      */
@@ -28,7 +30,7 @@ interface Container
     /**
      * Inserts a $thing at a specified location; if no key is provided, $thing will be added to the back.
      *
-     * @param      $thing
+     * @param          $thing
      * @param int|null $key
      * @return mixed
      */
