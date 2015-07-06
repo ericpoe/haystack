@@ -21,8 +21,61 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         $emptyString = new OString("");
         $this->assertEmpty($emptyString);
 
+        $emptyString = new OString(false);
+        $this->assertEmpty($emptyString);
+
         $emptyLookingString = new OString(" ");
         $this->assertNotEmpty($emptyLookingString);
+    }
+
+    /**
+     * @dataProvider stringOfThingsProvider
+     *
+     * @param $item
+     * @param $expected
+     * @param $message
+     */
+    public function testCreateOStringOfThings($item, $expected, $message)
+    {
+        $this->aString = new OString($item);
+        $this->assertEquals($expected, $this->aString, $message);
+    }
+
+    public function stringOfThingsProvider()
+    {
+        $timeStamp = new \DateTime();
+        return [
+            ["item" => "abc", "expected" => "abc", "message" => "Simple string"],
+            ["item" => new OString("abc"), "expected" => "abc", "message" => "OString"],
+            ["item" => true, "expected" => "1", "message" => "boolean true"],
+            ["item" => false, "expected" => "", "message" => "boolean false"],
+            ["item" => 1, "expected" => "1", "message" => "integer 1"],
+            ["item" => 0, "expected" => "0", "message" => "integer 0"],
+            ["item" => 1.1, "expected" => "1.1", "message" => "double 1.1"],
+            ["item" => $timeStamp->format('c'), "expected" => $timeStamp->format('c'), "message" => "DateTime formatted timestamp"],
+        ];
+    }
+
+    /**
+     * @dataProvider createBadOStringProvider
+     *
+     * @param $item
+     * @param $message
+     */
+    public function testCreateBadOstringOfThings($item, $message)
+    {
+        $this->setExpectedException("ErrorException", $message);
+        $this->aString = new OString($item);
+        $this->getExpectedException();
+
+    }
+
+    public function createBadOStringProvider()
+    {
+        return [
+            ["item" => new \DateTime(), "DateTime is not a proper String"],
+            ["item" => new \SplDoublyLinkedList(), "SplDoublyLinkedList is not a proper String"],
+        ];
     }
 
     /**
@@ -50,6 +103,27 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider badTypesOfStringInFoobar
+     * @param $item
+     * @param $message
+     * @throws \ErrorException
+     */
+    public function testBadTypesOfStringInFoobar($item, $message)
+    {
+        $this->setExpectedException("ErrorException", $message);
+        $var = $this->aString->contains($item);
+        $this->getExpectedException();
+    }
+
+    public function badTypesOfStringInFoobar()
+    {
+        return [
+            ["item" => new \DateTime(), "DateTime is neither a proper String nor an OString"],
+            ["item" => new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a proper String nor an OString"],
+        ];
+    }
+
+    /**
      * @dataProvider stringLocateProvider()
      *
      * @param $checkString
@@ -71,6 +145,27 @@ class OStringTest extends \PHPUnit_Framework_TestCase
             ["checkString" => new OString('baz'), "expected" => -1],
             ["checkString" => new OString(42), "expected" => -1],
 
+        ];
+    }
+
+    /**
+     * @dataProvider badLocateTypesOfStringInFoobarProvider
+     * @param $item
+     * @param $message
+     * @throws \ErrorException
+     */
+    public function testBadLocateTypesOfStringInFoobar($item, $message)
+    {
+        $this->setExpectedException("ErrorException", $message);
+        $var = $this->aString->locate($item);
+        $this->getExpectedException();
+    }
+
+    public function badLocateTypesOfStringInFoobarProvider()
+    {
+        return [
+            ["item" => new \DateTime(), "DateTime is neither a proper String nor an OString"],
+            ["item" => new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a proper String nor an OString"],
         ];
     }
 
