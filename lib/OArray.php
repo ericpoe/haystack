@@ -37,6 +37,13 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
         return $this->arr;
     }
 
+    /**
+     * Determines if a $thing is in the current object.
+     *
+     * @param $thing
+     * @return boolean
+     * @throws \ErrorException
+     */
     public function contains($thing)
     {
         if ($this->canBeInArray($thing)) {

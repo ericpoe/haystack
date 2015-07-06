@@ -35,6 +35,13 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         return $this->__toString();
     }
 
+    /**
+     * Determines if a $thing is in the current object.
+     *
+     * @param $thing
+     * @return bool
+     * @throws \ErrorException
+     */
     public function contains($thing)
     {
         if (is_scalar($thing)) {
@@ -51,11 +58,10 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Finds the first location of $thing
+     * Finds the location of $thing in the current object. If it does not exist, the user will be notified
      *
      * @param $thing
-     * @return int position of $thing, -1 if not found
-     * @throws \ErrorException
+     * @return int - array-notation location of $thing in current object; "-1" if not found
      */
     public function locate($thing)
     {
