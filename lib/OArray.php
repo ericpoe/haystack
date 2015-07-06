@@ -53,15 +53,21 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
         }
     }
 
+    /**
+     * Finds the location of $thing in the current object. If it does not exist, the user will be notified
+     *
+     * @param $thing
+     * @return int - array-notation location of $thing in current object; "-1" if not found
+     */
     public function locate($thing)
     {
-        if ($this->canBeInArray($thing)) {
+        if ($this->contains($thing)) {
             $key = array_search($thing, $this->arr);
-
-            return (false !== $key) ? $key : -1;
         } else {
-            throw new \ErrorException("{$this->getType($thing)} cannot be contained within an OArray");
+            $key = -1;
         }
+
+        return $key;
     }
 
     /**
