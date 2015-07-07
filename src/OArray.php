@@ -18,6 +18,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
     {
         if (is_null($arr)) {
             parent::__construct();
+            $this->arr = [];
         } elseif (is_array($arr) || $arr instanceof \ArrayObject) {
             parent::__construct($arr);
             $this->arr = $arr;
