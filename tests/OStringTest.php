@@ -1,5 +1,5 @@
 <?php
-namespace OPHP\Test;
+namespace OPHP\Tests;
 
 use OPHP\OString;
 

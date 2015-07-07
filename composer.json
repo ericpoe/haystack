@@ -15,7 +15,7 @@
     "php": " ~5.4"
   },
   "autoload": {
-    "psr-4": {"OPHP\\": "lib"}
+    "psr-4": {"OPHP\\": "src"}
   },
   "autoload-dev": {
     "psr-4": {"OPHP\\Tests\\": "tests"}
