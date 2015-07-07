@@ -4,43 +4,43 @@ namespace OPHP;
 interface Container
 {
     /**
-     * Determines if a $thing is in the current object.
+     * Determines if a $value is in the current object.
      *
-     * @param $thing
+     * @param $value
      * @return boolean
      */
-    public function contains($thing);
+    public function contains($value);
 
     /**
-     * Finds the location of $thing in the current object. If it does not exist, the user will be notified
+     * Finds the location of $value in the current object. If it does not exist, the user will be notified
      *
-     * @param $thing
-     * @return int - array-notation location of $thing in current object; "-1" if not found
+     * @param $value
+     * @return int - array-notation location of $value in current object; "-1" if not found
      */
-    public function locate($thing);
+    public function locate($value);
 
     /**
      * Concatenates two things of the same type.
      *
-     * @param $thing
+     * @param $value
      * @return mixed
      */
-    public function append($thing);
+    public function append($value);
 
     /**
-     * Inserts a $thing at a specified location; if no key is provided, $thing will be added to the back.
+     * Inserts a $value at a specified location; if no key is provided, $value will be added to the back.
      *
-     * @param          $thing
+     * @param          $value
      * @param int|null $key
      * @return mixed
      */
-    public function insert($thing, $key = null);
+    public function insert($value, $key = null);
 
     /**
-     * @param $thing
+     * @param $value
      * @return mixed
      */
-    public function remove($thing);
+    public function remove($value);
 
     /**
      * @param $start

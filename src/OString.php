@@ -36,44 +36,44 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Determines if a $thing is in the current object.
+     * Determines if a $value is in the current object.
      *
-     * @param $thing
+     * @param $value
      * @return bool
      * @throws \ErrorException
      */
-    public function contains($thing)
+    public function contains($value)
     {
-        if (is_scalar($thing)) {
-            $pos = strstr($this->string, (string)$thing);
+        if (is_scalar($value)) {
+            $pos = strstr($this->string, (string)$value);
 
             return (false !== $pos) ?: false;
-        } elseif ($thing instanceof OString) {
-            $pos = strstr($this->string, sprintf("%s", $thing));
+        } elseif ($value instanceof OString) {
+            $pos = strstr($this->string, sprintf("%s", $value));
 
             return (false !== $pos) ?: false;
         } else {
-            throw new \ErrorException("{$this->getType($thing)} is neither a proper String nor an OString");
+            throw new \ErrorException("{$this->getType($value)} is neither a proper String nor an OString");
         }
     }
 
     /**
-     * Finds the location of $thing in the current object. If it does not exist, the user will be notified
+     * Finds the location of $value in the current object. If it does not exist, the user will be notified
      *
-     * @param $thing
-     * @return int - array-notation location of $thing in current object; "-1" if not found
+     * @param $value
+     * @return int - array-notation location of $value in current object; "-1" if not found
      */
-    public function locate($thing)
+    public function locate($value)
     {
-        if ($this->contains($thing)) {
-            if (is_scalar($thing)) {
-                $pos = strpos($this->string, (string)$thing);
+        if ($this->contains($value)) {
+            if (is_scalar($value)) {
+                $pos = strpos($this->string, (string)$value);
 
                 return $pos;
             }
 
-            if ($thing instanceof OString) {
-                $pos = strpos($this->string, sprintf("%s", $thing));
+            if ($value instanceof OString) {
+                $pos = strpos($this->string, sprintf("%s", $value));
 
                 return $pos;
             }
@@ -85,44 +85,44 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * Concatenates two things of the same type.
      *
-     * @param $thing
+     * @param $value
      * @return OString
      * @throws \ErrorException
      */
-    public function append($thing)
+    public function append($value)
     {
-        if (is_scalar($thing) || $thing instanceof OString) {
-            return new OString($this->string . $thing);
+        if (is_scalar($value) || $value instanceof OString) {
+            return new OString($this->string . $value);
         } else {
-            throw new \ErrorException("Cannot concatenate an OString with a {$this->getType($thing)}");
+            throw new \ErrorException("Cannot concatenate an OString with a {$this->getType($value)}");
         }
     }
 
     /**
-     * Inserts a $thing at a specified location; if no location is provided, $thing will be added to the back.
+     * Inserts a $value at a specified location; if no location is provided, $value will be added to the back.
      *
-     * @param          $thing
+     * @param          $value
      * @param int|null $key
      * @return mixed
      */
-    public function insert($thing, $key = null)
+    public function insert($value, $key = null)
     {
-        if (is_scalar($thing) || $thing instanceof OString) {
+        if (is_scalar($value) || $value instanceof OString) {
             if (!isset($key)) {
                 $key = strlen($this);
             }
 
-            return new OString(substr_replace($this->string, $thing, $key, 0));
+            return new OString(substr_replace($this->string, $value, $key, 0));
         }
     }
 
     /**
-     * @param $thing
+     * @param $value
      * @return mixed
      */
-    public function remove($thing)
+    public function remove($value)
     {
-        $key = $this->locate($thing);
+        $key = $this->locate($value);
         $startString = $this->slice(0, $key);
         $endString = $this->slice($key + 1);
         $newString = $startString->insert($endString);

@@ -38,31 +38,31 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
     }
 
     /**
-     * Determines if a $thing is in the current object.
+     * Determines if a $value is in the current object.
      *
-     * @param $thing
+     * @param $value
      * @return boolean
      * @throws \ErrorException
      */
-    public function contains($thing)
+    public function contains($value)
     {
-        if ($this->canBeInArray($thing)) {
-            return (in_array($thing, $this->arr));
+        if ($this->canBeInArray($value)) {
+            return (in_array($value, $this->arr));
         } else {
-            throw new \ErrorException("{$this->getType($thing)} cannot be contained within an OArray");
+            throw new \ErrorException("{$this->getType($value)} cannot be contained within an OArray");
         }
     }
 
     /**
-     * Finds the location of $thing in the current object. If it does not exist, the user will be notified
+     * Finds the location of $value in the current object. If it does not exist, the user will be notified
      *
-     * @param $thing
-     * @return int - array-notation location of $thing in current object; "-1" if not found
+     * @param $value
+     * @return int - array-notation location of $value in current object; "-1" if not found
      */
-    public function locate($thing)
+    public function locate($value)
     {
-        if ($this->contains($thing)) {
-            $key = array_search($thing, $this->arr);
+        if ($this->contains($value)) {
+            $key = array_search($value, $this->arr);
         } else {
             $key = -1;
         }
@@ -73,53 +73,53 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
     /**
      * Concatenates two things of the same type.
      *
-     * @param $thing
+     * @param $value
      * @return OArray
      * @throws \ErrorException
      */
-    public function append($thing)
+    public function append($value)
     {
-        if ($this->canBeInArray($thing)) {
+        if ($this->canBeInArray($value)) {
             $array = new OArray($this);
-            parent::append($thing);
+            parent::append($value);
 
             return $array;
         } else {
-            throw new \ErrorException("{$this->getType($thing)} cannot be appended to an OArray");
+            throw new \ErrorException("{$this->getType($value)} cannot be appended to an OArray");
         }
     }
 
     /**
-     * Inserts a $thing at a specified location; if no location is provided, $thing will be added to the back.
+     * Inserts a $value at a specified location; if no location is provided, $value will be added to the back.
      *
-     * @param          $thing
+     * @param          $value
      * @param int|null $key
      * @return mixed
      *
      * @throws \ErrorException
      */
-    public function insert($thing, $key = null)
+    public function insert($value, $key = null)
     {
-        if ($thing instanceof OArray) {
-            $thingArray = $thing->toArray();
-        } elseif ($thing instanceof OString) {
-            $thingArray = $thing->toString();
-        } elseif ($this->canBeInArray($thing)) {
-            $thingArray = $thing;
+        if ($value instanceof OArray) {
+            $valueArray = $value->toArray();
+        } elseif ($value instanceof OString) {
+            $valueArray = $value->toString();
+        } elseif ($this->canBeInArray($value)) {
+            $valueArray = $value;
         } else {
-            throw new \ErrorException("{$this->getType($thing)} cannot be contained within an OArray");
+            throw new \ErrorException("{$this->getType($value)} cannot be contained within an OArray");
         }
 
         if (isset($key)) {
             if (is_numeric($key)) {
-                list($array, $length) = $this->setSubarrayAndLengthForSequentialArray($key, $thingArray);
+                list($array, $length) = $this->setSubarrayAndLengthForSequentialArray($key, $valueArray);
             } elseif (is_string($key)) {
-                list($array, $length) = $this->setSubarrayAndLengthForAssociativeArray($key, $thingArray);
+                list($array, $length) = $this->setSubarrayAndLengthForAssociativeArray($key, $valueArray);
             } else {
                 throw new \ErrorException("Invalid array key");
             }
         } else {
-            list($array, $length) = $this->setSubarrayAndLengthWhenNoKeyProvided($thingArray);
+            list($array, $length) = $this->setSubarrayAndLengthWhenNoKeyProvided($valueArray);
         }
 
         $first = $this->slice(0, $length)->toArray();
@@ -131,21 +131,21 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
 
 
     /**
-     * @param $thing
+     * @param $value
      * @return \OPHP\OArray
      * @throws \ErrorException
      */
-    public function remove($thing)
+    public function remove($value)
     {
-        if ($this->canBeInArray($thing)) {
-            if (!$this->contains($thing)) {
+        if ($this->canBeInArray($value)) {
+            if (!$this->contains($value)) {
                 return new OArray($this->arr);
             }
 
             $newArr = $this->arr;
-            $key = $this->locate($thing);
+            $key = $this->locate($value);
         } else {
-            throw new \ErrorException("{$this->getType($thing)} cannot be contained within an OArray");
+            throw new \ErrorException("{$this->getType($value)} cannot be contained within an OArray");
         }
 
 
@@ -294,12 +294,12 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
 
     /**
      * @param $key
-     * @param $thingArray
+     * @param $value
      * @return array
      */
-    protected function setSubarrayAndLengthForSequentialArray($key, $thingArray)
+    protected function setSubarrayAndLengthForSequentialArray($key, $value)
     {
-        $array = $thingArray;
+        $array = $value;
         $length = (int)$key;
 
         return array($array, $length);
