@@ -170,7 +170,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
      */
     public function slice($start, $length = null)
     {
-        if (!is_numeric($start)) {
+        if (is_null($start) || !is_numeric($start)) {
             throw new \ErrorException("Slice parameter 1, \$start, must be an integer");
         }
 
