@@ -240,17 +240,21 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
         // Flags are USE_KEY or USE_BOTH
         if ("key" === $flag || "both" === $flag) {
             if ("key" === $flag) {
-                return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_KEY));
+                if (version_compare(phpversion(), 5.6) >= 0) {
+                    return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_KEY));
+                } else {
+                    return $this->filterWithKey($func);
+                }
             }
             if ("both" === $flag) {
-                if (5.6 <= substr(phpversion(), 0, 3)) {
+                if (version_compare(phpversion(), 5.6) >= 0) {
                     return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_BOTH));
+                } else {
+                    return $this->filterWithValueAndKey($func);
                 }
-                throw new \ErrorException('filter flag of "USE_BOTH" is not supported prior to PHP 5.6');
             }
-        } else {
-            throw new \ErrorException("Invalid flag name");
         }
+        throw new \ErrorException("Invalid flag name");
     }
 
     /**
@@ -308,26 +312,58 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
 
     /**
      * @param $key
-     * @param $thingArray
+     * @param $value
      * @return array
      */
-    protected function setSubarrayAndLengthForAssociativeArray($key, $thingArray)
+    protected function setSubarrayAndLengthForAssociativeArray($key, $value)
     {
-        $array = [$key => $thingArray];
+        $array = [$key => $value];
         $length = sizeof($this->arr);
 
         return array($array, $length);
     }
 
     /**
-     * @param $thingArray
+     * @param $value
      * @return array
      */
-    protected function setSubarrayAndLengthWhenNoKeyProvided($thingArray)
+    protected function setSubarrayAndLengthWhenNoKeyProvided($value)
     {
-        $array = $thingArray;
+        $array = $value;
         $length = sizeof($this->arr);
 
         return array($array, $length);
+    }
+
+    /**
+     * @param callable $func
+     * @return OArray
+     */
+    protected function filterWithKey(callable $func)
+    {
+        $newArr = new OArray();
+        foreach ($this as $key => $value) {
+            if (true === (bool)$func($key)) {
+                $newArr = $newArr->insert($value, $key);
+            }
+        }
+
+        return $newArr;
+    }
+
+    /**
+     * @param callable $func
+     * @return OArray
+     */
+    protected function filterWithValueAndKey(callable $func)
+    {
+        $newArr = new OArray();
+        foreach ($this as $key => $value) {
+            if (true === (bool)$func($value, $key)) {
+                $newArr = $newArr->insert($value, $key);
+            }
+        }
+
+        return $newArr;
     }
 }

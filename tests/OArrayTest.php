@@ -627,27 +627,6 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         $this->getExpectedException();
     }
 
-    public function testFilterInvalidPhpVersion()
-    {
-        if (5.6 > substr(phpversion(), 0, 3)) {
-            $this->setExpectedException("ErrorException", 'filter flag of "USE_BOTH" is not supported prior to PHP 5.6');
-            $vowel_both = function ($value, $key) {
-                $vowels = new OString("aeiou");
-
-                if ($vowels->contains($value[0])) {
-                    return true;
-                } else {
-                    foreach ($vowels as $letter) {
-                        if ($key === $letter) {
-                            return true;
-                        }
-                    }
-                } return false;
-            };
-            $this->arrDict->filter($vowel_both, OArray::USE_BOTH);
-        }
-    }
-
     public function testArrayHead()
     {
         $this->assertEquals(new OArray(["apple"]), $this->arrList->head());

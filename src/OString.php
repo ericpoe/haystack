@@ -479,20 +479,15 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @param callable $func
      * @param OString  $newString
      * @return mixed
-     * @throws \ErrorException
      */
     protected function filterWithValueAndKey(callable $func, OString $newString)
     {
-        if (5.6 <= substr(phpversion(), 0, 3)) {
-            foreach ($this as $letter) {
-                if (true === (bool)$func($letter, $this->key())) {
-                    $newString = $newString->insert($letter);
-                }
+        foreach ($this as $letter) {
+            if (true === (bool)$func($letter, $this->key())) {
+                $newString = $newString->insert($letter);
             }
-
-            return $newString;
-        } else {
-            throw new \ErrorException('filter flag of "USE_BOTH" is not supported prior to PHP 5.6');
         }
+
+        return $newString;
     }
 }
