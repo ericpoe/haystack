@@ -8,6 +8,10 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     private $string;
     private $ptr; // pointer for iterating through $string
 
+    /**
+     * @param null $string
+     * @throws \ErrorException
+     */
     public function __construct($string = null)
     {
         if (is_scalar($string) || $string instanceof OString) {
@@ -20,6 +24,9 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         }
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return sprintf($this->string);
@@ -101,7 +108,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *
      * @param          $value
      * @param int|null $key
-     * @return mixed
+     * @return OString
+     * @throws \InvalidArgumentException
      */
     public function insert($value, $key = null)
     {
@@ -369,7 +377,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *                                 - Requires PHP >= 5.6
      * @return OString
      *
-     * @throws \ErrorException
+     * @throws \InvalidArgumentException
      */
     public function filter(callable $func = null, $flag = null)
     {
