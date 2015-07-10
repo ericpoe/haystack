@@ -40,7 +40,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *
      * @param $value
      * @return bool
-     * @throws \ErrorException
+     * @throws \InvalidArgumentException
      */
     public function contains($value)
     {
@@ -52,9 +52,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             $pos = strstr($this->string, sprintf("%s", $value));
 
             return (false !== $pos) ?: false;
-        } else {
-            throw new \ErrorException("{$this->getType($value)} is neither a proper String nor an OString");
         }
+        throw new \InvalidArgumentException("{$this->getType($value)} is neither a scalar value nor an OString");
     }
 
     /**
@@ -79,7 +78,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             }
         }
 
-        return -1;
+        throw new \InvalidArgumentException("{$this->getType($value)} is neither a scalar value nor an OString");
     }
 
     /**
@@ -87,15 +86,14 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *
      * @param $value
      * @return OString
-     * @throws \ErrorException
+     * @throws \InvalidArgumentException
      */
     public function append($value)
     {
         if (is_scalar($value) || $value instanceof OString) {
             return new OString($this->string . $value);
-        } else {
-            throw new \ErrorException("Cannot concatenate an OString with a {$this->getType($value)}");
         }
+        throw new \InvalidArgumentException("Cannot concatenate an OString with a {$this->getType($value)}");
     }
 
     /**
@@ -110,10 +108,16 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         if (is_scalar($value) || $value instanceof OString) {
             if (!isset($key)) {
                 $key = strlen($this);
+            } elseif (is_numeric($key)) {
+                $key = (int)$key;
+            } else {
+                throw new \InvalidArgumentException("Invalid array key");
             }
 
             return new OString(substr_replace($this->string, $value, $key, 0));
         }
+
+        throw new \InvalidArgumentException("Cannot insert {$this->getType($value)} into an OString");
     }
 
     /**
@@ -140,14 +144,14 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         if (isset($length)) {
             if (is_int($start) && is_int($length)) {
                 return new OString(substr($this, $start, $length));
-            } else {
-                throw new \InvalidArgumentException("Start value and Length value must both be integers");
             }
-        } elseif (is_int($start)) {
-            return new OString(substr($this, $start));
-        } else {
-            throw new \InvalidArgumentException("Start value must be an integer");
+            throw new \InvalidArgumentException("Start value and Length value must both be integers");
         }
+
+        if (is_int($start)) {
+            return new OString(substr($this, $start));
+        }
+        throw new \InvalidArgumentException("Start value must be an integer");
     }
 
     /**
@@ -392,9 +396,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             if ("both" === $flag) {
                 return $this->filterWithValueAndKey($func, $newString);
             }
-        } else {
-            throw new \ErrorException("Invalid flag name");
         }
+        throw new \InvalidArgumentException("Invalid flag name");
     }
 
     /**

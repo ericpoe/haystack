@@ -106,11 +106,11 @@ class OStringTest extends \PHPUnit_Framework_TestCase
      * @dataProvider badTypesOfStringInFoobar
      * @param $item
      * @param $message
-     * @throws \ErrorException
+     * @throws \InvalidArgumentException
      */
     public function testBadTypesOfStringInFoobar($item, $message)
     {
-        $this->setExpectedException("ErrorException", $message);
+        $this->setExpectedException("InvalidArgumentException", $message);
         $var = $this->aString->contains($item);
         $this->getExpectedException();
     }
@@ -118,8 +118,8 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function badTypesOfStringInFoobar()
     {
         return [
-            ["item" => new \DateTime(), "DateTime is neither a proper String nor an OString"],
-            ["item" => new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a proper String nor an OString"],
+            ["item" => new \DateTime(), "DateTime is neither a scalar value nor an OString"],
+            ["item" => new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a scalar value nor an OString"],
         ];
     }
 
@@ -152,11 +152,11 @@ class OStringTest extends \PHPUnit_Framework_TestCase
      * @dataProvider badLocateTypesOfStringInFoobarProvider
      * @param $item
      * @param $message
-     * @throws \ErrorException
+     * @throws InvalidArgumentException
      */
     public function testBadLocateTypesOfStringInFoobar($item, $message)
     {
-        $this->setExpectedException("ErrorException", $message);
+        $this->setExpectedException("InvalidArgumentException", $message);
         $var = $this->aString->locate($item);
         $this->getExpectedException();
     }
@@ -164,8 +164,8 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function badLocateTypesOfStringInFoobarProvider()
     {
         return [
-            ["item" => new \DateTime(), "DateTime is neither a proper String nor an OString"],
-            ["item" => new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a proper String nor an OString"],
+            ["item" => new \DateTime(), "DateTime is neither a scalar value nor an OString"],
+            ["item" => new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a scalar value nor an OString"],
         ];
     }
 
@@ -265,6 +265,31 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    /**
+     * @dataProvider badInsertProvider
+     *
+     * @param $value
+     * @param $key
+     * @param $exceptionMsg
+     * @throws \InvalidArgumentException
+     */
+    public function testBadInsert($value, $key, $exceptionMsg)
+    {
+        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->aString->insert($value, $key);
+        $this->getExpectedException();
+    }
+
+    public function badInsertProvider()
+    {
+        return [
+            ["value" => new \DateTime(), "key" => null, "exceptionMsg" => "Cannot insert DateTime into an OString"],
+            ["value" => new \SplDoublyLinkedList(), "key" => null, "exceptionMsg" => "Cannot insert SplDoublyLinkedList into an OString"],
+            ["value" => ['a' => 'apple'], "key" => null, "exceptionMsg" => "Cannot insert array into an OString"],
+            ["value" => "apple", "key" => "a", "exceptionMsg" => "Invalid array key"],
+        ];
+    }
+
     public function testTypesOfStringRemove()
     {
         $newString = $this->aString->remove("o");
@@ -272,7 +297,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \ErrorException
+     * @expectedException \InvalidArgumentException
      */
     public function testNonScalarTypeCannotBeAddedToFoobar()
     {
