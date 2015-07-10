@@ -111,13 +111,14 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function insert($value, $key = null)
     {
         if (is_scalar($value) || $value instanceof OString) {
-            if (!isset($key)) {
+            if (is_null($key)) {
                 $key = strlen($this);
             } elseif (is_numeric($key)) {
                 $key = (int)$key;
             } else {
                 throw new \InvalidArgumentException("Invalid array key");
             }
+
 
             return new OString(substr_replace($this->string, $value, $key, 0));
         }
@@ -134,9 +135,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         $key = $this->locate($value);
         $startString = $this->slice(0, $key);
         $endString = $this->slice($key + 1);
-        $newString = $startString->insert($endString);
 
-        return $newString;
+        return $startString->insert($endString);
     }
 
     /**

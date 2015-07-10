@@ -17,15 +17,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         $emptyString = new OString();
         $this->assertEmpty($emptyString);
-
-        $emptyString = new OString("");
-        $this->assertEmpty($emptyString);
-
-        $emptyString = new OString(false);
-        $this->assertEmpty($emptyString);
-
-        $emptyLookingString = new OString(" ");
-        $this->assertNotEmpty($emptyLookingString);
     }
 
     /**
@@ -45,14 +36,17 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         $timeStamp = new \DateTime();
         return [
-            ["item" => "abc", "expected" => "abc", "message" => "Simple string"],
+            ["item" => " ", "expected" => " ", "message" => "Empty string"],
             ["item" => new OString("abc"), "expected" => "abc", "message" => "OString"],
-            ["item" => true, "expected" => "1", "message" => "boolean true"],
-            ["item" => false, "expected" => "", "message" => "boolean false"],
+            ["item" => "abc", "expected" => "abc", "message" => "Simple string"],
             ["item" => 1, "expected" => "1", "message" => "integer 1"],
             ["item" => 0, "expected" => "0", "message" => "integer 0"],
             ["item" => 1.1, "expected" => "1.1", "message" => "double 1.1"],
             ["item" => $timeStamp->format('c'), "expected" => $timeStamp->format('c'), "message" => "DateTime formatted timestamp"],
+            ["item" => true, "expected" => "1", "message" => "boolean true"],
+            ["item" => false, "expected" => "", "message" => "boolean false"],
+            ["item" => "", "expected" => "", "message" => "Blank string"],
+            ["item" => null, "expected" => "", "message" => "Null string"],
         ];
     }
 
