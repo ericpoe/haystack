@@ -55,8 +55,10 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             $pos = strstr($this->string, (string)$value);
 
             return (false !== $pos) ?: false;
-        } elseif ($value instanceof OString) {
-            $pos = strstr($this->string, sprintf("%s", $value));
+        }
+
+        if ($value instanceof OString) {
+            $pos = strstr($this->string, $value->toString());
 
             return (false !== $pos) ?: false;
         }
@@ -67,22 +69,17 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * Finds the location of $value in the current object. If it does not exist, the user will be notified
      *
      * @param $value
-     * @return int - array-notation location of $value in current object; "-1" if not found
+     * @return int - location of $value in current object; "-1" if not found
+     * @throws \InvalidArgumentException
      */
     public function locate($value)
     {
-        if ($this->contains($value)) {
-            if (is_scalar($value)) {
-                $pos = strpos($this->string, (string)$value);
+        if (is_scalar($value)) {
+            return $this->contains($value) ? strpos($this->string, (string)$value) : -1;
+        }
 
-                return $pos;
-            }
-
-            if ($value instanceof OString) {
-                $pos = strpos($this->string, sprintf("%s", $value));
-
-                return $pos;
-            }
+        if ($value instanceof OString) {
+            return $this->contains($value) ? strpos($this->string, $value->toString()) : -1;
         }
 
         throw new \InvalidArgumentException("{$this->getType($value)} is neither a scalar value nor an OString");
