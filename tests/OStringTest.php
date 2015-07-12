@@ -336,12 +336,12 @@ class OStringTest extends \PHPUnit_Framework_TestCase
      *
      * @param $value
      * @param $key
-     * @param $exceptionMsg
+     * @param $message
      * @throws \InvalidArgumentException
      */
-    public function testBadInsert($value, $key, $exceptionMsg)
+    public function testBadInsert($value, $key, $message)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->setExpectedException("InvalidArgumentException", $message);
         $this->aString->insert($value, $key);
         $this->getExpectedException();
     }
@@ -349,10 +349,10 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function badInsertProvider()
     {
         return [
-            ["value" => new \DateTime(), "key" => null, "exceptionMsg" => "Cannot insert DateTime into an OString"],
-            ["value" => new \SplDoublyLinkedList(), "key" => null, "exceptionMsg" => "Cannot insert SplDoublyLinkedList into an OString"],
-            ["value" => ['a' => 'apple'], "key" => null, "exceptionMsg" => "Cannot insert array into an OString"],
-            ["value" => "apple", "key" => "a", "exceptionMsg" => "Invalid array key"],
+            ["value" => new \DateTime(), "key" => null, "message" => "Cannot insert DateTime into an OString"],
+            ["value" => new \SplDoublyLinkedList(), "key" => null, "message" => "Cannot insert SplDoublyLinkedList into an OString"],
+            ["value" => ['a' => 'apple'], "key" => null, "message" => "Cannot insert array into an OString"],
+            ["value" => "apple", "key" => "a", "message" => "Invalid array key"],
         ];
     }
 
@@ -362,12 +362,11 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new OString("fobar"), $newString);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testNonScalarTypeCannotBeAddedToFoobar()
     {
+        $this->setExpectedException("InvalidArgumentException", "Cannot concatenate an OString with a DateTime");
         $newString = $this->aString->append(new \DateTime());
+        $this->getExpectedException();
     }
 
     public function testIteratorNext()
