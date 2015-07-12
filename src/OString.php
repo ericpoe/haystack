@@ -234,7 +234,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function serialize()
     {
-        return $this->toString();
+        return serialize($this->toString());
     }
 
     /**
@@ -242,14 +242,20 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * Constructs the object
      *
      * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
+     * @param string $value <p>
      *                           The string representation of the object.
      *                           </p>
      * @return void
      */
-    public function unserialize($serialized)
+    public function unserialize($value)
     {
-        $this->string = $serialized;
+        if (is_scalar($value)) {
+            $this->string = unserialize($value);
+        } elseif (is_null($value)) {
+            $this->string = null;
+        } else {
+            throw new \InvalidArgumentException("OString cannot unserialize a {$this->getType($value)}");
+        }
     }
 
     /**

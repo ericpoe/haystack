@@ -253,6 +253,55 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testSerialize()
+    {
+        $serialized = $this->aString->serialize();
+        $this->assertEquals(serialize($this->aString->toString()), $serialized);
+    }
+
+    /**
+     * @dataProvider unserializeProvider
+     *
+     * @param $string
+     * @param $expected
+     */
+    public function testUnserialize($string, $expected)
+    {
+        $this->aString->unserialize($string);
+        $this->assertEquals($expected, $this->aString);
+    }
+
+    public function unserializeProvider()
+    {
+        return [
+            ["string" => serialize("foobarbaz"), "expected" => new OString("foobarbaz")],
+            ["string" => serialize("The quick brown fox jumps"), "expected" => new OString("The quick brown fox jumps")],
+            ["string" => serialize(null), "expected" => new OString()],
+            ["string" => null, "expected" => new OString()],
+            ["string" => serialize($this->aString), "expected" => new OString($this->aString)],
+        ];
+    }
+
+    /**
+     * @dataProvider badUnserializeProvider
+     * @param $item
+     * @param $message
+     */
+    public function testBadUnserialize($item, $message)
+    {
+        $this->setExpectedException("InvalidArgumentException", $message);
+        $this->aString->unserialize($item);
+        $this->getExpectedException();
+    }
+
+    public function badUnserializeProvider()
+    {
+        return [
+            ["item" => new OString("The quick brown fox"), "message" => "OString cannot unserialize a OPHP\\OString"],
+            ["item" => new \DateTime(), "message" => "OString cannot unserialize a DateTime"],
+        ];
+    }
+
     /**
      * @dataProvider stringInsertProvider()
      *
