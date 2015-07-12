@@ -43,14 +43,14 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
      *
      * @param $value
      * @return boolean
-     * @throws \ErrorException
+     * @throws \InvalidArgumentException
      */
     public function contains($value)
     {
         if ($this->canBeInArray($value)) {
             return (in_array($value, $this->arr));
         } else {
-            throw new \ErrorException("{$this->getType($value)} cannot be contained within an OArray");
+            throw new \InvalidArgumentException("{$this->getType($value)} cannot be contained within an OArray");
         }
     }
 
@@ -76,7 +76,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
      *
      * @param $value
      * @return OArray
-     * @throws \ErrorException
+     * @throws \InvalidArgumentException
      */
     public function append($value)
     {
@@ -86,7 +86,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
 
             return $array;
         } else {
-            throw new \ErrorException("{$this->getType($value)} cannot be appended to an OArray");
+            throw new \InvalidArgumentException("{$this->getType($value)} cannot be appended to an OArray");
         }
     }
 
@@ -97,7 +97,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
      * @param int|null $key
      * @return mixed
      *
-     * @throws \ErrorException
+     * @throws \InvalidArgumentException
      */
     public function insert($value, $key = null)
     {
@@ -108,7 +108,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
         } elseif ($this->canBeInArray($value)) {
             $valueArray = $value;
         } else {
-            throw new \ErrorException("{$this->getType($value)} cannot be contained within an OArray");
+            throw new \InvalidArgumentException("{$this->getType($value)} cannot be contained within an OArray");
         }
 
         if (isset($key)) {
@@ -117,7 +117,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
             } elseif (is_string($key)) {
                 list($array, $length) = $this->setSubarrayAndLengthForAssociativeArray($key, $valueArray);
             } else {
-                throw new \ErrorException("Invalid array key");
+                throw new \InvalidArgumentException("Invalid array key");
             }
         } else {
             list($array, $length) = $this->setSubarrayAndLengthWhenNoKeyProvided($valueArray);
@@ -134,7 +134,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
     /**
      * @param $value
      * @return \OPHP\OArray
-     * @throws \ErrorException
+     * @throws \InvalidArgumentException
      */
     public function remove($value)
     {
@@ -146,7 +146,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
             $newArr = $this->arr;
             $key = $this->locate($value);
         } else {
-            throw new \ErrorException("{$this->getType($value)} cannot be contained within an OArray");
+            throw new \InvalidArgumentException("{$this->getType($value)} cannot be contained within an OArray");
         }
 
 
@@ -166,16 +166,16 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
      * @param $start
      * @param $length
      * @return mixed
-     * @throws \ErrorException
+     * @throws \InvalidArgumentException
      */
     public function slice($start, $length = null)
     {
         if (is_null($start) || !is_numeric($start)) {
-            throw new \ErrorException("Slice parameter 1, \$start, must be an integer");
+            throw new \InvalidArgumentException("Slice parameter 1, \$start, must be an integer");
         }
 
         if (!is_null($length) && !is_numeric($length)) {
-            throw new \ErrorException("Slice parameter 2, \$length, must be null or an integer");
+            throw new \InvalidArgumentException("Slice parameter 2, \$length, must be null or an integer");
         }
 
         $maintainIndices = false;
@@ -223,7 +223,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
      *
      * @return OArray
      *
-     * @throws \ErrorException
+     * @throws \InvalidArgumentException
      */
     public function filter(callable $func = null, $flag = null)
     {
@@ -254,7 +254,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
                 }
             }
         }
-        throw new \ErrorException("Invalid flag name");
+        throw new \InvalidArgumentException("Invalid flag name");
     }
 
     /**
