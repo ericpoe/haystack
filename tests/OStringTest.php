@@ -231,6 +231,29 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider badSlicingProvider()
+     *
+     * @param $start
+     * @param $length
+     * @param $message
+     */
+    public function testBadSlicing($start, $length, $message)
+    {
+        $this->setExpectedException("InvalidArgumentException", $message);
+        $tmp = $this->aString->slice($start, $length);
+        $this->getExpectedException();
+    }
+
+    public function badSlicingProvider()
+    {
+        return [
+            ["start" => null, "length" => null, "message" => "Start value must be an integer"],
+            ["start" => "cat", "length" => null, "message" => "Start value must be an integer"],
+            ["start" => "cat", "length" => "dog", "message" => "Start value and Length value must both be integers"],
+        ];
+    }
+
+    /**
      * @dataProvider stringInsertProvider()
      *
      * @param $babyString
@@ -392,14 +415,31 @@ class OStringTest extends \PHPUnit_Framework_TestCase
 
     public function testStringFilter()
     {
+        $strangeString = $this->aString->insert(0, 3);
+        $default = $strangeString->filter();
+        $this->assertEquals("foobar", $default->toString());
+
         $removeVowels = function ($letter) {
             $vowels = new OString("aeiou");
             return !$vowels->contains($letter);
         };
 
+        $consonants = $this->aString->filter($removeVowels);
+        $this->assertEquals("fbr", $consonants->toString());
+
         $removeOdd = function ($key) {
             return $key % 2;
         };
+
+        $flag = OString::USE_KEY;
+
+        $even = $this->aString->filter($removeOdd, $flag);
+        $this->assertEquals("obr", $even->toString());
+
+        $even = $this->aString->filter(function ($key) {
+            return $key % 2;
+        }, $flag);
+        $this->assertEquals("obr", $even->toString());
 
         $alpha = new OString('abcdefghijklmnopqrstuvwxyz');
         $evenAlpha = $alpha->filter($removeOdd, OString::USE_KEY);
@@ -412,20 +452,21 @@ class OStringTest extends \PHPUnit_Framework_TestCase
             }
         };
 
-        $strangeString = $this->aString->insert(0, 3);
-        $default = $strangeString->filter();
-        $this->assertEquals("foobar", $default->toString());
-
-        $consonants = $this->aString->filter($removeVowels);
-        $this->assertEquals("fbr", $consonants->toString());
-
-        $flag = OString::USE_KEY;
-        $even = $this->aString->filter($removeOdd, $flag);
-        $this->assertEquals("obr", $even->toString());
-
         $flag = OString::USE_BOTH;
         $funky = $this->aString->filter($thing_both, $flag);
         $this->assertEquals("fobr", $funky->toString());
+
+    }
+
+    public function testInvalidFilterFlag()
+    {
+        $flag = "bad_flag";
+        $this->setExpectedException("InvalidArgumentException", "Invalid flag name");
+        $even = $this->aString->filter(function ($key) {
+            return $key % 2;
+        }, $flag);
+        $this->getExpectedException();
+        $this->assertEquals("obr", $even->toString());
     }
 
     public function testStringHead()
