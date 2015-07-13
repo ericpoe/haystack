@@ -202,6 +202,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($substr1, $this->aString->slice(-4));
         $this->assertEquals($substr2, $this->aString->slice(-4));
+        $this->assertEquals($substr1, $this->aString->slice(2, 2000));
     }
 
     /**
