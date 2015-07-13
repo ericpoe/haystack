@@ -247,9 +247,9 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function badSlicingProvider()
     {
         return [
-            ["start" => null, "length" => null, "message" => "Start value must be an integer"],
-            ["start" => "cat", "length" => null, "message" => "Start value must be an integer"],
-            ["start" => "cat", "length" => "dog", "message" => "Start value and Length value must both be integers"],
+            ["start" => null, "length" => null, "message" => "Slice parameter 1, \$start, must be an integer"],
+            ["start" => "cat", "length" => null, "message" => "Slice parameter 1, \$start, must be an integer"],
+            ["start" => "1", "length" => "dog", "message" => "Slice parameter 2, \$length, must be null or an integer"],
         ];
     }
 
