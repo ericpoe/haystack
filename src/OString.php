@@ -386,28 +386,26 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function filter(callable $func = null, $flag = null)
     {
-        $newString = new OString();
-
         // Default
         if (is_null($func)) {
-            return $this->filterWithDefaults($newString);
+            return $this->filterWithDefaults();
         }
 
         // No flags are passed
         if (is_null($flag)) {
-            return $this->filterWithValue($func, $newString);
+            return $this->filterWithValue($func);
         }
 
         // Flag is passed
         if ("key" === $flag || "both" === $flag) {
             // Flag of "USE_KEY" is passed
             if ("key" === $flag) {
-                return $this->filterWithKey($func, $newString);
+                return $this->filterWithKey($func);
             }
 
             // Flag of "USE_BOTH is passed
             if ("both" === $flag) {
-                return $this->filterWithValueAndKey($func, $newString);
+                return $this->filterWithValueAndKey($func);
             }
         }
         throw new \InvalidArgumentException("Invalid flag name");
@@ -445,11 +443,12 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * @param OString $newString
      * @return mixed
      */
-    protected function filterWithDefaults(OString $newString)
+    protected function filterWithDefaults()
     {
+        $newString = new OString();
+
         foreach ($this as $letter) {
             if ((bool)$letter) {
                 $newString = $newString->insert($letter);
@@ -461,11 +460,12 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * @param callable $func
-     * @param OString  $newString
      * @return mixed
      */
-    protected function filterWithValue(callable $func, Ostring $newString)
+    protected function filterWithValue(callable $func)
     {
+        $newString = new OString();
+
         foreach ($this as $letter) {
             if ($func($letter)) {
                 $newString = $newString->insert($letter);
@@ -477,11 +477,12 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * @param callable $func
-     * @param OString  $newString
      * @return mixed
      */
-    protected function filterWithKey(callable $func, Ostring $newString)
+    protected function filterWithKey(callable $func)
     {
+        $newString = new OString();
+
         foreach ($this as $letter) {
             if (true === (bool)$func($this->key())) {
                 $newString = $newString->insert($letter);
@@ -493,11 +494,12 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * @param callable $func
-     * @param OString  $newString
      * @return mixed
      */
-    protected function filterWithValueAndKey(callable $func, OString $newString)
+    protected function filterWithValueAndKey(callable $func)
     {
+        $newString = new OString();
+
         foreach ($this as $letter) {
             if (true === (bool)$func($letter, $this->key())) {
                 $newString = $newString->insert($letter);
