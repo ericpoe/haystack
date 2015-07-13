@@ -559,14 +559,19 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
 
     public function testArrayWalk()
     {
-        $capitalize = function ($word, $key) {
-            $this->arrDict[$key] = strtoupper($word);
+        $capitalizeDict = function ($word, $key) {
+            return $this->arrDict[$key] = strtoupper($word);
         };
 
-        $this->arrDict->walk($capitalize);
+        $capitalizeList = function ($word, $key) {
+            return $this->arrList[$key] = strtoupper($word);
+        };
 
-
+        $this->arrDict->walk($capitalizeDict);
         $this->assertEquals("APPLE", $this->arrDict["a"]);
+
+        $this->arrList->walk($capitalizeList);
+        $this->assertEquals("APPLE", $this->arrList[0]);
     }
 
     public function testArrayFilter()
