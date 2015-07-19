@@ -71,19 +71,169 @@ The main classes of OPHP are `OArray` and `OString`
 
 **insert($element, $key = null)** - Inserts an element at the $key location; if $key is not identified, the element is inserted at the end.
 
-**remove($value)** - Explanation
+```php
+    $myString = new OString("I am the very model of a modern major-general");
+    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+    
+    $newString = $myString->insert(", I've information vegetable, animal, and mineral");
+    // "I am the very model of a modern major-general, I've information vegetable, animal, and mineral"
+    $newString = $myString->insert("think that I ", 2);
+    // "I think that I am the very model of a modern major-general"
+    
+    $newArray = $myArray->insert(["d" => "daikon"]); //["a" => "apple", "b" => "banana", "c" => "celery", "d" => "daikon"]
+    $newArray = $myArray->insert(["a" => "apricot"]); // ["a" => ["apple", "apricot"], "b" => "banana", "c" => "celery"]
+    $newArray = $myArray->insert("apricot", "a"); // ["a" => ["apple", "apricot"], "b" => "banana", "c" => "celery"]
+```
 
-**slice($value)** - Explanation
+**remove($element)** - Removes an element, if found.
 
-**map($callable)** - Explanation
+```php
+    $myString = new OString("I am the very model of a modern major-general");
+    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+    
+    $newString = $myString->remove("the very model of "); // "I am a modern major-general"
+    $newArray = $myArray->remove("banana"); // ["a" => "apple", "c" => "celery"]
+```
 
-**walk($callable)** - Explanation
+**slice($start, $length = null)** - Shows only part of the array or string. 
+* *$start* (integer) is the point in the OArray or OString to start slicing. If this number is positive, start that far on the left; if this number is negative, start that far on the right.
+* *$length* (integer or null) is the amount of items to slice. If this number is null, the length will be the rest of the OArray or OString; if the length is positive, the length will be the distance forward the OArray or OString will be sliced; if the length is negative, that is the length backwards the OArray or OString will be sliced.
+* *note:* The numeric-key values of the OString and the OArray will be reset; the string-key values of an OArray will not be reset. 
 
-**filter($callable** = null, $flag = null) - Explanation
+```php
+    $myString = new OString("I am the very model of a modern major-general");
+    $myListArray = new OArray(["apple", "banana", "celery"]);
+    $myDictArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+    
+    $newString = $myString->slice(2); // "am the very model of a modern major-general"
+    $newString = $myString->slice(-7); // "general"
+    $newString = $myString->slice(2, 2); // "am"
+    
+    $newArray = $myListArray->slice(1); // ["banana", "celery"]
+    $newArray = $myListArray->slice(-2); // ["banana", "celery"]
+    $newArray = $myListArray->slice(1, 1); // ["banana"]
+    
+    $newArray = $myDictArray->slice(1); // ["b" => "banana", "c" => "celery"]
+    $newArray = $myDictArray->slice(-2); // ["b" => "banana", "c" => "celery"]
+    $newArray = $myDictArray->slice(1, 1); // ["b" => "banana"]
+```
 
-**head()** - Explanation
+### Functional Methods
 
-**tail()** - Explanation
+**map($callable)** - Returns a new OArray or OString that has had all elements run against the callback.
+
+```php
+    $myString = new OString("I am the very model of a modern major-general");
+    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+    
+    $rot13 = function ($letter) {
+        if (" " === $letter || "-" === $letter) { 
+            return $letter;
+        }
+        
+        return chr(97 + (ord($letter) - 97 + 13) % 26);
+    };
+    
+    $newString = $myString->map($rot13); // "V nz gur irel zbqry bs n zbqrea znwbe-trareny"
+    
+    $capitalize = function ($word) {
+        return strtoupper($word);
+    };
+    
+    $newArr = $myArray->map($capitalize); // ["a" => "APPLE", "b" => "BANANA", "c" => "CELERY"]
+```
+
+**walk($callable)** - Walk does an in-place update of items in the object.
+* **Note:** Since the update is in-place, this breaks the immutablity of OPHP objects. This is useful for very large implementations of the OPHP where cloning the object would be memory intensive.
+
+```php
+    $myString = new OString("I am the very model of a modern major-general");
+    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+    
+    $rot13 = function ($letter, $key) {
+        if (" " === $letter || "-" === $letter) {
+            return $myString[$key] = $letter;
+        }
+    
+        return $myString[$key] = chr(97 + (ord($letter) - 97 + 13) % 26);
+    };
+    
+    $myString->walk($rot13); // "V nz gur irel zbqry bs n zbqrea znwbe-trareny"
+    
+    $capitalize = function ($word, $key) {
+            return $myArray[$key] = strtoupper($word);
+        };
+        
+    $myArray->map($capitalize); // ["a" => "APPLE", "b" => "BANANA", "c" => "CELERY"]
+    
+```
+
+
+**filter($callable = null, $flag = null)** - Iterates over each value in the container passing them to the callback function. If the callback function returns true, the current value from container is returned into the result container. Container keys are preserved.
+* **Note:** Default is to filter by value.
+* **Flag: USE_KEY** Filters against the OPHP container's key
+* **Flag: USE_BOTH** Filters against the OPHP container's value and key. 
+    * **Note:** the callback parameter order is `$value` then `$key`
+
+```php
+    $myString = new OString("I am the very model of a modern major-general");
+    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+    
+    $removeLowerCaseVowels = function ($letter) {
+        $vowels = new OString("aeiou");
+        return !$vowels->contains($letter);
+    };
+    
+    $consonantWord = $myString->filter($removeLowerCaseVowels); // "I m th vry mdl f  mdrn mjr-gnrl"
+    
+    $vowel = function ($word) {
+        $vowels = new OString("aeiou");
+        return $vowels->contains($word[0]);
+    };
+    
+    $firstLetterVowelWords = $myArray->filter($vowel); // ["a" => "apple"]
+```
+
+* **USE_BOTH Example**
+    
+    ```php    
+    $myArray = new OArray(["a" => "bobble", "b" => "apple", "c" => "cobble"]);
+    
+    $vowel_both = function ($value, $key) {
+        $vowels = new OString("aeiou");
+    
+        if ($vowels->contains($value[0])) {
+            return true;
+        }
+    
+        return $vowels->contains($key);
+    };
+        
+    $vowelFoods = $myArray->filter($vowel_both, OArray::USE_BOTH); // ["a" => "bobble", "b" => "apple"]
+        
+    ```
+
+**head()** - Returns the first element of the OArray or OString.
+
+```php
+    $myString = new OString("I am the very model of a modern major-general");
+    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+    
+    $headString = $myString->head(); // "I"
+    $headArray = $myArray->head(); // ["a" => "apple"]
+    
+```
+
+**tail()** - Returns all of the elements that are not the head() of the OArray or OString
+
+```php
+    $myString = new OString("I am the very model of a modern major-general");
+    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+    
+    $tailString = $myString->tail(); // " am the very model of a modern major-general"
+    $tailArray = $myArray->tail(); // ["b" => "banana", "c" => "celery"]
+    
+```
 
 ## To install
 *this will come later*
