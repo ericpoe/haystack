@@ -235,5 +235,27 @@ The main classes of OPHP are `OArray` and `OString`
     
 ```
 
+### Math
+
+**product()** - Calculates the product of the values in the collection. Any non-number values are equal to 0.
+
+```php
+    $myString = new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
+    $myArray = new OArray(range(1, 10));
+    
+    $myString->product(); // 3628800
+    $myArray->product(); // 3628800
+```
+
+**sum()** - Calculates the sum of the values in the collection. Any non-number values are equal to 0.
+
+```php
+    $myString = new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
+    $myArray = new OArray(range(1, 10));
+    
+    $myString->sum(); // 55
+    $myArray->sum(); // 55
+```
+
 ## To install
 *this will come later*

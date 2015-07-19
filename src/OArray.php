@@ -6,7 +6,7 @@ namespace OPHP;
  *
  * @package OPHP
  */
-class OArray extends \ArrayObject implements Container, BaseFunctional
+class OArray extends \ArrayObject implements Container, BaseFunctional, Math
 {
     const USE_KEY = "key";
     const USE_BOTH = "both";
@@ -275,6 +275,16 @@ class OArray extends \ArrayObject implements Container, BaseFunctional
     public function tail()
     {
         return $this->slice(1);
+    }
+
+    public function sum()
+    {
+        return array_sum($this->arr);
+    }
+
+    public function product()
+    {
+        return array_product($this->arr);
     }
 
     protected function getType($thing)

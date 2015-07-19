@@ -1,7 +1,7 @@
 <?php
 namespace OPHP;
 
-class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Container, BaseFunctional
+class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Container, BaseFunctional, Math
 {
     const USE_KEY = "key";
     const USE_BOTH = "both";
@@ -431,6 +431,23 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         return $this->slice(1);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function sum()
+    {
+        $values = new OArray(str_getcsv(str_ireplace(" ", "", $this->string)));
+        return $values->sum();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function product()
+    {
+        $values = new OArray(str_getcsv(str_ireplace(" ", "", $this->string)));
+        return $values->product();
+    }
 
     protected function getType($thing)
     {

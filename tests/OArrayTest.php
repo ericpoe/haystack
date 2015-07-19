@@ -636,4 +636,50 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new OArray(["bobble", "cobble", "dobble"]), $this->arrList->tail());
         $this->assertEquals(new OArray(["b" => "bobble", "c" => "cobble", "d" => "dobble"]), $this->arrDict->tail());
     }
+
+    /**
+     * @dataProvider arraySumProvider
+     *
+     * @param              $expected
+     * @param \OPHP\OArray $testArr
+     */
+    public function testArraySum($expected, OArray $testArr)
+    {
+        $this->assertEquals($expected, $testArr->sum());
+    }
+
+    public function arraySumProvider()
+    {
+        return [
+            ['expected' => 0, 'testArr' => new OArray(["apple", "bobble", "cobble"])],
+            ['expected' => 5, 'testArr' => new OArray(["apple", "bobble", "cobble", 5])],
+            ['expected' => 0, 'testArr' => new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble"])],
+            ['expected' => 5, 'testArr' => new OArray(["a" => "apple", "b" => "bobble", "c" => "5"])],
+            ['expected' => 55, 'testArr' => new OArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])],
+            ['expected' => 55, 'testArr' => new OArray(["1", 2, "3", 4, "5", 6, "7", 8, "9", 10])],
+            ['expected' => 55, 'testArr' => new OArray(["a" => 1, "b" => 2, "c" => 3, "d" => 4, "e" => 5, "f" => 6, "g" => 7, "h" => 8, "i" => 9, "j" => 10])],
+        ];
+    }
+
+    /**
+     * @dataProvider arrayProductProvider()
+     *
+     * @param              $expected
+     * @param \OPHP\OArray $testArr
+     */
+    public function testArrayProduct($expected, OArray $testArr)
+    {
+        $this->assertEquals($expected, $testArr->product());
+    }
+
+    public function arrayProductProvider()
+    {
+        return [
+            ['expected' => 0, 'testArr' => new OArray(["apple", "bobble", "cobble", 5])],
+            ['expected' => 0, 'testArr' => new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "5"])],
+            ['expected' => 3628800, 'testArr' => new OArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])],
+            ['expected' => 3628800, 'testArr' => new OArray(["1", 2, "3", 4, "5", 6, "7", 8, "9", 10])],
+            ['expected' => 3628800, 'testArr' => new OArray(["a" => 1, "b" => 2, "c" => 3, "d" => 4, "e" => 5, "f" => 6, "g" => 7, "h" => 8, "i" => 9, "j" => 10])],
+        ];
+    }
 }

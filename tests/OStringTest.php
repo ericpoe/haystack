@@ -533,4 +533,47 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         $emptyString = new OString();
         $this->assertEmpty(sprintf($emptyString->tail()));
     }
+
+    /**
+     * @dataProvider sumStringProvider
+     *
+     * @param               $expected
+     * @param \OPHP\OString $string
+     */
+    public function testStringSum($expected, OString $string)
+    {
+        $this->assertEquals($expected, $string->sum());
+    }
+
+    public function sumStringProvider()
+    {
+        return [
+            ["expected" => 0, "string" => new OString("foobar")],
+            ["expected" => 0, "string" => new OString("foo bar baz")],
+            ["expected" => 55, "string" => new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10")],
+            ["expected" => 55.1, "string" => new OString("1.1, 2, 3, 4, 5, 6, 7, 8, 9, 10")],
+        ];
+    }
+
+    /**
+     * @dataProvider productStringProvider
+     *
+     * @param               $expected
+     * @param \OPHP\OString $string
+     */
+    public function testStringProvider($expected, OString $string)
+    {
+        $this->assertEquals($expected, $string->product());
+    }
+
+    public function productStringProvider()
+    {
+        return [
+            ["expected" => 0, "string" => new OString("foobar")],
+            ["expected" => 0, "string" => new OString("foo bar baz")],
+            ["expected" => 0, "string" => new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10, apple")],
+            ["expected" => 3628800, "string" => new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10")],
+            ["expected" => 3991680, "string" => new OString("1.1, 2, 3, 4, 5, 6, 7, 8, 9, 10")],
+        ];
+    }
 }
