@@ -96,9 +96,9 @@ The main classes of OPHP are `OArray` and `OString`
 ```
 
 **slice($start, $length = null)** - Shows only part of the array or string. 
-* *$start* (integer) is the point in the OArray or OString to start slicing. If this number is positive, start that far on the left; if this number is negative, start that far on the right.
-* *$length* (integer or null) is the amount of items to slice. If this number is null, the length will be the rest of the OArray or OString; if the length is positive, the length will be the distance forward the OArray or OString will be sliced; if the length is negative, that is the length backwards the OArray or OString will be sliced.
-* *note:* The numeric-key values of the OString and the OArray will be reset; the string-key values of an OArray will not be reset. 
+* **$start** (integer) is the point in the OArray or OString to start slicing. If this number is positive, start that far on the left; if this number is negative, start that far on the right.
+* **$length** (integer or null) is the amount of items to slice. If this number is null, the length will be the rest of the OArray or OString; if the length is positive, the length will be the distance forward the OArray or OString will be sliced; if the length is negative, that is the length backwards the OArray or OString will be sliced.
+* **Note:** The numeric-key values of the OString and the OArray will be reset; the string-key values of an OArray will not be reset. 
 
 ```php
     $myString = new OString("I am the very model of a modern major-general");
