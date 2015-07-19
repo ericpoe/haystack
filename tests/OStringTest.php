@@ -496,9 +496,9 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         $thing_both = function ($value, $key) use ($evenAlpha) {
             if ($evenAlpha->contains($value)) {
                 return true;
-            } else {
-                return $key % 2;
             }
+
+            return $key % 2;
         };
 
         $flag = OString::USE_BOTH;

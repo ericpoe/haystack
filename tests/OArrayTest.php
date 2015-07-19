@@ -578,17 +578,14 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     {
         $vowel = function ($word) {
             $vowels = new OString("aeiou");
+
             return $vowels->contains($word[0]);
         };
 
         $vowel_key = function ($key) {
             $vowels = new OString("aeoiu");
 
-            foreach ($vowels as $letter) {
-                if ($key === $letter) {
-                    return true;
-                }
-            } return false;
+            return $vowels->contains($key);
         };
 
         $vowel_both = function ($value, $key) {
@@ -596,13 +593,9 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
 
             if ($vowels->contains($value[0])) {
                 return true;
-            } else {
-                foreach ($vowels as $letter) {
-                    if ($key === $letter) {
-                        return true;
-                    }
-                }
-            } return false;
+            }
+
+            return $vowels->contains($key);
         };
 
         $this->assertEquals(new OArray(["apple"]), $this->arrList->filter($vowel));
