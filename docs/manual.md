@@ -28,7 +28,9 @@ The main classes of OPHP are `OArray` and `OString`
 
 ## Common Methods in OArray and OString
 
-**contains($value)** - Checks to see if $value is contained within the current OString or OArray. Returns boolean.
+### Container Methods
+
+**contains($element)** - Checks to see if $element is contained within the current OString or OArray. Returns boolean.
 
 ```php
     $myString = new OString("I am the very model of a modern major-general");
@@ -41,7 +43,7 @@ The main classes of OPHP are `OArray` and `OString`
     $myArray->contains("raspberry"); //false
 ```
 
-**locate($value)** - Returns the array key of the first instance of $value within the current OString or OArray. Returns a "-1" if not found.
+**locate($element)** - Returns the array key of the first instance of $element within the current OString or OArray. Returns a "-1" if not found.
 
 ```php
     $myString = new OString("I am the very model of a modern major-general");
@@ -55,7 +57,7 @@ The main classes of OPHP are `OArray` and `OString`
     $key = $myArray->locate("daikon"); // (int) -1
 ```
 
-**append($value)** - Adds an element to the end of the collection.
+**append($element)** - Adds an element to the end of the collection.
 
 ```php
     $myString = new OString("I am the very model of a modern major-general");
@@ -67,7 +69,7 @@ The main classes of OPHP are `OArray` and `OString`
     $newArray = $myArray->append(["d" => "daikon"]); // ["a" => "apple", "b" => "banana", "c" => "celery", ["d" => "daikon"]]
 ```
 
-**insert($value)** - Explanation
+**insert($element, $key = null)** - Inserts an element at the $key location; if $key is not identified, the element is inserted at the end.
 
 **remove($value)** - Explanation
 
