@@ -404,9 +404,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             }
 
             // Flag of "USE_BOTH is passed
-            if ("both" === $flag) {
-                return $this->filterWithValueAndKey($func);
-            }
+            return $this->filterWithValueAndKey($func);
         }
         throw new \InvalidArgumentException("Invalid flag name");
     }

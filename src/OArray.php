@@ -239,6 +239,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
 
         // Flags are USE_KEY or USE_BOTH
         if ("key" === $flag || "both" === $flag) {
+            // Flag of "USE_KEY" is passed
             if ("key" === $flag) {
                 if (version_compare(phpversion(), 5.6) >= 0) {
                     return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_KEY));
@@ -246,12 +247,11 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
                     return $this->filterWithKey($func);
                 }
             }
-            if ("both" === $flag) {
-                if (version_compare(phpversion(), 5.6) >= 0) {
-                    return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_BOTH));
-                } else {
-                    return $this->filterWithValueAndKey($func);
-                }
+            // Flag of "USE_BOTH is passed
+            if (version_compare(phpversion(), 5.6) >= 0) {
+                return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_BOTH));
+            } else {
+                return $this->filterWithValueAndKey($func);
             }
         }
         throw new \InvalidArgumentException("Invalid flag name");
