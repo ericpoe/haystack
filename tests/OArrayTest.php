@@ -30,36 +30,35 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodArraysProvider
      *
-     * @param $type
      * @param $item
      */
-    public function testCreateArrayOfThings($type, $item)
+    public function testCreateArrayOfThings($item)
     {
         $goodArr = new OArray($item);
-        $this->assertArrayHasKey(0, $goodArr->toArray(), $type);
+        $this->assertArrayHasKey(0, $goodArr->toArray());
     }
 
     public function goodArraysProvider()
     {
         return [
-            ["type" => "bool - true", "item" => true],
-            ["type" => "bool - false", "item" => false],
-            ["type" => "integer", "item" => 5],
-            ["type" => "integer - 0", "item" => 0],
-            ["type" => "array", "item" => [1, 2, 3]],
-            ["type" => "ArrayObject", "item" => new \ArrayObject([0, 1, 2])],
-            ["type" => "string", "item" => "a"],
-            ["type" => "OString", "item" => new OString("a string")],
+            "bool: true" => [true],
+            "bool: false" => [false],
+            "integer" => [5],
+            "integer: 0" => [0],
+            "array" => [1, 2, 3],
+            "ArrayObject" => [new \ArrayObject([0, 1, 2])],
+            "string" => ["a"],
+            "OString" => [new OString("a string")],
         ];
     }
 
     /**
      * @dataProvider badArraysProvider
-     * @param $type
+     *
      * @param $item
      * @param $exceptionMsg
      */
-    public function testCannotCreateArrayOfBadThings($type, $item, $exceptionMsg)
+    public function testCannotCreateArrayOfBadThings($item, $exceptionMsg)
     {
         $this->setExpectedException("ErrorException", $exceptionMsg);
         $badArr = new OArray($item);
@@ -70,8 +69,8 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function badArraysProvider()
     {
         return [
-            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be instantiated as an OArray"],
-            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be instantiated as an OArray" ],
+            "DateTime" => [new \DateTime(), "DateTime cannot be instantiated as an OArray"],
+            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be instantiated as an OArray"],
         ];
     }
 
@@ -95,29 +94,36 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function arrayContainsProvider()
     {
         return [
-            ["type" => "list", "checkThing" => "apple", "expected" => true],
-            ["type" => "list", "checkThing" => "cobble", "expected" => true],
-            ["type" => "list", "checkThing" => "fobble", "expected" => false],
-            ["type" => "list", "checkThing" => 3, "expected" => false],
-            ["type" => "dict", "checkThing" => "apple", "expected" => true],
-            ["type" => "dict", "checkThing" => "cobble", "expected" => true],
-            ["type" => "dict", "checkThing" => "fobble", "expected" => false],
-            ["type" => "dict", "checkThing" => 3, "expected" => false],
+            "1st item in list" => ["list", "apple", true],
+            "3rd item in list" => ["list", "cobble", true],
+            "String not in list" => ["list", "fobble", false],
+            "Int not in list" => ["list", 3, false],
+            "1st item in dictionary" => ["dict", "apple", true],
+            "3rd item in dictionary" => ["dict", "cobble", true],
+            "String not in dictionary" => ["dict", "fobble", false],
+            "Int not in dictionary" => ["dict", 3, false],
         ];
     }
 
     /**
      * @dataProvider badArrayContainsProvider
      *
-     * @param $type
      * @param $item
      * @param $exceptionMsg
      */
-    public function testBadArrayContains($type, $item, $exceptionMsg)
+    public function testBadArrayContains($item, $exceptionMsg)
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $this->arrList->contains($item);
         $this->getExpectedException();
+    }
+
+    public function badArrayContainsProvider()
+    {
+        return [
+            "DateTime" => [new \DateTime(), "DateTime cannot be contained within an OArray"],
+            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be contained within an OArray"],
+        ];
     }
 
 
@@ -142,37 +148,28 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function arrayLocateProvider()
     {
         return [
-            ["type" => "list", "checkThing" => "apple", "expected" => 0],
-            ["type" => "list", "checkThing" => "fobble", "expected" => -1],
-            ["type" => "list", "checkThing" => new OString("apple"), "expected" => 0],
-            ["type" => "list", "checkThing" => new OString("fobble"), "expected" => -1],
-            ["type" => "dict", "checkThing" => "apple", "expected" => 'a'],
-            ["type" => "dict", "checkThing" => "fobble", "expected" => -1],
-            ["type" => "dict", "checkThing" => new OString("apple"), "expected" => 'a'],
-            ["type" => "dict", "checkThing" => new OString("fobble"), "expected" => -1],
+            "1st item in list" => ["list", "apple", 0],
+            "String not in list" => ["list", "fobble", -1],
+            "1st OString in list" => ["list", new OString("apple"), 0],
+            "OString not in list" => ["list", new OString("fobble"), -1],
+            "1st item in dictionary" => ["dict", "apple", 'a'],
+            "String not in dictionary" => ["dict", "fobble", -1],
+            "1st OString in dictionary" => ["dict", new OString("apple"), 'a'],
+            "OString not in dictionary" => ["dict", new OString("fobble"), -1],
         ];
     }
 
     /**
      * @dataProvider badArrayContainsProvider
      *
-     * @param $type
      * @param $item
      * @param $exceptionMsg
      */
-    public function testLocateBadThingsInOArray($type, $item, $exceptionMsg)
+    public function testLocateBadThingsInOArray($item, $exceptionMsg)
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $this->arrList->locate($item);
         $this->getExpectedException();
-    }
-
-    public function badArrayContainsProvider()
-    {
-        return [
-            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be contained within an OArray"],
-            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be contained within an OArray" ],
-        ];
     }
 
     /**
@@ -246,8 +243,8 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function firstPartOfArraySliceProvider()
     {
         return [
-            ["type" => "list", "expected" => new OArray(["apple", "bobble"])],
-            ["type" => "dict", "expected" => new OArray(["a" => "apple", "b" => "bobble"])],
+            "First two items of list" => ["list", new OArray(["apple", "bobble"])],
+            "First two items of dictionary" => ["dict", new OArray(["a" => "apple", "b" => "bobble"])],
         ];
     }
 
@@ -271,8 +268,8 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function lastPartOfArraySliceProvider()
     {
         return [
-            ["type" => "list", "expected" => new OArray(["cobble", "dobble"])],
-            ["type" => "dict", "expected" => new OArray(["c" => "cobble", "d" => "dobble"])],
+            "Last two items of list" => ["list", new OArray(["cobble", "dobble"])],
+            "Last two items of dictionary" => ["dict", new OArray(["c" => "cobble", "d" => "dobble"])],
         ];
     }
 
@@ -281,15 +278,15 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      *
      * @param $type
      * @param $start
-     * @param $finish
+     * @param $length
      * @param $expected
      */
-    public function testGetMiddlePartOfTypesOfArrayUsingSlice($type, $start, $finish, $expected)
+    public function testGetMiddlePartOfTypesOfArrayUsingSlice($type, $start, $length, $expected)
     {
         if ("list" === $type) {
-            $subArray = $this->arrList->slice($start, $finish);
+            $subArray = $this->arrList->slice($start, $length);
         } else {
-            $subArray = $this->arrDict->slice($start, $finish);
+            $subArray = $this->arrDict->slice($start, $length);
         }
 
         $this->assertEquals($expected, $subArray);
@@ -298,14 +295,14 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function middlePartOfArraySliceProvider()
     {
         return [
-            ["type" => "list", "start" => "-3", "finish" => "-1", "expected" => new OArray(["bobble", "cobble"])],
-            ["type" => "list", "start" => "1", "finish" => "-1", "expected" => new OArray(["bobble", "cobble"])],
-            ["type" => "list", "start" => "1", "finish" => "2", "expected" => new OArray(["bobble", "cobble"])],
-            ["type" => "list", "start" => "1", "finish" => null, "expected" => new OArray(["bobble", "cobble", "dobble"])],
-            ["type" => "dict", "start" => "-3", "finish" => "-1", "expected" => new OArray(["b"=> "bobble", "c" => "cobble"])],
-            ["type" => "dict", "start" => "1", "finish" => "-1", "expected" => new OArray(["b"=> "bobble", "c" => "cobble"])],
-            ["type" => "dict", "start" => "1", "finish" => "2", "expected" => new OArray(["b"=> "bobble", "c" => "cobble"])],
-            ["type" => "dict", "start" => "1", "finish" => null, "expected" => new OArray(["b"=> "bobble", "c" => "cobble", "d" => "dobble"])],
+            "List: Start -3, length: -1" => ["list", "-3", "-1", new OArray(["bobble", "cobble"])],
+            "List: Start 1, length: -1" => ["list", "1", "-1", new OArray(["bobble", "cobble"])],
+            "List: Start 1, length: 2" => ["list", "1", "2", new OArray(["bobble", "cobble"])],
+            "List: Start 1, length: null" => ["list", "1", null, new OArray(["bobble", "cobble", "dobble"])],
+            "Dictionary: Start -3, length: -1" => ["dict", "-3", "-1", new OArray(["b" => "bobble", "c" => "cobble"])],
+            "Dictionary: Start 1, length: -1" => ["dict", "1", "-1", new OArray(["b" => "bobble", "c" => "cobble"])],
+            "Dictionary: Start 1, length: 2" => ["dict", "1", "2", new OArray(["b" => "bobble", "c" => "cobble"])],
+            "Dictionary: Start 1, length: null" => ["dict", "1", null, new OArray(["b" => "bobble", "c" => "cobble", "d" => "dobble"])],
         ];
     }
 
@@ -313,16 +310,16 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      * @dataProvider badArraySliceProvider
      * @param $type
      * @param $start
-     * @param $finish
+     * @param $length
      * @param $expectedMsg
      */
-    public function testBadArraySlice($type, $start, $finish, $expectedMsg)
+    public function testBadArraySlice($type, $start, $length, $expectedMsg)
     {
         $this->setExpectedException("InvalidArgumentException", $expectedMsg);
         if ("list" === $type) {
-            $subArray = $this->arrList->slice($start, $finish);
+            $subArray = $this->arrList->slice($start, $length);
         } else {
-            $subArray = $this->arrDict->slice($start, $finish);
+            $subArray = $this->arrDict->slice($start, $length);
         }
 
         $this->getExpectedException();
@@ -331,10 +328,10 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function badArraySliceProvider()
     {
         return [
-            ["type" => "list", "start" => "b", "length" => "2", "expectedMsg" => 'Slice parameter 1, $start, must be an integer'],
-            ["type" => "dict", "start" => "b", "length" => "2", "expectedMsg" => 'Slice parameter 1, $start, must be an integer'],
-            ["type" => "list", "start" => "1", "length" => "b", "expectedMsg" => 'Slice parameter 2, $length, must be null or an integer'],
-            ["type" => "dict", "start" => "1", "length" => "b", "expectedMsg" => 'Slice parameter 2, $length, must be null or an integer'],
+            "List: non-integer start" => ["list", "b", "2", 'Slice parameter 1, $start, must be an integer'],
+            "Dictionary: non-integer start" => ["dict", "b", "2", 'Slice parameter 1, $start, must be an integer'],
+            "List: non-integer length" => ["list", "1", "b", 'Slice parameter 2, $length, must be null or an integer'],
+            "Dictionary: non-integer length" => ["dict", "1", "b", 'Slice parameter 2, $length, must be null or an integer'],
         ];
     }
 
@@ -359,89 +356,28 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function arrayInsertProvider()
     {
         return [
-            [
-                "type" => "list",
-                "babyArray" => 5,
-                "key" => null,
-                "expected" => new OArray(["apple", "bobble","cobble", "dobble", 5])
-            ],
-            [
-                "type" => "list",
-                "babyArray" => ["foo"],
-                "key" => "1",
-                "expected" => new OArray(["apple", "foo", "bobble","cobble", "dobble"])
-            ],
-            [
-                "type" => "list",
-                "babyArray" => new \ArrayObject(["foo"]),
-                "key" => "1",
-                "expected" => new OArray(["apple", "foo", "bobble","cobble", "dobble"])
-            ],
-            [
-                "type" => "list",
-                "babyArray" => [new OString("foo")],
-                "key" => "1",
-                "expected" => new OArray(["apple", "foo", "bobble","cobble", "dobble"])
-            ],
-            [
-                "type" => "list",
-                "babyArray" => [new OString("foo")],
-                "key" => "-1",
-                "expected" => new OArray(["apple", "bobble","cobble", "foo", "dobble"])
-            ],
-            [
-                "type" => "dict",
-                "babyArray" => 5,
-                "key" => null,
-                "expected" => new OArray(["a" => "apple", "b" => "bobble", "c"=> "cobble", "d" => "dobble", 0 => 5])
-            ],
-            [
-                "type" => "dict",
-                "babyArray" => new OArray(["f" => "foo"]),
-                "key" => null,
-                "expected" => new OArray(["a" => "apple", "b" => "bobble", "c"=> "cobble", "d" => "dobble", "f" => "foo"])
-            ],
-            [
-                "type" => "dict",
-                "babyArray" => new OString("foo"),
-                "key" => null,
-                "expected" => new OArray(["a" => "apple", "b" => "bobble", "c"=> "cobble", "d" => "dobble", "0" => "foo"])
-            ],
-            [
-                "type" => "dict",
-                "babyArray" => new OArray(["f" => "foo", "e" => "ebble"]),
-                "key" => null,
-                "expected" => new OArray(["a" => "apple", "b" => "bobble", "c"=> "cobble", "d" => "dobble", "e" => "ebble", "f" => "foo"])
-            ],
-            [
-                "type" => "dict",
-                "babyArray" => new OArray(["b" => "foo"]),
-                "key" => null,
-                "expected" => new OArray(["a" => "apple", "b" => ["bobble", "foo"], "c"=> "cobble", "d" => "dobble"]),
-            ],
-            [
-                "type" => "dict",
-                "babyArray" => new \ArrayObject(["b" => "foo"]),
-                "key" => null,
-                "expected" => new OArray(["a" => "apple", "b" => ["bobble", "foo"], "c"=> "cobble", "d" => "dobble"]),
-            ],
-            [
-                "type" => "dict",
-                "babyArray" => new OString("foo"),
-                "key" => "b",
-                "expected" => new OArray(["a" => "apple", "b" => ["bobble", "foo"], "c"=> "cobble", "d" => "dobble"]),
-            ],
+            "List: Int at end" => ["list", 5, null, new OArray(["apple", "bobble", "cobble", "dobble", 5])],
+            "List: String array at 1" => ["list", ["foo"], "1", new OArray(["apple", "foo", "bobble", "cobble", "dobble"])],
+            "List: String ArrayObject at 1" => ["list", new \ArrayObject(["foo"]), "1", new OArray(["apple", "foo", "bobble", "cobble", "dobble"])],
+            "List: OString at 1" => ["list", [new OString("foo")], "1", new OArray(["apple", "foo", "bobble", "cobble", "dobble"])],
+            "List: OString at -1" => ["list", [new OString("foo")], "-1", new OArray(["apple", "bobble", "cobble", "foo", "dobble"])],
+            "Dictionary: Int at end" => ["dict", 5, null, new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", 0 => 5])],
+            "Dictionary: String OArray at end" => ["dict", new OArray(["f" => "foo"]), null, new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", "f" => "foo"])],
+            "Dictionary: OString at end" => ["dict", new OString("foo"), null, new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", "0" => "foo"])],
+            "Dictionary: OArray dictionary at end" => ["dict", new OArray(["f" => "foo", "e" => "ebble"]), null, new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", "e" => "ebble", "f" => "foo"])],
+            "Dictionary: OArray dictionary with matching key" => ["dict", new OArray(["b" => "foo"]), null, new OArray(["a" => "apple", "b" => ["bobble", "foo"], "c" => "cobble", "d" => "dobble"])],
+            "Dictionary: ArrayObject dictionary with matching key" => ["dict", new \ArrayObject(["b" => "foo"]), null, new OArray(["a" => "apple", "b" => ["bobble", "foo"], "c" => "cobble", "d" => "dobble"])],
+            "Dictionary: OString at present key" => ["dict", new OString("foo"), "b", new OArray(["a" => "apple", "b" => ["bobble", "foo"], "c" => "cobble", "d" => "dobble"])],
         ];
     }
 
     /**
      * @dataProvider badArrayInsertProvider
      *
-     * @param $type
      * @param $item
      * @param $exceptionMsg
      */
-    public function testInsertBadThingsInOArray($type, $item, $exceptionMsg)
+    public function testInsertBadThingsInOArray($item, $exceptionMsg)
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $this->arrList->insert($item);
@@ -451,8 +387,8 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function badArrayInsertProvider()
     {
         return [
-            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be contained within an OArray"],
-            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be contained within an OArray" ],
+            "DateTime" => [new \DateTime(), "DateTime cannot be contained within an OArray"],
+            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be contained within an OArray"],
         ];
     }
 
@@ -462,9 +398,8 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      * @param $type
      * @param $value
      * @param $expected
-
      */
-    public function testArrayTypeRemove($type, $value, $expected, $message)
+    public function testArrayTypeRemove($type, $value, $expected)
     {
         if ("list" === $type) {
             $newArr = $this->arrList->remove($value);
@@ -472,44 +407,27 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
             $newArr = $this->arrDict->remove($value);
         }
 
-        $this->assertEquals($expected, $newArr, $message);
+        $this->assertEquals($expected, $newArr);
 
     }
 
     public function arrayRemoveProvider()
     {
         return [
-            [
-                "type" => "list",
-                "value" => "bobble",
-                "expected" => new OArray(["apple", "cobble", "dobble"]),
-                "message" => "Basic list",
-            ],
-            [
-                "type" => "list",
-                "value" => "zobble",
-                "expected" => new OArray(["apple", "bobble", "cobble", "dobble"]),
-                "message" => "Basic list - item not found"
-            ],
-            [
-                "type" => "dict",
-                "value" => "bobble",
-                "expected" => new OArray(["a" => "apple", "c" => "cobble", "d" => "dobble"]),
-                "message" => "Basic dict",
-            ],
-            [
-                "type" => "dict",
-                "value" => "zobble",
-                "expected" => new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"]),
-                "message" => "Basic dict - item not found",
-            ],
+            "List: Basic list" => ["list", "bobble", new OArray(["apple", "cobble", "dobble"])],
+            "List: Basic list - item not found" => ["list", "zobble", new OArray(["apple", "bobble", "cobble", "dobble"])],
+            "Basic dict" => ["dict", "bobble", new OArray(["a" => "apple", "c" => "cobble", "d" => "dobble"])],
+            "Basic dict - item not found" => ["dict", "zobble", new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"])],
         ];
     }
 
     /**
      * @dataProvider badRemoveProvider
+     *
+     * @param $item
+     * @param $exceptionMsg
      */
-    public function testBadObjectCannotBeRemovedFromArray($type, $item, $exceptionMsg)
+    public function testBadObjectCannotBeRemovedFromArray($item, $exceptionMsg)
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $newArray = $this->arrDict->remove($item);
@@ -519,15 +437,18 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function badRemoveProvider()
     {
         return [
-            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be contained within an OArray"],
-            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be contained within an OArray" ],
+            "DateTime" => [new \DateTime(), "DateTime cannot be contained within an OArray"],
+            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be contained within an OArray"],
         ];
     }
 
     /**
      * @dataProvider badInsertKeyProvider
+     *
+     * @param $key
+     * @param $exceptionMsg
      */
-    public function testObjectCannotBeUsedAsArrayKey($type, $key, $exceptionMsg)
+    public function testObjectCannotBeUsedAsArrayKey($key, $exceptionMsg)
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $newArray = $this->arrDict->insert("yobbo", $key);
@@ -537,8 +458,8 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function badInsertKeyProvider()
     {
         return [
-            ["type" => "DateTime", "key" => new \DateTime(), "exceptionMsg" => "Invalid array key"],
-            ["type" => "SplDoublyLinkedList", "key" => new \SplDoublyLinkedList(), "exceptionMsg" => "Invalid array key" ],
+            "DateTime" => [new \DateTime(), "Invalid array key"],
+            "SPL Object" => [new \SplDoublyLinkedList(), "Invalid array key"],
         ];
     }
 
@@ -642,10 +563,10 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider arraySumProvider
      *
-     * @param              $expected
      * @param \OPHP\OArray $testArr
+     * @param              $expected
      */
-    public function testArraySum($expected, OArray $testArr)
+    public function testArraySum(OArray $testArr, $expected)
     {
         $this->assertEquals($expected, $testArr->sum());
     }
@@ -653,13 +574,14 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function arraySumProvider()
     {
         return [
-            ['expected' => 0, 'testArr' => new OArray(["apple", "bobble", "cobble"])],
-            ['expected' => 5, 'testArr' => new OArray(["apple", "bobble", "cobble", 5])],
-            ['expected' => 0, 'testArr' => new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble"])],
-            ['expected' => 5, 'testArr' => new OArray(["a" => "apple", "b" => "bobble", "c" => "5"])],
-            ['expected' => 55, 'testArr' => new OArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])],
-            ['expected' => 55, 'testArr' => new OArray(["1", 2, "3", 4, "5", 6, "7", 8, "9", 10])],
-            ['expected' => 55, 'testArr' => new OArray(["a" => 1, "b" => 2, "c" => 3, "d" => 4, "e" => 5, "f" => 6, "g" => 7, "h" => 8, "i" => 9, "j" => 10])],
+            "Empty OArray" => [new OArray(), 0],
+            "List: Array of Strings" => [new OArray($this->arrList), 0],
+            "List: Array of Strings & Int" => [new OArray(["apple", "bobble", "cobble", 5]), 5],
+            "Dictionary: Array of Strings" => [new OArray($this->arrDict), 0],
+            "Dictionary: Array of Strings & Int" => [new OArray(["a" => "apple", "b" => "bobble", "c" => "5"]), 5],
+            "List: Array of Ints" => [new OArray(range(1, 10)), 55],
+            "List: Array of Ints and String Ints" => [new OArray(["1", 2, "3", 4, "5", 6, "7", 8, "9", 10]), 55],
+            "Dictionary: Array of Ints" => [new OArray(["a" => 1, "b" => 2, "c" => 3, "d" => 4, "e" => 5, "f" => 6, "g" => 7, "h" => 8, "i" => 9, "j" => 10]), 55],
         ];
     }
 

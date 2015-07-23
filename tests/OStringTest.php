@@ -24,29 +24,29 @@ class OStringTest extends \PHPUnit_Framework_TestCase
      *
      * @param $item
      * @param $expected
-     * @param $message
      */
-    public function testCreateOStringOfThings($item, $expected, $message)
+    public function testCreateOStringOfThings($item, $expected)
     {
         $this->aString = new OString($item);
-        $this->assertEquals($expected, $this->aString, $message);
+        $this->assertEquals($expected, $this->aString);
     }
 
     public function stringOfThingsProvider()
     {
         $timeStamp = new \DateTime();
+
         return [
-            ["item" => " ", "expected" => " ", "message" => "Empty string"],
-            ["item" => new OString("abc"), "expected" => "abc", "message" => "OString"],
-            ["item" => "abc", "expected" => "abc", "message" => "Simple string"],
-            ["item" => 1, "expected" => "1", "message" => "integer 1"],
-            ["item" => 0, "expected" => "0", "message" => "integer 0"],
-            ["item" => 1.1, "expected" => "1.1", "message" => "double 1.1"],
-            ["item" => $timeStamp->format('c'), "expected" => $timeStamp->format('c'), "message" => "DateTime formatted timestamp"],
-            ["item" => true, "expected" => "1", "message" => "boolean true"],
-            ["item" => false, "expected" => "", "message" => "boolean false"],
-            ["item" => "", "expected" => "", "message" => "Blank string"],
-            ["item" => null, "expected" => "", "message" => "Null string"],
+            "Empty String" => [" ", " "],
+            "OString" => [new OString("abc"), "abc"],
+            "Simple string" => ["abc", "abc"],
+            "integer 1" => [1, "1"],
+            "integer 0" => [0, "0"],
+            "double 1.1" => [1.1, "1.1"],
+            "DateTime formatted timestamp" => [$timeStamp->format('c'), $timeStamp->format('c')],
+            "boolean true" => [true, "1"],
+            "boolean false" => [false, ""],
+            "Blank string" => ["", ""],
+            "Null string" => [null, ""],
         ];
     }
 
@@ -67,8 +67,8 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function createBadOStringProvider()
     {
         return [
-            ["item" => new \DateTime(), "DateTime is not a proper String"],
-            ["item" => new \SplDoublyLinkedList(), "SplDoublyLinkedList is not a proper String"],
+            "DateTime" => [new \DateTime(), "DateTime is not a proper String"],
+            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList is not a proper String"],
         ];
     }
 
@@ -87,11 +87,11 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function stringContainsProvider()
     {
         return [
-            ["checkString" => "oob", "expected" => true],
-            ["checkString" => "baz", "expected" => false],
-            ["checkString" => new OString('oob'), "expected" => true],
-            ["checkString" => new OString('baz'), "expected" => false],
-            ["checkString" => 42, "expected" => false],
+            "String known-present" => ["oob", true],
+            "String known-missing" => ["baz", false],
+            "OString known-present" => [new OString('oob'), true],
+            "OString known-missing" => [new OString('baz'), false],
+            "Integer known-missing" => [42, false],
 
         ];
     }
@@ -112,8 +112,8 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function badTypesOfStringInFoobar()
     {
         return [
-            ["item" => new \DateTime(), "DateTime is neither a scalar value nor an OString"],
-            ["item" => new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a scalar value nor an OString"],
+            "DateTime" => [new \DateTime(), "DateTime is neither a scalar value nor an OString"],
+            "SplDoublyLinkedList" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a scalar value nor an OString"],
         ];
     }
 
@@ -132,12 +132,12 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function stringLocateProvider()
     {
         return [
-            ["checkString" => "oob", "expected" => 1],
-            ["checkString" => "baz", "expected" => -1],
-            ["checkString" => 42, "expected" => -1],
-            ["checkString" => new OString('oob'), "expected" => 1],
-            ["checkString" => new OString('baz'), "expected" => -1],
-            ["checkString" => new OString(42), "expected" => -1],
+            "String known-present" => ["oob", 1],
+            "String known-missing" => ["baz", -1],
+            "OString known-present" => [new OString('oob'), 1],
+            "OString known-missing" => [new OString('baz'), -1],
+            "Integer known-missing" => [42, -1],
+            "OString integer known-missing" => [new OString(42), -1],
 
         ];
     }
@@ -146,7 +146,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
      * @dataProvider badLocateTypesOfStringInFoobarProvider
      * @param $item
      * @param $message
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function testBadLocateTypesOfStringInFoobar($item, $message)
     {
@@ -158,8 +158,8 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function badLocateTypesOfStringInFoobarProvider()
     {
         return [
-            ["item" => new \DateTime(), "DateTime is neither a scalar value nor an OString"],
-            ["item" => new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a scalar value nor an OString"],
+            "DateTime" => [new \DateTime(), "DateTime is neither a scalar value nor an OString"],
+            "SplDoublyLinkedList" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a scalar value nor an OString"],
         ];
     }
 
@@ -179,30 +179,48 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function stringAppendProvider()
     {
         return [
-            ["babyString" => "baz", "expected" => "foobarbaz"],
-            ["babyString" => new OString('baz'), "expected" => "foobarbaz"],
-            ["babyString" => 5, "expected" => "foobar5"],
+            "Append a normal string" => ["babyString" => "baz", "expected" => "foobarbaz"],
+            "Append an OString" => ["babyString" => new OString('baz'), "expected" => "foobarbaz"],
+            "Append an integer" => ["babyString" => 5, "expected" => "foobar5"],
         ];
     }
 
-    public function testGetFirstPartOfTypesOfStringUsingSlice()
+    /**
+     * @dataProvider providerFirstPartOfTypesOfStringUsingSlice
+     *
+     * @param $expected
+     */
+    public function testGetFirstPartOfTypesOfStringUsingSlice($expected)
     {
-        $substr1 = "foob";
-        $substr2 = new OString("foob");
 
-        $this->assertEquals($substr1, $this->aString->slice(0, 4));
-        $this->assertEquals($substr2, $this->aString->slice(0, 4));
+        $this->assertEquals($expected, $this->aString->slice(0, 4));
 
     }
 
-    public function testGetLastPartOfTypesOfStringUsingSlice()
+    public function providerFirstPartOfTypesOfStringUsingSlice()
     {
-        $substr1 = "obar";
-        $substr2 = new OString("obar");
+        return [
+            "String" => ["foob"],
+            "OString" => [new OString("foob")],
+        ];
+    }
 
-        $this->assertEquals($substr1, $this->aString->slice(-4));
-        $this->assertEquals($substr2, $this->aString->slice(-4));
-        $this->assertEquals($substr1, $this->aString->slice(2, 2000));
+    /**
+     * @dataProvider providerLastPartOfTypesOfStringUsingSlice
+     *
+     * @param $expected
+     */
+    public function testGetLastPartOfTypesOfStringUsingSlice($expected)
+    {
+        $this->assertEquals($expected, $this->aString->slice(-4));
+    }
+
+    public function providerLastPartOfTypesOfStringUsingSlice()
+    {
+        return [
+            "String" => ["obar"],
+            "OString" => [new OString("obar")],
+        ];
     }
 
     /**
@@ -214,20 +232,22 @@ class OStringTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMiddlePartOfTypesOfStringUsingSlice($start, $finish, $expected)
     {
-        $substr1 = $expected;
-        $substr2 = new OString($expected);
-
-        $this->assertEquals($substr1, $this->aString->slice($start, $finish));
-        $this->assertEquals($substr2, $this->aString->slice($start, $finish));
+        $this->assertEquals($expected, $this->aString->slice($start, $finish));
     }
 
     public function middlePartOfStringProvider()
     {
         return [
-            ["start" => 2, "finish" => -2, "expected" => "ob"],
-            ["start" => -4, "finish" => -2, "expected" => "ob"],
-            ["start" => 2, "finish" => 2, "expected" => "ob"],
-            ["start" => 2, "finish" => null, "expected" => "obar"],
+            "String: Negative finish, middle" => [2, -2, "ob"],
+            "String: Negative start & finish, middle" => [-4, -2, "ob"],
+            "String: normal middle" => [2, 2, "ob"],
+            "String: null finish" => [2, null, "obar"],
+            "String: overflow finish" => [2, 2000, "obar"],
+            "OString: Negative finish, middle" => [2, -2, new OString("ob")],
+            "OString: Negative start & finish, middle" => [-4, -2, new OString("ob")],
+            "OString: normal middle" => [2, 2, new OString("ob")],
+            "OString: null finish" => [2, null, new OString("obar")],
+            "OString: overflow finish" => [2, 2000, new OString("obar")],
         ];
     }
 
@@ -248,9 +268,9 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function badSlicingProvider()
     {
         return [
-            ["start" => null, "length" => null, "message" => "Slice parameter 1, \$start, must be an integer"],
-            ["start" => "cat", "length" => null, "message" => "Slice parameter 1, \$start, must be an integer"],
-            ["start" => "1", "length" => "dog", "message" => "Slice parameter 2, \$length, must be null or an integer"],
+            "No start or length of slice" => [null, null, "Slice parameter 1, \$start, must be an integer"],
+            "Non-integer start of slice" => ["cat", 4, "Slice parameter 1, \$start, must be an integer"],
+            "Non-integer length of slice" => ["1", "dog", "Slice parameter 2, \$length, must be null or an integer"],
         ];
     }
 
@@ -275,11 +295,10 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function unserializeProvider()
     {
         return [
-            ["string" => serialize("foobarbaz"), "expected" => new OString("foobarbaz")],
-            ["string" => serialize("The quick brown fox jumps"), "expected" => new OString("The quick brown fox jumps")],
-            ["string" => serialize(null), "expected" => new OString()],
-            ["string" => null, "expected" => new OString()],
-            ["string" => serialize($this->aString), "expected" => new OString($this->aString)],
+            "String" => [serialize($this->aString), new OString($this->aString)],
+            "String with spaces" => [serialize("The quick brown fox jumps"), new OString("The quick brown fox jumps")],
+            "Null string" => [serialize(null), new OString()],
+            "Unserialized null string" => [null, new OString()],
         ];
     }
 
@@ -298,8 +317,8 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function badUnserializeProvider()
     {
         return [
-            ["item" => new OString("The quick brown fox"), "message" => "OString cannot unserialize a OPHP\\OString"],
-            ["item" => new \DateTime(), "message" => "OString cannot unserialize a DateTime"],
+            "Unserialized OString" => [new OString("The quick brown fox"), "OString cannot unserialize a OPHP\\OString"],
+            "DateTime object" => [new \DateTime(), "OString cannot unserialize a DateTime"],
         ];
     }
 
@@ -320,15 +339,16 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function stringInsertProvider()
     {
         return [
-            ["babyString" => "baz", "location" => "1", "expected" => "fbazoobar"],
-            ["babyString" => "baz", "location" => "-1", "expected" => "foobabazr"],
-            ["babyString" => "baz", "location" => null, "expected" => "foobarbaz"],
-            ["babyString" => 0.0, "location" => 3, "expected" => "foo0bar"],
-            ["babyString" => new OString("baz"), "location" => "1", "expected" => "fbazoobar"],
-            ["babyString" => new OString("baz"), "location" => "-1", "expected" => "foobabazr"],
-            ["babyString" => new OString("baz"), "location" => null, "expected" => "foobarbaz"],
-            ["babyString" => new OString("baz"), "location" => null, "expected" => "foobarbaz"],
-            ["babyString" => new OString(0), "location" => 3, "expected" => "foo0bar"],
+            "String: insert at position 1" => ["baz", 1, "fbazoobar"],
+            "String: insert at position -1" => ["baz", -1, "foobabazr"],
+            "String: insert at end" => ["baz", null, "foobarbaz"],
+            "String: insert Integer" => [1, 3, "foo1bar"],
+            "String: insert Double" => [1.1, 3, "foo1.1bar"],
+            "OString: insert at position 1" => [new OString("baz"), 1, "fbazoobar"],
+            "OString: insert at position -1" => [new OString("baz"), -1, "foobabazr"],
+            "OString: insert at end" => [new OString("baz"), null, "foobarbaz"],
+            "OString: insert Integer" => [new OString(1), 3, "foo1bar"],
+            "OString: insert Double" => [new OString(1.1), 3, "foo1.1bar"],
         ];
     }
 
@@ -350,10 +370,10 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function badInsertProvider()
     {
         return [
-            ["value" => new \DateTime(), "key" => null, "message" => "Cannot insert DateTime into an OString"],
-            ["value" => new \SplDoublyLinkedList(), "key" => null, "message" => "Cannot insert SplDoublyLinkedList into an OString"],
-            ["value" => ['a' => 'apple'], "key" => null, "message" => "Cannot insert array into an OString"],
-            ["value" => "apple", "key" => "a", "message" => "Invalid array key"],
+            "Insert DateTime at end" => [new \DateTime(), null, "Cannot insert DateTime into an OString"],
+            "Insert SPL object at end" => [new \SplDoublyLinkedList(), null, "Cannot insert SplDoublyLinkedList into an OString"],
+            "Insert Array at end" => [['a' => "apple"], null, "Cannot insert array into an OString"],
+            "Insert at non-integer key" => ["apple", "a", "Invalid array key"],
         ];
     }
 
@@ -378,13 +398,13 @@ class OStringTest extends \PHPUnit_Framework_TestCase
 
     public function testIteratorValid()
     {
-        $this->aString->next();
-        $this->aString->next();
-        $this->aString->next();
-        $this->aString->next();
-        $this->aString->next();
+        $this->aString->next(); // "o"
+        $this->aString->next(); // "o"
+        $this->aString->next(); // "b"
+        $this->aString->next(); // "a"
+        $this->aString->next(); // "r"
         $this->assertTrue($this->aString->valid());
-        $this->aString->next();
+        $this->aString->next(); // uninitialized string offset
         $this->assertFalse($this->aString->valid());
     }
 
@@ -442,8 +462,8 @@ class OStringTest extends \PHPUnit_Framework_TestCase
 
     public function testStringMap()
     {
-        $capitalize = function ($word) {
-            return strtoupper($word);
+        $capitalize = function ($letter) {
+            return strtoupper($letter);
         };
 
         $newString = $this->aString->map($capitalize);
@@ -537,10 +557,10 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider sumStringProvider
      *
-     * @param               $expected
      * @param \OPHP\OString $string
+     * @param               $expected
      */
-    public function testStringSum($expected, OString $string)
+    public function testStringSum(OString $string, $expected)
     {
         $this->assertEquals($expected, $string->sum());
     }
@@ -548,20 +568,21 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function sumStringProvider()
     {
         return [
-            ["expected" => 0, "string" => new OString("foobar")],
-            ["expected" => 0, "string" => new OString("foo bar baz")],
-            ["expected" => 55, "string" => new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10")],
-            ["expected" => 55.1, "string" => new OString("1.1, 2, 3, 4, 5, 6, 7, 8, 9, 10")],
+            "Empty OString" => [new OString(), 0],
+            "OString of chars" => [new OString($this->aString), 0],
+            "OString of chars & spaces" => [new OString("foo bar baz"), 0],
+            "OString of comma-delimited ints" => [new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10"), 55],
+            "OString of comma-delimited ints & doubles" => [new OString("1.1, 2, 3, 4, 5, 6, 7, 8, 9, 10"), 55.1],
         ];
     }
 
     /**
      * @dataProvider productStringProvider
      *
-     * @param               $expected
      * @param \OPHP\OString $string
+     * @param               $expected
      */
-    public function testStringProvider($expected, OString $string)
+    public function testStringProvider(OString $string, $expected)
     {
         $this->assertEquals($expected, $string->product());
     }
@@ -569,11 +590,12 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function productStringProvider()
     {
         return [
-            ["expected" => 0, "string" => new OString("foobar")],
-            ["expected" => 0, "string" => new OString("foo bar baz")],
-            ["expected" => 0, "string" => new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10, apple")],
-            ["expected" => 3628800, "string" => new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10")],
-            ["expected" => 3991680, "string" => new OString("1.1, 2, 3, 4, 5, 6, 7, 8, 9, 10")],
+            "Empty OString" => [new OString(), 0],
+            "OString of chars" => [new OString($this->aString), 0],
+            "OString of chars & spaces" => [new OString("foo bar baz"), 0],
+            "OString of chars & ints" => [new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10, apple"), 0],
+            "OString of comma-delimited ints" => [new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10"), 3628800],
+            "OString of comma-delimited ints & doubles" => [new OString("1.1, 2, 3, 4, 5, 6, 7, 8, 9, 10"), 3991680],
         ];
     }
 }
