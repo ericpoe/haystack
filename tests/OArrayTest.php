@@ -196,20 +196,22 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function appendProvider()
     {
         return [
-            ["type" => "list", "newThing" => "ebble", "expected" => new OArray(["apple", "bobble", "cobble", "dobble", "ebble"])],
-            ["type" => "list", "newThing" => ["ebble"], "expected" => new OArray(["apple", "bobble", "cobble", "dobble", ["ebble"]])],
-            ["type" => "dict", "newThing" => ["e" => "ebble"], "expected" => new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", ["e" => "ebble"]])],
+            "String to list" => ["list", "ebble", new OArray(["apple", "bobble", "cobble", "dobble", "ebble"])],
+            "String array to list" => ["list", ["ebble"], new OArray(["apple", "bobble", "cobble", "dobble", ["ebble"]])],
+            "String OArray to list" => ["list", new OArray(["ebble"]), new OArray(["apple", "bobble", "cobble", "dobble", ["ebble"]])],
+            "String to dictionary" => ["dict", "ebble", new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", "0" => "ebble"])],
+            "String array to dictionary" => ["dict", ["e" => "ebble"], new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", ["e" => "ebble"]])],
+            "String OArray to dictionary" => ["dict", new OArray(["e" => "ebble"]), new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", ["e" => "ebble"]])],
         ];
     }
 
     /**
      * @dataProvider badAppendProvider
      *
-     * @param $type
      * @param $item
      * @param $exceptionMsg
      */
-    public function testAppendBadThingsToArray($type, $item, $exceptionMsg)
+    public function testAppendBadThingsToArray($item, $exceptionMsg)
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $this->arrList->append($item);
@@ -219,8 +221,8 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function badAppendProvider()
     {
         return [
-            ["type" => "DateTime", "item" => new \DateTime(), "exceptionMsg" => "DateTime cannot be appended to an OArray"],
-            ["type" => "SplDoublyLinkedList", "item" => new \SplDoublyLinkedList(), "exceptionMsg" => "SplDoublyLinkedList cannot be appended to an OArray" ],
+            "DateTime" => [new \DateTime(), "DateTime cannot be appended to an OArray"],
+            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be appended to an OArray"],
         ];
     }
 

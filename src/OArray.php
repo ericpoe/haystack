@@ -80,6 +80,9 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function append($value)
     {
+        if ($value instanceof OArray) {
+            $value = $value->toArray();
+        }
         if ($this->canBeInArray($value)) {
             $array = new OArray($this);
             parent::append($value);
