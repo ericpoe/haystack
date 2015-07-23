@@ -540,6 +540,7 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     {
         $vowel = function ($word) {
             $vowels = new OString("aeiou");
+
             return $vowels->contains($word[0]);
         };
 

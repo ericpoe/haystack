@@ -10,7 +10,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->aString= new OString("foobar");
+        $this->aString = new OString("foobar");
     }
 
     public function testCreateEmptyString()
@@ -490,6 +490,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
 
         $removeVowels = function ($letter) {
             $vowels = new OString("aeiou");
+
             return !$vowels->contains($letter);
         };
 
