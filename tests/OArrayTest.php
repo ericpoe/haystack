@@ -13,8 +13,8 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->arrList = new OArray(array("apple", "bobble", "cobble", "dobble"));
-        $this->arrDict = new OArray(array("a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"));
+        $this->arrList = new OArray(["apple", "bobble", "cobble", "dobble"]);
+        $this->arrDict = new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"]);
     }
 
     public function testCreateEmptyArray()
