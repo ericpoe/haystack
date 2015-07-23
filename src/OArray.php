@@ -287,6 +287,10 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
 
     public function product()
     {
+        if (empty($this->arr)) {
+            return 0;
+        }
+
         return array_product($this->arr);
     }
 

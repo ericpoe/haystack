@@ -666,10 +666,10 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider arrayProductProvider()
      *
-     * @param              $expected
      * @param \OPHP\OArray $testArr
+     * @param              $expected
      */
-    public function testArrayProduct($expected, OArray $testArr)
+    public function testArrayProduct(OArray $testArr, $expected)
     {
         $this->assertEquals($expected, $testArr->product());
     }
@@ -677,11 +677,14 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     public function arrayProductProvider()
     {
         return [
-            ['expected' => 0, 'testArr' => new OArray(["apple", "bobble", "cobble", 5])],
-            ['expected' => 0, 'testArr' => new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "5"])],
-            ['expected' => 3628800, 'testArr' => new OArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])],
-            ['expected' => 3628800, 'testArr' => new OArray(["1", 2, "3", 4, "5", 6, "7", 8, "9", 10])],
-            ['expected' => 3628800, 'testArr' => new OArray(["a" => 1, "b" => 2, "c" => 3, "d" => 4, "e" => 5, "f" => 6, "g" => 7, "h" => 8, "i" => 9, "j" => 10])],
+            "Empty OArray" => [new OArray(), 0],
+            "List: Array of Strings" => [new OArray("apple", "bobble", "cobble"), 0],
+            "List: Array of Ints" => [new OArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 3628800],
+            "List: Array of Strings & Int" => [new OArray(["apple", "bobble", "cobble", 5]), 0],
+            "List: Array of String Ints & Int" => [new OArray(["1", 2, "3", 4, "5", 6, "7", 8, "9", 10]), 3628800],
+            "Dictionary: Array of Strings" => [new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble"]), 0],
+            "Dictionary: Array of Strings & Int" => [new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "5"]), 0],
+            "Dictionary: Array of Ints" => [new OArray(["a" => 1, "b" => 2, "c" => 3, "d" => 4, "e" => 5, "f" => 6, "g" => 7, "h" => 8, "i" => 9, "j" => 10]), 3628800],
         ];
     }
 }
