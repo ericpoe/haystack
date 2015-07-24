@@ -518,6 +518,67 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("obr", $even->toString());
     }
 
+    public function testStringReduce()
+    {
+        $encode = function ($carry, $item) {
+            $value = (ord($item) % 26) + 97;
+            $carry .= chr($value);
+
+            return $carry;
+        };
+
+        $decode = function ($carry, $item) {
+            $value = ((ord($item) + 14) % 26) + 97;
+            $carry .= chr($value);
+
+            return $carry;
+        };
+
+        $codedMessage = new OString("yhhutk");
+
+        $this->assertEquals($codedMessage, $this->aString->reduce($encode));
+        $this->assertEquals("foobar", $codedMessage->reduce($decode));
+    }
+
+    /**
+     * @dataProvider stringReduceWithInitialValueProvider
+     *
+     * @param OString $string
+     * @param         $initial
+     * @param         $expected
+     */
+    public function testStringReduceWithInitialValue(OString $string, $initial, $expected)
+    {
+        $what = function ($carry, $item) {
+            $carry .= $item;
+
+            return $carry;
+        };
+
+        $this->assertEquals($expected, $string->reduce($what, $initial));
+    }
+
+    public function stringReduceWithInitialValueProvider()
+    {
+        return [
+            "Empty OString" => [new OString(), "alone", "alone"],
+            "OString" => [new OString("present"), "The ", "The present"],
+        ];
+    }
+
+    public function testStringReduceWithBadInitialValue()
+    {
+        $what = function ($carry, $item) {
+            $carry .= $item;
+
+            return $carry;
+        };
+
+        $this->setExpectedException("InvalidArgumentException", "Initial value must be scalar");
+        $this->aString->reduce($what, new \DateTime());
+        $this->getExpectedException();
+    }
+
     public function testStringHead()
     {
         $this->assertEquals("f", $this->aString->head()->toString());

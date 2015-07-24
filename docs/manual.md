@@ -212,6 +212,38 @@ The main classes of OPHP are `OArray` and `OString`
     $vowelFoods = $myArray->filter($vowel_both, OArray::USE_BOTH); // ["a" => "bobble", "b" => "apple"]
         
     ```
+    
+**reduce()** - Iteratively reduce the OPHP Collection to a single value using a callback function
+  * **$callback:** mixed callback ( mixed $carry , mixed $item )
+      *   **$carry:** Holds the return value of the previous iteration; in the case of the first iteration it instead holds the value of initial.
+      *   **$item:** Holds the value of the current iteration.
+  * **$initial:** If the optional initial is available, it will be used at the beginning of the process, or as a final result in case the array is empty.
+  
+```php
+    $myString = new OString("I am the very model of a modern major-general");
+    
+    $encode = function ($carry, $item) {
+        if (ctype_upper($item) || ctype_lower($item)) {
+            $value = (ord($item) % 26) + 97;
+            $carry .= chr($value);
+        } else {
+            $carry .= $item;
+        }
+        
+        return $carry;
+    };
+    
+    $codedMessage = $myString->reduce($encode); // "v tf max oxkr fhwxe hy t fhwxkg ftchk-zxgxkte"
+    
+    $myArray = new OArray(range(1,10));
+    
+    $sum = function ($carry, $item) {
+        $carry += $item;
+        return $carry;
+    };
+    
+    $bigNum = $myArray->reduce($sum); // int(55)
+```
 
 **head()** - Returns the first element of the OArray or OString.
 

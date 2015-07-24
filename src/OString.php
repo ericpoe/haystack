@@ -410,6 +410,27 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
+     * @inheritdoc
+     *
+     * @param callable $func
+     * @param null     $initial
+     * @return bool|float|int|string
+     */
+    public function reduce(callable $func, $initial = null)
+    {
+        if (is_null($initial) || is_scalar($initial)) {
+            $output = $initial;
+            foreach ($this as $letter) {
+                $output = $func($output, $letter);
+            }
+
+            return $output;
+        }
+
+        throw new \InvalidArgumentException("Initial value must be scalar");
+    }
+
+    /**
      * Shows the first element of the collection
      *
      * @return mixed

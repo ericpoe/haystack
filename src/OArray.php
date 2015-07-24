@@ -258,6 +258,19 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
+     * @inheritdoc
+     *
+     * @param callable $func
+     * @param null     $initial
+     * @return mixed
+     */
+    public function reduce(callable $func, $initial = null)
+    {
+        // todo: figure out invalid types of $initial
+        return array_reduce($this->arr, $func, $initial);
+    }
+
+    /**
      * Shows the first element of the collection
      *
      * @return mixed
