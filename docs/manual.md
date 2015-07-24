@@ -36,11 +36,11 @@ The main classes of OPHP are `OArray` and `OString`
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["apple", "banana", "celery"]);
 
-    $myString->contains("model"); // true
-    $myString->contains("view"); // false
+    $myString->contains("model"); // bool(true)
+    $myString->contains("view"); // bool(false)
 
-    $myArray->contains("banana"); // true
-    $myArray->contains("raspberry"); //false
+    $myArray->contains("banana"); // bool(true)
+    $myArray->contains("raspberry"); // bool(false)
 ```
 
 **locate($element)** - Returns the array key of the first instance of $element within the current OString or OArray. Returns a "-1" if not found.
@@ -49,12 +49,12 @@ The main classes of OPHP are `OArray` and `OString`
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
-    $key = $myString->locate("a"); // (int) 2
-    $key = $myString->locate("mod"); // (int) 14
-    $key = $myString->locate("z"); // (int) -1
+    $key = $myString->locate("a"); // int(2)
+    $key = $myString->locate("mod"); // int(14)
+    $key = $myString->locate("z"); // int(-1)
 
     $key = $myArray->locate("apple"); // "a"
-    $key = $myArray->locate("daikon"); // (int) -1
+    $key = $myArray->locate("daikon"); // int(-1)
 ```
 
 **append($element)** - Adds an element to the end of the collection.
@@ -275,8 +275,8 @@ The main classes of OPHP are `OArray` and `OString`
     $myString = new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
     $myArray = new OArray(range(1, 10));
     
-    $myString->product(); // 3628800
-    $myArray->product(); // 3628800
+    $myString->product(); // int(3628800)
+    $myArray->product(); // int(3628800)
 ```
 
 **sum()** - Calculates the sum of the values in the collection. Any non-number values are equal to 0.
@@ -285,8 +285,8 @@ The main classes of OPHP are `OArray` and `OString`
     $myString = new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
     $myArray = new OArray(range(1, 10));
     
-    $myString->sum(); // 55
-    $myArray->sum(); // 55
+    $myString->sum(); // int(55)
+    $myArray->sum(); // int(55)
 ```
 
 ## To install
