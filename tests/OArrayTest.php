@@ -684,6 +684,73 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    /**
+     * @dataProvider reduceAsArrayTypeProvider
+     *
+     * @param $freq
+     */
+    public function testReduceAsArrayType($freq)
+    {
+        $this->assertTrue($this->arrList->reduce($freq) instanceof OArray);
+        $this->assertTrue($this->arrDict->reduce($freq) instanceof OArray);
+    }
+
+    public function reduceAsArrayTypeProvider()
+    {
+        $freqArray = function ($frequency, $letter) {
+            if (!isset($frequency[$letter])) {
+                $frequency[$letter] = 0;
+            }
+
+            $frequency[$letter]++;
+
+            return $frequency;
+        };
+
+        $freqArrayObject = function ($frequency, $letter) {
+            if (!isset($frequency[$letter])) {
+                $frequency[$letter] = 0;
+            }
+
+            $frequency = new \ArrayObject($frequency);
+
+            $frequency[$letter]++;
+
+            return $frequency;
+        };
+
+        $freqOArray = function ($frequency, $letter) {
+            if (!isset($frequency[$letter])) {
+                $frequency[$letter] = 0;
+            }
+
+            $frequency = new OArray($frequency);
+
+            $frequency[$letter]++;
+
+            return $frequency;
+        };
+
+        return [
+            "Array" => [$freqArray],
+            "ArrayObject" => [$freqArrayObject],
+            "OArray" => [$freqOArray],
+        ];
+    }
+
+    public function testReduceAsString()
+    {
+        $toString = function ($sentence, $word) {
+            $builtSentence = $sentence . $word . " ";
+            return $builtSentence;
+        };
+
+        $this->assertEquals(new OString("apple bobble cobble dobble"), trim($this->arrList->reduce($toString)));
+        $this->assertEquals(new OString("apple bobble cobble dobble"), trim($this->arrDict->reduce($toString)));
+        $this->assertTrue($this->arrList->reduce($toString) instanceof OString);
+        $this->assertTrue($this->arrDict->reduce($toString) instanceof OString);
+    }
+
     public function testArrayHead()
     {
         $this->assertEquals(new OArray(["apple"]), $this->arrList->head());

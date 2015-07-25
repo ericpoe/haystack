@@ -1,6 +1,7 @@
 <?php
 namespace OPHP\Tests;
 
+use OPHP\OArray;
 use OPHP\OString;
 
 class OStringTest extends \PHPUnit_Framework_TestCase
@@ -518,7 +519,17 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("obr", $even->toString());
     }
 
-    public function testStringReduce()
+    public function testReduce()
+    {
+        $fn = function ($carry, $item) {
+            $value = (ord(strtolower($item)) - 64);
+            return $carry + $value;
+        };
+
+        $this->assertEquals(249, $this->aString->reduce($fn));
+    }
+
+    public function testOStringReduce()
     {
         $encode = function ($carry, $item) {
             $value = (ord($item) % 26) + 97;
@@ -538,6 +549,59 @@ class OStringTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($codedMessage, $this->aString->reduce($encode));
         $this->assertEquals("foobar", $codedMessage->reduce($decode));
+        $this->assertTrue($this->aString->reduce($encode) instanceof OString);
+    }
+
+    /**
+     * @dataProvider stringReduceAsArrayTypeProvider
+     * @param $freq
+     */
+    public function testStringReduceAsArrayTypeReturnsOarray($freq)
+    {
+        $this->assertTrue($this->aString->reduce($freq) instanceof OArray);
+    }
+
+    public function stringReduceAsArrayTypeProvider()
+    {
+        $freqArray = function ($frequency, $letter) {
+            if (!isset($frequency[$letter])) {
+                $frequency[$letter] = 0;
+            }
+
+            $frequency[$letter]++;
+
+            return $frequency;
+        };
+
+        $freqArrayObject = function ($frequency, $letter) {
+            if (!isset($frequency[$letter])) {
+                $frequency[$letter] = 0;
+            }
+
+            $frequency = new \ArrayObject($frequency);
+
+            $frequency[$letter]++;
+
+            return $frequency;
+        };
+
+        $freqOArray = function ($frequency, $letter) {
+            if (!isset($frequency[$letter])) {
+                $frequency[$letter] = 0;
+            }
+
+            $frequency = new OArray($frequency);
+
+            $frequency[$letter]++;
+
+            return $frequency;
+        };
+
+        return [
+            "Array" => [$freqArray],
+            "ArrayObject" => [$freqArrayObject],
+            "OArray" => [$freqOArray],
+        ];
     }
 
     /**

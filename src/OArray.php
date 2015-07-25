@@ -266,8 +266,18 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function reduce(callable $func, $initial = null)
     {
-        // todo: figure out invalid types of $initial
-        return array_reduce($this->arr, $func, $initial);
+        // todo: figure out invalid types, if any, of $initial
+        $reduced = array_reduce($this->arr, $func, $initial);
+
+        if ($reduced instanceof \ArrayObject || is_array($reduced)) {
+            return new OArray($reduced);
+        }
+
+        if (is_string($reduced)) {
+            return new OString($reduced);
+        }
+
+        return $reduced;
     }
 
     /**

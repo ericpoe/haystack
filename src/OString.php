@@ -418,13 +418,18 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function reduce(callable $func, $initial = null)
     {
-        if (is_null($initial) || is_scalar($initial)) {
-            $output = $initial;
-            foreach ($this as $letter) {
-                $output = $func($output, $letter);
-            }
+        // todo: figure out invalid types, if any, of $initial
+        $reduced = $initial;
+        foreach ($this as $letter) {
+            $reduced = $func($reduced, $letter);
+        }
 
-            return $output;
+        if ($reduced instanceof \ArrayObject || is_array($reduced)) {
+            return new OArray($reduced);
+        }
+
+        if (is_string($reduced)) {
+            return new OString($reduced);
         }
 
         return $reduced;
