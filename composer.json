@@ -1,7 +1,6 @@
 {
   "name": "ericpoe/OPHP",
   "description": "An imagining of PHP as if it were designed around objects.",
-  "version": "0.0.1",
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
