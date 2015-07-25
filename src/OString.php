@@ -427,7 +427,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             return $output;
         }
 
-        throw new \InvalidArgumentException("Initial value must be scalar");
+        return $reduced;
     }
 
     /**

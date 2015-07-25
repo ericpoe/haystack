@@ -566,19 +566,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testStringReduceWithBadInitialValue()
-    {
-        $what = function ($carry, $item) {
-            $carry .= $item;
-
-            return $carry;
-        };
-
-        $this->setExpectedException("InvalidArgumentException", "Initial value must be scalar");
-        $this->aString->reduce($what, new \DateTime());
-        $this->getExpectedException();
-    }
-
     public function testStringHead()
     {
         $this->assertEquals("f", $this->aString->head()->toString());
