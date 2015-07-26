@@ -125,7 +125,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
         $lastStartingPoint = sizeof($this->arr) - sizeof($first);
         $last = $this->slice($length, $lastStartingPoint)->toArray();
 
-        return new OArray(array_merge_recursive($first, (array)$array, $last));
+        return new OArray(array_merge_recursive($first, (array) $array, $last));
     }
 
 
@@ -354,7 +354,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     private function setSubarrayAndLengthForSequentialArray($key, $value)
     {
         $array = $value;
-        $length = (int)$key;
+        $length = (int) $key;
 
         return array($array, $length);
     }
@@ -392,7 +392,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     {
         $newArr = new OArray();
         foreach ($this as $key => $value) {
-            if (true === (bool)$func($key)) {
+            if (true === (bool) $func($key)) {
                 $newArr = $newArr->insert($value, $key);
             }
         }
@@ -408,7 +408,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     {
         $newArr = new OArray();
         foreach ($this as $key => $value) {
-            if (true === (bool)$func($value, $key)) {
+            if (true === (bool) $func($value, $key)) {
                 $newArr = $newArr->insert($value, $key);
             }
         }

@@ -15,7 +15,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function __construct($string = null)
     {
         if (is_scalar($string) || $string instanceof OString) {
-            $this->string = (string)$string;
+            $this->string = (string) $string;
             $this->rewind();
         } elseif (is_null($string)) {
             $this->string = null;
@@ -52,7 +52,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function contains($value)
     {
         if (is_scalar($value)) {
-            $pos = strstr($this->string, (string)$value);
+            $pos = strstr($this->string, (string) $value);
 
             return (false !== $pos) ?: false;
         }
@@ -75,7 +75,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function locate($value)
     {
         if (is_scalar($value)) {
-            return $this->contains($value) ? strpos($this->string, (string)$value) : -1;
+            return $this->contains($value) ? strpos($this->string, (string) $value) : -1;
         }
 
         if ($value instanceof OString) {
@@ -114,7 +114,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             if (is_null($key)) {
                 $key = strlen($this);
             } elseif (is_numeric($key)) {
-                $key = (int)$key;
+                $key = (int) $key;
             } else {
                 throw new \InvalidArgumentException("Invalid array key");
             }
@@ -491,7 +491,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         $newString = new OString();
 
         foreach ($this as $letter) {
-            if ((bool)$letter) {
+            if ((bool) $letter) {
                 $newString = $newString->insert($letter);
             }
         }
@@ -525,7 +525,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         $newString = new OString();
 
         foreach ($this as $letter) {
-            if (true === (bool)$func($this->key())) {
+            if (true === (bool) $func($this->key())) {
                 $newString = $newString->insert($letter);
             }
         }
@@ -542,7 +542,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         $newString = new OString();
 
         foreach ($this as $letter) {
-            if (true === (bool)$func($letter, $this->key())) {
+            if (true === (bool) $func($letter, $this->key())) {
                 $newString = $newString->insert($letter);
             }
         }
