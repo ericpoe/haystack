@@ -1,6 +1,8 @@
 <?php
 namespace OPHP;
 
+use OPHP\Helpers\Helper;
+
 class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Container, BaseFunctional, Math
 {
     const USE_KEY = "key";
@@ -8,19 +10,24 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     private $string;
     private $ptr; // pointer for iterating through $string
 
+    /** @var  Helper */
+    private $helper;
+
     /**
      * @param null $string
      * @throws \ErrorException
      */
     public function __construct($string = null)
     {
+        $this->helper = new Helper();
+
         if (is_scalar($string) || $string instanceof OString) {
             $this->string = (string) $string;
             $this->rewind();
         } elseif (is_null($string)) {
             $this->string = null;
         } else {
-            throw new \ErrorException("{$this->getType($string)} is not a proper String");
+            throw new \ErrorException("{$this->helper->getType($string)} is not a proper String");
         }
     }
 
@@ -62,7 +69,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
             return (false !== $pos) ?: false;
         }
-        throw new \InvalidArgumentException("{$this->getType($value)} is neither a scalar value nor an OString");
+        throw new \InvalidArgumentException("{$this->helper->getType($value)} is neither a scalar value nor an OString");
     }
 
     /**
@@ -82,7 +89,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             return $this->contains($value) ? strpos($this->string, $value->toString()) : -1;
         }
 
-        throw new \InvalidArgumentException("{$this->getType($value)} is neither a scalar value nor an OString");
+        throw new \InvalidArgumentException("{$this->helper->getType($value)} is neither a scalar value nor an OString");
     }
 
     /**
@@ -97,7 +104,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         if (is_scalar($value) || $value instanceof OString) {
             return new OString($this->string . $value);
         }
-        throw new \InvalidArgumentException("Cannot concatenate an OString with a {$this->getType($value)}");
+        throw new \InvalidArgumentException("Cannot concatenate an OString with a {$this->helper->getType($value)}");
     }
 
     /**
@@ -123,7 +130,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             return new OString(substr_replace($this->string, $value, $key, 0));
         }
 
-        throw new \InvalidArgumentException("Cannot insert {$this->getType($value)} into an OString");
+        throw new \InvalidArgumentException("Cannot insert {$this->helper->getType($value)} into an OString");
     }
 
     /**
@@ -261,7 +268,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         } elseif (is_null($value)) {
             $this->string = null;
         } else {
-            throw new \InvalidArgumentException("OString cannot unserialize a {$this->getType($value)}");
+            throw new \InvalidArgumentException("OString cannot unserialize a {$this->helper->getType($value)}");
         }
     }
 
@@ -471,16 +478,6 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         $values = new OArray(str_getcsv(str_ireplace(" ", "", $this->string)));
 
         return $values->product();
-    }
-
-    private function getType($thing)
-    {
-        $type = gettype($thing);
-        if ('object' === $type) {
-            $type = get_class($thing);
-        }
-
-        return $type;
     }
 
     /**

@@ -1,16 +1,23 @@
 <?php
 namespace OPHP;
 
+use OPHP\Helpers\Helper;
+
 class OArray extends \ArrayObject implements Container, BaseFunctional, Math
 {
     const USE_KEY = "key";
     const USE_BOTH = "both";
 
-    /** @var OArray array */
+    /** @var array */
     private $arr;
+
+    /** @var  Helper */
+    private $helper;
 
     public function __construct($arr = null)
     {
+        $this->helper = new Helper();
+
         if (is_null($arr)) {
             parent::__construct();
             $this->arr = [];
@@ -24,7 +31,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
             parent::__construct();
             $this->arr = [$arr];
         } else {
-            throw new \ErrorException("{$this->getType($arr)} cannot be instantiated as an OArray");
+            throw new \ErrorException("{$this->helper->getType($arr)} cannot be instantiated as an OArray");
         }
     }
 
@@ -42,10 +49,10 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function contains($value)
     {
-        if ($this->canBeInArray($value)) {
+        if ($this->helper->canBeInArray($value)) {
             return (in_array($value, $this->arr));
         } else {
-            throw new \InvalidArgumentException("{$this->getType($value)} cannot be contained within an OArray");
+            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an OArray");
         }
     }
 
@@ -78,13 +85,13 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
         if ($value instanceof OArray) {
             $value = $value->toArray();
         }
-        if ($this->canBeInArray($value)) {
+        if ($this->helper->canBeInArray($value)) {
             $array = new OArray($this);
             parent::append($value);
 
             return $array;
         } else {
-            throw new \InvalidArgumentException("{$this->getType($value)} cannot be appended to an OArray");
+            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be appended to an OArray");
         }
     }
 
@@ -103,10 +110,10 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
             $valueArray = $value->toArray();
         } elseif ($value instanceof OString) {
             $valueArray = $value->toString();
-        } elseif ($this->canBeInArray($value)) {
+        } elseif ($this->helper->canBeInArray($value)) {
             $valueArray = $value;
         } else {
-            throw new \InvalidArgumentException("{$this->getType($value)} cannot be contained within an OArray");
+            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an OArray");
         }
 
         if (isset($key)) {
@@ -138,7 +145,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function remove($value)
     {
-        if ($this->canBeInArray($value)) {
+        if ($this->helper->canBeInArray($value)) {
             if (!$this->contains($value)) {
                 return new OArray($this->arr);
             }
@@ -146,7 +153,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
             $newArr = $this->arr;
             $key = $this->locate($value);
         } else {
-            throw new \InvalidArgumentException("{$this->getType($value)} cannot be contained within an OArray");
+            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an OArray");
         }
 
 
@@ -320,30 +327,6 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
         }
 
         return array_product($this->arr);
-    }
-
-    private function getType($thing)
-    {
-        $type = gettype($thing);
-        if ('object' === $type) {
-            $type = get_class($thing);
-        }
-
-        return $type;
-    }
-
-    /**
-     * @param $thing
-     * @return bool
-     */
-    private function canBeInArray($thing)
-    {
-        $possibility = is_array($thing)
-            || is_scalar($thing)
-            || $thing instanceof \ArrayObject
-            || $thing instanceof OString;
-
-        return $possibility;
     }
 
     /**
