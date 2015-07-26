@@ -1,11 +1,6 @@
 <?php
 namespace OPHP;
 
-/**
- * Class OArray
- *
- * @package OPHP
- */
 class OArray extends \ArrayObject implements Container, BaseFunctional, Math
 {
     const USE_KEY = "key";
