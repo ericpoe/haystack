@@ -219,7 +219,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      *                                 - pass both value and key as arguments to callback instead of the value
      *                                 - Requires PHP >= 5.6
      *
-     * @return OArray|null
+     * @return OArray
      *
      * @throws \InvalidArgumentException
      */
