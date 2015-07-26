@@ -18,7 +18,7 @@ interface BaseFunctional
      * implementation of the OPHP where cloning the object would be memory intensive.
      *
      * @param callable $func
-     * @return bool
+     * @return null
      */
     public function walk(callable $func);
 

@@ -39,7 +39,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
-     * Determines if a $value is in the current object.
+     * @inheritdoc
      *
      * @param $value
      * @return boolean
@@ -55,7 +55,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
-     * Finds the location of $value in the current object. If it does not exist, the user will be notified
+     * @inheritdoc
      *
      * @param $value
      * @return int - array-notation location of $value in current object; "-1" if not found
@@ -72,7 +72,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
-     * Concatenates two things of the same type.
+     * @inheritdoc
      *
      * @param $value
      * @return OArray
@@ -94,7 +94,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
-     * Inserts a $value at a specified location; if no location is provided, $value will be added to the back.
+     * @inheritdoc
      *
      * @param          $value
      * @param int|null $key
@@ -135,6 +135,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
 
 
     /**
+     * @inheritdoc
+     *
      * @param $value
      * @return OArray
      * @throws \InvalidArgumentException
@@ -166,6 +168,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
+     * @inheritdoc
+     *
      * @param $start
      * @param $length
      * @return OArray
@@ -188,7 +192,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
-     * Applies the callback to the elements of the given array
+     * @inheritdoc
      *
      * @param callable $func
      * @return OArray
@@ -199,13 +203,10 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
-     * Walk does an in-place update of items in the object.
-     *
-     * Since the update is in-place, this breaks the immutablity of OPHP objects. This is useful for very large
-     * implementations of the OPHP where cloning the object would be memory intensive.
+     * @inheritdoc
      *
      * @param callable $func
-     * @return bool
+     * @return null
      */
     public function walk(callable $func)
     {
@@ -213,8 +214,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
-     * Iterates over each value in the container passing them to the callback function. If the callback function returns
-     * true, the current value from container is returned into the result container. Container keys are preserved.
+     * @inheritdoc
      *
      * @param callable $func   - If no callback is supplied, all entries of container equal to FALSE will be removed.
      * @param null     $flag   - Flag determining what arguments are sent to callback
@@ -224,7 +224,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      *                                 - pass both value and key as arguments to callback instead of the value
      *                                 - Requires PHP >= 5.6
      *
-     * @return OArray
+     * @return OArray|null
      *
      * @throws \InvalidArgumentException
      */
@@ -284,7 +284,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
-     * Shows the first element of the collection
+     * @inheritdoc
      *
      * @return OArray
      */
@@ -294,7 +294,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
-     * Shows the collection that doesn't include the head
+     * @inheritdoc
      *
      * @return OArray
      */
@@ -304,6 +304,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
+     * @inheritdoc
+     *
      * @return number
      */
     public function sum()
@@ -312,6 +314,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
+     * @inheritdoc
+     *
      * @return int|number
      */
     public function product()
@@ -361,8 +365,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     }
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param        $value
      * @return array
      */
     protected function setSubarrayAndLengthForAssociativeArray($key, $value)

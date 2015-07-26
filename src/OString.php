@@ -43,7 +43,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Determines if a $value is in the current object.
+     * @inheritdoc
      *
      * @param $value
      * @return bool
@@ -66,7 +66,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Finds the location of $value in the current object. If it does not exist, the user will be notified
+     * @inheritdoc
      *
      * @param $value
      * @return int - location of $value in current object; "-1" if not found
@@ -86,7 +86,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Concatenates two things of the same type.
+     * @inheritdoc
      *
      * @param $value
      * @return OString
@@ -101,7 +101,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Inserts a $value at a specified location; if no location is provided, $value will be added to the back.
+     * @inheritdoc
      *
      * @param          $value
      * @param int|null $key
@@ -127,6 +127,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
+     * @inheritdoc
+     *
      * @param $value
      * @return OString
      */
@@ -140,9 +142,12 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
+     * @inheritdoc
+     *
      * @param $start
      * @param $length
      * @return OString
+     * @throws \InvalidArgumentException
      */
     public function slice($start, $length = null)
     {
@@ -338,7 +343,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
 
     /**
-     * Applies the callback to the elements of the given array
+     * @inheritdoc
      *
      * @param callable $func
      * @return OString
@@ -354,13 +359,10 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Walk does an in-place update of items in the object.
-     *
-     * Since the update is in-place, this breaks the immutablity of OPHP objects. This is useful for very large
-     * implementations of the OPHP where cloning the object would be memory intensive.
+     * @inheritdoc
      *
      * @param callable $func
-     * @return bool
+     * @return null
      */
     public function walk(callable $func)
     {
@@ -370,16 +372,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Iterates over each value in the container passing them to the callback function. If the callback function returns
-     * true, the current value from container is returned into the result container. Container keys are preserved.
+     * @inheritdoc
      *
-     * @param callable $func   - If no callback is supplied, all entries of container equal to FALSE will be removed.
-     * @param null     $flag   - Flag determining what arguments are sent to callback
-     *                             - USE_KEY
-     *                                 - pass key as the only argument to callback instead of the value
-     *                             - USE_BOTH
-     *                                 - pass both value and key as arguments to callback instead of the value
-     *                                 - Requires PHP >= 5.6
      * @return OString
      *
      * @throws \InvalidArgumentException
@@ -436,7 +430,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Shows the first element of the collection
+     * @inheritdoc
      *
      * @return OString
      */
@@ -446,7 +440,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Shows the collection that doesn't include the head
+     * @inheritdoc
      *
      * @return OString
      */
@@ -457,6 +451,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * @inheritdoc
+     *
+     * @return number
      */
     public function sum()
     {
@@ -467,6 +463,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * @inheritdoc
+     *
+     * @return number
      */
     public function product()
     {
@@ -486,7 +484,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * @return mixed
+     * @return OString
      */
     protected function filterWithDefaults()
     {
@@ -503,7 +501,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * @param callable $func
-     * @return mixed
+     * @return OString
      */
     protected function filterWithValue(callable $func)
     {
@@ -520,7 +518,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * @param callable $func
-     * @return mixed
+     * @return OString
      */
     protected function filterWithKey(callable $func)
     {
@@ -537,7 +535,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * @param callable $func
-     * @return mixed
+     * @return OString
      */
     protected function filterWithValueAndKey(callable $func)
     {
