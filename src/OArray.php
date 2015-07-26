@@ -322,7 +322,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
         return array_product($this->arr);
     }
 
-    protected function getType($thing)
+    private function getType($thing)
     {
         $type = gettype($thing);
         if ('object' === $type) {
@@ -336,7 +336,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      * @param $thing
      * @return bool
      */
-    protected function canBeInArray($thing)
+    private function canBeInArray($thing)
     {
         $possibility = is_array($thing)
             || is_scalar($thing)
@@ -351,7 +351,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      * @param $value
      * @return array
      */
-    protected function setSubarrayAndLengthForSequentialArray($key, $value)
+    private function setSubarrayAndLengthForSequentialArray($key, $value)
     {
         $array = $value;
         $length = (int)$key;
@@ -364,7 +364,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      * @param        $value
      * @return array
      */
-    protected function setSubarrayAndLengthForAssociativeArray($key, $value)
+    private function setSubarrayAndLengthForAssociativeArray($key, $value)
     {
         $array = [$key => $value];
         $length = sizeof($this->arr);
@@ -376,7 +376,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      * @param $value
      * @return array
      */
-    protected function setSubarrayAndLengthWhenNoKeyProvided($value)
+    private function setSubarrayAndLengthWhenNoKeyProvided($value)
     {
         $array = $value;
         $length = sizeof($this->arr);
@@ -388,7 +388,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      * @param callable $func
      * @return OArray
      */
-    protected function filterWithKey(callable $func)
+    private function filterWithKey(callable $func)
     {
         $newArr = new OArray();
         foreach ($this as $key => $value) {
@@ -404,7 +404,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      * @param callable $func
      * @return OArray
      */
-    protected function filterWithValueAndKey(callable $func)
+    private function filterWithValueAndKey(callable $func)
     {
         $newArr = new OArray();
         foreach ($this as $key => $value) {

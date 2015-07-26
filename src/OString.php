@@ -473,7 +473,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         return $values->product();
     }
 
-    protected function getType($thing)
+    private function getType($thing)
     {
         $type = gettype($thing);
         if ('object' === $type) {
@@ -486,7 +486,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @return OString
      */
-    protected function filterWithDefaults()
+    private function filterWithDefaults()
     {
         $newString = new OString();
 
@@ -503,7 +503,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @param callable $func
      * @return OString
      */
-    protected function filterWithValue(callable $func)
+    private function filterWithValue(callable $func)
     {
         $newString = new OString();
 
@@ -520,7 +520,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @param callable $func
      * @return OString
      */
-    protected function filterWithKey(callable $func)
+    private function filterWithKey(callable $func)
     {
         $newString = new OString();
 
@@ -537,7 +537,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @param callable $func
      * @return OString
      */
-    protected function filterWithValueAndKey(callable $func)
+    private function filterWithValueAndKey(callable $func)
     {
         $newString = new OString();
 
