@@ -128,7 +128,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * @param $value
-     * @return mixed
+     * @return OString
      */
     public function remove($value)
     {
@@ -142,7 +142,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @param $start
      * @param $length
-     * @return mixed
+     * @return OString
      */
     public function slice($start, $length = null)
     {
@@ -414,7 +414,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *
      * @param callable $func
      * @param null     $initial
-     * @return bool|float|int|string
+     * @return bool|float|int|string|OString|array|\ArrayObject|OArray
      */
     public function reduce(callable $func, $initial = null)
     {
@@ -438,7 +438,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * Shows the first element of the collection
      *
-     * @return mixed
+     * @return OString
      */
     public function head()
     {
@@ -448,7 +448,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * Shows the collection that doesn't include the head
      *
-     * @return mixed
+     * @return OString
      */
     public function tail()
     {

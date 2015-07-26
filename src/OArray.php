@@ -98,7 +98,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      *
      * @param          $value
      * @param int|null $key
-     * @return mixed
+     * @return OArray
      *
      * @throws \InvalidArgumentException
      */
@@ -136,7 +136,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
 
     /**
      * @param $value
-     * @return \OPHP\OArray
+     * @return OArray
      * @throws \InvalidArgumentException
      */
     public function remove($value)
@@ -168,7 +168,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     /**
      * @param $start
      * @param $length
-     * @return mixed
+     * @return OArray
      * @throws \InvalidArgumentException
      */
     public function slice($start, $length = null)
@@ -265,7 +265,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      *
      * @param callable $func
      * @param null     $initial
-     * @return mixed
+     * @return bool|float|int|string|OString|array|\ArrayObject|OArray
      */
     public function reduce(callable $func, $initial = null)
     {
@@ -286,7 +286,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     /**
      * Shows the first element of the collection
      *
-     * @return mixed
+     * @return OArray
      */
     public function head()
     {
@@ -296,18 +296,24 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     /**
      * Shows the collection that doesn't include the head
      *
-     * @return mixed
+     * @return OArray
      */
     public function tail()
     {
         return $this->slice(1);
     }
 
+    /**
+     * @return number
+     */
     public function sum()
     {
         return array_sum($this->arr);
     }
 
+    /**
+     * @return int|number
+     */
     public function product()
     {
         if (empty($this->arr)) {
@@ -327,6 +333,10 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
         return $type;
     }
 
+    /**
+     * @param $thing
+     * @return bool
+     */
     protected function canBeInArray($thing)
     {
         $possibility = is_array($thing)
