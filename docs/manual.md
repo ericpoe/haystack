@@ -4,6 +4,7 @@
 You can start using OPHP right away, like so:
 
 ```php
+    use OPHP\OArray;
     $myArray = new OArray();
     $myArray = $myArray->insert("orange", "o");
 ```
@@ -11,6 +12,7 @@ You can start using OPHP right away, like so:
 Or you can use OPHP later on, like so:
 
 ```php
+    use OPHP\OArray;
     $existingArray = range(1, 10);
     ...
     $myArray = new OArray($existingArray);
