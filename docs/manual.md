@@ -332,6 +332,3 @@ The main classes of OPHP are `OArray` and `OString`
     $myString->sum(); // int(55)
     $myArray->sum(); // int(55)
 ```
-
-## To install
-*this will come later*
