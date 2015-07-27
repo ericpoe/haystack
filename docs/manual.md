@@ -269,6 +269,21 @@ The main classes of OPHP are `OArray` and `OString`
     
 ```
 
+### Collection Pipeline
+
+`OArray` can also be used as a concise [Collection
+Pipeline](http://martinfowler.com/articles/collection-pipeline/) by
+using map, reduce and filter with a fluent interface.
+
+```php
+$array = new OArray([3, 5, 7, 9, 11]);
+$result = $array->map(function ($i) { return $i * $i; })    // Square [9, 25, 49, 81, 121]
+  ->filter(function ($i) { return $i > 30; })               // Only large numbers [49, 81, 121]
+  ->reduce(function ($carry, $i) { return $carry += $i; }); // Sum
+
+var_dump($result); // int(251)
+```
+
 ### Math
 
 **product()** - Calculates the product of the values in the collection. Any non-number values are equal to 0.
