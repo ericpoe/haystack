@@ -245,10 +245,10 @@ $vowelFoods = $myArray->filter($vowel_both, OArray::USE_BOTH); // ["a" => "bobbl
   ```
 
 **reduce()** - Iteratively reduce the OPHP Collection to a single value using a callback function
-    * **$callback:** mixed callback ( mixed $carry , mixed $item )
-        * **$carry:** Holds the return value of the previous iteration; in the case of the first iteration it instead holds the value of initial.
-        * **$item:** Holds the value of the current iteration.
-    * **$initial:** If the optional initial is available, it will be used at the beginning of the process, or as a final result in case the array is empty.
+* **$callback:** mixed callback ( mixed $carry , mixed $item )
+    * **$carry:** Holds the return value of the previous iteration; in the case of the first iteration it instead holds the value of initial.
+    * **$item:** Holds the value of the current iteration.
+* **$initial:** If the optional initial is available, it will be used at the beginning of the process, or as a final result in case the array is empty.
 
 ```php
 use OPHP\OArray;
