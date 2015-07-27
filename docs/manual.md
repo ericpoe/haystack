@@ -4,6 +4,8 @@
 You can start using OPHP right away, like so:
 
 ```php
+    use OPHP\OArray;
+
     $myArray = new OArray();
     $myArray = $myArray->insert("orange", "o");
 ```
@@ -11,6 +13,8 @@ You can start using OPHP right away, like so:
 Or you can use OPHP later on, like so:
 
 ```php
+    use OPHP\OArray;
+
     $existingArray = range(1, 10);
     ...
     $myArray = new OArray($existingArray);
@@ -33,6 +37,9 @@ The main classes of OPHP are `OArray` and `OString`
 **contains($element)** - Checks to see if $element is contained within the current OString or OArray. Returns boolean.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["apple", "banana", "celery"]);
 
@@ -46,6 +53,9 @@ The main classes of OPHP are `OArray` and `OString`
 **locate($element)** - Returns the array key of the first instance of $element within the current OString or OArray. Returns a "-1" if not found.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
@@ -60,6 +70,9 @@ The main classes of OPHP are `OArray` and `OString`
 **append($element)** - Adds an element to the end of the collection.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
@@ -72,6 +85,9 @@ The main classes of OPHP are `OArray` and `OString`
 **insert($element, $key = null)** - Inserts an element at the $key location; if $key is not identified, the element is inserted at the end.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
@@ -88,6 +104,9 @@ The main classes of OPHP are `OArray` and `OString`
 **remove($element)** - Removes an element, if found.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
@@ -101,6 +120,9 @@ The main classes of OPHP are `OArray` and `OString`
 * **Note:** The numeric-key values of the OString and the OArray will be reset; the string-key values of an OArray will not be reset.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
     $myListArray = new OArray(["apple", "banana", "celery"]);
     $myDictArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
@@ -123,6 +145,9 @@ The main classes of OPHP are `OArray` and `OString`
 **map($callable)** - Returns a new OArray or OString that has had all elements run against the callback.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
@@ -147,6 +172,9 @@ The main classes of OPHP are `OArray` and `OString`
 * **Note:** Since the update is in-place, this breaks the immutablity of OPHP objects. This is useful for very large implementations of the OPHP where cloning the object would be memory intensive.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
@@ -174,6 +202,9 @@ The main classes of OPHP are `OArray` and `OString`
     * **Note:** the callback parameter order is `$value` then `$key`
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
@@ -193,8 +224,11 @@ The main classes of OPHP are `OArray` and `OString`
 ```
 
 * **USE_BOTH Example**
-    
-    ```php    
+
+    ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myArray = new OArray(["a" => "bobble", "b" => "apple", "c" => "cobble"]);
 
     $vowel_both = function ($value, $key) {
@@ -217,6 +251,9 @@ The main classes of OPHP are `OArray` and `OString`
     * **$initial:** If the optional initial is available, it will be used at the beginning of the process, or as a final result in case the array is empty.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
 
     $encode = function ($carry, $item) {
@@ -245,6 +282,9 @@ The main classes of OPHP are `OArray` and `OString`
 **head()** - Returns the first element of the OArray or OString.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
@@ -255,6 +295,9 @@ The main classes of OPHP are `OArray` and `OString`
 **tail()** - Returns all of the elements that are not the head() of the OArray or OString
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("I am the very model of a modern major-general");
     $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
@@ -267,6 +310,9 @@ The main classes of OPHP are `OArray` and `OString`
 **product()** - Calculates the product of the values in the collection. Any non-number values are equal to 0.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
     $myArray = new OArray(range(1, 10));
 
@@ -277,6 +323,9 @@ The main classes of OPHP are `OArray` and `OString`
 **sum()** - Calculates the sum of the values in the collection. Any non-number values are equal to 0.
 
 ```php
+    use OPHP\OArray;
+    use OPHP\OString;
+
     $myString = new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
     $myArray = new OArray(range(1, 10));
 
