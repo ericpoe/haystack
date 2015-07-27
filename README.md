@@ -2,6 +2,8 @@
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/ericpoe/ophp.svg?style=flat-square)](https://scrutinizer-ci.com/g/ericpoe/ophp/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/ericpoe/ophp.svg?style=flat-square)](https://scrutinizer-ci.com/g/ericpoe/ophp)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![Packagist Version](https://img.shields.io/packagist/v/ericpoe/ophp.svg?style=flat-square)](https://packagist.org/packages/ericpoe/ophp)
+[![Total Downloads](https://img.shields.io/packagist/dt/ericpoe/ophp.svg?style=flat-square)](https://packagist.org/packages/ericpoe/ophp)
 
 # OPHP
 An imagining of PHP as if it were designed around objects.
