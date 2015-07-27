@@ -1,5 +1,5 @@
 {
-  "name": "ericpoe/OPHP",
+  "name": "ericpoe/ophp",
   "description": "An imagining of PHP as if it were designed around objects.",
   "minimum-stability": "stable",
   "license": "MIT",
