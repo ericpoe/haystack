@@ -29,3 +29,8 @@ an array. Ditto `$foo->map($callable)` and `$foo->filter($callable)`.
 ## Status
 This project is in its early stages. Use at your own peril. _Caveat Codor_ & _Caveat Emptor_ As a matter of fact, if
 you can think of a caveat, follow it!
+
+## Install
+To install, do the following:
+* Install [Composer](http://getcomposer.org)
+* Run `composer require ericpoe/ophp`
