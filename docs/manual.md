@@ -4,21 +4,21 @@
 You can start using OPHP right away, like so:
 
 ```php
-    use OPHP\OArray;
+use OPHP\OArray;
 
-    $myArray = new OArray();
-    $myArray = $myArray->insert("orange", "o");
+$myArray = new OArray();
+$myArray = $myArray->insert("orange", "o");
 ```
 
 Or you can use OPHP later on, like so:
 
 ```php
-    use OPHP\OArray;
+use OPHP\OArray;
 
-    $existingArray = range(1, 10);
-    ...
-    $myArray = new OArray($existingArray);
-    $myArray = $myArray->insert("orange", "o");
+$existingArray = range(1, 10);
+...
+$myArray = new OArray($existingArray);
+$myArray = $myArray->insert("orange", "o");
 ```
 
 ## Requirements
@@ -37,81 +37,81 @@ The main classes of OPHP are `OArray` and `OString`
 **contains($element)** - Checks to see if $element is contained within the current OString or OArray. Returns boolean.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
-    $myArray = new OArray(["apple", "banana", "celery"]);
+$myString = new OString("I am the very model of a modern major-general");
+$myArray = new OArray(["apple", "banana", "celery"]);
 
-    $myString->contains("model"); // bool(true)
-    $myString->contains("view"); // bool(false)
+$myString->contains("model"); // bool(true)
+$myString->contains("view"); // bool(false)
 
-    $myArray->contains("banana"); // bool(true)
-    $myArray->contains("raspberry"); // bool(false)
+$myArray->contains("banana"); // bool(true)
+$myArray->contains("raspberry"); // bool(false)
 ```
 
 **locate($element)** - Returns the array key of the first instance of $element within the current OString or OArray. Returns a "-1" if not found.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
-    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+$myString = new OString("I am the very model of a modern major-general");
+$myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
-    $key = $myString->locate("a"); // int(2)
-    $key = $myString->locate("mod"); // int(14)
-    $key = $myString->locate("z"); // int(-1)
+$key = $myString->locate("a"); // int(2)
+$key = $myString->locate("mod"); // int(14)
+$key = $myString->locate("z"); // int(-1)
 
-    $key = $myArray->locate("apple"); // "a"
-    $key = $myArray->locate("daikon"); // int(-1)
+$key = $myArray->locate("apple"); // "a"
+$key = $myArray->locate("daikon"); // int(-1)
 ```
 
 **append($element)** - Adds an element to the end of the collection.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
-    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+$myString = new OString("I am the very model of a modern major-general");
+$myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
-    $newString = $myString->append(", I've information vegetable, animal, and mineral");
-    // "I am the very model of a modern major-general, I've information vegetable, animal, and mineral"
+$newString = $myString->append(", I've information vegetable, animal, and mineral");
+// "I am the very model of a modern major-general, I've information vegetable, animal, and mineral"
 
-    $newArray = $myArray->append(["d" => "daikon"]); // ["a" => "apple", "b" => "banana", "c" => "celery", ["d" => "daikon"]]
+$newArray = $myArray->append(["d" => "daikon"]); // ["a" => "apple", "b" => "banana", "c" => "celery", ["d" => "daikon"]]
 ```
 
 **insert($element, $key = null)** - Inserts an element at the $key location; if $key is not identified, the element is inserted at the end.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
-    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+$myString = new OString("I am the very model of a modern major-general");
+$myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
-    $newString = $myString->insert(", I've information vegetable, animal, and mineral");
-    // "I am the very model of a modern major-general, I've information vegetable, animal, and mineral"
-    $newString = $myString->insert("think that I ", 2);
-    // "I think that I am the very model of a modern major-general"
+$newString = $myString->insert(", I've information vegetable, animal, and mineral");
+// "I am the very model of a modern major-general, I've information vegetable, animal, and mineral"
+$newString = $myString->insert("think that I ", 2);
+// "I think that I am the very model of a modern major-general"
 
-    $newArray = $myArray->insert(["d" => "daikon"]); //["a" => "apple", "b" => "banana", "c" => "celery", "d" => "daikon"]
-    $newArray = $myArray->insert(["a" => "apricot"]); // ["a" => ["apple", "apricot"], "b" => "banana", "c" => "celery"]
-    $newArray = $myArray->insert("apricot", "a"); // ["a" => ["apple", "apricot"], "b" => "banana", "c" => "celery"]
+$newArray = $myArray->insert(["d" => "daikon"]); //["a" => "apple", "b" => "banana", "c" => "celery", "d" => "daikon"]
+$newArray = $myArray->insert(["a" => "apricot"]); // ["a" => ["apple", "apricot"], "b" => "banana", "c" => "celery"]
+$newArray = $myArray->insert("apricot", "a"); // ["a" => ["apple", "apricot"], "b" => "banana", "c" => "celery"]
 ```
 
 **remove($element)** - Removes an element, if found.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
-    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+$myString = new OString("I am the very model of a modern major-general");
+$myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
-    $newString = $myString->remove("the very model of "); // "I am a modern major-general"
-    $newArray = $myArray->remove("banana"); // ["a" => "apple", "c" => "celery"]
+$newString = $myString->remove("the very model of "); // "I am a modern major-general"
+$newArray = $myArray->remove("banana"); // ["a" => "apple", "c" => "celery"]
 ```
 
 **slice($start, $length = null)** - Shows only part of the array or string.
@@ -120,24 +120,24 @@ The main classes of OPHP are `OArray` and `OString`
 * **Note:** The numeric-key values of the OString and the OArray will be reset; the string-key values of an OArray will not be reset.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
-    $myListArray = new OArray(["apple", "banana", "celery"]);
-    $myDictArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+$myString = new OString("I am the very model of a modern major-general");
+$myListArray = new OArray(["apple", "banana", "celery"]);
+$myDictArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
-    $newString = $myString->slice(2); // "am the very model of a modern major-general"
-    $newString = $myString->slice(-7); // "general"
-    $newString = $myString->slice(2, 2); // "am"
+$newString = $myString->slice(2); // "am the very model of a modern major-general"
+$newString = $myString->slice(-7); // "general"
+$newString = $myString->slice(2, 2); // "am"
 
-    $newArray = $myListArray->slice(1); // ["banana", "celery"]
-    $newArray = $myListArray->slice(-2); // ["banana", "celery"]
-    $newArray = $myListArray->slice(1, 1); // ["banana"]
+$newArray = $myListArray->slice(1); // ["banana", "celery"]
+$newArray = $myListArray->slice(-2); // ["banana", "celery"]
+$newArray = $myListArray->slice(1, 1); // ["banana"]
 
-    $newArray = $myDictArray->slice(1); // ["b" => "banana", "c" => "celery"]
-    $newArray = $myDictArray->slice(-2); // ["b" => "banana", "c" => "celery"]
-    $newArray = $myDictArray->slice(1, 1); // ["b" => "banana"]
+$newArray = $myDictArray->slice(1); // ["b" => "banana", "c" => "celery"]
+$newArray = $myDictArray->slice(-2); // ["b" => "banana", "c" => "celery"]
+$newArray = $myDictArray->slice(1, 1); // ["b" => "banana"]
 ```
 
 ### Functional Methods
@@ -145,54 +145,54 @@ The main classes of OPHP are `OArray` and `OString`
 **map($callable)** - Returns a new OArray or OString that has had all elements run against the callback.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
-    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+$myString = new OString("I am the very model of a modern major-general");
+$myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
-    $rot13 = function ($letter) {
-        if (" " === $letter || "-" === $letter) {
-            return $letter;
-        }
+$rot13 = function ($letter) {
+    if (" " === $letter || "-" === $letter) {
+        return $letter;
+    }
 
-        return chr(97 + (ord($letter) - 97 + 13) % 26);
-    };
+    return chr(97 + (ord($letter) - 97 + 13) % 26);
+};
 
-    $newString = $myString->map($rot13); // "V nz gur irel zbqry bs n zbqrea znwbe-trareny"
+$newString = $myString->map($rot13); // "V nz gur irel zbqry bs n zbqrea znwbe-trareny"
 
-    $capitalize = function ($word) {
-        return strtoupper($word);
-    };
+$capitalize = function ($word) {
+    return strtoupper($word);
+};
 
-    $newArr = $myArray->map($capitalize); // ["a" => "APPLE", "b" => "BANANA", "c" => "CELERY"]
+$newArr = $myArray->map($capitalize); // ["a" => "APPLE", "b" => "BANANA", "c" => "CELERY"]
 ```
 
 **walk($callable)** - Walk does an in-place update of items in the object.
 * **Note:** Since the update is in-place, this breaks the immutablity of OPHP objects. This is useful for very large implementations of the OPHP where cloning the object would be memory intensive.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
-    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+$myString = new OString("I am the very model of a modern major-general");
+$myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
-    $rot13 = function ($letter, $key) {
-        if (" " === $letter || "-" === $letter) {
-            return $myString[$key] = $letter;
-        }
+$rot13 = function ($letter, $key) {
+    if (" " === $letter || "-" === $letter) {
+        return $myString[$key] = $letter;
+    }
 
-        return $myString[$key] = chr(97 + (ord($letter) - 97 + 13) % 26);
+    return $myString[$key] = chr(97 + (ord($letter) - 97 + 13) % 26);
+};
+
+$myString->walk($rot13); // "V nz gur irel zbqry bs n zbqrea znwbe-trareny"
+
+$capitalize = function ($word, $key) {
+        return $myArray[$key] = strtoupper($word);
     };
 
-    $myString->walk($rot13); // "V nz gur irel zbqry bs n zbqrea znwbe-trareny"
-
-    $capitalize = function ($word, $key) {
-            return $myArray[$key] = strtoupper($word);
-        };
-
-    $myArray->walk($capitalize); // ["a" => "APPLE", "b" => "BANANA", "c" => "CELERY"]
+$myArray->walk($capitalize); // ["a" => "APPLE", "b" => "BANANA", "c" => "CELERY"]
 ```
 
 **filter($callable = null, $flag = null)** - Iterates over each value in the container passing them to the callback function. If the callback function returns true, the current value from container is returned into the result container. Container keys are preserved.
@@ -202,46 +202,46 @@ The main classes of OPHP are `OArray` and `OString`
     * **Note:** the callback parameter order is `$value` then `$key`
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
-    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+$myString = new OString("I am the very model of a modern major-general");
+$myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
-    $removeLowerCaseVowels = function ($letter) {
-        $vowels = new OString("aeiou");
-        return !$vowels->contains($letter);
-    };
+$removeLowerCaseVowels = function ($letter) {
+    $vowels = new OString("aeiou");
+    return !$vowels->contains($letter);
+};
 
-    $consonantWord = $myString->filter($removeLowerCaseVowels); // "I m th vry mdl f  mdrn mjr-gnrl"
+$consonantWord = $myString->filter($removeLowerCaseVowels); // "I m th vry mdl f  mdrn mjr-gnrl"
 
-    $vowel = function ($word) {
-        $vowels = new OString("aeiou");
-        return $vowels->contains($word[0]);
-    };
+$vowel = function ($word) {
+    $vowels = new OString("aeiou");
+    return $vowels->contains($word[0]);
+};
 
-    $firstLetterVowelWords = $myArray->filter($vowel); // ["a" => "apple"]
+$firstLetterVowelWords = $myArray->filter($vowel); // ["a" => "apple"]
 ```
 
 * **USE_BOTH Example**
 
     ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myArray = new OArray(["a" => "bobble", "b" => "apple", "c" => "cobble"]);
+$myArray = new OArray(["a" => "bobble", "b" => "apple", "c" => "cobble"]);
 
-    $vowel_both = function ($value, $key) {
-        $vowels = new OString("aeiou");
+$vowel_both = function ($value, $key) {
+    $vowels = new OString("aeiou");
 
-        if ($vowels->contains($value[0])) {
-            return true;
-        }
+    if ($vowels->contains($value[0])) {
+        return true;
+    }
 
-        return $vowels->contains($key);
-    };
+    return $vowels->contains($key);
+};
 
-    $vowelFoods = $myArray->filter($vowel_both, OArray::USE_BOTH); // ["a" => "bobble", "b" => "apple"]
+$vowelFoods = $myArray->filter($vowel_both, OArray::USE_BOTH); // ["a" => "bobble", "b" => "apple"]
   ```
 
 **reduce()** - Iteratively reduce the OPHP Collection to a single value using a callback function
@@ -251,58 +251,58 @@ The main classes of OPHP are `OArray` and `OString`
     * **$initial:** If the optional initial is available, it will be used at the beginning of the process, or as a final result in case the array is empty.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
+$myString = new OString("I am the very model of a modern major-general");
 
-    $encode = function ($carry, $item) {
-      if (ctype_upper($item) || ctype_lower($item)) {
-          $value = (ord($item) % 26) + 97;
-          $carry .= chr($value);
-      } else {
-          $carry .= $item;
-      }
+$encode = function ($carry, $item) {
+  if (ctype_upper($item) || ctype_lower($item)) {
+      $value = (ord($item) % 26) + 97;
+      $carry .= chr($value);
+  } else {
+      $carry .= $item;
+  }
 
-      return $carry;
-    };
+  return $carry;
+};
 
-    $codedMessage = $myString->reduce($encode); // "v tf max oxkr fhwxe hy t fhwxkg ftchk-zxgxkte"
+$codedMessage = $myString->reduce($encode); // "v tf max oxkr fhwxe hy t fhwxkg ftchk-zxgxkte"
 
-    $myArray = new OArray(range(1,10));
+$myArray = new OArray(range(1,10));
 
-    $sum = function ($carry, $item) {
-        $carry += $item;
-        return $carry;
-    };
+$sum = function ($carry, $item) {
+    $carry += $item;
+    return $carry;
+};
 
-    $bigNum = $myArray->reduce($sum); // int(55)
+$bigNum = $myArray->reduce($sum); // int(55)
 ```
 
 **head()** - Returns the first element of the OArray or OString.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
-    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+$myString = new OString("I am the very model of a modern major-general");
+$myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
-    $headString = $myString->head(); // "I"
-    $headArray = $myArray->head(); // ["a" => "apple"]
+$headString = $myString->head(); // "I"
+$headArray = $myArray->head(); // ["a" => "apple"]
 ```
 
 **tail()** - Returns all of the elements that are not the head() of the OArray or OString
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("I am the very model of a modern major-general");
-    $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
+$myString = new OString("I am the very model of a modern major-general");
+$myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
-    $tailString = $myString->tail(); // " am the very model of a modern major-general"
-    $tailArray = $myArray->tail(); // ["b" => "banana", "c" => "celery"]
+$tailString = $myString->tail(); // " am the very model of a modern major-general"
+$tailArray = $myArray->tail(); // ["b" => "banana", "c" => "celery"]
 
 ```
 
@@ -329,25 +329,25 @@ var_dump($result); // int(251)
 **product()** - Calculates the product of the values in the collection. Any non-number values are equal to 0.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
-    $myArray = new OArray(range(1, 10));
+$myString = new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
+$myArray = new OArray(range(1, 10));
 
-    $myString->product(); // int(3628800)
-    $myArray->product(); // int(3628800)
+$myString->product(); // int(3628800)
+$myArray->product(); // int(3628800)
 ```
 
 **sum()** - Calculates the sum of the values in the collection. Any non-number values are equal to 0.
 
 ```php
-    use OPHP\OArray;
-    use OPHP\OString;
+use OPHP\OArray;
+use OPHP\OString;
 
-    $myString = new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
-    $myArray = new OArray(range(1, 10));
+$myString = new OString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
+$myArray = new OArray(range(1, 10));
 
-    $myString->sum(); // int(55)
-    $myArray->sum(); // int(55)
+$myString->sum(); // int(55)
+$myArray->sum(); // int(55)
 ```
