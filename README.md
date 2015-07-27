@@ -7,11 +7,20 @@
 # OPHP
 An imagining of PHP as if it were designed around objects.
 
+## Install
+OPHP is installable as a [Composer](http://getcomposer.org) package:
+
+```sh
+$ composer require ericpoe/ophp
+```
+
 ## Running tests
 
-    $ git clone ...
-    $ composer install
-    $ vendor/bin/phpunit
+```sh
+$ git clone ...
+$ composer install
+$ vendor/bin/phpunit
+```
 
 ## Background
 Trying to remember commonly-used PHP functions for strings and arrays in PHP is hard. Are array functions
@@ -30,8 +39,3 @@ an array. Ditto `$foo->map($callable)` and `$foo->filter($callable)`.
 ## Status
 This project is in its early stages. Use at your own peril. _Caveat Codor_ & _Caveat Emptor_ As a matter of fact, if
 you can think of a caveat, follow it!
-
-## Install
-To install, do the following:
-* Install [Composer](http://getcomposer.org)
-* Run `composer require ericpoe/ophp`

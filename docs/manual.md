@@ -4,6 +4,7 @@
 You can start using OPHP right away, like so:
 
 ```php
+    use OPHP\OArray;
     $myArray = new OArray();
     $myArray = $myArray->insert("orange", "o");
 ```
@@ -11,6 +12,7 @@ You can start using OPHP right away, like so:
 Or you can use OPHP later on, like so:
 
 ```php
+    use OPHP\OArray;
     $existingArray = range(1, 10);
     ...
     $myArray = new OArray($existingArray);
@@ -265,6 +267,21 @@ The main classes of OPHP are `OArray` and `OString`
     $tailString = $myString->tail(); // " am the very model of a modern major-general"
     $tailArray = $myArray->tail(); // ["b" => "banana", "c" => "celery"]
     
+```
+
+### Collection Pipeline
+
+`OArray` can also be used as a concise [Collection
+Pipeline](http://martinfowler.com/articles/collection-pipeline/) by
+using map, reduce and filter with a fluent interface.
+
+```php
+$array = new OArray([3, 5, 7, 9, 11]);
+$result = $array->map(function ($i) { return $i * $i; })    // Square [9, 25, 49, 81, 121]
+  ->filter(function ($i) { return $i > 30; })               // Only large numbers [49, 81, 121]
+  ->reduce(function ($carry, $i) { return $carry += $i; }); // Sum
+
+var_dump($result); // int(251)
 ```
 
 ### Math
