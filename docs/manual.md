@@ -30,6 +30,23 @@ The main classes of OPHP are `OArray` and `OString`
 
 `OArray` is designed as a replacement for the standard PHP Array; `OString` is designed as a replacement for the standard PHP String. These two types of objects share many of the same method calls. In OPHP, accessing and manipulating an array, for the most part, is no different from accessing and manipulating a string. Where differences exist, this document shall show those differences.
 
+### Collection Pipeline
+
+`OArray` and `OString` can also be used as a concise [Collection
+Pipeline](http://martinfowler.com/articles/collection-pipeline/) by
+using map, reduce and filter with a fluent interface.
+
+```php
+use OPHP\OArray;
+
+$array = new OArray([3, 5, 7, 9, 11]);
+$result = $array->map(function ($i) { return $i * $i; })    // Square [9, 25, 49, 81, 121]
+  ->filter(function ($i) { return $i > 30; })               // Only large numbers [49, 81, 121]
+  ->reduce(function ($carry, $i) { return $carry += $i; }); // Sum
+
+var_dump($result); // int(251)
+```
+
 ## Common Methods in OArray and OString
 
 ### Container Methods
@@ -304,24 +321,6 @@ $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 $tailString = $myString->tail(); // " am the very model of a modern major-general"
 $tailArray = $myArray->tail(); // ["b" => "banana", "c" => "celery"]
 
-```
-
-### Collection Pipeline
-
-`OArray` can also be used as a concise [Collection
-Pipeline](http://martinfowler.com/articles/collection-pipeline/) by
-using map, reduce and filter with a fluent interface.
-
-```php
-use OPHP\OArray;
-use OPHP\OString;
-
-$array = new OArray([3, 5, 7, 9, 11]);
-$result = $array->map(function ($i) { return $i * $i; })    // Square [9, 25, 49, 81, 121]
-  ->filter(function ($i) { return $i > 30; })               // Only large numbers [49, 81, 121]
-  ->reduce(function ($carry, $i) { return $carry += $i; }); // Sum
-
-var_dump($result); // int(251)
 ```
 
 ### Math
