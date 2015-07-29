@@ -40,6 +40,23 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
         return $this->arr;
     }
 
+    public function toOString($glue = null)
+    {
+        if (0 === $this->count()) {
+            return new OString();
+        }
+
+        if (is_null($glue)) {
+            $glue = "";
+        }
+
+        if (is_string($glue) || $glue instanceof OString) {
+            return new OString(implode($glue, $this->arr));
+        }
+
+        throw new \InvalidArgumentException("glue must be a string");
+    }
+
     /**
      * @inheritdoc
      *

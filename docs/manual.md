@@ -350,3 +350,47 @@ $myArray = new OArray(range(1, 10));
 $myString->sum(); // int(55)
 $myArray->sum(); // int(55)
 ```
+## OArray-only Methods
+**toArray()** - Converts OArray to a standard PHP array.
+```php
+use OPHP\OArray;
+
+$myArray = new OArray(range(1, 4));
+$array = $myArray->toArray(); // [1, 2, 3, 4]
+```
+
+**toOString($glue = null)** - Converts an OArray to an OString. This is similar to PHP's [`implode`](http://php.net/manual/en/function.implode.php).
+* **$glue** is the string that binds the values of the OArray together to form the OString.
+* If the OArray is empty, the returned OString will also be empty.
+```php
+use OPHP\OArray;
+use OPHP\OString;
+
+$myArray = new OArray(range(1, 4));
+$lawrenceWelk = $myArray->toOString(" and-a "); // OString("1 and-a 2 and-a 3 and-a 4")
+```
+
+## OString-only Methods
+**toString()** - Converts OString to a standard PHP string.
+```php
+use OPHP\OString;
+
+$myString = new OString("foo bar");
+$string = $myString->toString(); // "foo bar"
+```
+
+**toOArray($delim = " ", $limit = null)** - Converts an OString to an OArray. This is similar to PHP's [`explode`](http://php.net/manual/en/function.explode.php).
+* **$delim** - The string to split the string on. This could be a single character or a phrase.
+* **$limit** - How many elements should be in the OArray.
+* If the OString is empty, the returned OArray will also be empty.
+
+```php
+use OPHP\OArray;
+use OPHP\OString;
+
+$myString = new OString("I am the very model of a modern major-general");
+$words = $myString->toOArray(" "); // OArray(["I", "am", "the", "very", "model", "of", "a", "modern", "major-general"]);
+$wordGroups = $myString->toOArray(" modern "); // OArray(["I am the very model of a", "major-general"]);
+$someWords = $myString->toOArray(" ", 4); // OArray (["I", "am", "the", "very model of a modern major-general"]);
+```
+
