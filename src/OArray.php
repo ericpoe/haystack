@@ -60,7 +60,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
     public function contains($value)
     {
         $answer = new OArrayContains($this, $value);
-        return $answer->getAnswer();
+        return $answer->isContained();
     }
 
     /**

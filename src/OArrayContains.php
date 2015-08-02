@@ -19,7 +19,10 @@ class OArrayContains
         }
     }
 
-    public function getAnswer()
+    /**
+     * @return bool
+     */
+    public function isContained()
     {
         return $this->answer;
     }

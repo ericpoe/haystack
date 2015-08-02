@@ -32,7 +32,10 @@ class OStringContains
         }
     }
 
-    public function getAnswer()
+    /**
+     * @return boolean
+     */
+    public function isContained()
     {
         return $this->flag;
     }
