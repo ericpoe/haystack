@@ -42,7 +42,7 @@ class OStringContains
     }
 
     /**
-     * @param |bool|float|int|string $value
+     * @param bool|float|int|string $value
      */
     private function containsScalar($value)
     {
