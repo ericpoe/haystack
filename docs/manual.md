@@ -359,7 +359,7 @@ $myArray = new OArray(range(1, 4));
 $array = $myArray->toArray(); // [1, 2, 3, 4]
 ```
 
-**toOString($glue = null)** - Converts an OArray to an OString. This is similar to PHP's [`implode`](http://php.net/manual/en/function.implode.php).
+**toOString($glue = "")** - Converts an OArray to an OString. This is similar to PHP's [`implode`](http://php.net/manual/en/function.implode.php).
 * **$glue** is the string that binds the values of the OArray together to form the OString.
 * If the OArray is empty, the returned OString will also be empty.
 ```php

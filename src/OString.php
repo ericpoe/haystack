@@ -64,19 +64,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             return new OArray();
         }
 
-        if (empty($delim)) {
-            $delim = " ";
-        }
-
-        if (is_string($delim) || $delim instanceof OString) {
-            if (is_null($limit)) {
-                return new OArray(explode($delim, $this->string));
-            } elseif (is_integer($limit)) {
-                return new OArray(explode($delim, $this->string, $limit));
-            }
-            throw new \InvalidArgumentException("limit must be an integer");
-        }
-        throw new \InvalidArgumentException("delimiter must be a string");
+        $arr = new ToOArray($this->string, $delim, $limit);
+        return new OArray($arr->toArray());
     }
 
     /**
