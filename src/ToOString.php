@@ -10,6 +10,11 @@ class ToOString
     /** @var OString|string */
     private $glue;
     private $string;
+
+    /**
+     * @param array  $arr
+     * @param string $glue
+     */
     public function __construct(array $arr, $glue = "")
     {
         $this->arr = $arr;
@@ -27,6 +32,9 @@ class ToOString
         throw new \InvalidArgumentException("glue must be a string");
     }
 
+    /**
+     * @return string
+     */
     public function toString()
     {
         return $this->string;

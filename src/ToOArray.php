@@ -12,6 +12,11 @@ class ToOArray
     /** @var array */
     private $arr;
 
+    /**
+     * @param           $string
+     * @param string    $delim
+     * @param int|null  $limit
+     */
     public function __construct($string, $delim = " ", $limit = null)
     {
         $this->string = $string;
@@ -37,6 +42,9 @@ class ToOArray
         }
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return $this->arr;
@@ -52,6 +60,9 @@ class ToOArray
         $this->arr = explode($this->delim, $this->string);
     }
 
+    /**
+     * @param int   $limit
+     */
     private function explode($limit)
     {
         $this->arr = explode($this->delim, $this->string, $limit);
