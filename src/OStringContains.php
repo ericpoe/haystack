@@ -67,6 +67,6 @@ class OStringContains
     {
         $pos = strstr($this->string, $value);
 
-        return (false != $pos) ?: false;
+        return (false !== $pos) ?: false;
     }
 }
