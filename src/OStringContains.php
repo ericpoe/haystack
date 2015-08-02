@@ -15,6 +15,7 @@ class OStringContains
      */
     private $string;
 
+    /** @var  boolean */
     private $flag;
 
 
@@ -40,18 +41,28 @@ class OStringContains
         return $this->flag;
     }
 
+    /**
+     * @param |bool|float|int|string $value
+     */
     private function containsScalar($value)
     {
         $newValue = (string)$value;
         $this->flag = $this->containsValue($newValue);
     }
 
+    /**
+     * @param OString $value
+     */
     private function containsOString(OString $value)
     {
         $newValue = $value->toString();
         $this->flag = $this->containsValue($newValue);
     }
 
+    /**
+     * @param string|OString $value
+     * @return bool
+     */
     private function containsValue($value)
     {
         $pos = strstr($this->string, $value);

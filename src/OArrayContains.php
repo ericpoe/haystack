@@ -5,10 +5,17 @@ use OPHP\Helpers\Helper;
 
 class OArrayContains
 {
+    /** @var bool */
     private $answer;
+
+    /** @var Helper */
     private $helper;
 
-    public function __construct($arr, $value)
+    /**
+     * @param OArray $arr
+     * @param        $value
+     */
+    public function __construct(OArray $arr, $value)
     {
         $this->helper = new Helper();
 
