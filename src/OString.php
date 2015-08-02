@@ -77,18 +77,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function contains($value)
     {
-        if (is_scalar($value)) {
-            $pos = strstr($this->string, (string) $value);
-
-            return (false !== $pos) ?: false;
-        }
-
-        if ($value instanceof OString) {
-            $pos = strstr($this->string, $value->toString());
-
-            return (false !== $pos) ?: false;
-        }
-        throw new \InvalidArgumentException("{$this->helper->getType($value)} is neither a scalar value nor an OString");
+        $answer = new OStringContains($this, $value);
+        return $answer->getAnswer();
     }
 
     /**

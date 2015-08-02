@@ -59,11 +59,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function contains($value)
     {
-        if ($this->helper->canBeInArray($value)) {
-            return (in_array($value, $this->arr));
-        } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an OArray");
-        }
+        $answer = new OArrayContains($this, $value);
+        return $answer->getAnswer();
     }
 
     /**
