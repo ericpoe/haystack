@@ -1,7 +1,7 @@
 <?php
 namespace OPHP;
 
-interface BaseFunctional
+interface BaseFunctionalInterface
 {
     /**
      * Applies the callback to the elements of the given array

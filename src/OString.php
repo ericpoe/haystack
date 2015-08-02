@@ -3,7 +3,7 @@ namespace OPHP;
 
 use OPHP\Helpers\Helper;
 
-class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Container, BaseFunctional, Math
+class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, ContainerInterface, BaseFunctionalInterface, MathInterface
 {
     const USE_KEY = "key";
     const USE_BOTH = "both";

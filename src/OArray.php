@@ -3,7 +3,7 @@ namespace OPHP;
 
 use OPHP\Helpers\Helper;
 
-class OArray extends \ArrayObject implements Container, BaseFunctional, Math
+class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalInterface, MathInterface
 {
     const USE_KEY = "key";
     const USE_BOTH = "both";

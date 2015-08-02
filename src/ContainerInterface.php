@@ -1,7 +1,7 @@
 <?php
 namespace OPHP;
 
-interface Container
+interface ContainerInterface
 {
     /**
      * Determines if a $value is in the current object.
