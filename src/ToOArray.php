@@ -22,7 +22,8 @@ class ToOArray
         $this->string = $string;
 
         if (empty($delim)) {
-            return $this->noDelimExplode();
+            $this->arr = $this->noDelimExplode();
+            return $this->arr;
         }
 
         if (is_string($delim) || $delim instanceof OString) {
@@ -32,11 +33,13 @@ class ToOArray
         }
 
         if (is_null($limit)) {
-            return $this->noLimitExplode();
+            $this->arr = $this->noLimitExplode();
+            return $this->arr;
         }
 
         if (is_integer($limit)) {
-            return $this->explode($limit);
+            $this->arr = $this->explode($limit);
+            return $this->arr;
         } else {
             throw new \InvalidArgumentException("limit must be an integer");
         }
@@ -50,21 +53,28 @@ class ToOArray
         return $this->arr;
     }
 
+    /**
+     * @return array
+     */
     private function noDelimExplode()
     {
-        $this->arr = explode(" ", $this->string);
+        return explode(" ", $this->string);
     }
 
+    /**
+     * @return array
+     */
     private function noLimitExplode()
     {
-        $this->arr = explode($this->delim, $this->string);
+        return explode($this->delim, $this->string);
     }
 
     /**
      * @param int   $limit
+     * @return array
      */
     private function explode($limit)
     {
-        $this->arr = explode($this->delim, $this->string, $limit);
+        return explode($this->delim, $this->string, $limit);
     }
 }

@@ -26,7 +26,8 @@ class ToOString
         }
 
         if (is_string($this->glue) || $this->glue instanceof OString) {
-            return $this->oArrayImplode();
+            $this->string = $this->oArrayImplode();
+            return $this->string;
         }
 
         throw new \InvalidArgumentException("glue must be a string");
@@ -40,8 +41,11 @@ class ToOString
         return $this->string;
     }
 
+    /**
+     * @return string
+     */
     private function oArrayImplode()
     {
-        $this->string = implode($this->glue, $this->arr);
+        return implode($this->glue, $this->arr);
     }
 }
