@@ -62,8 +62,6 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("ErrorException", $exceptionMsg);
         $badArr = new OArray($item);
-        $this->getExpectedException();
-
     }
 
     public function badArraysProvider()
@@ -116,7 +114,6 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $this->arrList->locate($item);
-        $this->getExpectedException();
     }
 
     public function badArrayContainsProvider()
@@ -167,7 +164,6 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $this->arrList->append($item);
-        $this->getExpectedException();
     }
 
     public function badAppendProvider()
@@ -276,8 +272,6 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         } else {
             $subArray = $this->arrDict->slice($start, $length);
         }
-
-        $this->getExpectedException();
     }
 
     public function badArraySliceProvider()
@@ -336,7 +330,6 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $this->arrList->insert($item);
-        $this->getExpectedException();
     }
 
     public function badArrayInsertProvider()
@@ -386,7 +379,6 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $newArray = $this->arrDict->remove($item);
-        $this->getExpectedException();
     }
 
     public function badRemoveProvider()
@@ -407,7 +399,6 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $newArray = $this->arrDict->insert("yobbo", $key);
-        $this->getExpectedException();
     }
 
     public function badInsertKeyProvider()
@@ -501,7 +492,6 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException("InvalidArgumentException", "Invalid flag name");
         $this->arrList->filter($vowel, "boooth");
-        $this->getExpectedException();
     }
 
     /**

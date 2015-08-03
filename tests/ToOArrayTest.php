@@ -54,7 +54,6 @@ class ToOArrayTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException("InvalidArgumentException", $expectedMsg);
         $string->toOArray($delim);
-        $this->getExpectedException();
     }
 
     public function badDelimInStringToArrayProvider()
@@ -75,7 +74,6 @@ class ToOArrayTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException("InvalidArgumentException", $expectedMsg);
         $string->toOArray(" ", $limit);
-        $this->getExpectedException();
     }
 
     public function badLimitInStringToArrayProvider()

@@ -61,8 +61,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("ErrorException", $message);
         $this->aString = new OString($item);
-        $this->getExpectedException();
-
     }
 
     public function createBadOStringProvider()
@@ -108,7 +106,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $message);
         $var = $this->aString->locate($item);
-        $this->getExpectedException();
     }
 
     public function badLocateTypesOfStringInFoobarProvider()
@@ -218,7 +215,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $message);
         $tmp = $this->aString->slice($start, $length);
-        $this->getExpectedException();
     }
 
     public function badSlicingProvider()
@@ -267,7 +263,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $message);
         $this->aString->unserialize($item);
-        $this->getExpectedException();
     }
 
     public function badUnserializeProvider()
@@ -320,7 +315,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $message);
         $this->aString->insert($value, $key);
-        $this->getExpectedException();
     }
 
     public function badInsertProvider()
@@ -343,7 +337,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", "Cannot concatenate an OString with a DateTime");
         $newString = $this->aString->append(new \DateTime());
-        $this->getExpectedException();
     }
 
     public function testIteratorNext()

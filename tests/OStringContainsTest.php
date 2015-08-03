@@ -47,7 +47,6 @@ class OStringContainsTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $message);
         $var = $this->aString->contains($item);
-        $this->getExpectedException();
     }
 
     public function badTypesOfStringInFoobar()
