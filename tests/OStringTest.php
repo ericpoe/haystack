@@ -39,6 +39,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         return [
             "Empty String" => [" ", " "],
             "OString" => [new OString("abc"), "abc"],
+            "OString of OString of OString of..." => [new OString(new OString(new OString(new OString("abc")))), "abc"],
             "Simple string" => ["abc", "abc"],
             "integer 1" => [1, "1"],
             "integer 0" => [0, "0"],
