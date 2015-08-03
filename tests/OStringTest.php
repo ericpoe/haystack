@@ -431,63 +431,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("FOOBAR", $this->aString->toString());
     }
 
-    public function testStringFilter()
-    {
-        $strangeString = $this->aString->insert(0, 3);
-        $default = $strangeString->filter();
-        $this->assertEquals("foobar", $default->toString());
-
-        $removeVowels = function ($letter) {
-            $vowels = new OString("aeiou");
-
-            return !$vowels->contains($letter);
-        };
-
-        $consonants = $this->aString->filter($removeVowels);
-        $this->assertEquals("fbr", $consonants->toString());
-
-        $removeOdd = function ($key) {
-            return $key % 2;
-        };
-
-        $flag = OString::USE_KEY;
-
-        $even = $this->aString->filter($removeOdd, $flag);
-        $this->assertEquals("obr", $even->toString());
-
-        $even = $this->aString->filter(function ($key) {
-            return $key % 2;
-        }, $flag);
-        $this->assertEquals("obr", $even->toString());
-
-        $alpha = new OString('abcdefghijklmnopqrstuvwxyz');
-        $evenAlpha = $alpha->filter($removeOdd, OString::USE_KEY);
-
-        $thing_both = function ($value, $key) use ($evenAlpha) {
-            if ($evenAlpha->contains($value)) {
-                return true;
-            }
-
-            return $key % 2;
-        };
-
-        $flag = OString::USE_BOTH;
-        $funky = $this->aString->filter($thing_both, $flag);
-        $this->assertEquals("fobr", $funky->toString());
-
-    }
-
-    public function testInvalidFilterFlag()
-    {
-        $flag = "bad_flag";
-        $this->setExpectedException("InvalidArgumentException", "Invalid flag name");
-        $even = $this->aString->filter(function ($key) {
-            return $key % 2;
-        }, $flag);
-        $this->getExpectedException();
-        $this->assertEquals("obr", $even->toString());
-    }
-
     public function testReduce()
     {
         $fn = function ($carry, $item) {

@@ -11,23 +11,29 @@ class OStringContains
     private $helper;
 
     /**
-     * @var \OPHP\OString
+     * @var OString
      */
     private $string;
+
+    /**
+     * @var OString|string
+     */
+    private $value;
 
     /** @var  boolean */
     private $flag;
 
 
-    public function __construct(OString $string, $value)
+    public function __construct(OString &$string, &$value)
     {
         $this->helper = new Helper();
-        $this->string = $string;
+        $this->string = $string->toString();
+        $this->value = $value;
 
-        if (is_scalar($value)) {
-            $this->containsScalar($value);
-        } elseif ($value instanceof OString) {
-            $this->containsOString($value);
+        if (is_scalar($this->value)) {
+            $this->containsScalar($this->value);
+        } elseif ($this->value instanceof OString) {
+            $this->containsOString($this->value);
         } else {
             throw new \InvalidArgumentException("{$this->helper->getType($value)} is neither a scalar value nor an OString");
         }
@@ -41,21 +47,15 @@ class OStringContains
         return $this->flag;
     }
 
-    /**
-     * @param bool|float|int|string $value
-     */
-    private function containsScalar($value)
+    private function containsScalar()
     {
-        $newValue = (string)$value;
+        $newValue = (string)$this->value;
         $this->flag = $this->containsValue($newValue);
     }
 
-    /**
-     * @param OString $value
-     */
-    private function containsOString(OString $value)
+    private function containsOString()
     {
-        $newValue = $value->toString();
+        $newValue = $this->value->toString();
         $this->flag = $this->containsValue($newValue);
     }
 
@@ -63,9 +63,9 @@ class OStringContains
      * @param string|OString $value
      * @return bool
      */
-    private function containsValue($value)
+    private function containsValue(&$newValue)
     {
-        $pos = strstr($this->string, $value);
+        $pos = strstr($this->string, $newValue);
 
         return (false !== $pos) ?: false;
     }

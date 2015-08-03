@@ -400,27 +400,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function filter(callable $func = null, $flag = null)
     {
-        // Default
-        if (is_null($func)) {
-            return $this->filterWithDefaults();
-        }
-
-        // No flags are passed
-        if (is_null($flag)) {
-            return $this->filterWithValue($func);
-        }
-
-        // Flag is passed
-        if ("key" === $flag || "both" === $flag) {
-            // Flag of "USE_KEY" is passed
-            if ("key" === $flag) {
-                return $this->filterWithKey($func);
-            }
-
-            // Flag of "USE_BOTH is passed
-            return $this->filterWithValueAndKey($func);
-        }
-        throw new \InvalidArgumentException("Invalid flag name");
+        return new OStringFilter($this, $func, $flag);
     }
 
     /**
@@ -491,72 +471,5 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         $values = new OArray(str_getcsv(str_ireplace(" ", "", $this->string)));
 
         return $values->product();
-    }
-
-    /**
-     * @return OString
-     */
-    private function filterWithDefaults()
-    {
-        $newString = new OString();
-
-        foreach ($this as $letter) {
-            if ((bool) $letter) {
-                $newString = $newString->insert($letter);
-            }
-        }
-
-        return $newString;
-    }
-
-    /**
-     * @param callable $func
-     * @return OString
-     */
-    private function filterWithValue(callable $func)
-    {
-        $newString = new OString();
-
-        foreach ($this as $letter) {
-            if ($func($letter)) {
-                $newString = $newString->insert($letter);
-            }
-        }
-
-        return $newString;
-    }
-
-    /**
-     * @param callable $func
-     * @return OString
-     */
-    private function filterWithKey(callable $func)
-    {
-        $newString = new OString();
-
-        foreach ($this as $letter) {
-            if (true === (bool) $func($this->key())) {
-                $newString = $newString->insert($letter);
-            }
-        }
-
-        return $newString;
-    }
-
-    /**
-     * @param callable $func
-     * @return OString
-     */
-    private function filterWithValueAndKey(callable $func)
-    {
-        $newString = new OString();
-
-        foreach ($this as $letter) {
-            if (true === (bool) $func($letter, $this->key())) {
-                $newString = $newString->insert($letter);
-            }
-        }
-
-        return $newString;
     }
 }
