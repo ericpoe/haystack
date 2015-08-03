@@ -30,8 +30,12 @@ class OStringContainsTest extends \PHPUnit_Framework_TestCase
         return [
             "String known-present" => ["oob", true],
             "String known-missing" => ["baz", false],
+            "String letter known-present" => ["b", true],
+            "String letter known-missing" => ["z", false],
             "OString known-present" => [new OString('oob'), true],
+            "OString letter known-present" => [new OString('b'), true],
             "OString known-missing" => [new OString('baz'), false],
+            "OString letter known-missing" => [new OString('z'), false],
             "Integer known-missing" => [42, false],
 
         ];
