@@ -7,7 +7,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 {
     const USE_KEY = "key";
     const USE_BOTH = "both";
-    private $string;
+    protected $string;
     private $ptr; // pointer for iterating through $string
 
     /** @var  Helper */

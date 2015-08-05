@@ -1,22 +1,22 @@
 <?php
 namespace OPHP;
 
-use OPHP\Filter\FilterWithDefaults;
-use OPHP\Filter\FilterWithKey;
-use OPHP\Filter\FilterWithValue;
-use OPHP\Filter\FilterWithValueAndKey;
+use OPHP\Filter\OStringFilterWithDefaults;
+use OPHP\Filter\OStringFilterWithKey;
+use OPHP\Filter\OStringFilterWithValue;
+use OPHP\Filter\OStringFilterWithValueAndKey;
 
 class OStringFilter extends OString
 {
-    private $string;
-    private $filtered;
+    /** @var OString */
+    protected $string;
+
+    /** @var OString */
+    protected $filtered;
 
     public function __construct(OString &$string, callable $func = null, $flag = null)
     {
-        /** @var string */
         $this->string = $string;
-
-        /** @var OString filtered */
         $this->filtered = new OString();
 
         // Default
@@ -56,7 +56,7 @@ class OStringFilter extends OString
      */
     private function filterWithDefaults()
     {
-        return new FilterWithDefaults($this->string, $this->filtered);
+        return new OStringFilterWithDefaults($this->string, $this->filtered);
     }
 
     /**
@@ -65,7 +65,7 @@ class OStringFilter extends OString
      */
     private function filterWithValue(callable $func)
     {
-        return new FilterWithValue($this->string, $this->filtered, $func);
+        return new OStringFilterWithValue($this->string, $this->filtered, $func);
     }
 
     /**
@@ -74,7 +74,7 @@ class OStringFilter extends OString
      */
     private function filterWithKey(callable $func)
     {
-        return new FilterWithKey($this->string, $this->filtered, $func);
+        return new OStringFilterWithKey($this->string, $this->filtered, $func);
     }
 
     /**
@@ -83,6 +83,6 @@ class OStringFilter extends OString
      */
     private function filterWithValueAndKey(callable $func)
     {
-        return new FilterWithValueAndKey($this->string, $this->filtered, $func);
+        return new OStringFilterWithValueAndKey($this->string, $this->filtered, $func);
     }
 }

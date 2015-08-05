@@ -4,7 +4,7 @@ namespace OPHP\Filter;
 use OPHP\OString;
 use OPHP\OStringFilter;
 
-class FilterWithValue extends OStringFilter
+class OStringFilterWithValue extends OStringFilter
 {
     /**
      * @param OString  $string
