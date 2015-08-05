@@ -1,23 +1,26 @@
 language: php
 
 php:
-  - "5.4"
-  - "5.5"
-  - "5.6"
-  - "7.0"
-  - hhvm
+    - "5.4"
+    - "5.5"
+    - "5.6"
+    - "7.0"
+    - hhvm
 
 #sudo: false
 
 install: travis_retry composer install --no-interaction --prefer-source
 
 before_script:
-  - composer install --dev --prefer-source
+    - travis_retry composer self-update
+    - composer install --dev --prefer-source
+    - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "hhvm" ]; then rm phpunit.xml; fi;'
+    - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "hhvm" ]; then mv phpunit.xml.dist phpunit.xml; fi;'
 
 script:
-  - if [ "$TRAVIS_PHP_VERSION" == "hhvm" ]; then vendor/bin/phpunit; fi
-  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover; fi
+    - if [ "$TRAVIS_PHP_VERSION" == "hhvm" ]; then vendor/bin/phpunit; fi
+    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover; fi
 
 after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$TRAVIS_PHP_VERSION" != "7.0" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$TRAVIS_PHP_VERSION" != "7.0" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
