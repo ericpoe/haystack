@@ -1,7 +1,7 @@
 <?php
 namespace OPHP;
 
-class ToOArray
+class StringToArray
 {
     /** @var string */
     private $string;
@@ -13,23 +13,29 @@ class ToOArray
     private $arr;
 
     /**
-     * @param           $string
-     * @param string    $delim
-     * @param int|null  $limit
+     * @param $string
+     * @param string $delim
      */
-    public function __construct($string, $delim = " ", $limit = null)
+    public function __construct($string, $delim = " ")
     {
         $this->string = $string;
 
-        if (empty($delim)) {
-            $this->arr = $this->noDelimExplode();
-            return $this->arr;
-        }
-
-        if (is_string($delim) || $delim instanceof OString) {
+        if (empty($delim) || is_string($delim) || $delim instanceof OString) {
             $this->delim = $delim;
         } else {
             throw new \InvalidArgumentException("delimiter must be a string");
+        }
+    }
+
+    /**
+     * @param null $limit
+     * @return array
+     */
+    public function stringToArray($limit = null)
+    {
+        if (empty($this->delim)) {
+            $this->arr = $this->noDelimExplode();
+            return $this->arr;
         }
 
         if (is_null($limit)) {
@@ -43,14 +49,6 @@ class ToOArray
         } else {
             throw new \InvalidArgumentException("limit must be an integer");
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return $this->arr;
     }
 
     /**

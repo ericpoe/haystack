@@ -64,8 +64,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             return new OArray();
         }
 
-        $arr = new ToOArray($this->string, $delim, $limit);
-        return new OArray($arr->toArray());
+        $arr = new StringToArray($this->string, $delim);
+        return new OArray($arr->stringToArray($limit));
     }
 
     /**

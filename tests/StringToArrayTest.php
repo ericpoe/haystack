@@ -4,7 +4,7 @@ namespace OPHP\Tests;
 use OPHP\OArray;
 use OPHP\OString;
 
-class ToOArrayTest extends \PHPUnit_Framework_TestCase
+class StringToArrayTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider stringToOArrayProvider
