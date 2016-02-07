@@ -22,7 +22,7 @@ $myArray = $myArray->insert("orange", "o");
 ```
 
 ## Requirements
-* PHP >= 5.4
+* PHP >= 5.6
 * [composer](http://getcomposer.org)
 
 ## Main Classes of OPHP

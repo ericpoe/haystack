@@ -15,28 +15,13 @@ class OArrayFilterWithKey extends OArray
     {
         parent::__construct($arr);
 
-        if (version_compare(phpversion(), 5.6) >= 0) {
-            $this->internalFilterWithKey($func);
-        } else {
-            $this->legacyFilterWithKey($func);
-        }
+        $this->filterWithKey($func);
 
         $this->arr = $this->filtered;
     }
 
-    private function internalFilterWithKey($func)
+    private function filterWithKey($func)
     {
         $this->filtered = array_filter($this->arr->toArray(), $func, ARRAY_FILTER_USE_KEY);
-    }
-
-    private function legacyFilterWithKey($func)
-    {
-        $filtered = new OArray();
-        foreach ($this as $key => $value) {
-            if (true === (bool) $func($key)) {
-                $filtered = $filtered->insert($value, $key);
-            }
-        }
-        $this->filtered = $filtered->toArray();
     }
 }
