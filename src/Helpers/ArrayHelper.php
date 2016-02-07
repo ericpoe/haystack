@@ -1,8 +1,5 @@
 <?php
-
-
 namespace OPHP\Helpers;
-
 
 class ArrayHelper
 {

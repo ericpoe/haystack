@@ -1,5 +1,4 @@
 <?php
-
 namespace OPHP;
 
 class ToOString
