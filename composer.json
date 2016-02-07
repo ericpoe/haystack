@@ -20,6 +20,6 @@
     "psr-4": {"OPHP\\Tests\\": "tests"}
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.6"
+    "phpunit/phpunit": "~5.0"
   }
 }
