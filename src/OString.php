@@ -77,8 +77,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function contains($value)
     {
-        $answer = new OStringContains($this, $value);
-        return $answer->isContained();
+        $answer = new OStringContains($this);
+        return $answer->contains($value);
     }
 
     /**

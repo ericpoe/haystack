@@ -5,32 +5,32 @@ use OPHP\Helpers\Helper;
 
 class OArrayContains
 {
-    /** @var bool */
-    private $answer;
+    /**
+     * @var OArray
+     */
+    private $arr;
 
     /** @var Helper */
     private $helper;
 
-    /**
-     * @param OArray $arr
-     * @param        $value
-     */
-    public function __construct(OArray $arr, $value)
+    public function __construct(OArray $arr)
     {
+        $this->arr = $arr;
         $this->helper = new Helper();
-
-        if ($this->helper->canBeInArray($value)) {
-            $this->answer = in_array($value, $arr->toArray());
-        } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an OArray");
-        }
     }
 
     /**
+     * @param $value
      * @return bool
      */
-    public function isContained()
+    public function contains($value)
     {
-        return $this->answer;
+        if ($this->helper->canBeInArray($value)) {
+            $arr = $this->arr->toArray();
+            $answer = in_array($value, $arr);
+        } else {
+            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an OArray");
+        }
+        return $answer;
     }
 }

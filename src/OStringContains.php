@@ -24,26 +24,28 @@ class OStringContains
     private $flag;
 
 
-    public function __construct(OString &$string, &$value)
+    public function __construct(OString $string)
     {
         $this->helper = new Helper();
         $this->string = $string->toString();
-        $this->value = $value;
-
-        if (is_scalar($this->value)) {
-            $this->containsScalar($this->value);
-        } elseif ($this->value instanceof OString) {
-            $this->containsOString($this->value);
-        } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} is neither a scalar value nor an OString");
-        }
     }
 
     /**
-     * @return boolean
+     * @param string $value
+     * @return bool
      */
-    public function isContained()
+    public function contains($value)
     {
+        $this->value = $value;
+
+        if (is_scalar($value)) {
+            $this->containsScalar();
+        } elseif ($value instanceof OString) {
+            $this->containsOString();
+        } else {
+            throw new \InvalidArgumentException("{$this->helper->getType($value)} is neither a scalar value nor an OString");
+        }
+
         return $this->flag;
     }
 
@@ -60,10 +62,10 @@ class OStringContains
     }
 
     /**
-     * @param string|OString $value
+     * @param OString|string $value
      * @return bool
      */
-    private function containsValue(&$newValue)
+    private function containsValue($newValue)
     {
         $pos = strstr($this->string, $newValue);
 

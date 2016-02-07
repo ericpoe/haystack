@@ -63,8 +63,8 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
      */
     public function contains($value)
     {
-        $answer = new OArrayContains($this, $value);
-        return $answer->isContained();
+        $answer = new OArrayContains($this);
+        return $answer->contains($value);
     }
 
     /**
