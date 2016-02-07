@@ -75,13 +75,8 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
      */
     public function locate($value)
     {
-        if ($this->contains($value)) {
-            $key = array_search($value, $this->arr);
-        } else {
-            $key = -1;
-        }
-
-        return $key;
+        $answer = new OArrayLocate($this);
+        return $answer->locate($value);
     }
 
     /**
