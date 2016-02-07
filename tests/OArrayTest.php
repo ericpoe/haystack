@@ -61,7 +61,9 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      */
     public function testCannotCreateArrayOfBadThings($item, $exceptionMsg)
     {
-        $this->setExpectedException("ErrorException", $exceptionMsg);
+        $this->expectException("ErrorException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $badArr = new OArray($item);
     }
 
@@ -113,7 +115,9 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      */
     public function testLocateBadThingsInOArray($item, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $this->arrList->locate($item);
     }
 
@@ -163,7 +167,9 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      */
     public function testAppendBadThingsToArray($item, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $this->arrList->append($item);
     }
 
@@ -263,11 +269,13 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      * @param $type
      * @param $start
      * @param $length
-     * @param $expectedMsg
+     * @param $exceptionMsg
      */
-    public function testBadArraySlice($type, $start, $length, $expectedMsg)
+    public function testBadArraySlice($type, $start, $length, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $expectedMsg);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         if ("list" === $type) {
             $subArray = $this->arrList->slice($start, $length);
         } else {
@@ -329,7 +337,9 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      */
     public function testInsertBadThingsInOArray($item, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $this->arrList->insert($item);
     }
 
@@ -378,7 +388,9 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadObjectCannotBeRemovedFromArray($item, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $newArray = $this->arrDict->remove($item);
     }
 
@@ -398,7 +410,9 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCannotBeUsedAsArrayKey($key, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $newArray = $this->arrDict->insert("yobbo", $key);
     }
 

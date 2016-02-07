@@ -62,7 +62,10 @@ class ToOStringTest extends \PHPUnit_Framework_TestCase
     public function testBadGlueInToOString()
     {
         $arr = new OArray(["apple", "banana"]);
-        $this->setExpectedException("InvalidArgumentException", "glue must be a string");
+
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage("glue must be a string");
+
         $arr->toOString(3);
     }
 }

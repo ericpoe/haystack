@@ -76,7 +76,10 @@ class OStringFilterTest extends \PHPUnit_Framework_TestCase
     public function testInvalidFilterFlag()
     {
         $flag = "bad_flag";
-        $this->setExpectedException("InvalidArgumentException", "Invalid flag name");
+        $exceptionMsg = "Invalid flag name";
+
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
         $even = $this->aString->filter(function ($key) {
             return $key % 2;
         }, $flag);

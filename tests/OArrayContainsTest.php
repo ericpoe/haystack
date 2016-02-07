@@ -55,7 +55,9 @@ class OArrayContainsTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadArrayContains($item, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $this->arrList->contains($item);
     }
 

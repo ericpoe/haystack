@@ -44,12 +44,14 @@ class OStringContainsTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider badTypesOfStringInFoobar
      * @param $item
-     * @param $message
+     * @param $exceptionMsg
      * @throws \InvalidArgumentException
      */
-    public function testBadTypesOfStringInFoobar($item, $message)
+    public function testBadTypesOfStringInFoobar($item, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $message);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $var = $this->aString->contains($item);
     }
 

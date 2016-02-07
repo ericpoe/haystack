@@ -46,13 +46,15 @@ class ToOArrayTest extends \PHPUnit_Framework_TestCase
      * @dataProvider badDelimInStringToArrayProvider
      *
      * @param $delim
-     * @param $expectedMsg
+     * @param $exceptionMsg
      */
-    public function testBadDelimInStringToArray($delim, $expectedMsg)
+    public function testBadDelimInStringToArray($delim, $exceptionMsg)
     {
         $string = new OString("foobar");
 
-        $this->setExpectedException("InvalidArgumentException", $expectedMsg);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $string->toOArray($delim);
     }
 
@@ -66,13 +68,15 @@ class ToOArrayTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider badLimitInStringToArrayProvider
      * @param $limit
-     * @param $expectedMsg
+     * @param $exceptionMsg
      */
-    public function testBadLimitInStringToArray($limit, $expectedMsg)
+    public function testBadLimitInStringToArray($limit, $exceptionMsg)
     {
         $string = new OString("foobar");
 
-        $this->setExpectedException("InvalidArgumentException", $expectedMsg);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $string->toOArray(" ", $limit);
     }
 

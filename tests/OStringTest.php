@@ -56,11 +56,13 @@ class OStringTest extends \PHPUnit_Framework_TestCase
      * @dataProvider createBadOStringProvider
      *
      * @param $item
-     * @param $message
+     * @param $exceptionMsg
      */
-    public function testCreateBadOstringOfThings($item, $message)
+    public function testCreateBadOstringOfThings($item, $exceptionMsg)
     {
-        $this->setExpectedException("ErrorException", $message);
+        $this->expectException("ErrorException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $this->aString = new OString($item);
     }
 
@@ -100,12 +102,14 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider badLocateTypesOfStringInFoobarProvider
      * @param $item
-     * @param $message
+     * @param $exceptionMsg
      * @throws \InvalidArgumentException
      */
-    public function testBadLocateTypesOfStringInFoobar($item, $message)
+    public function testBadLocateTypesOfStringInFoobar($item, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $message);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $var = $this->aString->locate($item);
     }
 
@@ -210,11 +214,13 @@ class OStringTest extends \PHPUnit_Framework_TestCase
      *
      * @param $start
      * @param $length
-     * @param $message
+     * @param $exceptionMsg
      */
-    public function testBadSlicing($start, $length, $message)
+    public function testBadSlicing($start, $length, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $message);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $tmp = $this->aString->slice($start, $length);
     }
 
@@ -258,11 +264,13 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider badUnserializeProvider
      * @param $item
-     * @param $message
+     * @param $exceptionMsg
      */
-    public function testBadUnserialize($item, $message)
+    public function testBadUnserialize($item, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $message);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $this->aString->unserialize($item);
     }
 
@@ -309,12 +317,14 @@ class OStringTest extends \PHPUnit_Framework_TestCase
      *
      * @param $value
      * @param $key
-     * @param $message
+     * @param $exceptionMsg
      * @throws \InvalidArgumentException
      */
-    public function testBadInsert($value, $key, $message)
+    public function testBadInsert($value, $key, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $message);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $this->aString->insert($value, $key);
     }
 
@@ -336,7 +346,9 @@ class OStringTest extends \PHPUnit_Framework_TestCase
 
     public function testNonScalarTypeCannotBeAddedToFoobar()
     {
-        $this->setExpectedException("InvalidArgumentException", "Cannot concatenate an OString with a DateTime");
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage("Cannot concatenate an OString with a DateTime");
+
         $newString = $this->aString->append(new \DateTime());
     }
 

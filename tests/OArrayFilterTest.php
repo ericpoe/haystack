@@ -76,7 +76,9 @@ class OArrayFilterTest extends \PHPUnit_Framework_TestCase
             return $vowels->contains($word[0]);
         };
 
-        $this->setExpectedException("InvalidArgumentException", "Invalid flag name");
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage("Invalid flag name");
+
         $this->arrList->filter($vowel, "boooth");
     }
 }
