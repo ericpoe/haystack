@@ -11,6 +11,10 @@ class OArrayLocate
         $this->arr = $arr;
     }
 
+    /**
+     * @param $value
+     * @return int|string
+     */
     public function locate($value)
     {
         if ($this->arr->contains($value)) {

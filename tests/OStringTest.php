@@ -6,7 +6,7 @@ use OPHP\OString;
 
 class OStringTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \OPHP\Ostring */
+    /** @var \OPHP\OString */
     protected $aString;
 
     protected function setUp()
