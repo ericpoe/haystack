@@ -1,14 +1,13 @@
 <?php
 namespace OPHP;
 
-class ToOString
+class OArrayToString
 {
     /** @var  array */
     private $arr;
 
     /** @var OString|string */
     private $glue;
-    private $string;
 
     /**
      * @param array  $arr
@@ -18,18 +17,7 @@ class ToOString
     {
         $this->arr = $arr;
 
-        if (empty($glue)) {
-            $this->glue = "";
-        } else {
-            $this->glue = $glue;
-        }
-
-        if (is_string($this->glue) || $this->glue instanceof OString) {
-            $this->string = $this->oArrayImplode();
-            return $this->string;
-        }
-
-        throw new \InvalidArgumentException("glue must be a string");
+        $this->glue = empty($glue) ? "" : $glue;
     }
 
     /**
@@ -37,7 +25,11 @@ class ToOString
      */
     public function toString()
     {
-        return $this->string;
+        if (is_string($this->glue) || $this->glue instanceof OString) {
+            return $this->oArrayImplode();
+        }
+
+        throw new \InvalidArgumentException("glue must be a string");
     }
 
     /**

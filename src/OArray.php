@@ -50,7 +50,7 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
             return new OString();
         }
 
-        $string = new ToOString($this->arr, $glue);
+        $string = new OArrayToString($this->arr, $glue);
         return new OString($string->toString());
     }
 
