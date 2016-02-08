@@ -1,10 +1,6 @@
 <?php
 namespace OPHP;
 
-use OPHP\Filter\OArrayFilterWithDefaults;
-use OPHP\Filter\OArrayFilterWithKey;
-use OPHP\Filter\OArrayFilterWithValue;
-use OPHP\Filter\OArrayFilterWithValueAndKey;
 use OPHP\Helpers\Helper;
 
 class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalInterface, MathInterface
@@ -235,30 +231,8 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
      */
     public function filter(callable $func = null, $flag = null)
     {
-        // Default
-        if (is_null($func)) {
-            $filtered = new OArrayFilterWithDefaults($this);
-            return new OArray($filtered->toArray());
-        }
-
-        // No flags are passed
-        if (is_null($flag)) {
-            $filtered = new OArrayFilterWithValue($this, $func);
-            return new OArray($filtered->toArray());
-        }
-
-        // Flags are USE_KEY or USE_BOTH
-        if ("key" === $flag || "both" === $flag) {
-            // Flag of "USE_KEY" is passed
-            if ("key" === $flag) {
-                $filtered = new OArrayFilterWithKey($this, $func);
-                return new OArray($filtered->toArray());
-            }
-            // Flag of "USE_BOTH is passed
-            $filtered = new OArrayFilterWithValueAndKey($this, $func);
-            return new OArray($filtered->toArray());
-        }
-        throw new \InvalidArgumentException("Invalid flag name");
+        $answer = new OArrayFilter($this);
+        return new OArray($answer->filter($func, $flag));
     }
 
     /**

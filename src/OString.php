@@ -391,7 +391,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function filter(callable $func = null, $flag = null)
     {
-        return new OStringFilter($this, $func, $flag);
+        $answer =  new OStringFilter($this);
+        return new OString($answer->filter($func, $flag));
     }
 
     /**

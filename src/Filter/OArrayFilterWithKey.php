@@ -1,27 +1,25 @@
 <?php
 namespace OPHP\Filter;
 
-use OPHP\OArray;
-
-class OArrayFilterWithKey extends OArray
+class OArrayFilterWithKey
 {
-    /** @var  OArray*/
+    /** @var array */
     protected $arr;
 
-    /** @var  array*/
-    private $filtered;
-
-    public function __construct(OArray &$arr, callable $func)
+    /**
+     * @param array $arr
+     */
+    public function __construct(array $arr)
     {
-        parent::__construct($arr);
-
-        $this->filterWithKey($func);
-
-        $this->arr = $this->filtered;
+        $this->arr = $arr;
     }
 
-    private function filterWithKey($func)
+    /**
+     * @param callable $func
+     * @return array
+     */
+    public function filter(callable $func)
     {
-        $this->filtered = array_filter($this->arr->toArray(), $func, ARRAY_FILTER_USE_KEY);
+        return array_filter($this->arr, $func, ARRAY_FILTER_USE_KEY);
     }
 }

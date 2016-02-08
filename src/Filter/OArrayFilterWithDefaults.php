@@ -2,23 +2,26 @@
 namespace OPHP\Filter;
 
 use OPHP\Helpers\ArrayHelper;
-use OPHP\OArray;
 
-class OArrayFilterWithDefaults extends OArray
+class OArrayFilterWithDefaults
 {
-    /** @var  OArray*/
+    /** @var array*/
     protected $arr;
 
-    public function __construct(OArray &$arr)
+    /**
+     * @param array $arr
+     */
+    public function __construct(array $arr)
     {
-        parent::__construct($arr);
-
-        $this->arr = $this->run();
+        $this->arr = $arr;
     }
 
-    private function run()
+    /**
+     * @return array
+     */
+    public function filter()
     {
-        $filtered = array_filter($this->arr->toArray());
+        $filtered = array_filter($this->arr);
 
         if (ArrayHelper::isAssociativeArray($filtered)) {
             return $filtered;

@@ -2,21 +2,32 @@
 namespace OPHP\Filter;
 
 use OPHP\OString;
-use OPHP\OStringFilter;
 
-class OStringFilterWithKey extends OStringFilter
+class OStringFilterWithKey
 {
+    /** @var OString */
+    private $string;
+
     /**
-     * @param OString  $string
-     * @param OString  $filtered
-     * @param callable $func
+     * @param OString $string
      */
-    public function __construct(OString &$string, OString &$filtered, callable &$func)
+    public function __construct(OString $string)
     {
-        foreach ($string as $letter) {
-            if (true === (bool) $func($string->key())) {
+        $this->string = $string;
+    }
+
+    /**
+     * @param callable $func
+     * @return OString
+     */
+    public function filter(callable $func){
+        $filtered = new OString();
+        foreach ($this->string as $letter) {
+            if (true === (bool) $func($this->string->key())) {
                 $filtered = $filtered->insert($letter);
             }
         }
+
+        return $filtered;
     }
 }

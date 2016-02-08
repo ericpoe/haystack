@@ -2,16 +2,34 @@
 namespace OPHP\Filter;
 
 use OPHP\OString;
-use OPHP\OStringFilter;
 
-class OStringFilterWithDefaults extends OStringFilter
+class OStringFilterWithDefaults
 {
-    public function __construct(OString &$string, OString &$filtered)
+    /**
+     * @var OString
+     */
+    private $string;
+
+    /**
+     * @param OString $string
+     */
+    public function __construct(OString $string)
     {
-        foreach ($string as $letter) {
+        $this->string = $string;
+    }
+
+    /**
+     * @return OString
+     */
+    public function filter()
+    {
+        $filtered = new OString();
+        foreach ($this->string as $letter) {
             if ((bool) $letter) {
                 $filtered = $filtered->insert($letter);
             }
         }
+
+        return $filtered;
     }
 }
