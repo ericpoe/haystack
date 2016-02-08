@@ -21,9 +21,12 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
         if (is_null($arr)) {
             parent::__construct();
             $this->arr = [];
-        } elseif (is_array($arr) || $arr instanceof \ArrayObject) {
+        } elseif (is_array($arr)) {
             parent::__construct($arr);
             $this->arr = $arr;
+        } elseif ($arr instanceof \ArrayObject) {
+            parent::__construct($arr);
+            $this->arr = $arr->getArrayCopy();
         } elseif ($arr instanceof OString) {
             parent::__construct();
             $this->arr = $arr;
