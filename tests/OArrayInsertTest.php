@@ -75,4 +75,26 @@ class OArrayInsertTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    /**
+     * @dataProvider badInsertKeyProvider
+     *
+     * @param $key
+     * @param $exceptionMsg
+     */
+    public function testObjectCannotBeUsedAsArrayKey($key, $exceptionMsg)
+    {
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
+        $newArray = $this->arrDict->insert("yobbo", $key);
+    }
+
+    public function badInsertKeyProvider()
+    {
+        return [
+            "DateTime" => [new \DateTime(), "Invalid array key"],
+            "SPL Object" => [new \SplDoublyLinkedList(), "Invalid array key"],
+        ];
+    }
+
 }

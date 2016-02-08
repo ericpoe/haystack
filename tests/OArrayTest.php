@@ -6,9 +6,9 @@ use OPHP\OString;
 
 class OArrayTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var  \OPHP\OArray */
+    /** @var  OArray */
     private $arrList;
-    /** @var  \OPHP\OArray */
+    /** @var  OArray */
     private $arrDict;
 
     protected function setUp()
@@ -184,79 +184,6 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
             "Dictionary: non-integer start" => ["dict", "b", "2", 'Slice parameter 1, $start, must be an integer'],
             "List: non-integer length" => ["list", "1", "b", 'Slice parameter 2, $length, must be null or an integer'],
             "Dictionary: non-integer length" => ["dict", "1", "b", 'Slice parameter 2, $length, must be null or an integer'],
-        ];
-    }
-
-    /**
-     * @dataProvider arrayRemoveProvider
-     *
-     * @param $type
-     * @param $value
-     * @param $expected
-     */
-    public function testArrayTypeRemove($type, $value, $expected)
-    {
-        if ("list" === $type) {
-            $newArr = $this->arrList->remove($value);
-        } else {
-            $newArr = $this->arrDict->remove($value);
-        }
-
-        $this->assertEquals($expected, $newArr);
-
-    }
-
-    public function arrayRemoveProvider()
-    {
-        return [
-            "List: Basic list" => ["list", "bobble", new OArray(["apple", "cobble", "dobble"])],
-            "List: Basic list - item not found" => ["list", "zobble", new OArray(["apple", "bobble", "cobble", "dobble"])],
-            "Basic dict" => ["dict", "bobble", new OArray(["a" => "apple", "c" => "cobble", "d" => "dobble"])],
-            "Basic dict - item not found" => ["dict", "zobble", new OArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"])],
-        ];
-    }
-
-    /**
-     * @dataProvider badRemoveProvider
-     *
-     * @param $item
-     * @param $exceptionMsg
-     */
-    public function testBadObjectCannotBeRemovedFromArray($item, $exceptionMsg)
-    {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
-
-        $newArray = $this->arrDict->remove($item);
-    }
-
-    public function badRemoveProvider()
-    {
-        return [
-            "DateTime" => [new \DateTime(), "DateTime cannot be contained within an OArray"],
-            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be contained within an OArray"],
-        ];
-    }
-
-    /**
-     * @dataProvider badInsertKeyProvider
-     *
-     * @param $key
-     * @param $exceptionMsg
-     */
-    public function testObjectCannotBeUsedAsArrayKey($key, $exceptionMsg)
-    {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
-
-        $newArray = $this->arrDict->insert("yobbo", $key);
-    }
-
-    public function badInsertKeyProvider()
-    {
-        return [
-            "DateTime" => [new \DateTime(), "Invalid array key"],
-            "SPL Object" => [new \SplDoublyLinkedList(), "Invalid array key"],
         ];
     }
 
