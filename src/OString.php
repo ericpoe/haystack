@@ -390,7 +390,6 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function reduce(callable $func, $initial = null)
     {
-        // todo: figure out invalid types, if any, of $initial
         $reduced = $initial;
         foreach ($this as $letter) {
             $reduced = $func($reduced, $letter);

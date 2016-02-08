@@ -202,7 +202,6 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
      */
     public function reduce(callable $func, $initial = null)
     {
-        // todo: figure out invalid types, if any, of $initial
         $reduced = array_reduce($this->arr, $func, $initial);
 
         if ($reduced instanceof \ArrayObject || is_array($reduced)) {
