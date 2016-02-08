@@ -75,28 +75,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider stringAppendProvider()
-     *
-     * @param $babyString
-     * @param $expected
-     */
-    public function testTypesOfStringAppendToFoobar($babyString, $expected)
-    {
-        $newString = $this->aString->append($babyString);
-
-        $this->assertEquals(sprintf("%s", $expected), sprintf("%s", $newString));
-    }
-
-    public function stringAppendProvider()
-    {
-        return [
-            "Append a normal string" => ["babyString" => "baz", "expected" => "foobarbaz"],
-            "Append an OString" => ["babyString" => new OString('baz'), "expected" => "foobarbaz"],
-            "Append an integer" => ["babyString" => 5, "expected" => "foobar5"],
-        ];
-    }
-
-    /**
      * @dataProvider providerFirstPartOfTypesOfStringUsingSlice
      *
      * @param $expected

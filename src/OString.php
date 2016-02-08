@@ -103,10 +103,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function append($value)
     {
-        if (is_scalar($value) || $value instanceof OString) {
-            return new OString($this->string . $value);
-        }
-        throw new \InvalidArgumentException("Cannot concatenate an OString with a {$this->helper->getType($value)}");
+        $answer = new OStringAppend($this);
+        return new OString($answer->append($value));
     }
 
     /**

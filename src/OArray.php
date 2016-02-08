@@ -94,17 +94,8 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
      */
     public function append($value)
     {
-        if ($value instanceof OArray) {
-            $value = $value->toArray();
-        }
-        if ($this->helper->canBeInArray($value)) {
-            $array = new OArray($this);
-            parent::append($value);
-
-            return $array;
-        } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be appended to an OArray");
-        }
+        $answer = new OArrayAppend($this->toArray());
+        return new OArray($answer->append($value));
     }
 
     /**
