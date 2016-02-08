@@ -122,28 +122,8 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
      */
     public function remove($value)
     {
-        if ($this->helper->canBeInArray($value)) {
-            if (!$this->contains($value)) {
-                return new OArray($this->arr);
-            }
-
-            $newArr = $this->arr;
-            $key = $this->locate($value);
-        } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an OArray");
-        }
-
-
-        if (is_numeric($key)) {
-            unset($newArr[$key]);
-
-            return new OArray(array_values($newArr));
-        }
-
-        // key is string
-        unset($newArr[$key]);
-
-        return new OArray($newArr);
+        $answer = new OArrayRemove($this);
+        return new OArray($answer->remove($value));
     }
 
     /**
