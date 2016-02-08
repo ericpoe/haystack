@@ -117,20 +117,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function insert($value, $key = null)
     {
-        if (is_scalar($value) || $value instanceof OString) {
-            if (is_null($key)) {
-                $key = strlen($this);
-            } elseif (is_numeric($key)) {
-                $key = (int) $key;
-            } else {
-                throw new \InvalidArgumentException("Invalid array key");
-            }
-
-
-            return new OString(substr_replace($this->string, $value, $key, 0));
-        }
-
-        throw new \InvalidArgumentException("Cannot insert {$this->helper->getType($value)} into an OString");
+        $answer = new OStringInsert($this);
+        return new OString($answer->insert($value, $key));
     }
 
     /**
