@@ -49,7 +49,7 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
             "ArrayObject" => [new \ArrayObject([0, 1, 2])],
             "string" => ["a"],
             "OString" => [new OString("a string")],
-            "OString of Ostring of ... " => [new OString(new OString(new OString(new OString("a string"))))],
+            "OString of OString of ... " => [new OString(new OString(new OString(new OString("a string"))))],
         ];
     }
 
