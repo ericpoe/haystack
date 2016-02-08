@@ -9,7 +9,10 @@ use OPHP\Helpers\Helper;
 
 class OArrayFilter
 {
+    /** @var Helper */
     private $helper;
+
+    /** @var array */
     private $arr;
 
     public function __construct(OArray $array)
