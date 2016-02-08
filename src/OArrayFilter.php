@@ -5,19 +5,14 @@ use OPHP\Filter\OArrayFilterWithDefaults;
 use OPHP\Filter\OArrayFilterWithKey;
 use OPHP\Filter\OArrayFilterWithValue;
 use OPHP\Filter\OArrayFilterWithValueAndKey;
-use OPHP\Helpers\Helper;
 
 class OArrayFilter
 {
-    /** @var Helper */
-    private $helper;
-
     /** @var array */
     private $arr;
 
     public function __construct(OArray $array)
     {
-        $this->helper = new Helper();
         $this->arr = $array->toArray();
     }
 
