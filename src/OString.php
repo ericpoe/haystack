@@ -130,11 +130,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function remove($value)
     {
-        $key = $this->locate($value);
-        $startString = $this->slice(0, $key);
-        $endString = $this->slice($key + 1);
-
-        return $startString->insert($endString);
+        $answer = new OStringRemove($this);
+        return new OString($answer->remove($value));
     }
 
     /**

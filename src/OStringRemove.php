@@ -16,7 +16,7 @@ class OStringRemove
      */
     public function remove($value)
     {
-        $key = $this->string->locate((string) $value);
+        $key = $this->string->locate($value);
         $startString = $this->string->slice(0, $key);
         $endString = $this->string->slice($key + 1);
 
