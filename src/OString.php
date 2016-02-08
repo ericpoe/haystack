@@ -126,6 +126,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *
      * @param $value
      * @return OString
+     * @throws \InvalidArgumentException
      */
     public function remove($value)
     {

@@ -6,7 +6,7 @@ use OPHP\OString;
 
 class OStringTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \OPHP\OString */
+    /** @var OString */
     protected $aString;
 
     protected function setUp()
@@ -211,20 +211,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
             "Unserialized OString" => [new OString("The quick brown fox"), "OString cannot unserialize a OPHP\\OString"],
             "DateTime object" => [new \DateTime(), "OString cannot unserialize a DateTime"],
         ];
-    }
-
-    public function testTypesOfStringRemove()
-    {
-        $newString = $this->aString->remove("o");
-        $this->assertEquals(new OString("fobar"), $newString);
-    }
-
-    public function testNonScalarTypeCannotBeAddedToFoobar()
-    {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage("Cannot concatenate an OString with a DateTime");
-
-        $newString = $this->aString->append(new \DateTime());
     }
 
     public function testIteratorNext()
