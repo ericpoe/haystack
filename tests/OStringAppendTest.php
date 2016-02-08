@@ -36,7 +36,7 @@ class OStringAppendTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testBadStringAppend()
+    public function testNonScalarTypeCannotBeAddedToFoobar()
     {
         $this->expectException("InvalidArgumentException");
         $this->expectExceptionMessage("Cannot concatenate an OString with a DateTime");
