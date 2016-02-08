@@ -44,6 +44,12 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
         return $this->arr;
     }
 
+    /**
+     * Alias to PHP function `implode`
+     *
+     * @param string $glue - defaults to an empty string
+     * @return OString
+     */
     public function toOString($glue = "")
     {
         if (empty($this->arr)) {

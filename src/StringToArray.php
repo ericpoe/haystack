@@ -28,10 +28,10 @@ class StringToArray
     }
 
     /**
-     * @param null $limit
+     * @param int|null $limit
      * @return array
      */
-    public function stringToArray($limit = null)
+    public function stringToArray($limit)
     {
         if (empty($this->delim)) {
             $this->arr = $this->noDelimExplode();
@@ -68,7 +68,7 @@ class StringToArray
     }
 
     /**
-     * @param int   $limit
+     * @param int $limit
      * @return array
      */
     private function explode($limit)
