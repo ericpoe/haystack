@@ -332,14 +332,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function map(callable $func)
     {
-        $newString = new OString($this->string);
-
-        $size = $this->count();
-        for ($i = 0; $i < $size; $i++) {
-            $newString[$i] = $func($this[$i]);
-        }
-
-        return $newString;
+        $answer = new OStringMap($this);
+        return new OString($answer->map($func));
     }
 
     /**
