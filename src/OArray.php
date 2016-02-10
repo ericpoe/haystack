@@ -188,22 +188,13 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
      * @inheritdoc
      *
      * @param callable $func
-     * @param null     $initial
-     * @return bool|float|int|string|OString|array|\ArrayObject|OArray
+     * @param mixed|null $initial
+     * @return bool|float|int|OString|OArray
      */
     public function reduce(callable $func, $initial = null)
     {
-        $reduced = array_reduce($this->arr, $func, $initial);
-
-        if ($reduced instanceof \ArrayObject || is_array($reduced)) {
-            return new OArray($reduced);
-        }
-
-        if (is_string($reduced)) {
-            return new OString($reduced);
-        }
-
-        return $reduced;
+        $answer = new OArrayReduce($this);
+        return $answer->reduce($func, $initial);
     }
 
     /**
