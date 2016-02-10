@@ -160,7 +160,7 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
      */
     public function walk(callable $func)
     {
-        array_walk($this->arr, $func);
+        OArrayWalk::walk($this->arr, $func);
     }
 
     /**
