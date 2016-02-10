@@ -1,7 +1,8 @@
 # Change Log
 
-## [0.2.1](https://github.com/ericpoe/ophp/tree/v0.2.1) - 2016-02-09
+## [0.3.0](https://github.com/ericpoe/ophp/tree/v0.3.0) - 2016-02-09
 
+* Drop support for PHP 5.4 and PHP 5.5
 * Reduce duplication in code
 * Add tests for bug fixes
 
