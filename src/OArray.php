@@ -148,7 +148,8 @@ class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalI
      */
     public function map(callable $func)
     {
-        return new OArray(array_map($func, $this->arr));
+        $answer = new OArrayMap($this);
+        return new OArray($answer->map($func));
     }
 
     /**
