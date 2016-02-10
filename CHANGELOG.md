@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.2.1](https://github.com/ericpoe/ophp/tree/v0.2.1) - 2016-02-09
+
+* Reduce duplication in code
+* Add tests for bug fixes
+
 ## [0.2.0](https://github.com/ericpoe/ophp/tree/v0.2.0) - 2015-07-29
 OArray <--> String conversion
 
@@ -8,12 +13,15 @@ OArray <--> String conversion
     * Add OArray & OString- specific sections
 
 ### Changes
+
 * OArray now has toOString() method. This is an alias to `implode`
 * OString now has toOArray() method. This is an alias to `explode`
+
 ## [0.1.1](https://github.com/ericpoe/ophp/tree/v0.1.1) - 2015-07-27
 Documentation updates
 
 ### Changes
+
 * Spacing requirements are now the same for all files
     * 4-space tabs
     * No empty space at the end of a line
@@ -31,6 +39,7 @@ Initial release
 
 ### Contains
 **Container methods:**
+
 * append
 * contains
 * insert
@@ -38,6 +47,7 @@ Initial release
 * slice
 
 **Functional methods:**
+
 * filter
 * head
 * map
@@ -46,5 +56,6 @@ Initial release
 * walk
 
 **Math methods:**
+
 * product
 * sum
