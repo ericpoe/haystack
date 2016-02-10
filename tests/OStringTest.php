@@ -193,17 +193,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("o", $this->aString[1]);
     }
 
-    public function testStringWalk()
-    {
-        $capitalize = function ($letter, $key) {
-            return $this->aString[$key] = strtoupper($letter);
-        };
-
-        $this->aString->walk($capitalize);
-
-        $this->assertEquals("FOOBAR", $this->aString->toString());
-    }
-
     public function testReduce()
     {
         $fn = function ($carry, $item) {

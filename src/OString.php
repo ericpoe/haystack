@@ -344,11 +344,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function walk(callable $func)
     {
-        $size = $this->count();
-
-        for ($i = 0; $i < $size; $i++) {
-            $this[$i] = $func($this[$i], $i);
-        }
+        OStringWalk::walk($this, $func);
     }
 
     /**
