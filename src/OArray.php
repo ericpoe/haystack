@@ -3,13 +3,13 @@ namespace OPHP;
 
 use OPHP\Helpers\Helper;
 
-class OArray extends \ArrayObject implements Container, BaseFunctional, Math
+class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalInterface, MathInterface
 {
     const USE_KEY = "key";
     const USE_BOTH = "both";
 
     /** @var array */
-    private $arr;
+    protected $arr;
 
     /** @var  Helper */
     private $helper;
@@ -21,9 +21,12 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
         if (is_null($arr)) {
             parent::__construct();
             $this->arr = [];
-        } elseif (is_array($arr) || $arr instanceof \ArrayObject) {
+        } elseif (is_array($arr)) {
             parent::__construct($arr);
             $this->arr = $arr;
+        } elseif ($arr instanceof \ArrayObject) {
+            parent::__construct($arr);
+            $this->arr = $arr->getArrayCopy();
         } elseif ($arr instanceof OString) {
             parent::__construct();
             $this->arr = $arr;
@@ -40,13 +43,19 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
         return $this->arr;
     }
 
+    /**
+     * Alias to PHP function `implode`
+     *
+     * @param string $glue - defaults to an empty string
+     * @return OString
+     */
     public function toOString($glue = "")
     {
         if (empty($this->arr)) {
             return new OString();
         }
 
-        $string = new ToOString($this->arr, $glue);
+        $string = new OArrayToString($this->arr, $glue);
         return new OString($string->toString());
     }
 
@@ -59,11 +68,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function contains($value)
     {
-        if ($this->helper->canBeInArray($value)) {
-            return (in_array($value, $this->arr));
-        } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an OArray");
-        }
+        $answer = new OArrayContains($this);
+        return $answer->contains($value);
     }
 
     /**
@@ -74,13 +80,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function locate($value)
     {
-        if ($this->contains($value)) {
-            $key = array_search($value, $this->arr);
-        } else {
-            $key = -1;
-        }
-
-        return $key;
+        $answer = new OArrayLocate($this);
+        return $answer->locate($value);
     }
 
     /**
@@ -92,17 +93,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function append($value)
     {
-        if ($value instanceof OArray) {
-            $value = $value->toArray();
-        }
-        if ($this->helper->canBeInArray($value)) {
-            $array = new OArray($this);
-            parent::append($value);
-
-            return $array;
-        } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be appended to an OArray");
-        }
+        $answer = new OArrayAppend($this->toArray());
+        return new OArray($answer->append($value));
     }
 
     /**
@@ -116,33 +108,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function insert($value, $key = null)
     {
-        if ($value instanceof OArray) {
-            $valueArray = $value->toArray();
-        } elseif ($value instanceof OString) {
-            $valueArray = $value->toString();
-        } elseif ($this->helper->canBeInArray($value)) {
-            $valueArray = $value;
-        } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an OArray");
-        }
-
-        if (isset($key)) {
-            if (is_numeric($key)) {
-                list($array, $length) = $this->setSubarrayAndLengthForSequentialArray($key, $valueArray);
-            } elseif (is_string($key)) {
-                list($array, $length) = $this->setSubarrayAndLengthForAssociativeArray($key, $valueArray);
-            } else {
-                throw new \InvalidArgumentException("Invalid array key");
-            }
-        } else {
-            list($array, $length) = $this->setSubarrayAndLengthWhenNoKeyProvided($valueArray);
-        }
-
-        $first = $this->slice(0, $length)->toArray();
-        $lastStartingPoint = sizeof($this->arr) - sizeof($first);
-        $last = $this->slice($length, $lastStartingPoint)->toArray();
-
-        return new OArray(array_merge_recursive($first, (array) $array, $last));
+        $answer = new OArrayInsert($this);
+        return new OArray($answer->insert($value, $key));
     }
 
 
@@ -155,28 +122,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function remove($value)
     {
-        if ($this->helper->canBeInArray($value)) {
-            if (!$this->contains($value)) {
-                return new OArray($this->arr);
-            }
-
-            $newArr = $this->arr;
-            $key = $this->locate($value);
-        } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an OArray");
-        }
-
-
-        if (is_numeric($key)) {
-            unset($newArr[$key]);
-
-            return new OArray(array_values($newArr));
-        }
-
-        // key is string
-        unset($newArr[$key]);
-
-        return new OArray($newArr);
+        $answer = new OArrayRemove($this);
+        return new OArray($answer->remove($value));
     }
 
     /**
@@ -189,18 +136,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function slice($start, $length = null)
     {
-        if (is_null($start) || !is_numeric($start)) {
-            throw new \InvalidArgumentException("Slice parameter 1, \$start, must be an integer");
-        }
-
-        if (!is_null($length) && !is_numeric($length)) {
-            throw new \InvalidArgumentException("Slice parameter 2, \$length, must be null or an integer");
-        }
-
-        $maintainIndices = false;
-
-        return new OArray(array_slice($this->arr, $start, $length, $maintainIndices));
-
+        $answer = new OArraySlice($this);
+        return new OArray($answer->slice($start, $length));
     }
 
     /**
@@ -211,7 +148,8 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function map(callable $func)
     {
-        return new OArray(array_map($func, $this->arr));
+        $answer = new OArrayMap($this);
+        return new OArray($answer->map($func));
     }
 
     /**
@@ -222,7 +160,7 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function walk(callable $func)
     {
-        array_walk($this->arr, $func);
+        OArrayWalk::walk($this->arr, $func);
     }
 
     /**
@@ -242,57 +180,21 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
      */
     public function filter(callable $func = null, $flag = null)
     {
-        // Default
-        if (is_null($func)) {
-            return new OArray(array_filter($this->arr));
-        }
-
-        // No flags are passed
-        if (is_null($flag)) {
-            return new OArray(array_filter($this->arr, $func));
-        }
-
-        // Flags are USE_KEY or USE_BOTH
-        if ("key" === $flag || "both" === $flag) {
-            // Flag of "USE_KEY" is passed
-            if ("key" === $flag) {
-                if (version_compare(phpversion(), 5.6) >= 0) {
-                    return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_KEY));
-                } else {
-                    return $this->filterWithKey($func);
-                }
-            }
-            // Flag of "USE_BOTH is passed
-            if (version_compare(phpversion(), 5.6) >= 0) {
-                return new OArray(array_filter($this->arr, $func, ARRAY_FILTER_USE_BOTH));
-            } else {
-                return $this->filterWithValueAndKey($func);
-            }
-        }
-        throw new \InvalidArgumentException("Invalid flag name");
+        $answer = new OArrayFilter($this);
+        return new OArray($answer->filter($func, $flag));
     }
 
     /**
      * @inheritdoc
      *
      * @param callable $func
-     * @param null     $initial
-     * @return bool|float|int|string|OString|array|\ArrayObject|OArray
+     * @param mixed|null $initial
+     * @return bool|float|int|OString|OArray
      */
     public function reduce(callable $func, $initial = null)
     {
-        // todo: figure out invalid types, if any, of $initial
-        $reduced = array_reduce($this->arr, $func, $initial);
-
-        if ($reduced instanceof \ArrayObject || is_array($reduced)) {
-            return new OArray($reduced);
-        }
-
-        if (is_string($reduced)) {
-            return new OString($reduced);
-        }
-
-        return $reduced;
+        $answer = new OArrayReduce($this);
+        return $answer->reduce($func, $initial);
     }
 
     /**
@@ -337,75 +239,5 @@ class OArray extends \ArrayObject implements Container, BaseFunctional, Math
         }
 
         return array_product($this->arr);
-    }
-
-    /**
-     * @param $key
-     * @param $value
-     * @return array
-     */
-    private function setSubarrayAndLengthForSequentialArray($key, $value)
-    {
-        $array = $value;
-        $length = (int) $key;
-
-        return array($array, $length);
-    }
-
-    /**
-     * @param string $key
-     * @param        $value
-     * @return array
-     */
-    private function setSubarrayAndLengthForAssociativeArray($key, $value)
-    {
-        $array = [$key => $value];
-        $length = sizeof($this->arr);
-
-        return array($array, $length);
-    }
-
-    /**
-     * @param $value
-     * @return array
-     */
-    private function setSubarrayAndLengthWhenNoKeyProvided($value)
-    {
-        $array = $value;
-        $length = sizeof($this->arr);
-
-        return array($array, $length);
-    }
-
-    /**
-     * @param callable $func
-     * @return OArray
-     */
-    private function filterWithKey(callable $func)
-    {
-        $newArr = new OArray();
-        foreach ($this as $key => $value) {
-            if (true === (bool) $func($key)) {
-                $newArr = $newArr->insert($value, $key);
-            }
-        }
-
-        return $newArr;
-    }
-
-    /**
-     * @param callable $func
-     * @return OArray
-     */
-    private function filterWithValueAndKey(callable $func)
-    {
-        $newArr = new OArray();
-        foreach ($this as $key => $value) {
-            if (true === (bool) $func($value, $key)) {
-                $newArr = $newArr->insert($value, $key);
-            }
-        }
-
-        return $newArr;
     }
 }

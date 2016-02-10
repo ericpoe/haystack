@@ -6,7 +6,7 @@ use OPHP\OString;
 
 class OStringTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \OPHP\Ostring */
+    /** @var OString */
     protected $aString;
 
     protected function setUp()
@@ -39,6 +39,7 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         return [
             "Empty String" => [" ", " "],
             "OString" => [new OString("abc"), "abc"],
+            "OString of OString of OString of..." => [new OString(new OString(new OString(new OString("abc")))), "abc"],
             "Simple string" => ["abc", "abc"],
             "integer 1" => [1, "1"],
             "integer 0" => [0, "0"],
@@ -55,14 +56,14 @@ class OStringTest extends \PHPUnit_Framework_TestCase
      * @dataProvider createBadOStringProvider
      *
      * @param $item
-     * @param $message
+     * @param $exceptionMsg
      */
-    public function testCreateBadOstringOfThings($item, $message)
+    public function testCreateBadOstringOfThings($item, $exceptionMsg)
     {
-        $this->setExpectedException("ErrorException", $message);
-        $this->aString = new OString($item);
-        $this->getExpectedException();
+        $this->expectException("ErrorException");
+        $this->expectExceptionMessage($exceptionMsg);
 
+        $this->aString = new OString($item);
     }
 
     public function createBadOStringProvider()
@@ -70,208 +71,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
         return [
             "DateTime" => [new \DateTime(), "DateTime is not a proper String"],
             "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList is not a proper String"],
-        ];
-    }
-
-    /**
-     * @dataProvider stringContainsProvider
-     *
-     * @param $checkString
-     * @param $expectedBool
-     */
-    public function testTypesOfStringInFoobar($checkString, $expectedBool)
-    {
-        $var = $this->aString->contains($checkString);
-        $expectedBool ? $this->assertTrue($var) : $this->assertFalse($var);
-    }
-
-    public function stringContainsProvider()
-    {
-        return [
-            "String known-present" => ["oob", true],
-            "String known-missing" => ["baz", false],
-            "OString known-present" => [new OString('oob'), true],
-            "OString known-missing" => [new OString('baz'), false],
-            "Integer known-missing" => [42, false],
-
-        ];
-    }
-
-    /**
-     * @dataProvider badTypesOfStringInFoobar
-     * @param $item
-     * @param $message
-     * @throws \InvalidArgumentException
-     */
-    public function testBadTypesOfStringInFoobar($item, $message)
-    {
-        $this->setExpectedException("InvalidArgumentException", $message);
-        $var = $this->aString->contains($item);
-        $this->getExpectedException();
-    }
-
-    public function badTypesOfStringInFoobar()
-    {
-        return [
-            "DateTime" => [new \DateTime(), "DateTime is neither a scalar value nor an OString"],
-            "SplDoublyLinkedList" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a scalar value nor an OString"],
-        ];
-    }
-
-    /**
-     * @dataProvider stringLocateProvider()
-     *
-     * @param $checkString
-     * @param $expected
-     */
-    public function testLocateTypesOfStringInFoobar($checkString, $expected)
-    {
-        $var = $this->aString->locate($checkString);
-        $this->assertEquals($expected, $var);
-    }
-
-    public function stringLocateProvider()
-    {
-        return [
-            "String known-present" => ["oob", 1],
-            "String known-missing" => ["baz", -1],
-            "OString known-present" => [new OString('oob'), 1],
-            "OString known-missing" => [new OString('baz'), -1],
-            "Integer known-missing" => [42, -1],
-            "OString integer known-missing" => [new OString(42), -1],
-
-        ];
-    }
-
-    /**
-     * @dataProvider badLocateTypesOfStringInFoobarProvider
-     * @param $item
-     * @param $message
-     * @throws \InvalidArgumentException
-     */
-    public function testBadLocateTypesOfStringInFoobar($item, $message)
-    {
-        $this->setExpectedException("InvalidArgumentException", $message);
-        $var = $this->aString->locate($item);
-        $this->getExpectedException();
-    }
-
-    public function badLocateTypesOfStringInFoobarProvider()
-    {
-        return [
-            "DateTime" => [new \DateTime(), "DateTime is neither a scalar value nor an OString"],
-            "SplDoublyLinkedList" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a scalar value nor an OString"],
-        ];
-    }
-
-    /**
-     * @dataProvider stringAppendProvider()
-     *
-     * @param $babyString
-     * @param $expected
-     */
-    public function testTypesOfStringAppendToFoobar($babyString, $expected)
-    {
-        $newString = $this->aString->append($babyString);
-
-        $this->assertEquals(sprintf("%s", $expected), sprintf("%s", $newString));
-    }
-
-    public function stringAppendProvider()
-    {
-        return [
-            "Append a normal string" => ["babyString" => "baz", "expected" => "foobarbaz"],
-            "Append an OString" => ["babyString" => new OString('baz'), "expected" => "foobarbaz"],
-            "Append an integer" => ["babyString" => 5, "expected" => "foobar5"],
-        ];
-    }
-
-    /**
-     * @dataProvider providerFirstPartOfTypesOfStringUsingSlice
-     *
-     * @param $expected
-     */
-    public function testGetFirstPartOfTypesOfStringUsingSlice($expected)
-    {
-
-        $this->assertEquals($expected, $this->aString->slice(0, 4));
-
-    }
-
-    public function providerFirstPartOfTypesOfStringUsingSlice()
-    {
-        return [
-            "String" => ["foob"],
-            "OString" => [new OString("foob")],
-        ];
-    }
-
-    /**
-     * @dataProvider providerLastPartOfTypesOfStringUsingSlice
-     *
-     * @param $expected
-     */
-    public function testGetLastPartOfTypesOfStringUsingSlice($expected)
-    {
-        $this->assertEquals($expected, $this->aString->slice(-4));
-    }
-
-    public function providerLastPartOfTypesOfStringUsingSlice()
-    {
-        return [
-            "String" => ["obar"],
-            "OString" => [new OString("obar")],
-        ];
-    }
-
-    /**
-     * @dataProvider middlePartOfStringProvider
-     *
-     * @param $start
-     * @param $finish
-     * @param $expected
-     */
-    public function testGetMiddlePartOfTypesOfStringUsingSlice($start, $finish, $expected)
-    {
-        $this->assertEquals($expected, $this->aString->slice($start, $finish));
-    }
-
-    public function middlePartOfStringProvider()
-    {
-        return [
-            "String: Negative finish, middle" => [2, -2, "ob"],
-            "String: Negative start & finish, middle" => [-4, -2, "ob"],
-            "String: normal middle" => [2, 2, "ob"],
-            "String: null finish" => [2, null, "obar"],
-            "String: overflow finish" => [2, 2000, "obar"],
-            "OString: Negative finish, middle" => [2, -2, new OString("ob")],
-            "OString: Negative start & finish, middle" => [-4, -2, new OString("ob")],
-            "OString: normal middle" => [2, 2, new OString("ob")],
-            "OString: null finish" => [2, null, new OString("obar")],
-            "OString: overflow finish" => [2, 2000, new OString("obar")],
-        ];
-    }
-
-    /**
-     * @dataProvider badSlicingProvider()
-     *
-     * @param $start
-     * @param $length
-     * @param $message
-     */
-    public function testBadSlicing($start, $length, $message)
-    {
-        $this->setExpectedException("InvalidArgumentException", $message);
-        $tmp = $this->aString->slice($start, $length);
-        $this->getExpectedException();
-    }
-
-    public function badSlicingProvider()
-    {
-        return [
-            "No start or length of slice" => [null, null, "Slice parameter 1, \$start, must be an integer"],
-            "Non-integer start of slice" => ["cat", 4, "Slice parameter 1, \$start, must be an integer"],
-            "Non-integer length of slice" => ["1", "dog", "Slice parameter 2, \$length, must be null or an integer"],
         ];
     }
 
@@ -306,13 +105,14 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider badUnserializeProvider
      * @param $item
-     * @param $message
+     * @param $exceptionMsg
      */
-    public function testBadUnserialize($item, $message)
+    public function testBadUnserialize($item, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $message);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $this->aString->unserialize($item);
-        $this->getExpectedException();
     }
 
     public function badUnserializeProvider()
@@ -321,74 +121,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
             "Unserialized OString" => [new OString("The quick brown fox"), "OString cannot unserialize a OPHP\\OString"],
             "DateTime object" => [new \DateTime(), "OString cannot unserialize a DateTime"],
         ];
-    }
-
-    /**
-     * @dataProvider stringInsertProvider()
-     *
-     * @param $babyString
-     * @param $location
-     * @param $expected
-     */
-    public function testTypesOfStringInsert($babyString, $location, $expected)
-    {
-        $newString = $this->aString->insert($babyString, $location);
-
-        $this->assertEquals(sprintf("%s", $expected), sprintf("%s", $newString));
-    }
-
-    public function stringInsertProvider()
-    {
-        return [
-            "String: insert at position 1" => ["baz", 1, "fbazoobar"],
-            "String: insert at position -1" => ["baz", -1, "foobabazr"],
-            "String: insert at end" => ["baz", null, "foobarbaz"],
-            "String: insert Integer" => [1, 3, "foo1bar"],
-            "String: insert Double" => [1.1, 3, "foo1.1bar"],
-            "OString: insert at position 1" => [new OString("baz"), 1, "fbazoobar"],
-            "OString: insert at position -1" => [new OString("baz"), -1, "foobabazr"],
-            "OString: insert at end" => [new OString("baz"), null, "foobarbaz"],
-            "OString: insert Integer" => [new OString(1), 3, "foo1bar"],
-            "OString: insert Double" => [new OString(1.1), 3, "foo1.1bar"],
-        ];
-    }
-
-    /**
-     * @dataProvider badInsertProvider
-     *
-     * @param $value
-     * @param $key
-     * @param $message
-     * @throws \InvalidArgumentException
-     */
-    public function testBadInsert($value, $key, $message)
-    {
-        $this->setExpectedException("InvalidArgumentException", $message);
-        $this->aString->insert($value, $key);
-        $this->getExpectedException();
-    }
-
-    public function badInsertProvider()
-    {
-        return [
-            "Insert DateTime at end" => [new \DateTime(), null, "Cannot insert DateTime into an OString"],
-            "Insert SPL object at end" => [new \SplDoublyLinkedList(), null, "Cannot insert SplDoublyLinkedList into an OString"],
-            "Insert Array at end" => [['a' => "apple"], null, "Cannot insert array into an OString"],
-            "Insert at non-integer key" => ["apple", "a", "Invalid array key"],
-        ];
-    }
-
-    public function testTypesOfStringRemove()
-    {
-        $newString = $this->aString->remove("o");
-        $this->assertEquals(new OString("fobar"), $newString);
-    }
-
-    public function testNonScalarTypeCannotBeAddedToFoobar()
-    {
-        $this->setExpectedException("InvalidArgumentException", "Cannot concatenate an OString with a DateTime");
-        $newString = $this->aString->append(new \DateTime());
-        $this->getExpectedException();
     }
 
     public function testIteratorNext()
@@ -459,196 +191,6 @@ class OStringTest extends \PHPUnit_Framework_TestCase
     public function testArrayStyleAccess()
     {
         $this->assertEquals("o", $this->aString[1]);
-    }
-
-    public function testStringMap()
-    {
-        $capitalize = function ($letter) {
-            return strtoupper($letter);
-        };
-
-        $newString = $this->aString->map($capitalize);
-
-        $this->assertEquals("FOOBAR", $newString);
-    }
-
-    public function testStringWalk()
-    {
-        $capitalize = function ($letter, $key) {
-            return $this->aString[$key] = strtoupper($letter);
-        };
-
-        $this->aString->walk($capitalize);
-
-        $this->assertEquals("FOOBAR", $this->aString->toString());
-    }
-
-    public function testStringFilter()
-    {
-        $strangeString = $this->aString->insert(0, 3);
-        $default = $strangeString->filter();
-        $this->assertEquals("foobar", $default->toString());
-
-        $removeVowels = function ($letter) {
-            $vowels = new OString("aeiou");
-
-            return !$vowels->contains($letter);
-        };
-
-        $consonants = $this->aString->filter($removeVowels);
-        $this->assertEquals("fbr", $consonants->toString());
-
-        $removeOdd = function ($key) {
-            return $key % 2;
-        };
-
-        $flag = OString::USE_KEY;
-
-        $even = $this->aString->filter($removeOdd, $flag);
-        $this->assertEquals("obr", $even->toString());
-
-        $even = $this->aString->filter(function ($key) {
-            return $key % 2;
-        }, $flag);
-        $this->assertEquals("obr", $even->toString());
-
-        $alpha = new OString('abcdefghijklmnopqrstuvwxyz');
-        $evenAlpha = $alpha->filter($removeOdd, OString::USE_KEY);
-
-        $thing_both = function ($value, $key) use ($evenAlpha) {
-            if ($evenAlpha->contains($value)) {
-                return true;
-            }
-
-            return $key % 2;
-        };
-
-        $flag = OString::USE_BOTH;
-        $funky = $this->aString->filter($thing_both, $flag);
-        $this->assertEquals("fobr", $funky->toString());
-
-    }
-
-    public function testInvalidFilterFlag()
-    {
-        $flag = "bad_flag";
-        $this->setExpectedException("InvalidArgumentException", "Invalid flag name");
-        $even = $this->aString->filter(function ($key) {
-            return $key % 2;
-        }, $flag);
-        $this->getExpectedException();
-        $this->assertEquals("obr", $even->toString());
-    }
-
-    public function testReduce()
-    {
-        $fn = function ($carry, $item) {
-            $value = (ord(strtolower($item)) - 64);
-            return $carry + $value;
-        };
-
-        $this->assertEquals(249, $this->aString->reduce($fn));
-    }
-
-    public function testOStringReduce()
-    {
-        $encode = function ($carry, $item) {
-            $value = (ord($item) % 26) + 97;
-            $carry .= chr($value);
-
-            return $carry;
-        };
-
-        $decode = function ($carry, $item) {
-            $value = ((ord($item) + 14) % 26) + 97;
-            $carry .= chr($value);
-
-            return $carry;
-        };
-
-        $codedMessage = new OString("yhhutk");
-
-        $this->assertEquals($codedMessage, $this->aString->reduce($encode));
-        $this->assertEquals("foobar", $codedMessage->reduce($decode));
-        $this->assertTrue($this->aString->reduce($encode) instanceof OString);
-    }
-
-    /**
-     * @dataProvider stringReduceAsArrayTypeProvider
-     * @param $freq
-     */
-    public function testStringReduceAsArrayTypeReturnsOarray($freq)
-    {
-        $this->assertTrue($this->aString->reduce($freq) instanceof OArray);
-    }
-
-    public function stringReduceAsArrayTypeProvider()
-    {
-        $freqArray = function ($frequency, $letter) {
-            if (!isset($frequency[$letter])) {
-                $frequency[$letter] = 0;
-            }
-
-            $frequency[$letter]++;
-
-            return $frequency;
-        };
-
-        $freqArrayObject = function ($frequency, $letter) {
-            if (!isset($frequency[$letter])) {
-                $frequency[$letter] = 0;
-            }
-
-            $frequency = new \ArrayObject($frequency);
-
-            $frequency[$letter]++;
-
-            return $frequency;
-        };
-
-        $freqOArray = function ($frequency, $letter) {
-            if (!isset($frequency[$letter])) {
-                $frequency[$letter] = 0;
-            }
-
-            $frequency = new OArray($frequency);
-
-            $frequency[$letter]++;
-
-            return $frequency;
-        };
-
-        return [
-            "Array" => [$freqArray],
-            "ArrayObject" => [$freqArrayObject],
-            "OArray" => [$freqOArray],
-        ];
-    }
-
-    /**
-     * @dataProvider stringReduceWithInitialValueProvider
-     *
-     * @param OString $string
-     * @param         $initial
-     * @param         $expected
-     */
-    public function testStringReduceWithInitialValue(OString $string, $initial, $expected)
-    {
-        $what = function ($carry, $item) {
-            $carry .= $item;
-
-            return $carry;
-        };
-
-        $this->assertEquals($expected, $string->reduce($what, $initial));
-    }
-
-    public function stringReduceWithInitialValueProvider()
-    {
-        return [
-            "Empty OString" => [new OString(), "alone", "alone"],
-            "OString" => [new OString("present"), "The ", "The present"],
-        ];
     }
 
     public function testStringHead()

@@ -4,7 +4,7 @@ namespace OPHP\Tests;
 use OPHP\OArray;
 use OPHP\OString;
 
-class ToOArrayTest extends \PHPUnit_Framework_TestCase
+class StringToArrayTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider stringToOArrayProvider
@@ -46,15 +46,16 @@ class ToOArrayTest extends \PHPUnit_Framework_TestCase
      * @dataProvider badDelimInStringToArrayProvider
      *
      * @param $delim
-     * @param $expectedMsg
+     * @param $exceptionMsg
      */
-    public function testBadDelimInStringToArray($delim, $expectedMsg)
+    public function testBadDelimInStringToArray($delim, $exceptionMsg)
     {
         $string = new OString("foobar");
 
-        $this->setExpectedException("InvalidArgumentException", $expectedMsg);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $string->toOArray($delim);
-        $this->getExpectedException();
     }
 
     public function badDelimInStringToArrayProvider()
@@ -67,15 +68,16 @@ class ToOArrayTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider badLimitInStringToArrayProvider
      * @param $limit
-     * @param $expectedMsg
+     * @param $exceptionMsg
      */
-    public function testBadLimitInStringToArray($limit, $expectedMsg)
+    public function testBadLimitInStringToArray($limit, $exceptionMsg)
     {
         $string = new OString("foobar");
 
-        $this->setExpectedException("InvalidArgumentException", $expectedMsg);
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage($exceptionMsg);
+
         $string->toOArray(" ", $limit);
-        $this->getExpectedException();
     }
 
     public function badLimitInStringToArrayProvider()

@@ -4,7 +4,7 @@ namespace OPHP\Tests;
 use OPHP\OArray;
 use OPHP\OString;
 
-class ToOStringTest extends \PHPUnit_Framework_TestCase
+class ArrayToStringTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider arrayToOstringProvider
@@ -62,8 +62,10 @@ class ToOStringTest extends \PHPUnit_Framework_TestCase
     public function testBadGlueInToOString()
     {
         $arr = new OArray(["apple", "banana"]);
-        $this->setExpectedException("InvalidArgumentException", "glue must be a string");
+
+        $this->expectException("InvalidArgumentException");
+        $this->expectExceptionMessage("glue must be a string");
+
         $arr->toOString(3);
-        $this->getExpectedException();
     }
 }

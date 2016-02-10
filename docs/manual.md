@@ -22,7 +22,8 @@ $myArray = $myArray->insert("orange", "o");
 ```
 
 ## Requirements
-* PHP >= 5.4
+
+* PHP >= 5.6
 * [composer](http://getcomposer.org)
 
 ## Main Classes of OPHP
@@ -132,6 +133,7 @@ $newArray = $myArray->remove("banana"); // ["a" => "apple", "c" => "celery"]
 ```
 
 **slice($start, $length = null)** - Shows only part of the array or string.
+
 * **$start** (integer) is the point in the OArray or OString to start slicing. If this number is positive, start that far on the left; if this number is negative, start that far on the right.
 * **$length** (integer or null) is the amount of items to slice. If this number is null, the length will be the rest of the OArray or OString; if the length is positive, the length will be the distance forward the OArray or OString will be sliced; if the length is negative, that is the length backwards the OArray or OString will be sliced.
 * **Note:** The numeric-key values of the OString and the OArray will be reset; the string-key values of an OArray will not be reset.
@@ -186,6 +188,7 @@ $newArr = $myArray->map($capitalize); // ["a" => "APPLE", "b" => "BANANA", "c" =
 ```
 
 **walk($callable)** - Walk does an in-place update of items in the object.
+
 * **Note:** Since the update is in-place, this breaks the immutablity of OPHP objects. This is useful for very large implementations of the OPHP where cloning the object would be memory intensive.
 
 ```php
@@ -213,6 +216,7 @@ $myArray->walk($capitalize); // ["a" => "APPLE", "b" => "BANANA", "c" => "CELERY
 ```
 
 **filter($callable = null, $flag = null)** - Iterates over each value in the container passing them to the callback function. If the callback function returns true, the current value from container is returned into the result container. Container keys are preserved.
+
 * **Note:** Default is to filter by value.
 * **Flag: USE_KEY** Filters against the OPHP container's key
 * **Flag: USE_BOTH** Filters against the OPHP container's value and key.
@@ -242,7 +246,7 @@ $firstLetterVowelWords = $myArray->filter($vowel); // ["a" => "apple"]
 
 * **USE_BOTH Example**
 
-    ```php
+```php
 use OPHP\OArray;
 use OPHP\OString;
 
@@ -259,9 +263,10 @@ $vowel_both = function ($value, $key) {
 };
 
 $vowelFoods = $myArray->filter($vowel_both, OArray::USE_BOTH); // ["a" => "bobble", "b" => "apple"]
-  ```
+```
 
 **reduce()** - Iteratively reduce the OPHP Collection to a single value using a callback function
+
 * **$callback:** mixed callback ( mixed $carry , mixed $item )
     * **$carry:** Holds the return value of the previous iteration; in the case of the first iteration it instead holds the value of initial.
     * **$item:** Holds the value of the current iteration.
@@ -320,7 +325,6 @@ $myArray = new OArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
 $tailString = $myString->tail(); // " am the very model of a modern major-general"
 $tailArray = $myArray->tail(); // ["b" => "banana", "c" => "celery"]
-
 ```
 
 ### Math
@@ -350,8 +354,10 @@ $myArray = new OArray(range(1, 10));
 $myString->sum(); // int(55)
 $myArray->sum(); // int(55)
 ```
+
 ## OArray-only Methods
 **toArray()** - Converts OArray to a standard PHP array.
+
 ```php
 use OPHP\OArray;
 
@@ -360,8 +366,11 @@ $array = $myArray->toArray(); // [1, 2, 3, 4]
 ```
 
 **toOString($glue = "")** - Converts an OArray to an OString. This is similar to PHP's [`implode`](http://php.net/manual/en/function.implode.php).
-* **$glue** is the string that binds the values of the OArray together to form the OString.
+
+* **$glue** is the string that binds the values of the OArray together to form the OString. Default value is an empty
+ string.
 * If the OArray is empty, the returned OString will also be empty.
+
 ```php
 use OPHP\OArray;
 use OPHP\OString;
@@ -372,6 +381,7 @@ $lawrenceWelk = $myArray->toOString(" and-a "); // OString("1 and-a 2 and-a 3 an
 
 ## OString-only Methods
 **toString()** - Converts OString to a standard PHP string.
+
 ```php
 use OPHP\OString;
 
@@ -380,6 +390,7 @@ $string = $myString->toString(); // "foo bar"
 ```
 
 **toOArray($delim = " ", $limit = null)** - Converts an OString to an OArray. This is similar to PHP's [`explode`](http://php.net/manual/en/function.explode.php).
+
 * **$delim** - The string to split the string on. This could be a single character or a phrase.
 * **$limit** - How many elements should be in the OArray.
 * If the OString is empty, the returned OArray will also be empty.
@@ -393,4 +404,3 @@ $words = $myString->toOArray(" "); // OArray(["I", "am", "the", "very", "model",
 $wordGroups = $myString->toOArray(" modern "); // OArray(["I am the very model of a", "major-general"]);
 $someWords = $myString->toOArray(" ", 4); // OArray (["I", "am", "the", "very model of a modern major-general"]);
 ```
-

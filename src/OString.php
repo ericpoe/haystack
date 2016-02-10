@@ -3,11 +3,11 @@ namespace OPHP;
 
 use OPHP\Helpers\Helper;
 
-class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Container, BaseFunctional, Math
+class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, ContainerInterface, BaseFunctionalInterface, MathInterface
 {
     const USE_KEY = "key";
     const USE_BOTH = "both";
-    private $string;
+    protected $string;
     private $ptr; // pointer for iterating through $string
 
     /** @var  Helper */
@@ -64,8 +64,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
             return new OArray();
         }
 
-        $arr = new ToOArray($this->string, $delim, $limit);
-        return new OArray($arr->toArray());
+        $arr = new StringToArray($this->string, $delim);
+        return new OArray($arr->stringToArray($limit));
     }
 
     /**
@@ -77,18 +77,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function contains($value)
     {
-        if (is_scalar($value)) {
-            $pos = strstr($this->string, (string) $value);
-
-            return (false !== $pos) ?: false;
-        }
-
-        if ($value instanceof OString) {
-            $pos = strstr($this->string, $value->toString());
-
-            return (false !== $pos) ?: false;
-        }
-        throw new \InvalidArgumentException("{$this->helper->getType($value)} is neither a scalar value nor an OString");
+        $answer = new OStringContains($this);
+        return $answer->contains($value);
     }
 
     /**
@@ -100,15 +90,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function locate($value)
     {
-        if (is_scalar($value)) {
-            return $this->contains($value) ? strpos($this->string, (string) $value) : -1;
-        }
-
-        if ($value instanceof OString) {
-            return $this->contains($value) ? strpos($this->string, $value->toString()) : -1;
-        }
-
-        throw new \InvalidArgumentException("{$this->helper->getType($value)} is neither a scalar value nor an OString");
+        $answer = new OStringLocate($this);
+        return $answer->locate($value);
     }
 
     /**
@@ -120,10 +103,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function append($value)
     {
-        if (is_scalar($value) || $value instanceof OString) {
-            return new OString($this->string . $value);
-        }
-        throw new \InvalidArgumentException("Cannot concatenate an OString with a {$this->helper->getType($value)}");
+        $answer = new OStringAppend($this);
+        return new OString($answer->append($value));
     }
 
     /**
@@ -136,20 +117,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function insert($value, $key = null)
     {
-        if (is_scalar($value) || $value instanceof OString) {
-            if (is_null($key)) {
-                $key = strlen($this);
-            } elseif (is_numeric($key)) {
-                $key = (int) $key;
-            } else {
-                throw new \InvalidArgumentException("Invalid array key");
-            }
-
-
-            return new OString(substr_replace($this->string, $value, $key, 0));
-        }
-
-        throw new \InvalidArgumentException("Cannot insert {$this->helper->getType($value)} into an OString");
+        $answer = new OStringInsert($this);
+        return new OString($answer->insert($value, $key));
     }
 
     /**
@@ -157,14 +126,12 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *
      * @param $value
      * @return OString
+     * @throws \InvalidArgumentException
      */
     public function remove($value)
     {
-        $key = $this->locate($value);
-        $startString = $this->slice(0, $key);
-        $endString = $this->slice($key + 1);
-
-        return $startString->insert($endString);
+        $answer = new OStringRemove($this);
+        return new OString($answer->remove($value));
     }
 
     /**
@@ -177,19 +144,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function slice($start, $length = null)
     {
-        if (is_null($start) || !is_numeric($start)) {
-            throw new \InvalidArgumentException("Slice parameter 1, \$start, must be an integer");
-        }
-
-        if (!is_null($length) && !is_numeric($length)) {
-            throw new \InvalidArgumentException("Slice parameter 2, \$length, must be null or an integer");
-        }
-
-        if (is_null($length)) {
-            return new OString((substr($this, $start)));
-        }
-
-        return new OString(substr($this->string, $start, $length));
+        $answer = new OStringSlice($this);
+        return new OString($answer->slice($start, $length));
     }
 
     /**
@@ -376,12 +332,8 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function map(callable $func)
     {
-        $newString = new OString($this->string);
-        for ($i = 0; $i < $this->count(); $i++) {
-            $newString[$i] = $func($this[$i]);
-        }
-
-        return $newString;
+        $answer = new OStringMap($this);
+        return new OString($answer->map($func));
     }
 
     /**
@@ -392,9 +344,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function walk(callable $func)
     {
-        for ($i = 0; $i < $this->count(); $i++) {
-            $this[$i] = $func($this[$i], $i);
-        }
+        OStringWalk::walk($this, $func);
     }
 
     /**
@@ -406,53 +356,21 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function filter(callable $func = null, $flag = null)
     {
-        // Default
-        if (is_null($func)) {
-            return $this->filterWithDefaults();
-        }
-
-        // No flags are passed
-        if (is_null($flag)) {
-            return $this->filterWithValue($func);
-        }
-
-        // Flag is passed
-        if ("key" === $flag || "both" === $flag) {
-            // Flag of "USE_KEY" is passed
-            if ("key" === $flag) {
-                return $this->filterWithKey($func);
-            }
-
-            // Flag of "USE_BOTH is passed
-            return $this->filterWithValueAndKey($func);
-        }
-        throw new \InvalidArgumentException("Invalid flag name");
+        $answer =  new OStringFilter($this);
+        return new OString($answer->filter($func, $flag));
     }
 
     /**
      * @inheritdoc
      *
      * @param callable $func
-     * @param null     $initial
-     * @return bool|float|int|string|OString|array|\ArrayObject|OArray
+     * @param mixed $initial
+     * @return bool|float|int|OString|OArray
      */
     public function reduce(callable $func, $initial = null)
     {
-        // todo: figure out invalid types, if any, of $initial
-        $reduced = $initial;
-        foreach ($this as $letter) {
-            $reduced = $func($reduced, $letter);
-        }
-
-        if ($reduced instanceof \ArrayObject || is_array($reduced)) {
-            return new OArray($reduced);
-        }
-
-        if (is_string($reduced)) {
-            return new OString($reduced);
-        }
-
-        return $reduced;
+        $answer = new OStringReduce($this);
+        return $answer->reduce($func, $initial);
     }
 
     /**
@@ -482,9 +400,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function sum()
     {
-        $values = new OArray(str_getcsv(str_ireplace(" ", "", $this->string)));
-
-        return $values->sum();
+        return $this->toOArray()->sum();
     }
 
     /**
@@ -494,75 +410,6 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function product()
     {
-        $values = new OArray(str_getcsv(str_ireplace(" ", "", $this->string)));
-
-        return $values->product();
-    }
-
-    /**
-     * @return OString
-     */
-    private function filterWithDefaults()
-    {
-        $newString = new OString();
-
-        foreach ($this as $letter) {
-            if ((bool) $letter) {
-                $newString = $newString->insert($letter);
-            }
-        }
-
-        return $newString;
-    }
-
-    /**
-     * @param callable $func
-     * @return OString
-     */
-    private function filterWithValue(callable $func)
-    {
-        $newString = new OString();
-
-        foreach ($this as $letter) {
-            if ($func($letter)) {
-                $newString = $newString->insert($letter);
-            }
-        }
-
-        return $newString;
-    }
-
-    /**
-     * @param callable $func
-     * @return OString
-     */
-    private function filterWithKey(callable $func)
-    {
-        $newString = new OString();
-
-        foreach ($this as $letter) {
-            if (true === (bool) $func($this->key())) {
-                $newString = $newString->insert($letter);
-            }
-        }
-
-        return $newString;
-    }
-
-    /**
-     * @param callable $func
-     * @return OString
-     */
-    private function filterWithValueAndKey(callable $func)
-    {
-        $newString = new OString();
-
-        foreach ($this as $letter) {
-            if (true === (bool) $func($letter, $this->key())) {
-                $newString = $newString->insert($letter);
-            }
-        }
-
-        return $newString;
+        return $this->toOArray()->product();
     }
 }
