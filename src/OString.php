@@ -400,9 +400,7 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function sum()
     {
-        $values = new OArray(str_getcsv(str_ireplace(" ", "", $this->string)));
-
-        return $values->sum();
+        return $this->toOArray()->sum();
     }
 
     /**
@@ -412,8 +410,6 @@ class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function product()
     {
-        $values = new OArray(str_getcsv(str_ireplace(" ", "", $this->string)));
-
-        return $values->product();
+        return $this->toOArray()->product();
     }
 }
