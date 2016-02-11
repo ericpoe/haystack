@@ -1,8 +1,8 @@
 [![Build Status](https://img.shields.io/travis/ericpoe/ophp/master.svg?style=flat-square)](https://travis-ci.org/ericpoe/ophp)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/ericpoe/ophp.svg?style=flat-square)](https://scrutinizer-ci.com/g/ericpoe/ophp/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/ericpoe/ophp.svg?style=flat-square)](https://scrutinizer-ci.com/g/ericpoe/ophp)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/a37859b2-cb28-4426-b488-dabdf483a192.svg?style=flat-square)]()
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/a37859b2-cb28-4426-b488-dabdf483a192.svg?style=flat-square)](https://insight.sensiolabs.com/projects/a37859b2-cb28-4426-b488-dabdf483a192)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Packagist Version](https://img.shields.io/packagist/v/ericpoe/ophp.svg?style=flat-square)](https://packagist.org/packages/ericpoe/ophp)
 
 # OPHP
