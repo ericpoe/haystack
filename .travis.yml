@@ -9,7 +9,8 @@ matrix:
   allow_failures:
     - php: hhvm
 
-sudo: false
+sudo: required
+dist: trusy
 
 install: travis_retry composer install --no-interaction --prefer-source
 
