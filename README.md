@@ -40,3 +40,6 @@ different manners.
 This project will attempt to match as many string and array verbs as possible. For example, `$foo->contains("elvis")`
 should determine if the string "elvis" is contained in the $foo object, it shouldn't matter if `$foo` is a string or
 an array. Ditto `$foo->map($callable)` and `$foo->filter($callable)`.
+
+## How do I?
+Check out the [manual](docs/manual.md) for all the things you can do with the Haystack library.
