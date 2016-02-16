@@ -15,7 +15,8 @@ class OStringFilterWithValue
     {
         $this->string = $string;
     }
-    public function filter(callable $func){
+    public function filter(callable $func)
+    {
         $filtered = new OString();
 
         foreach ($this->string as $letter) {

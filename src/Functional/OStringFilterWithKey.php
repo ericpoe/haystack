@@ -20,7 +20,8 @@ class OStringFilterWithKey
      * @param callable $func
      * @return OString
      */
-    public function filter(callable $func){
+    public function filter(callable $func)
+    {
         $filtered = new OString();
         foreach ($this->string as $letter) {
             if (true === (bool) $func($this->string->key())) {
