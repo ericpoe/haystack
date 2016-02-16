@@ -1,9 +1,23 @@
 <?php
 namespace OPHP;
 
+use OPHP\Container\ContainerInterface;
+use OPHP\Container\OArrayAppend;
+use OPHP\Container\OArrayContains;
+use OPHP\Container\OArrayInsert;
+use OPHP\Container\OArrayLocate;
+use OPHP\Container\OArrayRemove;
+use OPHP\Container\OArraySlice;
+use OPHP\Converter\ArrayToString;
+use OPHP\Functional\FunctionalInterface;
+use OPHP\Functional\OArrayFilter;
+use OPHP\Functional\OArrayMap;
+use OPHP\Functional\OArrayReduce;
+use OPHP\Functional\OArrayWalk;
 use OPHP\Helpers\Helper;
+use OPHP\Math\MathInterface;
 
-class OArray extends \ArrayObject implements ContainerInterface, BaseFunctionalInterface, MathInterface
+class OArray extends \ArrayObject implements ContainerInterface, FunctionalInterface, MathInterface
 {
     const USE_KEY = "key";
     const USE_BOTH = "both";

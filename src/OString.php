@@ -1,9 +1,23 @@
 <?php
 namespace OPHP;
 
+use OPHP\Container\ContainerInterface;
+use OPHP\Container\OStringAppend;
+use OPHP\Container\OStringContains;
+use OPHP\Container\OStringInsert;
+use OPHP\Container\OStringLocate;
+use OPHP\Container\OStringRemove;
+use OPHP\Container\OStringSlice;
+use OPHP\Converter\StringToArray;
+use OPHP\Functional\FunctionalInterface;
+use OPHP\Functional\OStringFilter;
+use OPHP\Functional\OStringMap;
+use OPHP\Functional\OStringReduce;
+use OPHP\Functional\OStringWalk;
 use OPHP\Helpers\Helper;
+use OPHP\Math\MathInterface;
 
-class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, ContainerInterface, BaseFunctionalInterface, MathInterface
+class OString implements \Iterator, \ArrayAccess, \Serializable, \Countable, ContainerInterface, FunctionalInterface, MathInterface
 {
     const USE_KEY = "key";
     const USE_BOTH = "both";
