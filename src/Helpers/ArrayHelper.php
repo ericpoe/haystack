@@ -1,7 +1,7 @@
 <?php
-namespace OPHP\Helpers;
+namespace Haystack\Helpers;
 
-use OPHP\OString;
+use Haystack\HString;
 
 class ArrayHelper
 {
@@ -26,7 +26,7 @@ class ArrayHelper
         $possibility = is_array($thing)
             || is_scalar($thing)
             || $thing instanceof \ArrayObject
-            || $thing instanceof OString;
+            || $thing instanceof HString;
 
         return $possibility;
     }

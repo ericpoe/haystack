@@ -1,5 +1,5 @@
 <?php
-namespace OPHP\Math;
+namespace Haystack\Math;
 
 interface MathInterface
 {

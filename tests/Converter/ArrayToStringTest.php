@@ -1,71 +1,71 @@
 <?php
-namespace OPHP\Tests\Converter;
+namespace Haystack\Tests\Converter;
 
-use OPHP\OArray;
-use OPHP\OString;
+use Haystack\HArray;
+use Haystack\HString;
 
 class ArrayToStringTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @dataProvider arrayToOstringProvider
+     * @dataProvider arrayToHstringProvider
      *
-     * @param OArray $arr
+     * @param HArray $arr
      * @param        $expected
      */
-    public function testArrayToOString(OArray $arr, $expected)
+    public function testArrayToHstring(HArray $arr, $expected)
     {
-        $this->assertEquals($expected, $arr->toOString());
+        $this->assertEquals($expected, $arr->ToHstring());
     }
 
-    public function arrayToOstringProvider()
+    public function arrayToHstringProvider()
     {
         return [
-            "Empty Array" => [new OArray(), new OString()],
-            "1-item list" => [new OArray(["apple"]), new OString("apple")],
-            "1-item dict" => [new OArray(["a" => "apple"]), new OString("apple")],
-            "2-item list" => [new OArray(["apple", "banana"]), new OString("applebanana")],
-            "2-item dict" => [new OArray(["a" => "apple", "b" => "banana"]), new OString("applebanana")],
+            "Empty Array" => [new HArray(), new HString()],
+            "1-item list" => [new HArray(["apple"]), new HString("apple")],
+            "1-item dict" => [new HArray(["a" => "apple"]), new HString("apple")],
+            "2-item list" => [new HArray(["apple", "banana"]), new HString("applebanana")],
+            "2-item dict" => [new HArray(["a" => "apple", "b" => "banana"]), new HString("applebanana")],
         ];
     }
 
     /**
-     * @dataProvider arrayToOstringWithGlueProvider
+     * @dataProvider arrayToHstringWithGlueProvider
      *
-     * @param OArray $arr
+     * @param HArray $arr
      * @param        $glue
      * @param        $expected
      */
-    public function testArrayToOStringWithGlue(OArray $arr, $glue, $expected)
+    public function testArrayToHstringWithGlue(HArray $arr, $glue, $expected)
     {
-        $this->assertEquals($expected, $arr->toOString($glue));
+        $this->assertEquals($expected, $arr->ToHstring($glue));
     }
 
-    public function arrayToOstringWithGlueProvider()
+    public function arrayToHstringWithGlueProvider()
     {
         return [
-            "Empty Array, null glue" => [new OArray(), null, new OString()],
-            "1-item list, null glue" => [new OArray(["apple"]), null, new OString("apple")],
-            "1-item dict, null glue" => [new OArray(["a" => "apple"]), null, new OString("apple")],
-            "2-item list, null glue" => [new OArray(["apple", "banana"]), null, new OString("applebanana")],
-            "2-item dict, null glue" => [new OArray(["a" => "apple", "b" => "banana"]), null, new OString("applebanana")],
-            "1-item list, space glue" => [new OArray(["apple"]), " ", new OString("apple")],
-            "1-item dict, space glue" => [new OArray(["a" => "apple"]), " ", new OString("apple")],
-            "2-item list, space glue" => [new OArray(["apple", "banana"]), " ", new OString("apple banana")],
-            "2-item dict, space glue" => [new OArray(["a" => "apple", "b" => "banana"]), " ", new OString("apple banana")],
-            "1-item list, OString glue" => [new OArray(["apple"]), new OString(" "), new OString("apple")],
-            "1-item dict, OString glue" => [new OArray(["a" => "apple"]), new OString(" "), new OString("apple")],
-            "2-item list, OString glue" => [new OArray(["apple", "banana"]), new OString(" "), new OString("apple banana")],
-            "2-item dict, OString glue" => [new OArray(["a" => "apple", "b" => "banana"]), new OString(" "), new OString("apple banana")],
+            "Empty Array, null glue" => [new HArray(), null, new HString()],
+            "1-item list, null glue" => [new HArray(["apple"]), null, new HString("apple")],
+            "1-item dict, null glue" => [new HArray(["a" => "apple"]), null, new HString("apple")],
+            "2-item list, null glue" => [new HArray(["apple", "banana"]), null, new HString("applebanana")],
+            "2-item dict, null glue" => [new HArray(["a" => "apple", "b" => "banana"]), null, new HString("applebanana")],
+            "1-item list, space glue" => [new HArray(["apple"]), " ", new HString("apple")],
+            "1-item dict, space glue" => [new HArray(["a" => "apple"]), " ", new HString("apple")],
+            "2-item list, space glue" => [new HArray(["apple", "banana"]), " ", new HString("apple banana")],
+            "2-item dict, space glue" => [new HArray(["a" => "apple", "b" => "banana"]), " ", new HString("apple banana")],
+            "1-item list, HString glue" => [new HArray(["apple"]), new HString(" "), new HString("apple")],
+            "1-item dict, HString glue" => [new HArray(["a" => "apple"]), new HString(" "), new HString("apple")],
+            "2-item list, HString glue" => [new HArray(["apple", "banana"]), new HString(" "), new HString("apple banana")],
+            "2-item dict, HString glue" => [new HArray(["a" => "apple", "b" => "banana"]), new HString(" "), new HString("apple banana")],
         ];
     }
 
-    public function testBadGlueInToOString()
+    public function testBadGlueInToHstring()
     {
-        $arr = new OArray(["apple", "banana"]);
+        $arr = new HArray(["apple", "banana"]);
 
         $this->expectException("InvalidArgumentException");
         $this->expectExceptionMessage("glue must be a string");
 
-        $arr->toOString(3);
+        $arr->ToHstring(3);
     }
 }

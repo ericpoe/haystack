@@ -1,44 +1,44 @@
 <?php
-namespace OPHP\Tests\Converter;
+namespace Haystack\Tests\Converter;
 
-use OPHP\OArray;
-use OPHP\OString;
+use Haystack\HArray;
+use Haystack\HString;
 
 class StringToArrayTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @dataProvider stringToOArrayProvider
+     * @dataProvider stringToHArrayProvider
      *
-     * @param OString $string
+     * @param HString $string
      * @param         $delim
      * @param         $limit
      * @param         $expected
      */
-    public function testStringToOArray(OString $string, $delim, $limit, $expected)
+    public function testStringToHArray(HString $string, $delim, $limit, $expected)
     {
-        $this->assertEquals($expected, $string->toOArray($delim, $limit));
+        $this->assertEquals($expected, $string->toHArray($delim, $limit));
     }
 
-    public function stringToOArrayProvider()
+    public function stringToHArrayProvider()
     {
         $jabberwocky = "'Twas brillig and the slithy toves";
         $jabberwockyColon = "'Twas:brillig:and:the:slithy:toves";
 
         return [
-            "Empty String" => [new OString(), null, null, new OArray()],
-            "String of integers with null delims" => [new OString("1 2 3 4 5"), null, null, new OArray([1, 2, 3, 4, 5])],
-            "String of integers with blank string delims" => [new OString("1 2 3 4 5"), "", null, new OArray([1, 2, 3, 4, 5])],
-            "String of integers with space delims" => [new OString("1 2 3 4 5"), " ", null, new OArray([1, 2, 3, 4, 5])],
-            "String of integers with comma delims" => [new OString("1, 2, 3, 4, 5"), ",", null, new OArray([1, 2, 3, 4, 5])],
-            "String of integers with non-existent delims" => [new OString("1, 2, 3, 4, 5"), "foo", null, new OArray(["1, 2, 3, 4, 5"])],
-            "String of integers with OString space delims" => [new OString("1 2 3 4 5"), new OString(" "), null, new OArray([1, 2, 3, 4, 5])],
-            "String of integers with OString comma delims" => [new OString("1, 2, 3, 4, 5"), new OString(","), null, new OArray([1, 2, 3, 4, 5])],
-            "String of words with spaces" => [new OString($jabberwocky), " ", null, new OArray(["'Twas", "brillig", "and", "the", "slithy", "toves"])],
-            "String of words with colons" => [new OString($jabberwockyColon), ":", null, new OArray(["'Twas", "brillig", "and", "the", "slithy", "toves"])],
-            "String of integers with spaces & limit" => [new OString("1 2 3 4 5"), " ", 3, new OArray([1, 2, "3 4 5"])],
-            "String of integers with commas & limit" => [new OString("1, 2, 3, 4, 5"), ", ", 3, new OArray([1, 2, "3, 4, 5"])],
-            "String of words with spaces & limit" => [new OString($jabberwocky), " ", 3, new OArray(["'Twas", "brillig", "and the slithy toves"])],
-            "String of words with colons & limit" => [new OString($jabberwockyColon), ":", 3, new OArray(["'Twas", "brillig", "and:the:slithy:toves"])],
+            "Empty String" => [new HString(), null, null, new HArray()],
+            "String of integers with null delims" => [new HString("1 2 3 4 5"), null, null, new HArray([1, 2, 3, 4, 5])],
+            "String of integers with blank string delims" => [new HString("1 2 3 4 5"), "", null, new HArray([1, 2, 3, 4, 5])],
+            "String of integers with space delims" => [new HString("1 2 3 4 5"), " ", null, new HArray([1, 2, 3, 4, 5])],
+            "String of integers with comma delims" => [new HString("1, 2, 3, 4, 5"), ",", null, new HArray([1, 2, 3, 4, 5])],
+            "String of integers with non-existent delims" => [new HString("1, 2, 3, 4, 5"), "foo", null, new HArray(["1, 2, 3, 4, 5"])],
+            "String of integers with HString space delims" => [new HString("1 2 3 4 5"), new HString(" "), null, new HArray([1, 2, 3, 4, 5])],
+            "String of integers with HString comma delims" => [new HString("1, 2, 3, 4, 5"), new HString(","), null, new HArray([1, 2, 3, 4, 5])],
+            "String of words with spaces" => [new HString($jabberwocky), " ", null, new HArray(["'Twas", "brillig", "and", "the", "slithy", "toves"])],
+            "String of words with colons" => [new HString($jabberwockyColon), ":", null, new HArray(["'Twas", "brillig", "and", "the", "slithy", "toves"])],
+            "String of integers with spaces & limit" => [new HString("1 2 3 4 5"), " ", 3, new HArray([1, 2, "3 4 5"])],
+            "String of integers with commas & limit" => [new HString("1, 2, 3, 4, 5"), ", ", 3, new HArray([1, 2, "3, 4, 5"])],
+            "String of words with spaces & limit" => [new HString($jabberwocky), " ", 3, new HArray(["'Twas", "brillig", "and the slithy toves"])],
+            "String of words with colons & limit" => [new HString($jabberwockyColon), ":", 3, new HArray(["'Twas", "brillig", "and:the:slithy:toves"])],
         ];
     }
 
@@ -50,12 +50,12 @@ class StringToArrayTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadDelimInStringToArray($delim, $exceptionMsg)
     {
-        $string = new OString("foobar");
+        $string = new HString("foobar");
 
         $this->expectException("InvalidArgumentException");
         $this->expectExceptionMessage($exceptionMsg);
 
-        $string->toOArray($delim);
+        $string->toHArray($delim);
     }
 
     public function badDelimInStringToArrayProvider()
@@ -72,12 +72,12 @@ class StringToArrayTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadLimitInStringToArray($limit, $exceptionMsg)
     {
-        $string = new OString("foobar");
+        $string = new HString("foobar");
 
         $this->expectException("InvalidArgumentException");
         $this->expectExceptionMessage($exceptionMsg);
 
-        $string->toOArray(" ", $limit);
+        $string->toHArray(" ", $limit);
     }
 
     public function badLimitInStringToArrayProvider()

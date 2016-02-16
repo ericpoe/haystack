@@ -1,5 +1,5 @@
 <?php
-namespace OPHP\Helpers;
+namespace Haystack\Helpers;
 
 class Helper
 {

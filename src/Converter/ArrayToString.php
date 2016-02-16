@@ -1,14 +1,14 @@
 <?php
-namespace OPHP\Converter;
+namespace Haystack\Converter;
 
-use OPHP\OString;
+use Haystack\HString;
 
 class ArrayToString
 {
     /** @var  array */
     private $arr;
 
-    /** @var OString|string */
+    /** @var HString|string */
     private $glue;
 
     /**
@@ -27,7 +27,7 @@ class ArrayToString
      */
     public function toString()
     {
-        if (is_string($this->glue) || $this->glue instanceof OString) {
+        if (is_string($this->glue) || $this->glue instanceof HString) {
             return $this->arrayImplode();
         }
 

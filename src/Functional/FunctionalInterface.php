@@ -1,5 +1,5 @@
 <?php
-namespace OPHP\Functional;
+namespace Haystack\Functional;
 
 interface FunctionalInterface
 {
@@ -14,8 +14,8 @@ interface FunctionalInterface
     /**
      * Walk does an in-place update of items in the object.
      *
-     * Since the update is in-place, this breaks the immutablity of OPHP objects. This is useful for very large
-     * implementation of the OPHP where cloning the object would be memory intensive.
+     * Since the update is in-place, this breaks the immutability of Haystack objects. This is useful for very large
+     * implementation of the Haystack where cloning the object would be memory intensive.
      *
      * @param callable $func
      * @return null
@@ -40,7 +40,7 @@ interface FunctionalInterface
     public function filter(callable $func = null, $flag = null);
 
     /**
-     * Iteratively reduce the OPHP Collection to a single value using a callback function
+     * Iteratively reduce the Haystack Collection to a single value using a callback function
      * * $callback: mixed callback ( mixed $carry , mixed $item )
      *   * $carry: Holds the return value of the previous iteration; in the case of the first iteration it instead holds the value of initial.
      *   * $item: Holds the value of the current iteration.

@@ -1,14 +1,14 @@
 <?php
-namespace OPHP\Converter;
+namespace Haystack\Converter;
 
-use OPHP\OString;
+use Haystack\HString;
 
 class StringToArray
 {
     /** @var string */
     private $string;
 
-    /** @var OString|string */
+    /** @var HString|string */
     private $delim;
 
     /** @var array */
@@ -22,7 +22,7 @@ class StringToArray
     {
         $this->string = $string;
 
-        if (empty($delim) || is_string($delim) || $delim instanceof OString) {
+        if (empty($delim) || is_string($delim) || $delim instanceof HString) {
             $this->delim = $delim;
         } else {
             throw new \InvalidArgumentException("delimiter must be a string");

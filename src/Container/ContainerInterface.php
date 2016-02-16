@@ -1,5 +1,5 @@
 <?php
-namespace OPHP\Container;
+namespace Haystack\Container;
 
 interface ContainerInterface
 {
@@ -47,8 +47,8 @@ interface ContainerInterface
     /**
      * Shows only part of the array or string.
      *
-     * @param int $start - the point in the OArray or OString to start slicing. If this number is positive, start that far on the left; if this number is negative, start that far on the right
-     * @param int|null $length - the amount of items to slice. If this number is null, the length will be the rest of the OArray or OString; if the length is positive, the length will be the distance forward the OArray or OString will be sliced; if the length is negative, that is the length backwards the OArray or OString will be sliced
+     * @param int $start - the point in the HArray or HString to start slicing. If this number is positive, start that far on the left; if this number is negative, start that far on the right
+     * @param int|null $length - the amount of items to slice. If this number is null, the length will be the rest of the HArray or HString; if the length is positive, the length will be the distance forward the HArray or HString will be sliced; if the length is negative, that is the length backwards the HArray or HString will be sliced
      * @return mixed
      */
     public function slice($start, $length);
