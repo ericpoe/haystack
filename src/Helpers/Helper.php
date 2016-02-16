@@ -1,8 +1,6 @@
 <?php
 namespace OPHP\Helpers;
 
-use OPHP\OString;
-
 class Helper
 {
     public function getType($thing)
@@ -13,19 +11,5 @@ class Helper
         }
 
         return $type;
-    }
-
-    /**
-     * @param $thing
-     * @return bool
-     */
-    public function canBeInArray($thing)
-    {
-        $possibility = is_array($thing)
-            || is_scalar($thing)
-            || $thing instanceof \ArrayObject
-            || $thing instanceof OString;
-
-        return $possibility;
     }
 }

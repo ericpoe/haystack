@@ -27,7 +27,7 @@ class OArrayContains
      */
     public function contains($value)
     {
-        if ($this->helper->canBeInArray($value)) {
+        if (ArrayHelper::canBeInArray($value)) {
             $arr = $this->arr->toArray();
             $answer = in_array($value, $arr);
         } else {

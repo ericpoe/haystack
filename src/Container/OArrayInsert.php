@@ -1,6 +1,7 @@
 <?php
 namespace OPHP\Container;
 
+use OPHP\Helpers\ArrayHelper;
 use OPHP\Helpers\Helper;
 use OPHP\OArray;
 use OPHP\OString;
@@ -22,7 +23,7 @@ class OArrayInsert
             $valueArray = $value->toArray();
         } elseif ($value instanceof OString) {
             $valueArray = $value->toString();
-        } elseif ($this->helper->canBeInArray($value)) {
+        } elseif (ArrayHelper::canBeInArray($value)) {
             $valueArray = $value;
         } else {
             throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an OArray");

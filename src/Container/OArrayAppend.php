@@ -30,7 +30,7 @@ class OArrayAppend
     {
         $value = $value instanceof OArray ? $value->toArray() : $value;
 
-        if ($this->helper->canBeInArray($value)) {
+        if (ArrayHelper::canBeInArray($value)) {
             $this->arr->append($value);
 
             return $this->arr;

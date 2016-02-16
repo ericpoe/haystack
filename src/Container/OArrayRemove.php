@@ -1,6 +1,7 @@
 <?php
 namespace OPHP\Container;
 
+use OPHP\Helpers\ArrayHelper;
 use OPHP\Helpers\Helper;
 use OPHP\OArray;
 
@@ -17,7 +18,7 @@ class OArrayRemove
 
     public function remove($value)
     {
-        if ($this->helper->canBeInArray($value)) {
+        if (ArrayHelper::canBeInArray($value)) {
             if (false === $this->arr->contains($value)) {
                 return $this->arr;
             }
