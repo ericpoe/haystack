@@ -1,5 +1,5 @@
 <?php
-namespace OPHP\Tests;
+namespace OPHP\Tests\Functional;
 
 use OPHP\OArray;
 use OPHP\OString;

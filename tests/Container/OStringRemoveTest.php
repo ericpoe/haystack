@@ -1,5 +1,5 @@
 <?php
-namespace OPHP\Tests;
+namespace OPHP\Tests\Container;
 
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use OPHP\OString;
