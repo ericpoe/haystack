@@ -9,7 +9,7 @@ class OStringWalk
      * @param OString &$string
      * @param callable $func
      */
-    static public function walk(OString &$string, callable $func)
+    public static function walk(OString &$string, callable $func)
     {
         $size = $string->count();
 
