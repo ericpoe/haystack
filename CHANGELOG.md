@@ -1,12 +1,21 @@
 # Change Log
 
-## [0.3.0](https://github.com/ericpoe/ophp/tree/v0.3.0) - 2016-02-09
+## [1.0.0](https://github.com/ericpoe/haystack/tree/v1.0.0) - 2016-02-15
+Rebranding as Haystack.
+
+### Changes
+
+* OArray is now known as HArray
+* OString is now known as HString
+* Bugfix dealing with static function declaration
+
+## [0.3.0](https://github.com/ericpoe/haystack/tree/v0.3.0) - 2016-02-09
 
 * Drop support for PHP 5.4 and PHP 5.5
 * Reduce duplication in code
 * Add tests for bug fixes
 
-## [0.2.0](https://github.com/ericpoe/ophp/tree/v0.2.0) - 2015-07-29
+## [0.2.0](https://github.com/ericpoe/haystack/tree/v0.2.0) - 2015-07-29
 OArray <--> String conversion
 
 * **Manual**
@@ -18,7 +27,7 @@ OArray <--> String conversion
 * OArray now has toOString() method. This is an alias to `implode`
 * OString now has toOArray() method. This is an alias to `explode`
 
-## [0.1.1](https://github.com/ericpoe/ophp/tree/v0.1.1) - 2015-07-27
+## [0.1.1](https://github.com/ericpoe/haystack/tree/v0.1.1) - 2015-07-27
 Documentation updates
 
 ### Changes
@@ -35,7 +44,7 @@ Documentation updates
 * **README**
     * Add copy/paste one liner to require the library
 
-## [0.1.0](https://github.com/ericpoe/ophp/tree/v0.1.0) - 2015-07-26
+## [0.1.0](https://github.com/ericpoe/haystack/tree/v0.1.0) - 2015-07-26
 Initial release
 
 ### Contains

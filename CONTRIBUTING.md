@@ -1,4 +1,4 @@
-# Contributing to OPHP
+# Contributing to Haystack
 
 Thank you for showing interest in helping make this project better for all.
 
@@ -11,13 +11,13 @@ In short, [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/
 Until I need to be more explicit, don't be a jerk.
 
 ## Submitting Issues & Features
-* You can create an issue [here](https://github.com/ericpoe/ophp/issues/new), but
+* You can create an issue [here](https://github.com/ericpoe/haystack/issues/new), but
   before doing that please read the notes below on debugging and submitting issues,
   and include as many details as possible with your report.
-* Ensure that you are using the latest pre-release version of OPHP
-* Include the version of OPHP you are using, the version of PHP you are using, and the OS.
+* Ensure that you are using the latest pre-release version of Haystack
+* Include the version of Haystack you are using, the version of PHP you are using, and the OS.
 * Include any error messages you are receiving and under which conditions if this is a bug-fix.
-* Include which OPHP objects this feature or bug affects.
+* Include which Haystack objects this feature or bug affects.
 * Try to make fixing this issue or adding this feature easier for the next person:
     * For the application:
         * If you submit a code-update, also submit appropriate PHPUnit tests
