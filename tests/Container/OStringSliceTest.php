@@ -91,7 +91,7 @@ class OStringSliceTest extends \PHPUnit_Framework_TestCase
         $this->expectException("InvalidArgumentException");
         $this->expectExceptionMessage($exceptionMsg);
 
-        $tmp = $this->aString->slice($start, $length);
+        $this->aString->slice($start, $length);
     }
 
     public function badSlicingProvider()

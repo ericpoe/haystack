@@ -56,7 +56,7 @@ class OArrayRemoveTest extends \PHPUnit_Framework_TestCase
         $this->expectException("InvalidArgumentException");
         $this->expectExceptionMessage($exceptionMsg);
 
-        $newArray = $this->arrDict->remove($item);
+        $this->arrDict->remove($item);
     }
 
     public function badRemoveProvider()

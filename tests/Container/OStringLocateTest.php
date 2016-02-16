@@ -49,7 +49,7 @@ class OStringLocateTest extends \PHPUnit_Framework_TestCase
         $this->expectException("InvalidArgumentException");
         $this->expectExceptionMessage($exceptionMsg);
 
-        $var = $this->aString->locate($item);
+        $this->aString->locate($item);
     }
 
     public function badLocateTypesOfStringInFoobarProvider()

@@ -64,7 +64,7 @@ class OArrayTest extends \PHPUnit_Framework_TestCase
         $this->expectException("ErrorException");
         $this->expectExceptionMessage($exceptionMsg);
 
-        $badArr = new OArray($item);
+        new OArray($item);
     }
 
     public function badArraysProvider()

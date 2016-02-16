@@ -86,7 +86,7 @@ class OArrayInsertTest extends \PHPUnit_Framework_TestCase
         $this->expectException("InvalidArgumentException");
         $this->expectExceptionMessage($exceptionMsg);
 
-        $newArray = $this->arrDict->insert("yobbo", $key);
+        $this->arrDict->insert("yobbo", $key);
     }
 
     public function badInsertKeyProvider()
