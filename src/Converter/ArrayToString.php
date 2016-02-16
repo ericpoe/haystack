@@ -28,7 +28,7 @@ class ArrayToString
     public function toString()
     {
         if (is_string($this->glue) || $this->glue instanceof OString) {
-            return $this->oArrayImplode();
+            return $this->arrayImplode();
         }
 
         throw new \InvalidArgumentException("glue must be a string");
@@ -37,7 +37,7 @@ class ArrayToString
     /**
      * @return string
      */
-    private function oArrayImplode()
+    private function arrayImplode()
     {
         return implode($this->glue, $this->arr);
     }

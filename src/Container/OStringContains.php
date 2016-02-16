@@ -63,7 +63,7 @@ class OStringContains
     }
 
     /**
-     * @param OString|string $value
+     * @param OString|string $newValue
      * @return bool
      */
     private function containsValue($newValue)
