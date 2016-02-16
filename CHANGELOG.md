@@ -8,6 +8,7 @@ Rebranding as Haystack.
 * OArray is now known as HArray
 * OString is now known as HString
 * Bugfix dealing with static function declaration
+* Manual is now linked from the main README document
 
 ## [0.3.0](https://github.com/ericpoe/haystack/tree/v0.3.0) - 2016-02-09
 
