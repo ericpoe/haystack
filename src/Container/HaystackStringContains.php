@@ -68,7 +68,7 @@ class HaystackStringContains
      */
     private function containsValue($newValue)
     {
-        $pos = strstr($this->string, $newValue);
+        $pos = strpos($this->string, $newValue);
 
         return (false !== $pos) ?: false;
     }
