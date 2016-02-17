@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.0.1](https://github.com/ericpoe/haystack/tree/v1.0.1) - 2016-02-16
+
+### Changes
+
+* Minor performance boost to HString::contains
+
 ## [1.0.0](https://github.com/ericpoe/haystack/tree/v1.0.0) - 2016-02-15
 Rebranding as Haystack.
 
