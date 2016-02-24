@@ -108,7 +108,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     public function append($value)
     {
         $answer = new HaystackArrayAppend($this->toArray());
-        return new HArray($answer->append($value));
+        return new static($answer->append($value));
     }
 
     /**
@@ -123,7 +123,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     public function insert($value, $key = null)
     {
         $answer = new HaystackArrayInsert($this);
-        return new HArray($answer->insert($value, $key));
+        return new static($answer->insert($value, $key));
     }
 
 
@@ -137,7 +137,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     public function remove($value)
     {
         $answer = new HaystackArrayRemove($this);
-        return new HArray($answer->remove($value));
+        return new static($answer->remove($value));
     }
 
     /**
@@ -151,7 +151,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     public function slice($start, $length = null)
     {
         $answer = new HaystackArraySlice($this);
-        return new HArray($answer->slice($start, $length));
+        return new static($answer->slice($start, $length));
     }
 
     /**
@@ -163,7 +163,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     public function map(callable $func)
     {
         $answer = new HArrayMap($this);
-        return new HArray($answer->map($func));
+        return new static($answer->map($func));
     }
 
     /**
@@ -195,7 +195,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     public function filter(callable $func = null, $flag = null)
     {
         $answer = new HArrayFilter($this);
-        return new HArray($answer->filter($func, $flag));
+        return new static($answer->filter($func, $flag));
     }
 
     /**

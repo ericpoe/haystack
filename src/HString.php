@@ -118,7 +118,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function append($value)
     {
         $answer = new HaystackStringAppend($this);
-        return new HString($answer->append($value));
+        return new static($answer->append($value));
     }
 
     /**
@@ -132,7 +132,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function insert($value, $key = null)
     {
         $answer = new HaystackStringInsert($this);
-        return new HString($answer->insert($value, $key));
+        return new static($answer->insert($value, $key));
     }
 
     /**
@@ -145,7 +145,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function remove($value)
     {
         $answer = new HaystackStringRemove($this);
-        return new HString($answer->remove($value));
+        return new static($answer->remove($value));
     }
 
     /**
@@ -159,7 +159,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function slice($start, $length = null)
     {
         $answer = new HaystackStringSlice($this);
-        return new HString($answer->slice($start, $length));
+        return new static($answer->slice($start, $length));
     }
 
     /**
@@ -347,7 +347,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function map(callable $func)
     {
         $answer = new HStringMap($this);
-        return new HString($answer->map($func));
+        return new static($answer->map($func));
     }
 
     /**
@@ -371,7 +371,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function filter(callable $func = null, $flag = null)
     {
         $answer =  new HStringFilter($this);
-        return new HString($answer->filter($func, $flag));
+        return new static($answer->filter($func, $flag));
     }
 
     /**
