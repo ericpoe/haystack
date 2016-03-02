@@ -43,7 +43,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
             $this->arr = $arr->getArrayCopy();
         } elseif ($arr instanceof HString) {
             parent::__construct();
-            $this->arr = $arr;
+            $this->arr = [$arr->toString()];
         } elseif (is_scalar($arr)) {
             parent::__construct();
             $this->arr = [$arr];
