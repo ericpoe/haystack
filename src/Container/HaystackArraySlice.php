@@ -17,10 +17,10 @@ class HaystackArraySlice
 
     /**
      * @param $start
-     * @param null $length
+     * @param integer|null $length
      * @return array
      */
-    public function slice($start, $length = null)
+    public function slice($start, $length)
     {
         if (is_null($start) || !is_numeric($start)) {
             throw new \InvalidArgumentException("Slice parameter 1, \$start, must be an integer");
