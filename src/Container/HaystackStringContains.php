@@ -12,7 +12,7 @@ class HaystackStringContains
     private $helper;
 
     /**
-     * @var HString
+     * @var string
      */
     private $string;
 
@@ -32,7 +32,7 @@ class HaystackStringContains
     }
 
     /**
-     * @param string $value
+     * @param HString|string $value
      * @return bool
      */
     public function contains($value)
