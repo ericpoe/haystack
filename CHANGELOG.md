@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.0.2](https://github.com/ericpoe/haystack/tree/v1.0.2) - 2016-03-01
+
+### Changes
+
+* Bugfix: internal storage when generating an HArray from an HString
+* Bugfix: Extended HArray and HString classes can also be pipelined
+
 ## [1.0.1](https://github.com/ericpoe/haystack/tree/v1.0.1) - 2016-02-16
 
 ### Changes
