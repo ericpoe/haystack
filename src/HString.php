@@ -46,6 +46,16 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
+     * Factory method for simplifying method chaining.
+     * @param  string $string String to be operated on
+     * @return HString        New instance of HString
+     */
+    public static function make($string = null)
+    {
+        return new static($string);
+    }
+
+    /**
      * @return string
      */
     public function __toString()

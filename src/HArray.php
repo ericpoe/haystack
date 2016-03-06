@@ -52,6 +52,16 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
         }
     }
 
+    /**
+     * Factory method for simplifying method chaining.
+     * @param  array $arr Array to be operated on
+     * @return HArray     New instance of HArray
+     */
+    public static function make($arr = null)
+    {
+        return new static($arr);
+    }
+
     public function toArray()
     {
         return $this->arr;

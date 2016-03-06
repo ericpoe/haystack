@@ -27,6 +27,11 @@ class HArrayTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($array);
     }
 
+    public function testMake()
+    {
+        $this->assertInstanceOf("Haystack\HArray", HArray::make(["apple"]));
+    }
+
     /**
      * @dataProvider goodArraysProvider
      *
