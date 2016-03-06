@@ -8,12 +8,10 @@ use Haystack\HString;
 
 class HaystackArrayInsert
 {
-    private $helper;
     private $arr;
 
     public function __construct(HArray $array)
     {
-        $this->helper = new Helper();
         $this->arr = $array;
     }
 
@@ -26,7 +24,7 @@ class HaystackArrayInsert
         } elseif (ArrayHelper::canBeInArray($value)) {
             $valueArray = $value;
         } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an HArray");
+            throw new \InvalidArgumentException(sprintf("%s cannot be contained within an HArray", Helper::getType($value)));
         }
 
         if (isset($key)) {

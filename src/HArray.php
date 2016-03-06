@@ -25,13 +25,8 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     /** @var array */
     protected $arr;
 
-    /** @var  Helper */
-    private $helper;
-
     public function __construct($arr = null)
     {
-        $this->helper = new Helper();
-
         if (is_null($arr)) {
             parent::__construct();
             $this->arr = [];
@@ -48,7 +43,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
             parent::__construct();
             $this->arr = [$arr];
         } else {
-            throw new \ErrorException("{$this->helper->getType($arr)} cannot be instantiated as an HArray");
+            throw new \ErrorException(sprintf("%s cannot be instantiated as an HArray", Helper::getType($arr)));
         }
     }
 

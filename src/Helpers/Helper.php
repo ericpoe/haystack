@@ -3,7 +3,7 @@ namespace Haystack\Helpers;
 
 class Helper
 {
-    public function getType($thing)
+    public static function getType($thing)
     {
         $type = gettype($thing);
         if ('object' === $type) {

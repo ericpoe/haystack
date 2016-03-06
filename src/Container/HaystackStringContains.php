@@ -7,11 +7,6 @@ use Haystack\HString;
 class HaystackStringContains
 {
     /**
-     * @var Helper
-     */
-    private $helper;
-
-    /**
      * @var string
      */
     private $string;
@@ -27,7 +22,6 @@ class HaystackStringContains
 
     public function __construct(HString $string)
     {
-        $this->helper = new Helper();
         $this->string = $string->toString();
     }
 
@@ -44,7 +38,7 @@ class HaystackStringContains
         } elseif ($value instanceof HString) {
             $this->containsHString();
         } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} is neither a scalar value nor an HString");
+            throw new \InvalidArgumentException(sprintf("%s is neither a scalar value nor an HString", Helper::getType($value)));
         }
 
         return $this->flag;

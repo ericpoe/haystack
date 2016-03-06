@@ -24,24 +24,19 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     protected $string;
     private $ptr; // pointer for iterating through $string
 
-    /** @var  Helper */
-    private $helper;
-
     /**
      * @param null $string
      * @throws \ErrorException
      */
     public function __construct($string = null)
     {
-        $this->helper = new Helper();
-
         if (is_scalar($string) || $string instanceof HString) {
             $this->string = (string) $string;
             $this->rewind();
         } elseif (is_null($string)) {
             $this->string = null;
         } else {
-            throw new \ErrorException("{$this->helper->getType($string)} is not a proper String");
+            throw new \ErrorException(sprintf("%s is not a proper String", Helper::getType($string)));
         }
     }
 
@@ -257,7 +252,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         } elseif (is_null($value)) {
             $this->string = null;
         } else {
-            throw new \InvalidArgumentException("HString cannot unserialize a {$this->helper->getType($value)}");
+            throw new \InvalidArgumentException(sprintf("HString cannot unserialize a %s", Helper::getType($value)));
         }
     }
 
