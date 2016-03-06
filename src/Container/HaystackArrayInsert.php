@@ -1,7 +1,6 @@
 <?php
 namespace Haystack\Container;
 
-use Haystack\Helpers\ArrayHelper;
 use Haystack\Helpers\Helper;
 use Haystack\HArray;
 use Haystack\HString;
@@ -21,7 +20,7 @@ class HaystackArrayInsert
             $valueArray = $value->toArray();
         } elseif ($value instanceof HString) {
             $valueArray = $value->toString();
-        } elseif (ArrayHelper::canBeInArray($value)) {
+        } elseif (Helper::canBeInArray($value)) {
             $valueArray = $value;
         } else {
             throw new \InvalidArgumentException(sprintf("%s cannot be contained within an HArray", Helper::getType($value)));

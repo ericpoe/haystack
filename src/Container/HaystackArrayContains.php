@@ -1,7 +1,6 @@
 <?php
 namespace Haystack\Container;
 
-use Haystack\Helpers\ArrayHelper;
 use Haystack\Helpers\Helper;
 use Haystack\HArray;
 
@@ -23,7 +22,7 @@ class HaystackArrayContains
      */
     public function contains($value)
     {
-        if (ArrayHelper::canBeInArray($value)) {
+        if (Helper::canBeInArray($value)) {
             $arr = $this->arr->toArray();
             $answer = in_array($value, $arr);
         } else {

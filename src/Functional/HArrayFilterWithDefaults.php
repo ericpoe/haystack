@@ -1,7 +1,7 @@
 <?php
 namespace Haystack\Functional;
 
-use Haystack\Helpers\ArrayHelper;
+use Haystack\Helpers\Helper;
 
 class HArrayFilterWithDefaults
 {
@@ -23,7 +23,7 @@ class HArrayFilterWithDefaults
     {
         $filtered = array_filter($this->arr);
 
-        if (ArrayHelper::isAssociativeArray($filtered)) {
+        if (Helper::isAssociativeArray($filtered)) {
             return $filtered;
         }
 

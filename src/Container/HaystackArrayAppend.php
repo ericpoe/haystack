@@ -1,7 +1,6 @@
 <?php
 namespace Haystack\Container;
 
-use Haystack\Helpers\ArrayHelper;
 use Haystack\Helpers\Helper;
 use Haystack\HArray;
 
@@ -26,7 +25,7 @@ class HaystackArrayAppend
     {
         $value = $value instanceof HArray ? $value->toArray() : $value;
 
-        if (ArrayHelper::canBeInArray($value)) {
+        if (Helper::canBeInArray($value)) {
             $this->arr->append($value);
 
             return $this->arr;

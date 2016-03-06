@@ -1,7 +1,6 @@
 <?php
 namespace Haystack\Container;
 
-use Haystack\Helpers\ArrayHelper;
 use Haystack\Helpers\Helper;
 use Haystack\HArray;
 
@@ -16,7 +15,7 @@ class HaystackArrayRemove
 
     public function remove($value)
     {
-        if (ArrayHelper::canBeInArray($value)) {
+        if (Helper::canBeInArray($value)) {
             if (false === $this->arr->contains($value)) {
                 return $this->arr;
             }
