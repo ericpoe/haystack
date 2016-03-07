@@ -1,15 +1,11 @@
 <?php
 namespace Haystack\Container;
 
-use Haystack\Helpers\ArrayHelper;
 use Haystack\Helpers\Helper;
 use Haystack\HArray;
 
 class HaystackArrayAppend
 {
-    /** @var  Helper */
-    private $helper;
-
     /** @var \ArrayObject */
     private $arr;
 
@@ -18,7 +14,6 @@ class HaystackArrayAppend
      */
     public function __construct(array $array)
     {
-        $this->helper = new Helper();
         $this->arr = new \ArrayObject($array);
     }
 
@@ -30,12 +25,12 @@ class HaystackArrayAppend
     {
         $value = $value instanceof HArray ? $value->toArray() : $value;
 
-        if (ArrayHelper::canBeInArray($value)) {
+        if (Helper::canBeInArray($value)) {
             $this->arr->append($value);
 
             return $this->arr;
         } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be appended to an HArray");
+            throw new \InvalidArgumentException(sprintf("%s cannot be appended to an HArray", Helper::getType($value)));
         }
     }
 

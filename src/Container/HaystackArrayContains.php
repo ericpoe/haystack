@@ -1,7 +1,6 @@
 <?php
 namespace Haystack\Container;
 
-use Haystack\Helpers\ArrayHelper;
 use Haystack\Helpers\Helper;
 use Haystack\HArray;
 
@@ -12,13 +11,9 @@ class HaystackArrayContains
      */
     private $arr;
 
-    /** @var Helper */
-    private $helper;
-
     public function __construct(HArray $arr)
     {
         $this->arr = $arr;
-        $this->helper = new Helper();
     }
 
     /**
@@ -27,11 +22,11 @@ class HaystackArrayContains
      */
     public function contains($value)
     {
-        if (ArrayHelper::canBeInArray($value)) {
+        if (Helper::canBeInArray($value)) {
             $arr = $this->arr->toArray();
             $answer = in_array($value, $arr);
         } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an HArray");
+            throw new \InvalidArgumentException(sprintf("%s cannot be contained within an HArray", Helper::getType($value)));
         }
         return $answer;
     }

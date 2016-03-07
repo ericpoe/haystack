@@ -1,24 +1,21 @@
 <?php
 namespace Haystack\Container;
 
-use Haystack\Helpers\ArrayHelper;
 use Haystack\Helpers\Helper;
 use Haystack\HArray;
 
 class HaystackArrayRemove
 {
-    private $helper;
     private $arr;
 
     public function __construct(HArray $array)
     {
-        $this->helper = new Helper();
         $this->arr = $array;
     }
 
     public function remove($value)
     {
-        if (ArrayHelper::canBeInArray($value)) {
+        if (Helper::canBeInArray($value)) {
             if (false === $this->arr->contains($value)) {
                 return $this->arr;
             }
@@ -26,7 +23,7 @@ class HaystackArrayRemove
             $newArr = $this->arr->toArray();
             $key = $this->arr->locate($value);
         } else {
-            throw new \InvalidArgumentException("{$this->helper->getType($value)} cannot be contained within an HArray");
+            throw new \InvalidArgumentException(sprintf("%s cannot be contained within an HArray", Helper::getType($value)));
         }
 
         if (is_numeric($key)) {

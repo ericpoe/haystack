@@ -6,12 +6,10 @@ use Haystack\HString;
 
 class HaystackStringInsert
 {
-    private $helper;
     private $string;
 
     public function __construct(HString $string)
     {
-        $this->helper = new Helper();
         $this->string = $string;
     }
 
@@ -29,7 +27,7 @@ class HaystackStringInsert
             return substr_replace($this->string, $value, $key, 0);
         }
 
-        throw new \InvalidArgumentException("Cannot insert {$this->helper->getType($value)} into an HString");
+        throw new \InvalidArgumentException(sprintf("Cannot insert %s into an HString", Helper::getType($value)));
     }
 
 }

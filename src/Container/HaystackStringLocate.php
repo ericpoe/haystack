@@ -6,16 +6,12 @@ use Haystack\HString;
 
 class HaystackStringLocate
 {
-    /** @var Helper */
-    private $helper;
-
     /** @var HString */
     private $string;
 
     public function __construct(HString $string)
     {
         $this->string = $string;
-        $this->helper = new Helper();
     }
 
     /**
@@ -32,7 +28,7 @@ class HaystackStringLocate
             return $this->string->contains($value) ? strpos($this->string, $value->toString()) : -1;
         }
 
-        throw new \InvalidArgumentException("{$this->helper->getType($value)} is neither a scalar value nor an HString");
+        throw new \InvalidArgumentException(sprintf("%s is neither a scalar value nor an HString", Helper::getType($value)));
     }
 
 }
