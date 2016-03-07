@@ -20,6 +20,11 @@ class HStringTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($emptyString);
     }
 
+    public function testMake()
+    {
+        $this->assertInstanceOf("Haystack\HString", HString::make("foobar"));
+    }
+
     /**
      * @dataProvider stringOfThingsProvider
      *
