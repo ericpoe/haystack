@@ -6,8 +6,7 @@ You can start using Haystack right away, like so:
 ```php
 use Haystack\HArray;
 
-$myArray = new HArray();
-$myArray = $myArray->insert("orange", "o");
+$myArray = (new HArray())->insert("orange", "o");
 ```
 
 Or you can use Haystack later on, like so:
@@ -17,8 +16,7 @@ use Haystack\HArray;
 
 $existingArray = range(1, 10);
 ...
-$myArray = new HArray($existingArray);
-$myArray = $myArray->insert("orange", "o");
+$myArray = (new HArray($existingArray))->insert("orange", "o");
 ```
 
 ## Requirements
@@ -40,8 +38,8 @@ using map, reduce and filter with a fluent interface.
 ```php
 use Haystack\HArray;
 
-$array = new HArray([3, 5, 7, 9, 11]);
-$result = $array->map(function ($i) { return $i * $i; })    // Square [9, 25, 49, 81, 121]
+$result = (new HArray([3, 5, 7, 9, 11]))
+  ->map(function ($i) { return $i * $i; })                  // Square [9, 25, 49, 81, 121]
   ->filter(function ($i) { return $i > 30; })               // Only large numbers [49, 81, 121]
   ->reduce(function ($carry, $i) { return $carry += $i; }); // Sum
 
@@ -180,11 +178,9 @@ $rot13 = function ($letter) {
 
 $newString = $myString->map($rot13); // "V nz gur irel zbqry bs n zbqrea znwbe-trareny"
 
-$capitalize = function ($word) {
+$newArr = $myArray->map(function ($word) {
     return strtoupper($word);
-};
-
-$newArr = $myArray->map($capitalize); // ["a" => "APPLE", "b" => "BANANA", "c" => "CELERY"]
+}); // ["a" => "APPLE", "b" => "BANANA", "c" => "CELERY"]
 ```
 
 **walk($callable)** - Walk does an in-place update of items in the object.
@@ -230,15 +226,13 @@ $myString = new HString("I am the very model of a modern major-general");
 $myArray = new HArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
 $removeLowerCaseVowels = function ($letter) {
-    $vowels = new HString("aeiou");
-    return !$vowels->contains($letter);
+    return false === (new HString("aeiou"))->contains($letter);
 };
 
 $consonantWord = $myString->filter($removeLowerCaseVowels); // "I m th vry mdl f  mdrn mjr-gnrl"
 
 $vowel = function ($word) {
-    $vowels = new HString("aeiou");
-    return $vowels->contains($word[0]);
+    return (new HString("aeiou"))->contains($word[0]);
 };
 
 $firstLetterVowelWords = $myArray->filter($vowel); // ["a" => "apple"]
@@ -335,11 +329,11 @@ $tailArray = $myArray->tail(); // ["b" => "banana", "c" => "celery"]
 use Haystack\HArray;
 use Haystack\HString;
 
-$myString = new HString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
-$myArray = new HArray(range(1, 10));
+(new HString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10"))
+    ->product(); // int(3628800)
 
-$myString->product(); // int(3628800)
-$myArray->product(); // int(3628800)
+(new HArray(range(1, 10)))
+    ->product(); // int(3628800)
 ```
 
 **sum()** - Calculates the sum of the values in the collection. Any non-number values are equal to 0.
@@ -348,11 +342,11 @@ $myArray->product(); // int(3628800)
 use Haystack\HArray;
 use Haystack\HString;
 
-$myString = new HString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10");
-$myArray = new HArray(range(1, 10));
+(new HString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10"))
+    ->sum(); // int(55)
 
-$myString->sum(); // int(55)
-$myArray->sum(); // int(55)
+(new HArray(range(1, 10)))
+    ->sum(); // int(55)
 ```
 
 ## HArray-only Methods
@@ -361,8 +355,7 @@ $myArray->sum(); // int(55)
 ```php
 use Haystack\HArray;
 
-$myArray = new HArray(range(1, 4));
-$array = $myArray->toArray(); // [1, 2, 3, 4]
+$array = (new HArray(range(1, 4)))->toArray(); // [1, 2, 3, 4]
 ```
 
 **toHString($glue = "")** - Converts an HArray to an HString. This is similar to PHP's [`implode`](http://php
@@ -376,8 +369,8 @@ $array = $myArray->toArray(); // [1, 2, 3, 4]
 use Haystack\HArray;
 use Haystack\HString;
 
-$myArray = new HArray(range(1, 4));
-$lawrenceWelk = $myArray->toHString(" and-a "); // HString("1 and-a 2 and-a 3 and-a 4")
+$lawrenceWelk = (new HArray(range(1, 4)))
+                    ->toHString(" and-a "); // HString("1 and-a 2 and-a 3 and-a 4")
 ```
 
 ## HString-only Methods
@@ -386,8 +379,7 @@ $lawrenceWelk = $myArray->toHString(" and-a "); // HString("1 and-a 2 and-a 3 an
 ```php
 use Haystack\HString;
 
-$myString = new HString("foo bar");
-$string = $myString->toString(); // "foo bar"
+$string = (new HString("foo bar"))->toString(); // "foo bar"
 ```
 
 **toHArray($delim = " ", $limit = null)** - Converts an HString to an HArray. This is similar to PHP's [`explode`]
