@@ -93,7 +93,6 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      *
      * @param $value
      * @return HArray
-     * @throws \InvalidArgumentException
      */
     public function append($value)
     {
