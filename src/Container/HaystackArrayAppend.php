@@ -1,7 +1,6 @@
 <?php
 namespace Haystack\Container;
 
-use Haystack\Helpers\Helper;
 use Haystack\HArray;
 
 class HaystackArrayAppend
