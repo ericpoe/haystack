@@ -22,28 +22,23 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     const USE_KEY = "key";
     const USE_BOTH = "both";
 
-    /** @var array */
+    /** @var \ArrayObject */
     protected $arr;
 
-    public function __construct($arr = null)
+    public function __construct($arr = [])
     {
-        if (is_null($arr)) {
-            parent::__construct();
-            $this->arr = [];
-        } elseif (is_array($arr)) {
-            parent::__construct($arr);
-            $this->arr = $arr;
-        } elseif ($arr instanceof \ArrayObject) {
+        if ($arr instanceof \ArrayObject) {
             parent::__construct($arr);
             $this->arr = $arr->getArrayCopy();
         } elseif ($arr instanceof HString) {
             parent::__construct();
             $this->arr = [$arr->toString()];
-        } elseif (is_scalar($arr)) {
-            parent::__construct();
+        } elseif (is_scalar($arr) || 'object' === gettype($arr)) {
+            parent::__construct([$arr]);
             $this->arr = [$arr];
         } else {
-            throw new \ErrorException(sprintf("%s cannot be instantiated as an HArray", Helper::getType($arr)));
+            parent::__construct((array) $arr);
+            $this->arr = (array) $arr;
         }
     }
 
