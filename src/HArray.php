@@ -14,7 +14,6 @@ use Haystack\Functional\HArrayFilter;
 use Haystack\Functional\HArrayMap;
 use Haystack\Functional\HArrayReduce;
 use Haystack\Functional\HArrayWalk;
-use Haystack\Helpers\Helper;
 use Haystack\Math\MathInterface;
 
 class HArray extends \ArrayObject implements ContainerInterface, FunctionalInterface, MathInterface
