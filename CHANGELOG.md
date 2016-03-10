@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.x.x](https://github.com/ericpoe/haystack/tree/v1.x.x) - 2016-03-xx
+
+### Changes
+* Bugfix: HArray::remove() no longer makes the entire array have numeric keys if the removed key was numeric
+* Potential BC Break: HArray can now contain objects. So `new HArray(new \DateTime())` is now possible!
+
+* **Manual**
+    * Some examples were changed to show an alternative manner of declaring the Haystack object for use in pipelining (thanks for the heads-up, ajmichels!)
+
 ## [1.0.2](https://github.com/ericpoe/haystack/tree/v1.0.2) - 2016-03-01
 
 ### Changes
