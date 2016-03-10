@@ -68,7 +68,6 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      *
      * @param $value
      * @return boolean
-     * @throws \InvalidArgumentException
      */
     public function contains($value)
     {
