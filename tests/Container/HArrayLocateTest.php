@@ -50,25 +50,16 @@ class HArrayLocateTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    /**
-     * @dataProvider badArrayContainsProvider
-     *
-     * @param $item
-     * @param $exceptionMsg
-     */
-    public function testLocateBadThingsInHArray($item, $exceptionMsg)
+    public function testLocateObjectTypeInHArray()
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $timeStamp = new \DateTime();
+        $object = new \SplDoublyLinkedList();
 
-        $this->arrList->locate($item);
-    }
+        $arrList = $this->arrList
+            ->append($timeStamp)
+            ->insert($object);
 
-    public function badArrayContainsProvider()
-    {
-        return [
-            "DateTime" => [new \DateTime(), "DateTime cannot be contained within an HArray"],
-            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be contained within an HArray"],
-        ];
+        $this->assertEquals(4, $arrList->locate($timeStamp));
+        $this->assertEquals(5, $arrList->locate($object));
     }
 }

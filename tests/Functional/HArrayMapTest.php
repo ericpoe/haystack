@@ -24,6 +24,9 @@ class HArrayMapTest extends \PHPUnit_Framework_TestCase
 
         $newArrList = $this->arrList->map($capitalizeList);
         $this->assertEquals("APPLE", $newArrList[0]);
+
+        $newArrDict = $this->arrDict->map($capitalizeList);
+        $this->assertEquals("APPLE", $newArrDict["a"]);
     }
 
 }

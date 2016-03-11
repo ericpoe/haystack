@@ -45,26 +45,17 @@ class HArrayRemoveTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    /**
-     * @dataProvider badRemoveProvider
-     *
-     * @param $item
-     * @param $exceptionMsg
-     */
-    public function testBadObjectCannotBeRemovedFromArray($item, $exceptionMsg)
+    public function testArrayTypeRemoveObject()
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $timestamp = new \DateTime();
 
-        $this->arrDict->remove($item);
-    }
+        $arrList = $this->arrList->insert($timestamp, 2);
+        $arrDict = $this->arrDict->insert($timestamp, 2);
 
-    public function badRemoveProvider()
-    {
-        return [
-            "DateTime" => [new \DateTime(), "DateTime cannot be contained within an HArray"],
-            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be contained within an HArray"],
-        ];
+        $this->assertEquals($this->arrList, $arrList->remove($timestamp), "Object removed from list");
+        $this->assertEquals($arrList, $arrList->remove(new \SplDoublyLinkedList()), "Object not removed from list");
+        $this->assertEquals($this->arrDict, $arrDict->remove($timestamp), "Object removed from dict");
+        $this->assertEquals($arrDict, $arrDict->remove(new \SplDoublyLinkedList()), "Object not removed from dict");
     }
 
 }

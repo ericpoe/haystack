@@ -37,36 +37,17 @@ class HArrayAppendTest extends \PHPUnit_Framework_TestCase
 
     public function appendProvider()
     {
+        $dateTime = new \DateTime();
+
         return [
             "String to list" => ["list", "ebble", new HArray(["apple", "bobble", "cobble", "dobble", "ebble"])],
             "String array to list" => ["list", ["ebble"], new HArray(["apple", "bobble", "cobble", "dobble", ["ebble"]])],
             "String HArray to list" => ["list", new HArray(["ebble"]), new HArray(["apple", "bobble", "cobble", "dobble", ["ebble"]])],
+            "Object to list" => ["list", $dateTime, new HArray(["apple", "bobble", "cobble", "dobble", $dateTime])],
             "String to dictionary" => ["dict", "ebble", new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", "0" => "ebble"])],
             "String array to dictionary" => ["dict", ["e" => "ebble"], new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", ["e" => "ebble"]])],
             "String HArray to dictionary" => ["dict", new HArray(["e" => "ebble"]), new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", ["e" => "ebble"]])],
+            "Object to dictionary" => ["dict", $dateTime, new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", 0 => $dateTime])],
         ];
     }
-
-    /**
-     * @dataProvider badAppendProvider
-     *
-     * @param $item
-     * @param $exceptionMsg
-     */
-    public function testAppendBadThingsToArray($item, $exceptionMsg)
-    {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
-
-        $this->arrList->append($item);
-    }
-
-    public function badAppendProvider()
-    {
-        return [
-            "DateTime" => [new \DateTime(), "DateTime cannot be appended to an HArray"],
-            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be appended to an HArray"],
-        ];
-    }
-
 }

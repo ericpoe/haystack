@@ -47,25 +47,11 @@ class HArrayContainsTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    /**
-     * @dataProvider badArrayContainsProvider
-     *
-     * @param $item
-     * @param $exceptionMsg
-     */
-    public function testBadArrayContains($item, $exceptionMsg)
+    public function testContainsObjectTypeInHArray()
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $list = $this->arrList->append(new \SplDoublyLinkedList());
 
-        $this->arrList->contains($item);
-    }
-
-    public function badArrayContainsProvider()
-    {
-        return [
-            "DateTime" => [new \DateTime(), "DateTime cannot be contained within an HArray"],
-            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be contained within an HArray"],
-        ];
+        $this->assertTrue($list->contains(new \SplDoublyLinkedList()), "SplDoublyLinkedList should be in the list");
+        $this->assertFalse($list->contains(new \DateTime()), "DateTime should be in the list");
     }
 }

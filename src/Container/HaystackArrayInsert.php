@@ -1,8 +1,8 @@
 <?php
 namespace Haystack\Container;
 
-use Haystack\Helpers\Helper;
 use Haystack\HArray;
+use Haystack\Helpers\Helper;
 use Haystack\HString;
 
 class HaystackArrayInsert
@@ -23,7 +23,7 @@ class HaystackArrayInsert
         } elseif (Helper::canBeInArray($value)) {
             $valueArray = $value;
         } else {
-            throw new \InvalidArgumentException(sprintf("%s cannot be contained within an HArray", Helper::getType($value)));
+            $valueArray = [$value];
         }
 
         if (isset($key)) {
@@ -55,7 +55,7 @@ class HaystackArrayInsert
         $array = $value;
         $length = (int) $key;
 
-        return array($array, $length);
+        return [$array, $length];
     }
 
     /**
@@ -68,7 +68,7 @@ class HaystackArrayInsert
         $array = [$key => $value];
         $length = sizeof($this->arr);
 
-        return array($array, $length);
+        return [$array, $length];
     }
 
     /**
@@ -80,6 +80,6 @@ class HaystackArrayInsert
         $array = $value;
         $length = sizeof($this->arr);
 
-        return array($array, $length);
+        return [$array, $length];
     }
 }

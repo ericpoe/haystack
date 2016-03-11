@@ -25,10 +25,10 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     private $ptr; // pointer for iterating through $string
 
     /**
-     * @param null $string
+     * @param string $string
      * @throws \ErrorException
      */
-    public function __construct($string = null)
+    public function __construct($string = "")
     {
         if (is_scalar($string) || $string instanceof HString) {
             $this->string = (string) $string;

@@ -47,31 +47,10 @@ class HArrayTest extends \PHPUnit_Framework_TestCase
             "integer: 0" => [0],
             "array" => [1, 2, 3],
             "ArrayObject" => [new \ArrayObject([0, 1, 2])],
+            "DateTime" => [new \DateTime()],
             "string" => ["a"],
             "HString" => [new HString("a string")],
             "HString of HString of ... " => [new HString(new HString(new HString(new HString("a string"))))],
-        ];
-    }
-
-    /**
-     * @dataProvider badArraysProvider
-     *
-     * @param $item
-     * @param $exceptionMsg
-     */
-    public function testCannotCreateArrayOfBadThings($item, $exceptionMsg)
-    {
-        $this->expectException("ErrorException");
-        $this->expectExceptionMessage($exceptionMsg);
-
-        new HArray($item);
-    }
-
-    public function badArraysProvider()
-    {
-        return [
-            "DateTime" => [new \DateTime(), "DateTime cannot be instantiated as an HArray"],
-            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be instantiated as an HArray"],
         ];
     }
 

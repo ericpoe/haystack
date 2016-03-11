@@ -53,26 +53,12 @@ class HArrayInsertTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    /**
-     * @dataProvider badArrayInsertProvider
-     *
-     * @param $item
-     * @param $exceptionMsg
-     */
-    public function testInsertBadThingsInHArray($item, $exceptionMsg)
+    public function testInsertObjects()
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
-
-        $this->arrList->insert($item);
-    }
-
-    public function badArrayInsertProvider()
-    {
-        return [
-            "DateTime" => [new \DateTime(), "DateTime cannot be contained within an HArray"],
-            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList cannot be contained within an HArray"],
-        ];
+        $object1 = new \DateTime();
+        $arrList = $this->arrList->insert($object1);
+        $this->assertTrue($arrList->contains($object1));
+        $this->assertEquals(4, $arrList->locate($object1));
     }
 
     /**
