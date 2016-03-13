@@ -15,7 +15,8 @@ interface ContainerInterface
      * Finds the location of $value in the current object. If it does not exist, the user will be notified
      *
      * @param $value
-     * @return int - array-notation location of $value in current object; "-1" if not found
+     * @return int - array-notation location of $value in current object
+     * @throws ElementNotFoundException
      */
     public function locate($value);
 

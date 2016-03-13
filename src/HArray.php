@@ -2,6 +2,7 @@
 namespace Haystack;
 
 use Haystack\Container\ContainerInterface;
+use Haystack\Container\ElementNotFoundException;
 use Haystack\Container\HaystackArrayAppend;
 use Haystack\Container\HaystackArrayContains;
 use Haystack\Container\HaystackArrayInsert;
@@ -79,6 +80,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      *
      * @param $value
      * @return int - array-notation location of $value in current object; "-1" if not found
+     * @throws ElementNotFoundException
      */
     public function locate($value)
     {

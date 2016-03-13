@@ -2,6 +2,7 @@
 namespace Haystack;
 
 use Haystack\Container\ContainerInterface;
+use Haystack\Container\ElementNotFoundException;
 use Haystack\Container\HaystackStringAppend;
 use Haystack\Container\HaystackStringContains;
 use Haystack\Container\HaystackStringInsert;
@@ -66,7 +67,8 @@ class HString extends BaseHString implements ContainerInterface, FunctionalInter
      * @inheritdoc
      *
      * @param $value
-     * @return int - location of $value in current object; "-1" if not found
+     * @return int - location of $value in current object
+     * @throws ElementNotFoundException
      * @throws \InvalidArgumentException
      */
     public function locate($value)

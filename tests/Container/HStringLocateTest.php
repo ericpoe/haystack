@@ -29,12 +29,32 @@ class HStringLocateTest extends \PHPUnit_Framework_TestCase
     {
         return [
             "String known-present" => ["oob", 1],
-            "String known-missing" => ["baz", -1],
             "HString known-present" => [new HString('oob'), 1],
-            "HString known-missing" => [new HString('baz'), -1],
-            "Integer known-missing" => [42, -1],
-            "HString integer known-missing" => [new HString(42), -1],
 
+        ];
+    }
+
+    /**
+     * @dataProvider stringBadLocateProvider()
+     *
+     * @param        $checkString
+     * @param string $message
+     */
+    public function testCannotLocateTypesOfStringInFoober($checkString, $message)
+    {
+        $this->expectException("Haystack\\Container\\ElementNotFoundException");
+        $this->expectExceptionMessage($message);
+
+        $this->aString->locate($checkString);
+    }
+
+    public function stringBadLocateProvider()
+    {
+        return [
+            "String known-missing" => ["baz", "Element could not be found: baz"],
+            "HString known-missing" => [new HString('baz'), "Element could not be found: baz"],
+            "Integer known-missing" => [42, "Element could not be found: 42"],
+            "HString integer known-missing" => [new HString(42), "Element could not be found: 42"],
         ];
     }
 

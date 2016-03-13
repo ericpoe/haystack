@@ -1,8 +1,9 @@
 # Change Log
 
-## [1.x.x](https://github.com/ericpoe/haystack/tree/v1.x.x) - 2016-03-xx
+## [2.x.x](https://github.com/ericpoe/haystack/tree/v2.x.x) - 2016-03-xx
 
 ### Changes
+* BC Break: ::locate($value) now throws an ElementNotFoundException when looking for something that does not exist
 * Bugfix: HArray::remove() no longer makes the entire array have numeric keys if the removed key was numeric
 * Potential BC Break: HArray can now contain objects. So `new HArray(new \DateTime())` is now possible!
 * Clean up HString methods
