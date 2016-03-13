@@ -5,6 +5,7 @@
 ### Changes
 * Bugfix: HArray::remove() no longer makes the entire array have numeric keys if the removed key was numeric
 * Potential BC Break: HArray can now contain objects. So `new HArray(new \DateTime())` is now possible!
+* Clean up HString methods
 
 * **Manual**
     * Some examples were changed to show an alternative manner of declaring the Haystack object for use in pipelining (thanks for the heads-up, ajmichels!)
