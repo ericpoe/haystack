@@ -103,7 +103,7 @@ abstract class BaseHString implements \Iterator, \ArrayAccess, \Serializable, \C
      */
     public function serialize()
     {
-        return serialize($this->toString());
+        return serialize($this->__toString());
     }
 
     /**
