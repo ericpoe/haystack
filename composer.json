@@ -1,6 +1,6 @@
 {
   "name": "ericpoe/haystack",
-  "description": "Forget Haystack vs Needle order, the object *IS* the Haystack.",
+  "description": "Forget Haystack vs Needle order, the object IS the Haystack. Haystack is a library that allows for pipelining and immutable structures.",
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
