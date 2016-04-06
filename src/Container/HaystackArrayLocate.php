@@ -16,15 +16,14 @@ class HaystackArrayLocate
     /**
      * @param $value
      * @return int|string
+     * @throws ElementNotFoundException
      */
     public function locate($value)
     {
         if ($this->arr->contains($value)) {
-            $key = array_search($value, $this->arr->toArray());
-        } else {
-            $key = -1;
+            return array_search($value, $this->arr->toArray());
         }
 
-        return $key;
+        throw new ElementNotFoundException($value);
     }
 }

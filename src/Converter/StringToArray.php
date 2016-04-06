@@ -6,7 +6,7 @@ use Haystack\HString;
 class StringToArray
 {
     /** @var string */
-    private $string;
+    private $str;
 
     /** @var HString|string */
     private $delim;
@@ -15,12 +15,12 @@ class StringToArray
     private $arr;
 
     /**
-     * @param $string
+     * @param string $str
      * @param string $delim
      */
-    public function __construct($string, $delim = " ")
+    public function __construct($str, $delim = " ")
     {
-        $this->string = $string;
+        $this->str = $str;
 
         if (empty($delim) || is_string($delim) || $delim instanceof HString) {
             $this->delim = $delim;
@@ -58,7 +58,7 @@ class StringToArray
      */
     private function noDelimExplode()
     {
-        return explode(" ", $this->string);
+        return explode(" ", $this->str);
     }
 
     /**
@@ -66,7 +66,7 @@ class StringToArray
      */
     private function noLimitExplode()
     {
-        return explode($this->delim, $this->string);
+        return explode($this->delim, $this->str);
     }
 
     /**
@@ -75,6 +75,6 @@ class StringToArray
      */
     private function explode($limit)
     {
-        return explode($this->delim, $this->string, $limit);
+        return explode($this->delim, $this->str, $limit);
     }
 }

@@ -7,14 +7,14 @@ use Haystack\HString;
 class HStringReduce
 {
     /** @var HString */
-    private $string;
+    private $hString;
 
     /**
-     * @param HString $string
+     * @param HString $hString
      */
-    public function __construct(HString $string)
+    public function __construct(HString $hString)
     {
-        $this->string = $string;
+        $this->hString = $hString;
     }
 
     /**
@@ -26,7 +26,7 @@ class HStringReduce
     {
         $reduced = $initial;
 
-        foreach ($this->string as $letter) {
+        foreach ($this->hString as $letter) {
             $reduced = $func($reduced, $letter);
         }
 

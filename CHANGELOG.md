@@ -1,36 +1,42 @@
 # Change Log
+All notable changes to this project will be documented in this file.
+This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
+This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.x.x](https://github.com/ericpoe/haystack/tree/v1.x.x) - 2016-03-xx
+## Unreleased - 2016-04-05
 
-### Changes
-* Bugfix: HArray::remove() no longer makes the entire array have numeric keys if the removed key was numeric
+### Changed
+* BC Break: ::locate($value) now throws an ElementNotFoundException when looking for something that does not exist
 * Potential BC Break: HArray can now contain objects. So `new HArray(new \DateTime())` is now possible!
-
+* Clean up HString methods
+* Whitespace rules added for md, yml, and json files
 * **Manual**
-    * Some examples were changed to show an alternative manner of declaring the Haystack object for use in pipelining (thanks for the heads-up, ajmichels!)
+    * Some examples were changed to show an alternative manner of declaring the Haystack object for use in pipelining (thanks for the heads-up, @ajmichels!)
+
+### Fixed
+* HArray::remove() no longer makes the entire array have numeric keys if the removed key was numeric
 
 ## [1.0.2](https://github.com/ericpoe/haystack/tree/v1.0.2) - 2016-03-01
 
-### Changes
-
+### Fixed
 * Bugfix: internal storage when generating an HArray from an HString
 * Bugfix: Extended HArray and HString classes can also be pipelined
 
 ## [1.0.1](https://github.com/ericpoe/haystack/tree/v1.0.1) - 2016-02-16
 
-### Changes
-
+### Changed
 * Minor performance boost to HString::contains
 
 ## [1.0.0](https://github.com/ericpoe/haystack/tree/v1.0.0) - 2016-02-15
 Rebranding as Haystack.
 
-### Changes
-
+### Changed
 * OArray is now known as HArray
 * OString is now known as HString
-* Bugfix dealing with static function declaration
 * Manual is now linked from the main README document
+
+### Fixed
+* Now deals with static function declaration
 
 ## [0.3.0](https://github.com/ericpoe/haystack/tree/v0.3.0) - 2016-02-09
 
@@ -45,7 +51,7 @@ OArray <--> String conversion
     * Move Pipelining section to be closer to the top since it's a good example of what can be done
     * Add OArray & OString- specific sections
 
-### Changes
+### Changed
 
 * OArray now has toOString() method. This is an alias to `implode`
 * OString now has toOArray() method. This is an alias to `explode`
@@ -53,7 +59,7 @@ OArray <--> String conversion
 ## [0.1.1](https://github.com/ericpoe/haystack/tree/v0.1.1) - 2015-07-27
 Documentation updates
 
-### Changes
+### Changed
 
 * Spacing requirements are now the same for all files
     * 4-space tabs

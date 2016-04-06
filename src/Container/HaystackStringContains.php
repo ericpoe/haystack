@@ -6,23 +6,19 @@ use Haystack\HString;
 
 class HaystackStringContains
 {
-    /**
-     * @var string
-     */
-    private $string;
+    /** @var string */
+    private $str;
 
-    /**
-     * @var HString|string
-     */
+    /** @var HString|string */
     private $value;
 
     /** @var  boolean */
     private $flag;
 
 
-    public function __construct(HString $string)
+    public function __construct(HString $hString)
     {
-        $this->string = $string->toString();
+        $this->str = $hString->toString();
     }
 
     /**
@@ -62,7 +58,7 @@ class HaystackStringContains
      */
     private function containsValue($newValue)
     {
-        $pos = strpos($this->string, $newValue);
+        $pos = strpos($this->str, $newValue);
 
         return (false !== $pos) ?: false;
     }

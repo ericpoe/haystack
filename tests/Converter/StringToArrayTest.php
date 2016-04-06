@@ -9,14 +9,14 @@ class StringToArrayTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider stringToHArrayProvider
      *
-     * @param HString $string
-     * @param         $delim
-     * @param         $limit
-     * @param         $expected
+     * @param HString $hString
+     * @param $delim
+     * @param $limit
+     * @param HArray $expected
      */
-    public function testStringToHArray(HString $string, $delim, $limit, $expected)
+    public function testStringToHArray(HString $hString, $delim, $limit, HArray $expected)
     {
-        $this->assertEquals($expected, $string->toHArray($delim, $limit));
+        $this->assertEquals($expected, $hString->toHArray($delim, $limit));
     }
 
     public function stringToHArrayProvider()
@@ -50,12 +50,12 @@ class StringToArrayTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadDelimInStringToArray($delim, $exceptionMsg)
     {
-        $string = new HString("foobar");
+        $hSTring = new HString("foobar");
 
         $this->expectException("InvalidArgumentException");
         $this->expectExceptionMessage($exceptionMsg);
 
-        $string->toHArray($delim);
+        $hSTring->toHArray($delim);
     }
 
     public function badDelimInStringToArrayProvider()
@@ -72,12 +72,12 @@ class StringToArrayTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadLimitInStringToArray($limit, $exceptionMsg)
     {
-        $string = new HString("foobar");
+        $hString = new HString("foobar");
 
         $this->expectException("InvalidArgumentException");
         $this->expectExceptionMessage($exceptionMsg);
 
-        $string->toHArray(" ", $limit);
+        $hString->toHArray(" ", $limit);
     }
 
     public function badLimitInStringToArrayProvider()

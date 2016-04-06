@@ -19,10 +19,10 @@ Until I need to be more explicit, don't be a jerk.
 * Include any error messages you are receiving and under which conditions if this is a bug-fix.
 * Include which Haystack objects this feature or bug affects.
 * Try to make fixing this issue or adding this feature easier for the next person:
-    * For the application:
-        * If you submit a code-update, also submit appropriate PHPUnit tests
-        * If you don't submit a code-update, submit appropriate PHPUnit tests to show what you want improved
-        * If you cannot supply PHPUnit tests, please be as descriptive as possible regarding the problem or feature you are wanting added.
+  * For the application:
+    * If you submit a code-update, also submit appropriate PHPUnit tests
+    * If you don't submit a code-update, submit appropriate PHPUnit tests to show what you want improved
+    * If you cannot supply PHPUnit tests, please be as descriptive as possible regarding the problem or feature you are wanting added.
 
 ## Pull Requests
 * Include screenshots and animated GIFs in your pull request whenever possible.

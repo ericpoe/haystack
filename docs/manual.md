@@ -66,7 +66,7 @@ $myArray->contains("banana"); // bool(true)
 $myArray->contains("raspberry"); // bool(false)
 ```
 
-**locate($element)** - Returns the array key of the first instance of $element within the current HString or HArray. Returns a "-1" if not found.
+**locate($element)** - Returns the array key of the first instance of $element within the current HString or HArray. Returns an `ElementNotFoundException` if not found.
 
 ```php
 use Haystack\HArray;
@@ -77,10 +77,10 @@ $myArray = new HArray(["a" => "apple", "b" => "banana", "c" => "celery"]);
 
 $key = $myString->locate("a"); // int(2)
 $key = $myString->locate("mod"); // int(14)
-$key = $myString->locate("z"); // int(-1)
+$key = $myString->locate("z"); // ElementNotFoundException - "Element could not be found: z"
 
 $key = $myArray->locate("apple"); // "a"
-$key = $myArray->locate("daikon"); // int(-1)
+$key = $myArray->locate("daikon"); // ElementNotFoundException - "Element could not be found: daikon"
 ```
 
 **append($element)** - Adds an element to the end of the collection.

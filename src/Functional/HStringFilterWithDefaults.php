@@ -5,17 +5,15 @@ use Haystack\HString;
 
 class HStringFilterWithDefaults
 {
-    /**
-     * @var HString
-     */
-    private $string;
+    /** @var HString */
+    private $hString;
 
     /**
-     * @param HString $string
+     * @param HString $hString
      */
-    public function __construct(HString $string)
+    public function __construct(HString $hString)
     {
-        $this->string = $string;
+        $this->hString = $hString;
     }
 
     /**
@@ -24,7 +22,7 @@ class HStringFilterWithDefaults
     public function filter()
     {
         $filtered = new HString();
-        foreach ($this->string as $letter) {
+        foreach ($this->hString as $letter) {
             if ((bool) $letter) {
                 $filtered = $filtered->insert($letter);
             }

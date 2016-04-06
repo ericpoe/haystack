@@ -7,25 +7,27 @@ use Haystack\HString;
 class HaystackStringLocate
 {
     /** @var HString */
-    private $string;
+    private $hString;
 
-    public function __construct(HString $string)
+    public function __construct(HString $str)
     {
-        $this->string = $string;
+        $this->hString = $str;
     }
 
     /**
      * @param $value
      * @return int
+     * @throws ElementNotFoundException
+     * @throws \InvalidArgumentException
      */
     public function locate($value)
     {
-        if (is_scalar($value)) {
-            return $this->string->contains($value) ? strpos($this->string, (string) $value) : -1;
-        }
+        if (is_scalar($value) || $value instanceof HString) {
+            if ($this->hString->contains($value)) {
+                return strpos($this->hString, (string) $value);
+            }
 
-        if ($value instanceof HString) {
-            return $this->string->contains($value) ? strpos($this->string, $value->toString()) : -1;
+            throw new ElementNotFoundException($value);
         }
 
         throw new \InvalidArgumentException(sprintf("%s is neither a scalar value nor an HString", Helper::getType($value)));

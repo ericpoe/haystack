@@ -6,14 +6,14 @@ use Haystack\HString;
 class HStringFilterWithKey
 {
     /** @var HString */
-    private $string;
+    private $hString;
 
     /**
-     * @param HString $string
+     * @param HString $hString
      */
-    public function __construct(HString $string)
+    public function __construct(HString $hString)
     {
-        $this->string = $string;
+        $this->hString = $hString;
     }
 
     /**
@@ -23,8 +23,8 @@ class HStringFilterWithKey
     public function filter(callable $func)
     {
         $filtered = new HString();
-        foreach ($this->string as $letter) {
-            if (true === (bool) $func($this->string->key())) {
+        foreach ($this->hString as $letter) {
+            if (true === (bool) $func($this->hString->key())) {
                 $filtered = $filtered->insert($letter);
             }
         }

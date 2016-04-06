@@ -40,13 +40,38 @@ class HArrayLocateTest extends \PHPUnit_Framework_TestCase
     {
         return [
             "1st item in list" => ["list", "apple", 0],
-            "String not in list" => ["list", "fobble", -1],
             "1st HString in list" => ["list", new HString("apple"), 0],
-            "HString not in list" => ["list", new HString("fobble"), -1],
             "1st item in dictionary" => ["dict", "apple", 'a'],
-            "String not in dictionary" => ["dict", "fobble", -1],
             "1st HString in dictionary" => ["dict", new HString("apple"), 'a'],
-            "HString not in dictionary" => ["dict", new HString("fobble"), -1],
+        ];
+    }
+
+    /**
+     * @dataProvider elementNotFoundProvider
+     *
+     * @param $type
+     * @param $checkThing
+     * @param $message
+     */
+    public function testElementNotFound($type, $checkThing, $message)
+    {
+        $this->expectException("Haystack\\Container\\ElementNotFoundException");
+        $this->expectExceptionMessage($message);
+
+        if ("list" === $type) {
+            $this->arrList->locate($checkThing);
+        } else {
+            $this->arrDict->locate($checkThing);
+        }
+    }
+
+    public function elementNotFoundProvider()
+    {
+        return [
+            "String not in list" => ["list", "fobble", "Element could not be found: fobble"],
+            "HString not in list" => ["list", new HString("fobble"), "Element could not be found: fobble"],
+            "String not in dictionary" => ["dict", "fobble", "Element could not be found: fobble"],
+            "HString not in dictionary" => ["dict", new HString("fobble"), "Element could not be found: fobble"],
         ];
     }
 
