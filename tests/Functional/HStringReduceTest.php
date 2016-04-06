@@ -103,11 +103,11 @@ class HStringReduceTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider stringReduceWithInitialValueProvider
      *
-     * @param HString $string
+     * @param HString $hString
      * @param $initial
      * @param $expected
      */
-    public function testStringReduceWithInitialValue(HString $string, $initial, $expected)
+    public function testStringReduceWithInitialValue(HString $hString, $initial, $expected)
     {
         $what = function ($carry, $item) {
             $carry .= $item;
@@ -115,7 +115,7 @@ class HStringReduceTest extends \PHPUnit_Framework_TestCase
             return $carry;
         };
 
-        $this->assertEquals($expected, $string->reduce($what, $initial));
+        $this->assertEquals($expected, $hString->reduce($what, $initial));
     }
 
     public function stringReduceWithInitialValueProvider()

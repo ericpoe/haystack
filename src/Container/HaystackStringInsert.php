@@ -6,25 +6,26 @@ use Haystack\HString;
 
 class HaystackStringInsert
 {
-    private $string;
+    /** @var HString */
+    private $hString;
 
-    public function __construct(HString $string)
+    public function __construct(HString $hString)
     {
-        $this->string = $string;
+        $this->hString = $hString;
     }
 
     public function insert($value, $key = null)
     {
         if (is_scalar($value) || $value instanceof HString) {
             if (is_null($key)) {
-                $key = strlen($this->string);
+                $key = strlen($this->hString);
             } elseif (is_numeric($key)) {
                 $key = (int) $key;
             } else {
                 throw new \InvalidArgumentException("Invalid array key");
             }
 
-            return substr_replace($this->string, $value, $key, 0);
+            return substr_replace($this->hString, $value, $key, 0);
         }
 
         throw new \InvalidArgumentException(sprintf("Cannot insert %s into an HString", Helper::getType($value)));

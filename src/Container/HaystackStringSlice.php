@@ -6,14 +6,14 @@ use Haystack\HString;
 class HaystackStringSlice
 {
     /** @var string */
-    private $string;
+    private $str;
 
     /**
-     * @param HString $string
+     * @param HString $hString
      */
-    public function __construct(HString $string)
+    public function __construct(HString $hString)
     {
-        $this->string = $string->toString();
+        $this->str = $hString->toString();
     }
 
     /**
@@ -32,9 +32,9 @@ class HaystackStringSlice
         }
 
         if (is_null($length)) {
-            return substr($this->string, $start);
+            return substr($this->str, $start);
         }
 
-        return substr($this->string, $start, $length);
+        return substr($this->str, $start, $length);
     }
 }

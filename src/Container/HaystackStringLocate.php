@@ -7,11 +7,11 @@ use Haystack\HString;
 class HaystackStringLocate
 {
     /** @var HString */
-    private $string;
+    private $hString;
 
-    public function __construct(HString $string)
+    public function __construct(HString $str)
     {
-        $this->string = $string;
+        $this->hString = $str;
     }
 
     /**
@@ -23,8 +23,8 @@ class HaystackStringLocate
     public function locate($value)
     {
         if (is_scalar($value) || $value instanceof HString) {
-            if ($this->string->contains($value)) {
-                return strpos($this->string, (string) $value);
+            if ($this->hString->contains($value)) {
+                return strpos($this->hString, (string) $value);
             }
 
             throw new ElementNotFoundException($value);

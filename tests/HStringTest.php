@@ -83,12 +83,12 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider unserializeProvider
      *
-     * @param $string
-     * @param $expected
+     * @param string $str
+     * @param HString $expected
      */
-    public function testUnserialize($string, $expected)
+    public function testUnserialize($str, HString $expected)
     {
-        $this->aString->unserialize($string);
+        $this->aString->unserialize($str);
         $this->assertEquals($expected, $this->aString);
     }
 
@@ -212,12 +212,12 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider sumStringProvider
      *
-     * @param \Haystack\HString $string
+     * @param \Haystack\HString $hString
      * @param               $expected
      */
-    public function testStringSum(HString $string, $expected)
+    public function testStringSum(HString $hString, $expected)
     {
-        $this->assertEquals($expected, $string->sum());
+        $this->assertEquals($expected, $hString->sum());
     }
 
     public function sumStringProvider()
@@ -234,12 +234,12 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider productStringProvider
      *
-     * @param \Haystack\HString $string
-     * @param               $expected
+     * @param HString $hString
+     * @param $expected
      */
-    public function testStringProvider(HString $string, $expected)
+    public function testStringProvider(HString $hString, $expected)
     {
-        $this->assertEquals($expected, $string->product());
+        $this->assertEquals($expected, $hString->product());
     }
 
     public function productStringProvider()

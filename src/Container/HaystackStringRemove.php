@@ -5,11 +5,12 @@ use Haystack\HString;
 
 class HaystackStringRemove
 {
-    private $string;
+    /** @var HString */
+    private $hString;
 
-    public function __construct(HString $string)
+    public function __construct(HString $hString)
     {
-        $this->string = $string;
+        $this->hString = $hString;
     }
 
     /**
@@ -18,9 +19,9 @@ class HaystackStringRemove
      */
     public function remove($value)
     {
-        $key = $this->string->locate($value);
-        $startString = $this->string->slice(0, $key);
-        $endString = $this->string->slice($key + 1);
+        $key = $this->hString->locate($value);
+        $startString = $this->hString->slice(0, $key);
+        $endString = $this->hString->slice($key + 1);
 
         return $startString->insert($endString);
     }

@@ -6,17 +6,18 @@ use Haystack\HString;
 
 class HaystackStringAppend
 {
-    private $string;
+    /** @var HString */
+    private $hString;
 
-    public function __construct(HString $string)
+    public function __construct(HString $hString)
     {
-        $this->string = $string;
+        $this->hString = $hString;
     }
 
     public function append($value)
     {
         if (is_scalar($value) || $value instanceof HString) {
-            return $this->string . $value;
+            return $this->hString . $value;
         }
         throw new \InvalidArgumentException(sprintf("Cannot concatenate an HString with a %s", Helper::getType($value)));
     }

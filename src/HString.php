@@ -23,18 +23,18 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     const USE_KEY = "key";
     const USE_BOTH = "both";
 
-    protected $string;
-    protected $ptr; // pointer for iterating through $string
+    protected $str;
+    protected $ptr; // pointer for iterating through $str
 
-    public function __construct($string = "")
+    public function __construct($str = "")
     {
-        if (is_scalar($string) || $string instanceof HString) {
-            $this->string = (string) $string;
+        if (is_scalar($str) || $str instanceof HString) {
+            $this->str = (string) $str;
             $this->rewind();
-        } elseif (is_null($string)) {
-            $this->string = null;
+        } elseif (is_null($str)) {
+            $this->str = null;
         } else {
-            throw new \ErrorException(sprintf("%s is not a proper String", Helper::getType($string)));
+            throw new \ErrorException(sprintf("%s is not a proper String", Helper::getType($str)));
         }
     }
 
@@ -43,7 +43,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function __toString()
     {
-        return sprintf($this->string);
+        return sprintf($this->str);
     }
 
     /**
@@ -61,7 +61,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function offsetExists($offset)
     {
-        return isset($this->string[$offset]);
+        return isset($this->str[$offset]);
     }
 
     /**
@@ -76,7 +76,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function offsetGet($offset)
     {
-        return $this->string[$offset];
+        return $this->str[$offset];
     }
 
     /**
@@ -94,7 +94,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function offsetSet($offset, $value)
     {
-        $this->string[$offset] = $value;
+        $this->str[$offset] = $value;
     }
 
     /**
@@ -109,7 +109,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function offsetUnset($offset)
     {
-        $this->string[$offset] = null;
+        $this->str[$offset] = null;
     }
 
     /**
@@ -137,9 +137,9 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function unserialize($value)
     {
         if (is_scalar($value)) {
-            $this->string = unserialize($value);
+            $this->str = unserialize($value);
         } elseif (is_null($value)) {
-            $this->string = null;
+            $this->str = null;
         } else {
             throw new \InvalidArgumentException(sprintf("HString cannot unserialize a %s", Helper::getType($value)));
         }
@@ -157,7 +157,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function count()
     {
-        return strlen($this->string);
+        return strlen($this->str);
     }
 
     /**
@@ -169,7 +169,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function current()
     {
-        return $this->string[$this->ptr];
+        return $this->str[$this->ptr];
     }
 
     /**
@@ -241,11 +241,11 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function toHArray($delim = " ", $limit = null)
     {
-        if (empty($this->string)) {
+        if (empty($this->str)) {
             return new HArray();
         }
 
-        $arr = new StringToArray($this->string, $delim);
+        $arr = new StringToArray($this->str, $delim);
         return new HArray($arr->stringToArray($limit));
     }
 

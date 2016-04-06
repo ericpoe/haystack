@@ -6,23 +6,23 @@ use Haystack\HString;
 class HStringMap
 {
     /** @var HString */
-    private $string;
+    private $hString;
 
     /**
-     * @param HString $string
+     * @param HString $hString
      */
-    public function __construct(HString $string)
+    public function __construct(HString $hString)
     {
-        $this->string = $string;
+        $this->hString = $hString;
     }
 
     public function map(callable $func)
     {
-        $newString = new HString($this->string);
+        $newString = new HString($this->hString);
 
-        $size = $this->string->count();
+        $size = $this->hString->count();
         for ($i = 0; $i < $size; $i++) {
-            $newString[$i] = $func($this->string[$i]);
+            $newString[$i] = $func($this->hString[$i]);
         }
 
         return $newString;

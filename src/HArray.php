@@ -59,8 +59,8 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
             return new HString();
         }
 
-        $string = new ArrayToString($this->arr, $glue);
-        return new HString($string->toString());
+        $str = new ArrayToString($this->arr, $glue);
+        return new HString($str->toString());
     }
 
     /**

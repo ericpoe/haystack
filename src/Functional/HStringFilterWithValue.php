@@ -6,20 +6,20 @@ use Haystack\HString;
 class HStringFilterWithValue
 {
     /** @var HString */
-    private $string;
+    private $hString;
 
     /**
-     * @param HString $string
+     * @param HString $hString
      */
-    public function __construct(HString $string)
+    public function __construct(HString $hString)
     {
-        $this->string = $string;
+        $this->hString = $hString;
     }
     public function filter(callable $func)
     {
         $filtered = new HString();
 
-        foreach ($this->string as $letter) {
+        foreach ($this->hString as $letter) {
             if ($func($letter)) {
                 $filtered = $filtered->insert($letter);
             }
