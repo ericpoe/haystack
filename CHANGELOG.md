@@ -1,6 +1,6 @@
 # Change Log
-All notable changes to this project will be documented in this file.  
-This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).  
+All notable changes to this project will be documented in this file.
+This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased - 2016-04-05
@@ -12,7 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Whitespace rules added for md, yml, and json files
 * **Manual**
     * Some examples were changed to show an alternative manner of declaring the Haystack object for use in pipelining (thanks for the heads-up, @ajmichels!)
-     
+
 ### Fixed
 * HArray::remove() no longer makes the entire array have numeric keys if the removed key was numeric
 
