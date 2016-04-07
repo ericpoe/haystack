@@ -3,10 +3,11 @@ All notable changes to this project will be documented in this file.
 This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased - 2016-04-05
+## Unreleased - 2016-04-07
 
 ### Changed
 * BC Break: ::locate($value) now throws an ElementNotFoundException when looking for something that does not exist
+* BC Break: HString classes now use a protected property of `$hString` if they're an `HString` and `$str` if they're a `String` since `string` is a reserved word in PHP7 
 * Potential BC Break: HArray can now contain objects. So `new HArray(new \DateTime())` is now possible!
 * Clean up HString methods
 * Whitespace rules added for md, yml, and json files
