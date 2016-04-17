@@ -33,7 +33,7 @@ class StringToArray
      * @param int|null $limit
      * @return array
      */
-    public function stringToArray($limit)
+    public function stringToArray($limit = null)
     {
         if (is_null($this->delim)) {
             $this->arr = $this->noDelimExplode();

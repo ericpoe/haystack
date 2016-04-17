@@ -6,6 +6,21 @@ use Haystack\HString;
 
 class StringToArrayTest extends \PHPUnit_Framework_TestCase
 {
+    public function testHStringToArray()
+    {
+        $jabberwocky = new HString("'Twas brillig and the slithy toves");
+        $expected = [
+            "'Twas",
+            "brillig",
+            "and",
+            "the",
+            "slithy",
+            "toves",
+        ];
+
+        $this->assertEquals($expected, $jabberwocky->toArray());
+    }
+
     /**
      * @dataProvider stringToHArrayProvider
      *

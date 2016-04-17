@@ -232,10 +232,25 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
+     * Converts a string into an array. Assumes a delimiter of " ".
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        if (empty($this->str)) {
+            return [];
+        }
+
+        return (new StringToArray($this->str))
+            ->stringToArray();
+    }
+
+    /**
      * Alias to PHP function `explode`
      *
      * @param string $delim
-     * @param int    $limit
+     * @param null|int    $limit
      * @return HArray
      * @throws \InvalidArgumentException
      */
