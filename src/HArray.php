@@ -146,12 +146,18 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      * @inheritdoc
      *
      * @param callable $func
+     * @param array $containers - a variadic array
      * @return HArray
      */
     public function map(callable $func)
     {
-        $answer = new HArrayMap($this);
-        return new static($answer->map($func));
+        $containers = array_slice(func_get_args(), 1); // remove `$func`
+
+        if (empty($containers)) {
+            return new static((new HArrayMap($this))->map($func));
+        }
+
+        return new static((new HArrayMap($this))->map($func, $containers));
     }
 
     /**

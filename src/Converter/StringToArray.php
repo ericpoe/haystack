@@ -30,12 +30,12 @@ class StringToArray
     }
 
     /**
-     * @param int|null $limit
+     * @param int $limit
      * @return array
      */
-    public function stringToArray($limit = null)
+    public function stringToArray($limit)
     {
-        if (is_null($this->delim)) {
+        if (is_null($this->delim) || "" === $this->delim) {
             $this->arr = $this->noDelimExplode();
             return $this->arr;
         }

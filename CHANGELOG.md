@@ -3,17 +3,19 @@ All notable changes to this project will be documented in this file.
 This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased - 2016-05-12
+## Unreleased - 2016-05-18
 
 ### Changed
 * BC Break: ::locate($value) now throws an ElementNotFoundException when looking for something that does not exist
 * BC Break: HString classes now use a protected property of `$hString` if they're an `HString` and `$str` if they're a `String` since `string` is a reserved word in PHP7
-* BC Break: HString ::toHArray() now assumes no delimiter. ::toHArray() is now *mostly* an alias to `explode`. This means that the default string-array will be made of characters, not words.
+* BC Break: HString ::toHArray() now assumes an empty-string delimiter. ::toHArray() is now *mostly* an alias to `explode`. This means that the default string-array will be made of characters, not words.
+  * This affects HString::toArray() in that it will now create an array of characters rather than words
 * Potential BC Break: HArray can now contain objects. So `new HArray(new \DateTime())` is now possible!
 * Clean up HString methods
 * Whitespace rules added for md, yml, and json files
 * **Manual**
     * Some examples were changed to show an alternative manner of declaring the Haystack object for use in pipelining (thanks for the heads-up, @ajmichels!)
+    * Made `toArray` work for both HArray and HString
 
 ### Fixed
 * HArray::remove() no longer makes the entire array have numeric keys if the removed key was numeric

@@ -2,6 +2,7 @@
 namespace Haystack\Functional;
 
 use Haystack\HArray;
+use Haystack\HString;
 
 class HArrayMap
 {
@@ -18,10 +19,29 @@ class HArrayMap
 
     /**
      * @param callable $func
+     * @param array $variadicList Variadic list of arrays to invoke array_map with
      * @return array
      */
-    public function map(callable $func)
+    public function map(callable $func, array $variadicList = [])
     {
-        return array_map($func, $this->arr);
+        $arrays = [$this->arr];
+
+        foreach ($variadicList as $item) {
+            if ($item instanceof HString) {
+                $item = $item->toHArray()->toArray();
+            };
+
+            if ($item instanceof HArray) {
+                $item = $item->toArray();
+            }
+
+            if (is_array($item)) {
+                $arrays[] = $item;
+            } else {
+                throw new \InvalidArgumentException("{$item} cannot be mapped");
+            }
+        }
+
+        return call_user_func_array('array_map', array_merge([$func], $arrays));
     }
 }

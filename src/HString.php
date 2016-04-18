@@ -232,7 +232,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     }
 
     /**
-     * Converts a string into an array. Assumes a delimiter of " ".
+     * Converts a string into an array. Assumes a delimiter of "" to return an array of chars.
      *
      * @return array
      */
@@ -354,7 +354,13 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function map(callable $func)
     {
         $answer = new HStringMap($this);
-        return new static($answer->map($func));
+        $argArrays = array_slice(func_get_args(), 1); // remove `$func`
+
+        if (empty($argArrays)) {
+            return new static($answer->map($func));
+        }
+
+        return new static($answer->map($func, $argArrays));
     }
 
     /**

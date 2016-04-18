@@ -48,6 +48,16 @@ var_dump($result); // int(251)
 
 ## Common Methods in HArray and HString
 
+**toArray()** - Converts HArray or HString to a standard PHP array.
+
+```php
+use Haystack\HArray;
+use Haystack\HString;
+
+$array = (new HArray(range(1, 4)))->toArray(); // [1, 2, 3, 4]
+$stringArray = (new HString("abcdefg"))->toArray(); // ["a", "b", "c", "d", "e", "f", "g"]
+```
+
 ### Container Methods
 
 **contains($element)** - Checks to see if $element is contained within the current HString or HArray. Returns boolean.
@@ -159,7 +169,8 @@ $newArray = $myDictArray->slice(1, 1); // ["b" => "banana"]
 
 ### Functional Methods
 
-**map($callable)** - Returns a new HArray or HString that has had all elements run against the callback.
+**map($callable, $variadic...)** - Returns a new HArray or HString that has had all elements run against the callback.
+  * **$variadic:** (*Optional*) This can be comprised of one or more `array`s, `HArray`s, and/or `HString`s
 
 ```php
 use Haystack\HArray;
@@ -181,6 +192,14 @@ $newString = $myString->map($rot13); // "V nz gur irel zbqry bs n zbqrea znwbe-t
 $newArr = $myArray->map(function ($word) {
     return strtoupper($word);
 }); // ["a" => "APPLE", "b" => "BANANA", "c" => "CELERY"]
+
+// With optional variadic
+$oddPairing = function ($sentenceWord, $arrayWord) {
+    return sprintf("%s : %s", $sentenceWord, $arrayWord);
+};
+
+$pairs = $myString->map($oddPairing, $myArray);
+// ["I : apple", "am : banana", "the : celery", "very : ", "model : ", "of : ", ...]
 ```
 
 **walk($callable)** - Walk does an in-place update of items in the object.
@@ -350,13 +369,6 @@ use Haystack\HString;
 ```
 
 ## HArray-only Methods
-**toArray()** - Converts HArray to a standard PHP array.
-
-```php
-use Haystack\HArray;
-
-$array = (new HArray(range(1, 4)))->toArray(); // [1, 2, 3, 4]
-```
 
 **toHString($glue = "")** - Converts an HArray to an HString. This is similar to PHP's [`implode`](http://php
 .net/manual/en/function.implode.php).
