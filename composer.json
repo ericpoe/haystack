@@ -11,7 +11,12 @@
     }
   ],
   "require": {
-    "php": ">=5.6.0"
+    "php": ">=5.5.9"
+  },
+  "config": {
+    "platform": {
+      "php": "5.5.9"
+    }
   },
   "autoload": {
     "psr-4": {"Haystack\\": "src"}
@@ -20,7 +25,7 @@
     "psr-4": {"Haystack\\Tests\\": "tests"}
   },
   "require-dev": {
-    "phpunit/phpunit": "~5.0"
+    "phpunit/phpunit": "~4.8"
   },
   "extra": {
     "branch-alias": {

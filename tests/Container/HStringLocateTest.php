@@ -42,8 +42,7 @@ class HStringLocateTest extends \PHPUnit_Framework_TestCase
      */
     public function testCannotLocateTypesOfStringInFoober($checkString, $message)
     {
-        $this->expectException("Haystack\\Container\\ElementNotFoundException");
-        $this->expectExceptionMessage($message);
+        $this->setExpectedException("Haystack\\Container\\ElementNotFoundException", $message);
 
         $this->aString->locate($checkString);
     }
@@ -66,8 +65,7 @@ class HStringLocateTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadLocateTypesOfStringInFoobar($item, $exceptionMsg)
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
 
         $this->aString->locate($item);
     }

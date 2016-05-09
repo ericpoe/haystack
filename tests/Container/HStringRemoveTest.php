@@ -22,8 +22,7 @@ class HStringRemoveTest extends \PHPUnit_Framework_TestCase
 
     public function testCannotRemoveBadString()
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage("DateTime is neither a scalar value nor an HString");
+        $this->setExpectedException("InvalidArgumentException", "DateTime is neither a scalar value nor an HString");
 
         $this->aString->remove(new \DateTime());
     }

@@ -88,8 +88,7 @@ class HStringSliceTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadSlicing($start, $length, $exceptionMsg)
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
 
         $this->aString->slice($start, $length);
     }

@@ -60,8 +60,7 @@ class HStringTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateBadHStringOfThings($item, $exceptionMsg)
     {
-        $this->expectException("ErrorException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $this->setExpectedException("ErrorException", $exceptionMsg);
 
         $this->aString = new HString($item);
     }
@@ -109,8 +108,7 @@ class HStringTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadUnserialize($item, $exceptionMsg)
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
 
         $this->aString->unserialize($item);
     }
