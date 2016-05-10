@@ -53,8 +53,7 @@ class HStringInsertTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadInsert($value, $key, $exceptionMsg)
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
 
         $this->aString->insert($value, $key);
     }

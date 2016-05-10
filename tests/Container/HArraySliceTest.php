@@ -108,8 +108,7 @@ class HArraySliceTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadArraySlice($type, $start, $length, $exceptionMsg)
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
 
         if ("list" === $type) {
             $subArray = $this->arrList->slice($start, $length);

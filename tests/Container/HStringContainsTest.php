@@ -49,8 +49,7 @@ class HStringContainsTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadTypesOfStringInFoobar($item, $exceptionMsg)
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
 
         $this->aString->contains($item);
     }

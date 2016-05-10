@@ -52,8 +52,7 @@ class StringToArrayTest extends \PHPUnit_Framework_TestCase
     {
         $hSTring = new HString("foobar");
 
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
 
         $hSTring->toHArray($delim);
     }
@@ -74,8 +73,7 @@ class StringToArrayTest extends \PHPUnit_Framework_TestCase
     {
         $hString = new HString("foobar");
 
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
 
         $hString->toHArray(" ", $limit);
     }

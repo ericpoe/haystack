@@ -55,8 +55,7 @@ class HArrayLocateTest extends \PHPUnit_Framework_TestCase
      */
     public function testElementNotFound($type, $checkThing, $message)
     {
-        $this->expectException("Haystack\\Container\\ElementNotFoundException");
-        $this->expectExceptionMessage($message);
+        $this->setExpectedException("Haystack\\Container\\ElementNotFoundException", $message);
 
         if ("list" === $type) {
             $this->arrList->locate($checkThing);

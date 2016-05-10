@@ -38,8 +38,7 @@ class HStringAppendTest extends \PHPUnit_Framework_TestCase
 
     public function testNonScalarTypeCannotBeAddedToFoobar()
     {
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage("Cannot concatenate an HString with a DateTime");
+        $this->setExpectedException("InvalidArgumentException", "Cannot concatenate an HString with a DateTime");
 
         $this->aString->append(new \DateTime());
     }

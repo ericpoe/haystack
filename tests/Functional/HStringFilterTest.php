@@ -75,8 +75,7 @@ class HStringFilterTest extends \PHPUnit_Framework_TestCase
         $flag = "bad_flag";
         $exceptionMsg = "Invalid flag name";
 
-        $this->expectException("InvalidArgumentException");
-        $this->expectExceptionMessage($exceptionMsg);
+        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
         $even = $this->aString->filter(function ($key) {
             return $key % 2;
         }, $flag);
