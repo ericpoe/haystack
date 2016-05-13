@@ -51,7 +51,7 @@ OArray <--> String conversion
 
 * **Manual**
     * Move Pipelining section to be closer to the top since it's a good example of what can be done
-    * Add OArray & OString- specific sections
+    * Add OArray- & OString- specific sections
 
 ### Changed
 
