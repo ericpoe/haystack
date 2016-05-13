@@ -239,7 +239,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @return HArray
      * @throws \InvalidArgumentException
      */
-    public function toHArray($delim = " ", $limit = null)
+    public function toHArray($delim = "", $limit = null)
     {
         if (empty($this->str)) {
             return new HArray();
@@ -406,7 +406,9 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function sum()
     {
-        return $this->toHArray()->sum();
+        $values = new HArray(str_getcsv(str_ireplace(" ", "", $this->str)));
+
+        return $values->sum();
     }
 
     /**
@@ -416,6 +418,8 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function product()
     {
-        return $this->toHArray()->product();
+        $values = new HArray(str_getcsv(str_ireplace(" ", "", $this->str)));
+
+        return $values->product();
     }
 }
