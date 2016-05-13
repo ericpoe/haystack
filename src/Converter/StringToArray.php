@@ -18,7 +18,7 @@ class StringToArray
      * @param string $str
      * @param string $delim
      */
-    public function __construct($str, $delim = " ")
+    public function __construct($str, $delim = "")
     {
         $this->str = $str;
 
@@ -35,7 +35,7 @@ class StringToArray
      */
     public function stringToArray($limit)
     {
-        if (empty($this->delim)) {
+        if (is_null($this->delim)) {
             $this->arr = $this->noDelimExplode();
             return $this->arr;
         }
@@ -58,7 +58,7 @@ class StringToArray
      */
     private function noDelimExplode()
     {
-        return explode(" ", $this->str);
+        return str_split($this->str);
     }
 
     /**

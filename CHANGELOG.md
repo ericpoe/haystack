@@ -3,11 +3,12 @@ All notable changes to this project will be documented in this file.
 This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased - 2016-04-07
+## Unreleased - 2016-05-12
 
 ### Changed
 * BC Break: ::locate($value) now throws an ElementNotFoundException when looking for something that does not exist
-* BC Break: HString classes now use a protected property of `$hString` if they're an `HString` and `$str` if they're a `String` since `string` is a reserved word in PHP7 
+* BC Break: HString classes now use a protected property of `$hString` if they're an `HString` and `$str` if they're a `String` since `string` is a reserved word in PHP7
+* BC Break: HString ::toHArray() now assumes no delimiter. ::toHArray() is now *mostly* an alias to `explode`. This means that the default string-array will be made of characters, not words.
 * Potential BC Break: HArray can now contain objects. So `new HArray(new \DateTime())` is now possible!
 * Clean up HString methods
 * Whitespace rules added for md, yml, and json files
@@ -55,7 +56,7 @@ OArray <--> String conversion
 ### Changed
 
 * OArray now has toOString() method. This is an alias to `implode`
-* OString now has toOArray() method. This is an alias to `explode`
+* OString now has toOArray() method. This is mostly an alias to `explode`
 
 ## [0.1.1](https://github.com/ericpoe/haystack/tree/v0.1.1) - 2015-07-27
 Documentation updates

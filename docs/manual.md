@@ -382,7 +382,7 @@ use Haystack\HString;
 $string = (new HString("foo bar"))->toString(); // "foo bar"
 ```
 
-**toHArray($delim = " ", $limit = null)** - Converts an HString to an HArray. This is similar to PHP's [`explode`]
+**toHArray($delim = "", $limit = null)** - Converts an HString to an HArray. This is similar to PHP's [`explode`]
 (http://php.net/manual/en/function.explode.php).
 
 * **$delim** - The string to split the string on. This could be a single character or a phrase.
@@ -394,6 +394,7 @@ use Haystack\HArray;
 use Haystack\HString;
 
 $myString = new HString("I am the very model of a modern major-general");
+$chars = $myString->toHArray(); // HArray(["I", " ", "a", "m", " ", "t", "h", "e", " ", ..., "g", "e", "n", "e", "r", "a", "l"]);
 $words = $myString->toHArray(" "); // HArray(["I", "am", "the", "very", "model", "of", "a", "modern", "major-general"]);
 $wordGroups = $myString->toHArray(" modern "); // HArray(["I am the very model of a", "major-general"]);
 $someWords = $myString->toHArray(" ", 4); // HArray (["I", "am", "the", "very model of a modern major-general"]);
