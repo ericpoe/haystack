@@ -26,19 +26,20 @@ class StringToArrayTest extends \PHPUnit_Framework_TestCase
 
         return [
             "Empty String" => [new HString(), null, null, new HArray()],
-            "String of integers with null delims" => [new HString("1 2 3 4 5"), null, null, new HArray([1, 2, 3, 4, 5])],
-            "String of integers with blank string delims" => [new HString("1 2 3 4 5"), "", null, new HArray([1, 2, 3, 4, 5])],
+            "String of integers with null delims" => [new HString("1 2 3 4 5"), null, null, new HArray([1, " ", 2, " " , 3," ", 4, " ", 5])],
+            "String of integers with blank string delims" => [new HString("1 2 3 4 5"), null, null, new HArray([1, " ", 2, " " , 3," ", 4, " ", 5])],
             "String of integers with space delims" => [new HString("1 2 3 4 5"), " ", null, new HArray([1, 2, 3, 4, 5])],
             "String of integers with comma delims" => [new HString("1, 2, 3, 4, 5"), ",", null, new HArray([1, 2, 3, 4, 5])],
             "String of integers with non-existent delims" => [new HString("1, 2, 3, 4, 5"), "foo", null, new HArray(["1, 2, 3, 4, 5"])],
             "String of integers with HString space delims" => [new HString("1 2 3 4 5"), new HString(" "), null, new HArray([1, 2, 3, 4, 5])],
             "String of integers with HString comma delims" => [new HString("1, 2, 3, 4, 5"), new HString(","), null, new HArray([1, 2, 3, 4, 5])],
-            "String of words with spaces" => [new HString($jabberwocky), " ", null, new HArray(["'Twas", "brillig", "and", "the", "slithy", "toves"])],
-            "String of words with colons" => [new HString($jabberwockyColon), ":", null, new HArray(["'Twas", "brillig", "and", "the", "slithy", "toves"])],
-            "String of integers with spaces & limit" => [new HString("1 2 3 4 5"), " ", 3, new HArray([1, 2, "3 4 5"])],
-            "String of integers with commas & limit" => [new HString("1, 2, 3, 4, 5"), ", ", 3, new HArray([1, 2, "3, 4, 5"])],
-            "String of words with spaces & limit" => [new HString($jabberwocky), " ", 3, new HArray(["'Twas", "brillig", "and the slithy toves"])],
-            "String of words with colons & limit" => [new HString($jabberwockyColon), ":", 3, new HArray(["'Twas", "brillig", "and:the:slithy:toves"])],
+            "String of words with null delims" => [new HString($jabberwocky), null, null, new HArray(["'", "T", "w", "a", "s", " ", "b", "r", "i", "l", "l", "i", "g", " ", "a", "n", "d", " ", "t", "h", "e", " ", "s", "l", "i", "t", "h", "y", " ", "t", "o", "v", "e", "s"])],
+            "String of words with space delims" => [new HString($jabberwocky), " ", null, new HArray(["'Twas", "brillig", "and", "the", "slithy", "toves"])],
+            "String of words with colon delims" => [new HString($jabberwockyColon), ":", null, new HArray(["'Twas", "brillig", "and", "the", "slithy", "toves"])],
+            "String of integers with space delims & limit" => [new HString("1 2 3 4 5"), " ", 3, new HArray([1, 2, "3 4 5"])],
+            "String of integers with comma delims & limit" => [new HString("1, 2, 3, 4, 5"), ", ", 3, new HArray([1, 2, "3, 4, 5"])],
+            "String of words with space delims & limit" => [new HString($jabberwocky), " ", 3, new HArray(["'Twas", "brillig", "and the slithy toves"])],
+            "String of words with colon delims & limit" => [new HString($jabberwockyColon), ":", 3, new HArray(["'Twas", "brillig", "and:the:slithy:toves"])],
         ];
     }
 
