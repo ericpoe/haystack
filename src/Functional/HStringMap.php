@@ -25,7 +25,7 @@ class HStringMap
     public function map(callable $func, $variadicList = [])
     {
         if (empty($variadicList)) {
-            return (new HArray($this->hString->toHArray()))->map($func)->toHString();
+            return $this->hString->toHArray()->map($func)->toHString();
         }
 
         $arrays = [$this->convertHStringToArrayOfChars($this->hString)];
