@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased - 2016-05-18
+## Unreleased - 2016-05-19
 
 ### Changed
 * BC Break: ::locate($value) now throws an ElementNotFoundException when looking for something that does not exist
@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 * HArray::remove() no longer makes the entire array have numeric keys if the removed key was numeric
+* HArray::toArray() was sometimes returning an \ArrayObject. Now it just returns an array
 
 ## [1.0.2](https://github.com/ericpoe/haystack/tree/v1.0.2) - 2016-03-01
 
