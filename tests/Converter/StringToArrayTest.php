@@ -8,17 +8,13 @@ class StringToArrayTest extends \PHPUnit_Framework_TestCase
 {
     public function testHStringToArray()
     {
-        $jabberwocky = new HString("'Twas brillig and the slithy toves");
-        $expected = [
-            "'Twas",
-            "brillig",
-            "and",
-            "the",
-            "slithy",
-            "toves",
-        ];
+        $emptyString = new HString();
+        $expected = [];
+        $this->assertEquals($expected, $emptyString->toArray());
 
-        $this->assertEquals($expected, $jabberwocky->toHArray(" ")->toArray());
+        $aString = new HString("foobar");
+        $expected = ["f", "o", "o", "b", "a", "r"];
+        $this->assertEquals($expected, $aString->toArray());
     }
 
     /**
