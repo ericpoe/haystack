@@ -53,4 +53,11 @@ interface ContainerInterface
      * @return mixed
      */
     public function slice($start, $length);
+
+    /**
+     * Converts the container into a simple array
+     *
+     * @return array
+     */
+    public function toArray();
 }

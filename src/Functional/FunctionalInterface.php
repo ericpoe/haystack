@@ -7,6 +7,7 @@ interface FunctionalInterface
      * Applies the callback to the elements of the given array
      *
      * @param callable $func
+     * @param array $containers - a variadic array
      * @return mixed
      */
     public function map(callable $func);

@@ -6,6 +6,17 @@ use Haystack\HString;
 
 class StringToArrayTest extends \PHPUnit_Framework_TestCase
 {
+    public function testHStringToArray()
+    {
+        $emptyString = new HString();
+        $expected = [];
+        $this->assertEquals($expected, $emptyString->toArray());
+
+        $aString = new HString("foobar");
+        $expected = ["f", "o", "o", "b", "a", "r"];
+        $this->assertEquals($expected, $aString->toArray());
+    }
+
     /**
      * @dataProvider stringToHArrayProvider
      *
@@ -27,6 +38,8 @@ class StringToArrayTest extends \PHPUnit_Framework_TestCase
         return [
             "Empty String" => [new HString(), null, null, new HArray()],
             "String of integers with null delims" => [new HString("1 2 3 4 5"), null, null, new HArray([1, " ", 2, " " , 3," ", 4, " ", 5])],
+            "String of integers with zero delims" => [new HString("102030405"), 0, null, new HArray(["1", "2", "3", "4", "5"])],
+            "String of integers with string-zero delims" => [new HString("102030405"), "0", null, new HArray(["1", "2", "3", "4", "5"])],
             "String of integers with blank string delims" => [new HString("1 2 3 4 5"), null, null, new HArray([1, " ", 2, " " , 3," ", 4, " ", 5])],
             "String of integers with space delims" => [new HString("1 2 3 4 5"), " ", null, new HArray([1, 2, 3, 4, 5])],
             "String of integers with comma delims" => [new HString("1, 2, 3, 4, 5"), ",", null, new HArray([1, 2, 3, 4, 5])],

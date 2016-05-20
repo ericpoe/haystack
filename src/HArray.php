@@ -22,18 +22,20 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     const USE_KEY = "key";
     const USE_BOTH = "both";
 
-    /** @var \ArrayObject */
+    /** @var array */
     protected $arr;
 
     public function __construct($arr = [])
     {
         if ($arr instanceof \ArrayObject) {
-            parent::__construct($arr);
-            $this->arr = $arr->getArrayCopy();
-        } elseif ($arr instanceof HString) {
-            parent::__construct();
-            $this->arr = [$arr->toString()];
-        } elseif (is_scalar($arr) || 'object' === gettype($arr)) {
+            $arr = $arr->getArrayCopy();
+        }
+
+        if ($arr instanceof HString) {
+            $arr = [$arr->toString()];
+        }
+
+        if (is_scalar($arr) || 'object' === gettype($arr)) {
             parent::__construct([$arr]);
             $this->arr = [$arr];
         } else {
@@ -146,12 +148,18 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      * @inheritdoc
      *
      * @param callable $func
+     * @param array $containers - a variadic array
      * @return HArray
      */
     public function map(callable $func)
     {
-        $answer = new HArrayMap($this);
-        return new static($answer->map($func));
+        $containers = array_slice(func_get_args(), 1); // remove `$func`
+
+        if (empty($containers)) {
+            return new static((new HArrayMap($this))->map($func));
+        }
+
+        return new static((new HArrayMap($this))->map($func, $containers));
     }
 
     /**
