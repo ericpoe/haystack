@@ -1,8 +1,8 @@
 <?php
 namespace Haystack\Functional;
 
+use Haystack\Container\ContainerInterface;
 use Haystack\HArray;
-use Haystack\HString;
 
 class HArrayMap
 {
@@ -27,11 +27,7 @@ class HArrayMap
         $arrays = [$this->arr];
 
         foreach ($variadicList as $item) {
-            if ($item instanceof HString) {
-                $item = $item->toHArray()->toArray();
-            };
-
-            if ($item instanceof HArray) {
+            if ($item instanceof ContainerInterface) {
                 $item = $item->toArray();
             }
 

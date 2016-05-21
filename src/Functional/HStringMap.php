@@ -1,6 +1,7 @@
 <?php
 namespace Haystack\Functional;
 
+use Haystack\Container\ContainerInterface;
 use Haystack\HArray;
 use Haystack\HString;
 
@@ -28,18 +29,14 @@ class HStringMap
             return $this->hString->toHArray()->map($func)->toHString();
         }
 
-        $arrays = [$this->convertHStringToArrayOfChars($this->hString)];
+        $arrays = [$this->hString->toArray()];
 
         foreach ($variadicList as $item) {
             if (is_string($item)) {
                 $item = new HString($item);
             }
 
-            if ($item instanceof HString) {
-                $item = $this->convertHStringToArrayOfChars($item);
-            }
-
-            if ($item instanceof HArray) {
+            if ($item instanceof ContainerInterface) {
                 $item = $item->toArray();
             }
 
@@ -54,20 +51,4 @@ class HStringMap
 
         return (new HArray($result))->toHString();
     }
-
-    /**
-     * @param HString $hString
-     * @return array
-     */
-    private function convertHStringToArrayOfChars(HString $hString)
-    {
-        $arr = [];
-
-        foreach ($hString as $char) {
-            $arr[] = $char;
-        }
-
-        return $arr;
-    }
-
 }
