@@ -23,7 +23,7 @@ class HArrayFilter
 
         // No flags are passed
         if (is_null($flag)) {
-            $filtered = new HArrayFilterWithValue($this->arr);
+            $filtered = new HaystackFilterWithValue($this->arr);
             return $filtered->filter($func);
         }
 

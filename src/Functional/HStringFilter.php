@@ -23,8 +23,8 @@ class HStringFilter
 
         // No flags are passed
         if (is_null($flag)) {
-            $filtered = new HStringFilterWithValue($this->hString);
-            return $filtered->filter($func);
+            $filtered = new HaystackFilterWithValue($this->hString->toArray());
+            return (new HArray($filtered->filter($func)))->toHString();
         }
 
         if ("key" === $flag || "both" === $flag) {
