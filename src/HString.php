@@ -11,7 +11,7 @@ use Haystack\Container\HStringRemove;
 use Haystack\Container\HStringSlice;
 use Haystack\Converter\StringToArray;
 use Haystack\Functional\FunctionalInterface;
-use Haystack\Functional\HaystackFilter;
+use Haystack\Functional\Filter;
 use Haystack\Functional\HaystackMap;
 use Haystack\Functional\HaystackReduce;
 use Haystack\Functional\HStringWalk;
@@ -383,7 +383,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function filter(callable $func = null, $flag = null)
     {
-        $answer = new HaystackFilter($this->toHArray());
+        $answer = new Filter($this->toHArray());
         return new static((new HArray(($answer->filter($func, $flag))))->toHString());
     }
 

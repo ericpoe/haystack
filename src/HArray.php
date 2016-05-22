@@ -11,7 +11,7 @@ use Haystack\Container\HArrayRemove;
 use Haystack\Container\HArraySlice;
 use Haystack\Converter\ArrayToString;
 use Haystack\Functional\FunctionalInterface;
-use Haystack\Functional\HaystackFilter;
+use Haystack\Functional\Filter;
 use Haystack\Functional\HArrayWalk;
 use Haystack\Functional\HaystackMap;
 use Haystack\Functional\HaystackReduce;
@@ -190,7 +190,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      */
     public function filter(callable $func = null, $flag = null)
     {
-        $answer = new HaystackFilter($this);
+        $answer = new Filter($this);
         return new static($answer->filter($func, $flag));
     }
 

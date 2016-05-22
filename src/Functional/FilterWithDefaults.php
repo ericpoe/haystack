@@ -3,7 +3,7 @@ namespace Haystack\Functional;
 
 use Haystack\Helpers\Helper;
 
-class HaystackFilterWithDefaults
+class FilterWithDefaults
 {
     /** @var array*/
     protected $arr;

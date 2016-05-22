@@ -1,7 +1,7 @@
 <?php
 namespace Haystack\Functional;
 
-class HaystackFilterWithValueAndKey
+class FilterWithValueAndKey
 {
     /** @var array */
     protected $arr;

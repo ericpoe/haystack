@@ -3,7 +3,7 @@ namespace Haystack\Functional;
 
 use Haystack\HArray;
 
-class HaystackFilter
+class Filter
 {
     /** @var array */
     private $arr;
@@ -17,13 +17,13 @@ class HaystackFilter
     {
         // Default
         if (is_null($func)) {
-            $filtered = new HaystackFilterWithDefaults($this->arr);
+            $filtered = new FilterWithDefaults($this->arr);
             return $filtered->filter();
         }
 
         // No flags are passed
         if (is_null($flag)) {
-            $filtered = new HaystackFilterWithValue($this->arr);
+            $filtered = new FilterWithValue($this->arr);
             return $filtered->filter($func);
         }
 
@@ -31,11 +31,11 @@ class HaystackFilter
         if ("key" === $flag || "both" === $flag) {
             // Flag of "USE_KEY" is passed
             if ("key" === $flag) {
-                $filtered = new HaystackFilterWithKey($this->arr);
+                $filtered = new FilterWithKey($this->arr);
                 return $filtered->filter($func);
             }
             // Flag of "USE_BOTH is passed
-            $filtered = new HaystackFilterWithValueAndKey($this->arr);
+            $filtered = new FilterWithValueAndKey($this->arr);
             return $filtered->filter($func);
         }
         throw new \InvalidArgumentException("Invalid flag name");
