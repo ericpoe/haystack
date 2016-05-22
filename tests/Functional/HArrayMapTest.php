@@ -151,7 +151,7 @@ class HArrayMapTest extends \PHPUnit_Framework_TestCase
     {
         $phrase = new HString("abcd");
 
-        $sentence =  function ($word, $letter) {
+        $sentence = function ($word, $letter) {
             return sprintf("%s starts with %s", $word, $letter);
         };
 
