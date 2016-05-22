@@ -192,4 +192,16 @@ class HStringMapTest extends \PHPUnit_Framework_TestCase
             ],
         ];
     }
+
+    public function testErrorGetsThrown()
+    {
+        $badStr = new \stdClass();
+        $this->setExpectedException("InvalidArgumentException", "stdClass cannot be mapped");
+
+        $action = function ($letterFromHaystack, $thingFromBadThings) {
+            return sprintf("%s:%s", $letterFromHaystack, $thingFromBadThings);
+        };
+
+        $badMapping = $this->aString->map($action, $badStr);
+    }
 }

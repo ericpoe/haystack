@@ -165,4 +165,16 @@ class HArrayMapTest extends \PHPUnit_Framework_TestCase
         ]);
         $this->assertEquals($expected, $oddThing);
     }
+
+    public function testErrorGetsThrown()
+    {
+        $badStr = new \stdClass();
+        $this->setExpectedException("InvalidArgumentException", "stdClass cannot be mapped");
+
+        $action = function ($letterFromHaystack, $thingFromBadThings) {
+            return sprintf("%s:%s", $letterFromHaystack, $thingFromBadThings);
+        };
+
+        $badMapping = $this->arrList->map($action, $badStr);
+    }
 }

@@ -3,6 +3,7 @@ namespace Haystack\Functional;
 
 use Haystack\Container\ContainerInterface;
 use Haystack\HArray;
+use Haystack\Helpers\Helper;
 use Haystack\HString;
 
 class HStringMap
@@ -25,30 +26,31 @@ class HStringMap
      */
     public function map(callable $func, $variadicList = [])
     {
-        if (empty($variadicList)) {
-            return $this->hString->toHArray()->map($func)->toHString();
-        }
+        $sourceHaystack = [$this->hString->toArray()];
 
-        $arrays = [$this->hString->toArray()];
+        $arrayOfVariadics = array_map(function ($item) {
+            return $this->convertToArray($item);
+        }, $variadicList);
 
-        foreach ($variadicList as $item) {
-            if (is_string($item)) {
-                $item = new HString($item);
-            }
-
-            if ($item instanceof ContainerInterface) {
-                $item = $item->toArray();
-            }
-
-            if (is_array($item)) {
-                $arrays[] = $item;
-            } else {
-                throw new \InvalidArgumentException("{$item} cannot be mapped");
-            }
-        }
-
-        $result = call_user_func_array('array_map', array_merge([$func], $arrays));
+        $result = call_user_func_array('array_map', array_merge([$func], $sourceHaystack, $arrayOfVariadics));
 
         return (new HArray($result))->toHString();
+    }
+
+    private function convertToArray($item)
+    {
+        if (is_string($item)) {
+            return (new HString($item))->toArray();
+        }
+
+        if ($item instanceof ContainerInterface) {
+            return $item->toArray();
+        }
+
+        if (is_array($item)) {
+            return $item;
+        }
+
+        throw new \InvalidArgumentException(Helper::getType($item) . " cannot be mapped");
     }
 }
