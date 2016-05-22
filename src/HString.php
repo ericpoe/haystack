@@ -12,8 +12,8 @@ use Haystack\Container\HStringSlice;
 use Haystack\Converter\StringToArray;
 use Haystack\Functional\FunctionalInterface;
 use Haystack\Functional\HaystackMap;
+use Haystack\Functional\HaystackReduce;
 use Haystack\Functional\HStringFilter;
-use Haystack\Functional\HStringReduce;
 use Haystack\Functional\HStringWalk;
 use Haystack\Helpers\Helper;
 use Haystack\Math\MathInterface;
@@ -396,7 +396,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function reduce(callable $func, $initial = null)
     {
-        $answer = new HStringReduce($this);
+        $answer = new HaystackReduce($this->toArray());
         return $answer->reduce($func, $initial);
     }
 

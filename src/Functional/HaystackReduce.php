@@ -4,17 +4,14 @@ namespace Haystack\Functional;
 use Haystack\HArray;
 use Haystack\HString;
 
-class HArrayReduce
+class HaystackReduce
 {
     /** @var array */
     private $arr;
-
-    /**
-     * @param HArray $array
-     */
-    public function __construct(HArray $array)
+    
+    public function __construct(array $arr)
     {
-        $this->arr = $array->toArray();
+        $this->arr = $arr;
     }
 
     /**

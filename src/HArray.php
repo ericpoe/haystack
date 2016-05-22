@@ -12,9 +12,9 @@ use Haystack\Container\HArraySlice;
 use Haystack\Converter\ArrayToString;
 use Haystack\Functional\FunctionalInterface;
 use Haystack\Functional\HArrayFilter;
-use Haystack\Functional\HArrayReduce;
 use Haystack\Functional\HArrayWalk;
 use Haystack\Functional\HaystackMap;
+use Haystack\Functional\HaystackReduce;
 use Haystack\Math\MathInterface;
 
 class HArray extends \ArrayObject implements ContainerInterface, FunctionalInterface, MathInterface
@@ -203,7 +203,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      */
     public function reduce(callable $func, $initial = null)
     {
-        $answer = new HArrayReduce($this);
+        $answer = new HaystackReduce($this->arr);
         return $answer->reduce($func, $initial);
     }
 
