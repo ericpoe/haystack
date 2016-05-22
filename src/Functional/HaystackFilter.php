@@ -3,7 +3,7 @@ namespace Haystack\Functional;
 
 use Haystack\HArray;
 
-class HArrayFilter
+class HaystackFilter
 {
     /** @var array */
     private $arr;
