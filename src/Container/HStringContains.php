@@ -41,8 +41,6 @@ class HStringContains
      */
     private function containsValue()
     {
-        $pos = strpos($this->str, $this->value);
-
-        return (false !== $pos) ?: false;
+        return false !== strpos($this->str, $this->value);
     }
 }
