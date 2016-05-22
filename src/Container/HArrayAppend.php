@@ -3,7 +3,7 @@ namespace Haystack\Container;
 
 use Haystack\HArray;
 
-class HaystackArrayAppend
+class HArrayAppend
 {
     /** @var \ArrayObject */
     private $arr;

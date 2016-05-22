@@ -3,7 +3,7 @@ namespace Haystack\Container;
 
 use Haystack\HString;
 
-class HaystackStringRemove
+class HStringRemove
 {
     /** @var HString */
     private $hString;

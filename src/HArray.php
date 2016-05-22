@@ -3,12 +3,12 @@ namespace Haystack;
 
 use Haystack\Container\ContainerInterface;
 use Haystack\Container\ElementNotFoundException;
-use Haystack\Container\HaystackArrayAppend;
-use Haystack\Container\HaystackArrayContains;
-use Haystack\Container\HaystackArrayInsert;
-use Haystack\Container\HaystackArrayLocate;
-use Haystack\Container\HaystackArrayRemove;
-use Haystack\Container\HaystackArraySlice;
+use Haystack\Container\HArrayAppend;
+use Haystack\Container\HArrayContains;
+use Haystack\Container\HArrayInsert;
+use Haystack\Container\HArrayLocate;
+use Haystack\Container\HArrayRemove;
+use Haystack\Container\HArraySlice;
 use Haystack\Converter\ArrayToString;
 use Haystack\Functional\FunctionalInterface;
 use Haystack\Functional\HArrayFilter;
@@ -73,7 +73,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      */
     public function contains($value)
     {
-        $answer = new HaystackArrayContains($this);
+        $answer = new HArrayContains($this);
         return $answer->contains($value);
     }
 
@@ -86,7 +86,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      */
     public function locate($value)
     {
-        $answer = new HaystackArrayLocate($this);
+        $answer = new HArrayLocate($this);
         return $answer->locate($value);
     }
 
@@ -98,7 +98,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      */
     public function append($value)
     {
-        $answer = new HaystackArrayAppend($this->toArray());
+        $answer = new HArrayAppend($this->toArray());
         return new static($answer->append($value));
     }
 
@@ -113,7 +113,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      */
     public function insert($value, $key = null)
     {
-        $answer = new HaystackArrayInsert($this);
+        $answer = new HArrayInsert($this);
         return new static($answer->insert($value, $key));
     }
 
@@ -126,7 +126,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      */
     public function remove($value)
     {
-        $answer = new HaystackArrayRemove($this);
+        $answer = new HArrayRemove($this);
         return new static($answer->remove($value));
     }
 
@@ -140,7 +140,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      */
     public function slice($start, $length = null)
     {
-        $answer = new HaystackArraySlice($this);
+        $answer = new HArraySlice($this);
         return new static($answer->slice($start, $length));
     }
 

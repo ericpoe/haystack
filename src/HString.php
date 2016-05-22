@@ -3,12 +3,12 @@ namespace Haystack;
 
 use Haystack\Container\ContainerInterface;
 use Haystack\Container\ElementNotFoundException;
-use Haystack\Container\HaystackStringAppend;
-use Haystack\Container\HaystackStringContains;
-use Haystack\Container\HaystackStringInsert;
-use Haystack\Container\HaystackStringLocate;
-use Haystack\Container\HaystackStringRemove;
-use Haystack\Container\HaystackStringSlice;
+use Haystack\Container\HStringAppend;
+use Haystack\Container\HStringContains;
+use Haystack\Container\HStringInsert;
+use Haystack\Container\HStringLocate;
+use Haystack\Container\HStringRemove;
+use Haystack\Container\HStringSlice;
 use Haystack\Converter\StringToArray;
 use Haystack\Functional\FunctionalInterface;
 use Haystack\Functional\HaystackMap;
@@ -273,7 +273,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function contains($value)
     {
-        $answer = new HaystackStringContains($this);
+        $answer = new HStringContains($this);
         return $answer->contains($value);
     }
 
@@ -287,7 +287,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function locate($value)
     {
-        $answer = new HaystackStringLocate($this);
+        $answer = new HStringLocate($this);
         return $answer->locate($value);
     }
 
@@ -300,7 +300,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function append($value)
     {
-        $answer = new HaystackStringAppend($this);
+        $answer = new HStringAppend($this);
         return new static($answer->append($value));
     }
 
@@ -314,7 +314,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function insert($value, $key = null)
     {
-        $answer = new HaystackStringInsert($this);
+        $answer = new HStringInsert($this);
         return new static($answer->insert($value, $key));
     }
 
@@ -327,7 +327,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function remove($value)
     {
-        $answer = new HaystackStringRemove($this);
+        $answer = new HStringRemove($this);
         return new static($answer->remove($value));
     }
 
@@ -341,7 +341,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function slice($start, $length = null)
     {
-        $answer = new HaystackStringSlice($this);
+        $answer = new HStringSlice($this);
         return new static($answer->slice($start, $length));
     }
 

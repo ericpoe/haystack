@@ -5,8 +5,9 @@ use Haystack\HArray;
 use Haystack\Helpers\Helper;
 use Haystack\HString;
 
-class HaystackArrayInsert
+class HArrayInsert
 {
+    /** @var HArray */
     private $arr;
 
     public function __construct(HArray $array)
@@ -17,10 +18,14 @@ class HaystackArrayInsert
     public function insert($value, $key)
     {
         if ($value instanceof HArray) {
-            $valueArray = $value->toArray();
-        } elseif ($value instanceof HString) {
-            $valueArray = $value->toString();
-        } elseif (Helper::canBeInArray($value)) {
+            $value = $value->toArray();
+        }
+
+        if ($value instanceof HString) {
+            $value = $value->toString();
+        }
+
+        if (Helper::canBeInArray($value)) {
             $valueArray = $value;
         } else {
             $valueArray = [$value];

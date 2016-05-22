@@ -3,7 +3,7 @@ namespace Haystack\Container;
 
 use Haystack\HArray;
 
-class HaystackArrayRemove
+class HArrayRemove
 {
     private $arr;
 

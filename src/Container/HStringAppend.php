@@ -4,7 +4,7 @@ namespace Haystack\Container;
 use Haystack\Helpers\Helper;
 use Haystack\HString;
 
-class HaystackStringAppend
+class HStringAppend
 {
     /** @var HString */
     private $hString;

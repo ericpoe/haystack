@@ -3,8 +3,9 @@ namespace Haystack\Container;
 
 use Haystack\HArray;
 
-class HaystackArraySlice
+class HArraySlice
 {
+    /** @var array */
     private $arr;
 
     /**
