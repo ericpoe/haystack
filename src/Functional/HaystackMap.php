@@ -37,16 +37,16 @@ class HaystackMap
 
     private function convertToArray($item)
     {
+        if (is_array($item)) {
+            return $item;
+        }
+
         if (is_string($item)) {
             return (new HString($item))->toArray();
         }
 
         if ($item instanceof ContainerInterface) {
             return $item->toArray();
-        }
-
-        if (is_array($item)) {
-            return $item;
         }
 
         throw new \InvalidArgumentException(Helper::getType($item) . " cannot be mapped");
