@@ -35,7 +35,7 @@ class HArrayFilter
                 return $filtered->filter($func);
             }
             // Flag of "USE_BOTH is passed
-            $filtered = new HArrayFilterWithValueAndKey($this->arr);
+            $filtered = new HaystackFilterWithValueAndKey($this->arr);
             return $filtered->filter($func);
         }
         throw new \InvalidArgumentException("Invalid flag name");

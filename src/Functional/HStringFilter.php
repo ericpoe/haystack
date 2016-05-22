@@ -35,8 +35,8 @@ class HStringFilter
             }
 
             // Flag of "USE_BOTH is passed
-            $filtered = new HStringFilterWithValueAndKey($this->hString);
-            return $filtered->filter($func);
+            $filtered = new HaystackFilterWithValueAndKey($this->hString->toArray());
+            return (new HArray($filtered->filter($func)))->toHString();
         } else {
             throw new \InvalidArgumentException("Invalid flag name");
         }
