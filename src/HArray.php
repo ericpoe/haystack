@@ -12,9 +12,9 @@ use Haystack\Container\HaystackArraySlice;
 use Haystack\Converter\ArrayToString;
 use Haystack\Functional\FunctionalInterface;
 use Haystack\Functional\HArrayFilter;
-use Haystack\Functional\HArrayMap;
 use Haystack\Functional\HArrayReduce;
 use Haystack\Functional\HArrayWalk;
+use Haystack\Functional\HaystackMap;
 use Haystack\Math\MathInterface;
 
 class HArray extends \ArrayObject implements ContainerInterface, FunctionalInterface, MathInterface
@@ -156,10 +156,10 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
         $containers = array_slice(func_get_args(), 1); // remove `$func`
 
         if (empty($containers)) {
-            return new static((new HArrayMap($this))->map($func));
+            return new static ((new HaystackMap($this))->map($func));
         }
 
-        return new static((new HArrayMap($this))->map($func, $containers));
+        return new static ((new HaystackMap($this))->map($func, $containers));
     }
 
     /**

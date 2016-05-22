@@ -11,8 +11,8 @@ use Haystack\Container\HaystackStringRemove;
 use Haystack\Container\HaystackStringSlice;
 use Haystack\Converter\StringToArray;
 use Haystack\Functional\FunctionalInterface;
+use Haystack\Functional\HaystackMap;
 use Haystack\Functional\HStringFilter;
-use Haystack\Functional\HStringMap;
 use Haystack\Functional\HStringReduce;
 use Haystack\Functional\HStringWalk;
 use Haystack\Helpers\Helper;
@@ -353,14 +353,14 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function map(callable $func)
     {
-        $answer = new HStringMap($this);
-        $argArrays = array_slice(func_get_args(), 1); // remove `$func`
+        $containers = array_slice(func_get_args(), 1); // remove `$func`
+        $haystack = $this->toHArray();
 
-        if (empty($argArrays)) {
-            return new static($answer->map($func));
+        if (empty($containers)) {
+            return new static ((new HArray((new HaystackMap($haystack))->map($func)))->toHString());
         }
 
-        return new static($answer->map($func, $argArrays));
+        return new static ((new HArray((new HaystackMap($haystack))->map($func, $containers)))->toHString());
     }
 
     /**

@@ -6,35 +6,33 @@ use Haystack\HArray;
 use Haystack\Helpers\Helper;
 use Haystack\HString;
 
-class HStringMap
+class HaystackMap
 {
-    /** @var HString */
-    private $hString;
+    /** @var array */
+    private $arr;
 
     /**
-     * @param HString $hString
+     * @param HArray $array
      */
-    public function __construct(HString $hString)
+    public function __construct(HArray $array)
     {
-        $this->hString = $hString;
+        $this->arr = $array->toArray();
     }
 
     /**
      * @param callable $func
-     * @param array    $variadicList
-     * @return HString
+     * @param array $variadicList Variadic list of arrays to invoke array_map with
+     * @return array
      */
-    public function map(callable $func, $variadicList = [])
+    public function map(callable $func, array $variadicList = [])
     {
-        $sourceHaystack = [$this->hString->toArray()];
+        $sourceHaystack = [$this->arr];
 
         $arrayOfVariadics = array_map(function ($item) {
             return $this->convertToArray($item);
         }, $variadicList);
 
-        $result = call_user_func_array('array_map', array_merge([$func], $sourceHaystack, $arrayOfVariadics));
-
-        return (new HArray($result))->toHString();
+        return call_user_func_array('array_map', array_merge([$func], $sourceHaystack, $arrayOfVariadics));
     }
 
     private function convertToArray($item)
