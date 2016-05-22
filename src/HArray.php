@@ -156,10 +156,10 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
         $containers = array_slice(func_get_args(), 1); // remove `$func`
 
         if (empty($containers)) {
-            return new static ((new HaystackMap($this))->map($func));
+            return new static((new HaystackMap($this))->map($func));
         }
 
-        return new static ((new HaystackMap($this))->map($func, $containers));
+        return new static((new HaystackMap($this))->map($func, $containers));
     }
 
     /**

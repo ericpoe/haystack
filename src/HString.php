@@ -357,10 +357,10 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         $haystack = $this->toHArray();
 
         if (empty($containers)) {
-            return new static ((new HArray((new HaystackMap($haystack))->map($func)))->toHString());
+            return new static((new HArray((new HaystackMap($haystack))->map($func)))->toHString());
         }
 
-        return new static ((new HArray((new HaystackMap($haystack))->map($func, $containers)))->toHString());
+        return new static((new HArray((new HaystackMap($haystack))->map($func, $containers)))->toHString());
     }
 
     /**
@@ -384,7 +384,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function filter(callable $func = null, $flag = null)
     {
         $answer = new HaystackFilter($this->toHArray());
-        return new static ((new HArray(($answer->filter($func, $flag))))->toHString());
+        return new static((new HArray(($answer->filter($func, $flag))))->toHString());
     }
 
     /**
