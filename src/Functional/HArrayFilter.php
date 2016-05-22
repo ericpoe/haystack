@@ -17,7 +17,7 @@ class HArrayFilter
     {
         // Default
         if (is_null($func)) {
-            $filtered = new HArrayFilterWithDefaults($this->arr);
+            $filtered = new HaystackFilterWithDefaults($this->arr);
             return $filtered->filter();
         }
 

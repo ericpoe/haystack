@@ -1,6 +1,7 @@
 <?php
 namespace Haystack\Functional;
 
+use Haystack\HArray;
 use Haystack\HString;
 
 class HStringFilter
@@ -16,8 +17,8 @@ class HStringFilter
     {
         // Default
         if (is_null($func)) {
-            $filtered = new HStringFilterWithDefaults($this->hString);
-            return $filtered->filter();
+            $filtered = new HaystackFilterWithDefaults($this->hString->toArray());
+            return (new HArray($filtered->filter()))->toHString();
         }
 
         // No flags are passed
