@@ -5,6 +5,7 @@ use Haystack\HArray;
 
 class HArrayRemove
 {
+    /** @var HArray */
     private $arr;
 
     public function __construct(HArray $array)
