@@ -24,11 +24,7 @@ class HStringReduce
      */
     public function reduce(callable $func, $initial)
     {
-        $reduced = $initial;
-
-        foreach ($this->hString as $letter) {
-            $reduced = $func($reduced, $letter);
-        }
+        $reduced = array_reduce($this->hString->toArray(), $func, $initial);
 
         if ($reduced instanceof \ArrayObject || is_array($reduced)) {
             return new HArray($reduced);
