@@ -30,8 +30,8 @@ class HStringFilter
         if ("key" === $flag || "both" === $flag) {
             // Flag of "USE_KEY" is passed
             if ("key" === $flag) {
-                $filtered = new HStringFilterWithKey($this->hString);
-                return $filtered->filter($func);
+                $filtered = new HaystackFilterWithKey($this->hString->toArray());
+                return (new HArray($filtered->filter($func)))->toHString();
             }
 
             // Flag of "USE_BOTH is passed

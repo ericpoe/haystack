@@ -31,7 +31,7 @@ class HArrayFilter
         if ("key" === $flag || "both" === $flag) {
             // Flag of "USE_KEY" is passed
             if ("key" === $flag) {
-                $filtered = new HArrayFilterWithKey($this->arr);
+                $filtered = new HaystackFilterWithKey($this->arr);
                 return $filtered->filter($func);
             }
             // Flag of "USE_BOTH is passed
