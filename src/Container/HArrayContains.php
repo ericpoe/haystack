@@ -5,7 +5,7 @@ use Haystack\HArray;
 
 class HArrayContains
 {
-    /**@var HArray */
+    /** @var HArray */
     private $arr;
 
     public function __construct(HArray $arr)
