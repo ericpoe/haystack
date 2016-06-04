@@ -23,8 +23,8 @@ class HStringContains
      */
     public function contains($value)
     {
-        if ($value instanceof HString) {
-            $value = $value->toString();
+        if (method_exists($value, "__toString")) {
+            $value = $value->__toString();
         }
 
         if (is_scalar($value)) {
