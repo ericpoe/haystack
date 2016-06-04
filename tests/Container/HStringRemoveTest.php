@@ -1,7 +1,6 @@
 <?php
 namespace Haystack\Tests\Container;
 
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Haystack\HString;
 
 class HStringRemoveTest extends \PHPUnit_Framework_TestCase

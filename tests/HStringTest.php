@@ -1,7 +1,6 @@
 <?php
 namespace Haystack\Tests;
 
-use Haystack\HArray;
 use Haystack\HString;
 
 class HStringTest extends \PHPUnit_Framework_TestCase
