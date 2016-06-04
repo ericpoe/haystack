@@ -70,9 +70,14 @@ class HStringContainsTest extends \PHPUnit_Framework_TestCase
     public function badTypesOfStringInFoobar()
     {
         return [
-            "DateTime" => [new \DateTime(), "DateTime is neither a scalar value nor an HString"],
-            "SplDoublyLinkedList" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a scalar value nor an HString"],
+            "DateTime" => [
+                new \DateTime(),
+                "DateTime cannot be converted to a string; it cannot be used as a search value within an HString"
+            ],
+            "SplDoublyLinkedList" => [
+                new \SplDoublyLinkedList(),
+                "SplDoublyLinkedList cannot be converted to a string; it cannot be used as a search value within an HString"
+            ],
         ];
     }
-
 }

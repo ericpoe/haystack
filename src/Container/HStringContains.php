@@ -30,7 +30,7 @@ class HStringContains
         if (is_scalar($value)) {
             $this->value = (string) $value;
         } else {
-            throw new \InvalidArgumentException(sprintf("%s is neither a scalar value nor an HString", Helper::getType($value)));
+            throw new \InvalidArgumentException(sprintf("%s cannot be converted to a string; it cannot be used as a search value within an HString", Helper::getType($value)));
         }
 
         return $this->containsValue();
