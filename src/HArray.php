@@ -182,7 +182,6 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      *                                 - pass key as the only argument to callback instead of the value
      *                             - USE_BOTH
      *                                 - pass both value and key as arguments to callback instead of the value
-     *                                 - Requires PHP >= 5.6
      *
      * @return HArray
      *

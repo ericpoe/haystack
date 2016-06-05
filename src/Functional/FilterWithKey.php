@@ -27,6 +27,7 @@ class FilterWithKey
                     $return[$k] = $v;
                 }
             }
+
             return $return;
         }
 
