@@ -3,11 +3,9 @@ namespace Haystack\Container;
 
 use Haystack\HArray;
 
-class HaystackArrayContains
+class HArrayContains
 {
-    /**
-     * @var HArray
-     */
+    /** @var HArray */
     private $arr;
 
     public function __construct(HArray $arr)

@@ -3,7 +3,7 @@ namespace Haystack\Container;
 
 use Haystack\HString;
 
-class HaystackStringSlice
+class HStringSlice
 {
     /** @var string */
     private $str;

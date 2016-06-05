@@ -151,7 +151,7 @@ class HArrayMapTest extends \PHPUnit_Framework_TestCase
     {
         $phrase = new HString("abcd");
 
-        $sentence =  function ($word, $letter) {
+        $sentence = function ($word, $letter) {
             return sprintf("%s starts with %s", $word, $letter);
         };
 
@@ -164,5 +164,17 @@ class HArrayMapTest extends \PHPUnit_Framework_TestCase
             "dobble starts with d",
         ]);
         $this->assertEquals($expected, $oddThing);
+    }
+
+    public function testErrorGetsThrown()
+    {
+        $badStr = new \stdClass();
+        $this->setExpectedException("InvalidArgumentException", "stdClass cannot be mapped");
+
+        $action = function ($letterFromHaystack, $thingFromBadThings) {
+            return sprintf("%s:%s", $letterFromHaystack, $thingFromBadThings);
+        };
+
+        $badMapping = $this->arrList->map($action, $badStr);
     }
 }

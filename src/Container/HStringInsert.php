@@ -4,7 +4,7 @@ namespace Haystack\Container;
 use Haystack\Helpers\Helper;
 use Haystack\HString;
 
-class HaystackStringInsert
+class HStringInsert
 {
     /** @var HString */
     private $hString;

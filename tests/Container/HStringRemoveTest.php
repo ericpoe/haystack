@@ -1,7 +1,6 @@
 <?php
 namespace Haystack\Tests\Container;
 
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Haystack\HString;
 
 class HStringRemoveTest extends \PHPUnit_Framework_TestCase
@@ -22,7 +21,10 @@ class HStringRemoveTest extends \PHPUnit_Framework_TestCase
 
     public function testCannotRemoveBadString()
     {
-        $this->setExpectedException("InvalidArgumentException", "DateTime is neither a scalar value nor an HString");
+        $this->setExpectedException(
+            "InvalidArgumentException",
+            "DateTime cannot be converted to a string; it cannot be used as a search value within an HString"
+        );
 
         $this->aString->remove(new \DateTime());
     }

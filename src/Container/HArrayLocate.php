@@ -3,7 +3,7 @@ namespace Haystack\Container;
 
 use Haystack\HArray;
 
-class HaystackArrayLocate
+class HArrayLocate
 {
     /** @var HArray */
     private $arr;

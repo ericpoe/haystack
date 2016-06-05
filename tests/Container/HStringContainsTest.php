@@ -37,8 +37,21 @@ class HStringContainsTest extends \PHPUnit_Framework_TestCase
             "HString known-missing" => [new HString('baz'), false],
             "HString letter known-missing" => [new HString('z'), false],
             "Integer known-missing" => [42, false],
-
         ];
+    }
+
+    public function testObjectWithString()
+    {
+        $date = new \DateTime('now');
+        $timeStamp = $date->format('c');
+        $timeSentence = new HString(sprintf("I have %s in me.", $timeStamp));
+        $this->assertTrue($timeSentence->contains($date->format('c')));
+
+        // This would be a good use of a PHP7 anonymous class
+        $obj = new ObjWithToString();
+        $sampleString = "I'm a string";
+        $objSentence = new HString(sprintf("I have %s in me.", $sampleString));
+        $this->assertTrue($objSentence->contains($obj));
     }
 
     /**
@@ -57,9 +70,14 @@ class HStringContainsTest extends \PHPUnit_Framework_TestCase
     public function badTypesOfStringInFoobar()
     {
         return [
-            "DateTime" => [new \DateTime(), "DateTime is neither a scalar value nor an HString"],
-            "SplDoublyLinkedList" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a scalar value nor an HString"],
+            "DateTime" => [
+                new \DateTime(),
+                "DateTime cannot be converted to a string; it cannot be used as a search value within an HString"
+            ],
+            "SplDoublyLinkedList" => [
+                new \SplDoublyLinkedList(),
+                "SplDoublyLinkedList cannot be converted to a string; it cannot be used as a search value within an HString"
+            ],
         ];
     }
-
 }

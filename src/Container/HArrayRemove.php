@@ -3,8 +3,9 @@ namespace Haystack\Container;
 
 use Haystack\HArray;
 
-class HaystackArrayRemove
+class HArrayRemove
 {
+    /** @var HArray */
     private $arr;
 
     public function __construct(HArray $array)

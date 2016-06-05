@@ -1,7 +1,7 @@
 <?php
 namespace Haystack\Functional;
 
-class HArrayFilterWithKey
+class FilterWithValueAndKey
 {
     /** @var array */
     protected $arr;
@@ -20,16 +20,17 @@ class HArrayFilterWithKey
      */
     public function filter(callable $func)
     {
-        if (!defined('ARRAY_FILTER_USE_KEY')) {
+        if (!defined('ARRAY_FILTER_USE_BOTH')) {
             $return = [];
             foreach ($this->arr as $k => $v) {
-                if (call_user_func($func, $k)) {
+                if (call_user_func($func, $v, $k)) {
                     $return[$k] = $v;
                 }
             }
+
             return $return;
         }
 
-        return array_filter($this->arr, $func, ARRAY_FILTER_USE_KEY);
+        return array_filter($this->arr, $func, ARRAY_FILTER_USE_BOTH);
     }
 }

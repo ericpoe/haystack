@@ -1,7 +1,7 @@
 <?php
 namespace Haystack\Functional;
 
-class HArrayFilterWithValue
+class FilterWithValue
 {
     /** @var array*/
     protected $arr;
