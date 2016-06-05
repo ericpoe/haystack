@@ -34,6 +34,20 @@ class HStringLocateTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testObjectWithString()
+    {
+        $date = new \DateTime('now');
+        $timeStamp = $date->format('c');
+        $timeSentence = new HString(sprintf("I have %s in me.", $timeStamp));
+        $this->assertEquals(7, $timeSentence->locate($date->format('c')));
+
+        // This would be a good use of a PHP7 anonymous class
+        $obj = new ObjWithToString();
+        $sampleString = "I'm a string";
+        $objSentence = new HString(sprintf("I have %s in me.", $sampleString));
+        $this->assertEquals(7, $objSentence->locate($obj));
+    }
+
     /**
      * @dataProvider stringBadLocateProvider()
      *
@@ -73,8 +87,14 @@ class HStringLocateTest extends \PHPUnit_Framework_TestCase
     public function badLocateTypesOfStringInFoobarProvider()
     {
         return [
-            "DateTime" => [new \DateTime(), "DateTime is neither a scalar value nor an HString"],
-            "SplDoublyLinkedList" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList is neither a scalar value nor an HString"],
+            "DateTime" => [
+                new \DateTime(),
+                "DateTime cannot be converted to a string; it cannot be used as a search value within an HString"
+            ],
+            "SplDoublyLinkedList" => [
+                new \SplDoublyLinkedList(),
+                "SplDoublyLinkedList cannot be converted to a string; it cannot be used as a search value within an HString"
+            ],
         ];
     }
 }
