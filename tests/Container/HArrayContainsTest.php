@@ -52,6 +52,6 @@ class HArrayContainsTest extends \PHPUnit_Framework_TestCase
         $list = $this->arrList->append(new \SplDoublyLinkedList());
 
         $this->assertTrue($list->contains(new \SplDoublyLinkedList()), "SplDoublyLinkedList should be in the list");
-        $this->assertFalse($list->contains(new \DateTime()), "DateTime should be in the list");
+        $this->assertFalse($list->contains(new \DateTime()), "DateTime should not be in the list");
     }
 }
