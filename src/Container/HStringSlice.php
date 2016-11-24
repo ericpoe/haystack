@@ -13,7 +13,7 @@ class HStringSlice
      */
     public function __construct(HString $hString)
     {
-        $this->str = $hString->toString();
+        $this->str = $hString;
     }
 
     /**
@@ -31,10 +31,6 @@ class HStringSlice
             throw new \InvalidArgumentException("Slice parameter 2, \$length, must be null or an integer");
         }
 
-        if (is_null($length)) {
-            return substr($this->str, $start);
-        }
-
-        return substr($this->str, $start, $length);
+        return mb_substr($this->str, $start, $length, $this->str->getEncoding());
     }
 }

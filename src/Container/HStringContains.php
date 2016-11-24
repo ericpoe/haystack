@@ -12,9 +12,12 @@ class HStringContains
     /** @var string */
     private $value;
 
+    private $encoding;
+
     public function __construct(HString $hString)
     {
         $this->str = $hString->toString();
+        $this->encoding = $hString->getEncoding();
     }
 
     /**
@@ -41,6 +44,6 @@ class HStringContains
      */
     private function containsValue()
     {
-        return false !== strpos($this->str, $this->value);
+        return false !== mb_strpos($this->str, $this->value, null, $this->encoding);
     }
 }

@@ -17,11 +17,10 @@ class HStringMapTest extends \PHPUnit_Framework_TestCase
     public function testStringMap()
     {
         $capitalize = function ($letter) {
-            return strtoupper($letter);
+            return mb_strtoupper($letter);
         };
 
         $newString = $this->aString->map($capitalize);
-
         $this->assertEquals("FOOBAR", $newString);
     }
 
@@ -36,7 +35,6 @@ class HStringMapTest extends \PHPUnit_Framework_TestCase
         };
 
         $newString = $this->aString->map($rot13);
-
         $expected = "sbbone";
         $this->assertEquals($expected, $newString);
     }

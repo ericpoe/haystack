@@ -5,41 +5,47 @@ use Haystack\HString;
 
 class HStringInsertTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var HString */
-    protected $aString;
-
-    protected function setUp()
-    {
-        $this->aString = new HString("foobar");
-    }
-
     /**
      * @dataProvider stringInsertProvider()
      *
-     * @param $babyString
-     * @param $location
-     * @param $expected
+     * @param HString $target
+     * @param string|HString $babyString
+     * @param integer $location
+     * @param HString $expected
      */
-    public function testTypesOfStringInsert($babyString, $location, $expected)
+    public function testTypesOfStringInsert(HString $target, $babyString, $location, HString $expected)
     {
-        $newString = $this->aString->insert($babyString, $location);
+        $newString = $target->insert($babyString, $location);
 
         $this->assertEquals(sprintf("%s", $expected), sprintf("%s", $newString));
     }
 
     public function stringInsertProvider()
     {
+        $aString = new HString("foobar");
+        $utf8String = new HString("ɹɐqooɟ");
+
         return [
-            "String: insert at position 1" => ["baz", 1, "fbazoobar"],
-            "String: insert at position -1" => ["baz", -1, "foobabazr"],
-            "String: insert at end" => ["baz", null, "foobarbaz"],
-            "String: insert Integer" => [1, 3, "foo1bar"],
-            "String: insert Double" => [1.1, 3, "foo1.1bar"],
-            "HString: insert at position 1" => [new HString("baz"), 1, "fbazoobar"],
-            "HString: insert at position -1" => [new HString("baz"), -1, "foobabazr"],
-            "HString: insert at end" => [new HString("baz"), null, "foobarbaz"],
-            "HString: insert Integer" => [new HString(1), 3, "foo1bar"],
-            "HString: insert Double" => [new HString(1.1), 3, "foo1.1bar"],
+            "ASCII String: insert at position 1" => [$aString, "baz", 1, new HString("fbazoobar")],
+            "ASCII String: insert at position -1" => [$aString, "baz", -1, new HString("foobabazr")],
+            "ASCII String: insert at end" => [$aString, "baz", null, new HString("foobarbaz")],
+            "ASCII String: insert Integer" => [$aString, 1, 3, new HString("foo1bar")],
+            "ASCII String: insert Double" => [$aString, 1.1, 3, new HString("foo1.1bar")],
+            "ASCII HString: insert at position 1" => [$aString, new HString("baz"), 1, new HString("fbazoobar")],
+            "ASCII HString: insert at position -1" => [$aString, new HString("baz"), -1, new HString("foobabazr")],
+            "ASCII HString: insert at end" => [$aString, new HString("baz"), null, new HString("foobarbaz")],
+            "ASCII HString: insert Integer" => [$aString, new HString(1), 3, new HString("foo1bar")],
+            "ASCII HString: insert Double" => [$aString, new HString(1.1), 3, new HString("foo1.1bar")],
+            "UTF-8 String: insert at position 1" => [$utf8String, "baz", 1, new HString("ɹbazɐqooɟ")],
+            "UTF-8 String: insert at position -1" => [$utf8String, "baz", -1, new HString("ɹɐqoobazɟ")],
+            "UTF-8 String: insert at end" => [$utf8String, "baz", null, new HString("ɹɐqooɟbaz")],
+            "UTF-8 String: insert Integer" => [$utf8String, 1, 3, new HString("ɹɐq1ooɟ")],
+            "UTF-8 String: insert Double" => [$utf8String, 1.1, 3, new HString("ɹɐq1.1ooɟ")],
+            "UTF-8 HString: insert at position 1" => [$utf8String, new HString("baz"), 1, new HString("ɹbazɐqooɟ")],
+            "UTF-8 HString: insert at position -1" => [$utf8String, new HString("baz"), -1, new HString("ɹɐqoobazɟ")],
+            "UTF-8 HString: insert at end" => [$utf8String, new HString("baz"), null, new HString("ɹɐqooɟbaz")],
+            "UTF-8 HString: insert Integer" => [$utf8String, new HString(1), 3, new HString("ɹɐq1ooɟ")],
+            "UTF-8 HString: insert Double" => [$utf8String, new HString(1.1), 3, new HString("ɹɐq1.1ooɟ")],
         ];
     }
 
@@ -55,7 +61,7 @@ class HStringInsertTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
 
-        $this->aString->insert($value, $key);
+        (new HString("foobar"))->insert($value, $key);
     }
 
     public function badInsertProvider()
@@ -67,5 +73,4 @@ class HStringInsertTest extends \PHPUnit_Framework_TestCase
             "Insert at non-integer key" => ["apple", "a", "Invalid array key"],
         ];
     }
-
 }

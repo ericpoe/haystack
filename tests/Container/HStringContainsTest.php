@@ -5,38 +5,42 @@ use Haystack\HString;
 
 class HStringContainsTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Haystack\HString */
-    protected $aString;
-
-    protected function setUp()
-    {
-        $this->aString = new HString("foobar");
-    }
-
     /**
      * @dataProvider stringContainsProvider
      *
-     * @param $checkString
-     * @param $expectedBool
+     * @param string|HString $target
+     * @param string|HString $checkString
+     * @param bool $expectedBool
      */
-    public function testTypesOfStringInFoobar($checkString, $expectedBool)
+    public function testTypesOfStringInFoobar($target, $checkString, $expectedBool)
     {
-        $var = $this->aString->contains($checkString);
+        $var = $target->contains($checkString);
         $expectedBool ? $this->assertTrue($var) : $this->assertFalse($var);
     }
 
     public function stringContainsProvider()
     {
+        $aString = new HString("foobar");
+        $utf8String = new HString("ɹɐqooɟ");
         return [
-            "String known-present" => ["oob", true],
-            "String known-missing" => ["baz", false],
-            "String letter known-present" => ["b", true],
-            "String letter known-missing" => ["z", false],
-            "HString known-present" => [new HString('oob'), true],
-            "HString letter known-present" => [new HString('b'), true],
-            "HString known-missing" => [new HString('baz'), false],
-            "HString letter known-missing" => [new HString('z'), false],
-            "Integer known-missing" => [42, false],
+            "ASCII: String known-present" => [$aString, "oob", true],
+            "ASCII: String known-missing" => [$aString, "baz", false],
+            "ASCII: String letter known-present" => [$aString, "b", true],
+            "ASCII: String letter known-missing" => [$aString, "z", false],
+            "ASCII: HString known-present" => [$aString, new HString('oob'), true],
+            "ASCII: HString letter known-present" => [$aString, new HString('b'), true],
+            "ASCII: HString known-missing" => [$aString, new HString('baz'), false],
+            "ASCII: HString letter known-missing" => [$aString, new HString('z'), false],
+            "ASCII: Integer known-missing" => [$aString, 42, false],
+            "UTF-8: String known-present" => [$utf8String, "ɐqo", true],
+            "UTF-8: String known-missing" => [$utf8String, "zɐq", false],
+            "UTF-8: String letter known-present" => [$utf8String, "q", true],
+            "UTF-8: String letter known-missing" => [$utf8String, "z", false],
+            "UTF-8: HString known-present" => [$utf8String, new HString('ɐqo'), true],
+            "UTF-8: HString letter known-present" => [$utf8String, new HString('q'), true],
+            "UTF-8: HString known-missing" => [$utf8String, new HString('zɐq'), false],
+            "UTF-8: HString letter known-missing" => [$utf8String, new HString('z'), false],
+            "UTF-8: Integer known-missing" => [$utf8String, 42, false],
         ];
     }
 
@@ -64,7 +68,7 @@ class HStringContainsTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
 
-        $this->aString->contains($item);
+        (new HString("foobar"))->contains($item);
     }
 
     public function badTypesOfStringInFoobar()

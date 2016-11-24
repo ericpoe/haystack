@@ -10,11 +10,14 @@ class HArrayTest extends \PHPUnit_Framework_TestCase
     private $arrList;
     /** @var HArray */
     private $arrDict;
+    /** @var HArray */
+    private $arrUtf8Dict;
 
     protected function setUp()
     {
         $this->arrList = new HArray(["apple", "bobble", "cobble", "dobble"]);
         $this->arrDict = new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"]);
+        $this->arrUtf8Dict = new HArray(["ɐ" => "ǝlddɐ", "q" => "ǝlqqoq", "ɔ" => "ǝlqqoɔ", "p" => "ǝlqqop"]);
     }
 
     public function testCreateEmptyArray()
@@ -58,12 +61,14 @@ class HArrayTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals("bobble", $this->arrList[1]);
         $this->assertEquals("bobble", $this->arrDict["b"]);
+        $this->assertEquals("ǝlqqoq", $this->arrUtf8Dict["q"]);
     }
 
     public function testArrayHead()
     {
         $this->assertEquals(new HArray(["apple"]), $this->arrList->head());
         $this->assertEquals(new HArray(["a" => "apple"]), $this->arrDict->head());
+        $this->assertEquals(new HArray(["ɐ" => "ǝlddɐ"]), $this->arrUtf8Dict->head());
     }
 
     public function testArrayTail()

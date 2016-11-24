@@ -18,17 +18,32 @@ class HStringInsert
     {
         if (is_scalar($value) || $value instanceof HString) {
             if (is_null($key)) {
-                $key = strlen($this->hString);
+                $key = $this->hString->count();
             } elseif (is_numeric($key)) {
                 $key = (int) $key;
             } else {
                 throw new \InvalidArgumentException("Invalid array key");
             }
 
-            return substr_replace($this->hString, $value, $key, 0);
+            return $this->getPrefix($key). $value . $this->getSuffix($key);
         }
 
         throw new \InvalidArgumentException(sprintf("Cannot insert %s into an HString", Helper::getType($value)));
+    }
+
+    private function getPrefix($key)
+    {
+        $length = $key >= 0 ? $key: $this->hString->count() - 1;
+
+        return mb_substr($this->hString, 0, $length, $this->hString->getEncoding());
+    }
+
+    private function getSuffix($key)
+    {
+        $start = $key >= 0 ? $key : $this->hString->count() + $key;
+        $length = $key >= 0 ? $this->hString->count() : $this->hString->count() + $key;
+
+        return mb_substr($this->hString, $start, $length, $this->hString->getEncoding());
     }
 
 }
