@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * Now with UTF-8 strings!
+* Added support for PHP 7.1
 
 ### Removed
 * Removed support for PHP 5.5 since it doesn't support UTF-8 as well as I'd like
