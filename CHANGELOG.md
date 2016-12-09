@@ -3,10 +3,13 @@ All notable changes to this project will be documented in this file.
 This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased - 2016-11-24
+## Unreleased - 2016-12-08
 
 ### Added
 * Now with UTF-8 strings!
+
+### Removed
+* Removed support for PHP 5.5 since it doesn't support UTF-8 as well as I'd like
 
 ### Changed
 * BC Break: ::locate($value) now throws an ElementNotFoundException when looking for something that does not exist
