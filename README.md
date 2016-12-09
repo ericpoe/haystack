@@ -6,8 +6,8 @@
 [![Packagist Version](https://img.shields.io/packagist/v/ericpoe/haystack.svg?style=flat-square)](https://packagist.org/packages/ericpoe/haystack)
 
 # Haystack
-Forget Haystack vs Needle order, the object *IS* the Haystack. Haystack is a library that allows for pipelining and
-immutable structures.
+Forget Haystack vs Needle order, the object *IS* the Haystack. Haystack is a library that allows for pipelining,
+immutable structures, and UTF-8 strings.
 
 ## Install
 Haystack is installable as a [Composer](http://getcomposer.org) package:
