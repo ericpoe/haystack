@@ -11,6 +11,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 * Removed support for PHP 5.5 since it doesn't support UTF-8 as well as I'd like
 
+## [2.0.0](https://github.com/ericpoe/haystack/tree/v2.0.0) - 2016-12-08
+
 ### Changed
 * BC Break: ::locate($value) now throws an ElementNotFoundException when looking for something that does not exist
 * BC Break: HString classes now use a protected property of `$hString` if they're an `HString` and `$str` if they're a `String` since `string` is a reserved word in PHP7
