@@ -26,7 +26,7 @@ class HArrayReduceTest extends \PHPUnit_Framework_TestCase
     public function testArrayReduce(HArray $testArr, $expected)
     {
         $sum = function ($carry, $item) {
-            $carry += $item;
+            $carry += (int) $item;
             return $carry;
         };
 

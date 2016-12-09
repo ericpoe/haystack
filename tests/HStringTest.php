@@ -8,9 +8,13 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     /** @var HString */
     protected $aString;
 
+    /** @var  HString */
+    protected $utf8String;
+
     protected function setUp()
     {
         $this->aString = new HString("foobar");
+        $this->utf8String = new HString("ɹɐqooɟ");
     }
 
     public function testCreateEmptyString()
@@ -40,6 +44,7 @@ class HStringTest extends \PHPUnit_Framework_TestCase
             "HString" => [new HString("abc"), "abc"],
             "HString of HString of HString of..." => [new HString(new HString(new HString(new HString("abc")))), "abc"],
             "Simple string" => ["abc", "abc"],
+            "UTF-8 string" => ["ɹɐqooɟ", "ɹɐqooɟ"],
             "integer 1" => [1, "1"],
             "integer 0" => [0, "0"],
             "double 1.1" => [1.1, "1.1"],
@@ -76,6 +81,9 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     {
         $serialized = $this->aString->serialize();
         $this->assertEquals(serialize($this->aString->toString()), $serialized);
+
+        $serialized = $this->utf8String->serialize();
+        $this->assertEquals(serialize($this->utf8String->toString()), $serialized);
     }
 
     /**
@@ -93,8 +101,9 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function unserializeProvider()
     {
         return [
-            "String" => [serialize($this->aString), new HString($this->aString)],
+            "String" => [serialize(new HString("foobar")), new HString("foobar")],
             "String with spaces" => [serialize("The quick brown fox jumps"), new HString("The quick brown fox jumps")],
+            "UTF-8 string" => [serialize("ɹɐqooɟ"), new HString("ɹɐqooɟ")],
             "Null string" => [serialize(null), new HString()],
             "Unserialized null string" => [null, new HString()],
         ];
@@ -124,75 +133,186 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     {
         $this->aString->next();
         $this->assertEquals("o", $this->aString->current());
+
+        $this->utf8String->next();
+        $this->assertEquals("ɐ", $this->utf8String->current());
     }
 
-    public function testIteratorValid()
+    /**
+     * @dataProvider iteratorValidProvider
+     *
+     * @param string $toIterate
+     */
+    public function testIteratorValid($toIterate)
     {
-        $this->aString->next(); // "o"
-        $this->aString->next(); // "o"
-        $this->aString->next(); // "b"
-        $this->aString->next(); // "a"
-        $this->aString->next(); // "r"
-        $this->assertTrue($this->aString->valid());
-        $this->aString->next(); // uninitialized string offset
-        $this->assertFalse($this->aString->valid());
+        $toIterate->next(); // "o"
+        $toIterate->next(); // "o"
+        $toIterate->next(); // "b"
+        $toIterate->next(); // "a"
+        $toIterate->next(); // "r"
+        $this->assertTrue($toIterate->valid());
+        $toIterate->next(); // uninitialized string offset
+        $this->assertFalse($toIterate->valid());
     }
 
-    public function testIteratorRewind()
+    public function iteratorValidProvider()
     {
-        $this->aString->next(); // "o"
-        $this->aString->next(); // "o"
-        $this->aString->next(); // 'b"
-
-        $this->aString->rewind(); // back to "f"
-        $this->assertEquals("f", $this->aString->current());
+        return [
+            "ASCII string to iterate" => [new HString("foobar")],
+            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ")],
+        ];
     }
 
-    public function testIteratorKey()
+    /**
+     * @dataProvider iteratorRewindProvider
+     *
+     * @param HString $toRewind
+     * @param integer $expected
+     */
+    public function testIteratorRewind(HString $toRewind, $expected)
     {
-        $this->aString->next(); // "o"
-        $this->aString->next(); // "o"
-        $this->aString->next(); // 'b"
+        $toRewind->next(); // "o"
+        $toRewind->next(); // "o"
+        $toRewind->next(); // 'b"
 
-        $this->assertEquals(3, $this->aString->key());
+        $toRewind->rewind(); // back to "f"
+        $this->assertEquals($expected, $toRewind->current());
+
+        $toRewind->rewind(); // before the first char!
+        $this->assertEquals($expected, $toRewind->current());
     }
 
-    public function testArrayStyleCount()
+    public function iteratorRewindProvider()
     {
-        $this->assertEquals(6, $this->aString->count());
+        return [
+            "ASCII string to iterate" => [new HString("foobar"), "f"],
+            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ"), "ɹ"],
+        ];
     }
 
-    public function testArrayStyleOffsetExists()
+    /**
+     * @dataProvider iteratorKeyProvider
+     *
+     * @param HString $toIterate
+     * @param integer $expected
+     */
+    public function testIteratorKey(HString $toIterate, $expected)
     {
-        $this->assertTrue(isset($this->aString[3]));
-        $this->assertFalse(isset($this->aString[30]));
+        $this->assertEquals(0, $toIterate->key());
+
+        for ($i = 0; $i < $expected; $i++) {
+            $toIterate->next();
+        }
+
+        $this->assertEquals($expected, $toIterate->key());
     }
 
-    public function testArrayStyleOffsetGet()
+    public function iteratorKeyProvider()
     {
-        $this->assertEquals("b", $this->aString[3]);
+        return [
+            "ASCII string to iterate" => [new HString("foobar"), 3],
+            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ"), 3],
+        ];
     }
 
-    public function testArrayStyleOffsetSet()
+    /**
+     * @dataProvider arrayStyleCountProvider
+     *
+     * @param HString $toCount
+     * @param integer $expected
+     */
+    public function testArrayStyleCount(HString $toCount, $expected)
     {
-        $this->aString[0] = "b";
-        $this->assertEquals(new HString("boobar"), $this->aString);
+        $this->assertEquals($expected, $toCount->count());
+    }
+
+    public function arrayStyleCountProvider()
+    {
+        return [
+            "ASCII string to iterate" => [new HString("foobar"), 6],
+            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ"), 6],
+        ];
+    }
+
+    /**
+     * @dataProvider arrayStyleOffsetExistsProvider
+     *
+     * @param HString $stringToTest
+     */
+    public function testArrayStyleOffsetExists(HString $stringToTest)
+    {
+        $expectedLastOffset = $stringToTest->count() - 1;
+
+        $this->assertTrue(isset($stringToTest[$expectedLastOffset]));
+        $this->assertFalse(isset($stringToTest[$expectedLastOffset + 1]));
+    }
+
+    public function arrayStyleOffsetExistsProvider()
+    {
+        return [
+            "ASCII string to iterate" => [new HString("foobar")],
+            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ")],
+        ];
+    }
+
+    /**
+     * @dataProvider arrayStyleOffsetGetProvider
+     *
+     * @param HString $stringToTest
+     * @param integer $offset
+     * @param string $expected
+     */
+    public function testArrayStyleOffsetGet(HString $stringToTest, $offset, $expected)
+    {
+        $this->assertEquals($expected, $stringToTest[$offset]);
+    }
+
+    public function arrayStyleOffsetGetProvider()
+    {
+        return [
+            "ASCII string to iterate" => [new HString("foobar"), 3, "b"],
+            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ"), 3, "o"],
+        ];
+    }
+
+    /**
+     * @dataProvider arrayStyleOffsetSetProvider
+     *
+     * @param HString $stringToTest
+     * @param integer $offset
+     * @param string $char
+     * @param HString $expected
+     */
+    public function testArrayStyleOffsetSet(HString $stringToTest, $offset, $char, $expected)
+    {
+        $stringToTest[$offset] = $char;
+        $this->assertEquals($expected, $stringToTest);
+    }
+
+    public function arrayStyleOffsetSetProvider()
+    {
+        return [
+            "ASCII string to iterate" => [new HString("foobar"), 0, "r", new HString("roobar")],
+            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ"), 0, "ɟ", new HString("ɟɐqooɟ")],
+        ];
     }
 
     public function testArrayStyleOffsetUnset()
     {
-        unset($this->aString[3]);
-        $this->assertEquals(chr(0x00), $this->aString[3]); // binary null
+        unset($this->utf8String[3]);
+        $this->assertEquals(chr(0x00), $this->utf8String[3]); // binary null
     }
 
     public function testArrayStyleAccess()
     {
         $this->assertEquals("o", $this->aString[1]);
+        $this->assertEquals("ɐ", $this->utf8String[1]);
     }
 
     public function testStringHead()
     {
         $this->assertEquals("f", $this->aString->head()->toString());
+        $this->assertEquals("ɹ", $this->utf8String->head()->toString());
 
         $emptyString = new HString();
         $this->assertEmpty(sprintf($emptyString->head()));

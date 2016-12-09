@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased - 2016-12-08
+
+### Added
+* Now with UTF-8 strings!
+* Added support for PHP 7.1
+
+### Removed
+* Removed support for PHP 5.5 since it doesn't support UTF-8 as well as I'd like
+
 ## [2.0.0](https://github.com/ericpoe/haystack/tree/v2.0.0) - 2016-12-08
 
 ### Changed

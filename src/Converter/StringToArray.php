@@ -16,7 +16,7 @@ class StringToArray
 
     /**
      * @param string $str
-     * @param string $delim
+     * @param string | HString $delim
      */
     public function __construct($str, $delim = "")
     {
@@ -58,7 +58,7 @@ class StringToArray
      */
     private function noDelimExplode()
     {
-        return str_split($this->str);
+        return preg_split('//u', $this->str, -1, PREG_SPLIT_NO_EMPTY);
     }
 
     /**

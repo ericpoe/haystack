@@ -15,11 +15,9 @@ class HStringWalkTest extends \PHPUnit_Framework_TestCase
 
     public function testStringWalk()
     {
-        $capitalize = function ($letter, $key) {
+        $this->aString->walk(function ($letter, $key) {
             return $this->aString[$key] = strtoupper($letter);
-        };
-
-        $this->aString->walk($capitalize);
+        });
 
         $this->assertEquals("FOOBAR", $this->aString->toString());
     }

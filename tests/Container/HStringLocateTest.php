@@ -5,32 +5,29 @@ use Haystack\HString;
 
 class HStringLocateTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var HString */
-    protected $aString;
-
-    protected function setUp()
-    {
-        $this->aString = new HString("foobar");
-    }
-
     /**
      * @dataProvider stringLocateProvider()
      *
-     * @param $checkString
-     * @param $expected
+     * @param HString $target
+     * @param string | HString $checkString
+     * @param integer $expected
      */
-    public function testLocateTypesOfStringInFoobar($checkString, $expected)
+    public function testLocateTypesOfStringInFoobar(HString $target, $checkString, $expected)
     {
-        $var = $this->aString->locate($checkString);
+        $var = $target->locate($checkString);
         $this->assertEquals($expected, $var);
     }
 
     public function stringLocateProvider()
     {
-        return [
-            "String known-present" => ["oob", 1],
-            "HString known-present" => [new HString('oob'), 1],
+        $aString = new HString("foobar");
+        $utf8String = new HString("ɹɐqooɟ");
 
+        return [
+            "ASCII: String known-present" => [$aString, "oob", 1],
+            "ASCII: HString known-present" => [$aString, new HString('oob'), 1],
+            "UTF-8: String known-present" => [$utf8String, "ɐqo", 1],
+            "UTF-8: HString known-present" => [$utf8String, new HString('ɐqo'), 1],
         ];
     }
 
@@ -58,7 +55,7 @@ class HStringLocateTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("Haystack\\Container\\ElementNotFoundException", $message);
 
-        $this->aString->locate($checkString);
+        (new HString("foobar"))->locate($checkString);
     }
 
     public function stringBadLocateProvider()
@@ -81,7 +78,7 @@ class HStringLocateTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
 
-        $this->aString->locate($item);
+        (new HString("foobar"))->locate($item);
     }
 
     public function badLocateTypesOfStringInFoobarProvider()

@@ -25,14 +25,17 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     protected $str;
     protected $ptr; // pointer for iterating through $str
+    protected $encoding; // defaults to UTF-8 encoding
 
     public function __construct($str = "")
     {
+        $this->encoding = "UTF-8";
+
         if (is_scalar($str) || $str instanceof HString) {
-            $this->str = (string) $str;
+            $this->str = mb_convert_encoding($str, $this->encoding);
             $this->rewind();
         } elseif (is_null($str)) {
-            $this->str = null;
+            $this->str = "";
         } else {
             throw new \ErrorException(sprintf("%s is not a proper String", Helper::getType($str)));
         }
@@ -43,12 +46,12 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function __toString()
     {
-        return sprintf($this->str);
+        return $this->str;
     }
 
     /**
      * (PHP 5 &gt;= 5.0.0)<br/>
-     * Whether a offset exists
+     * Whether an offset exists
      *
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      * @param mixed $offset <p>
@@ -61,7 +64,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function offsetExists($offset)
     {
-        return isset($this->str[$offset]);
+        return $offset >= 0 && $offset < $this->count();
     }
 
     /**
@@ -76,7 +79,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function offsetGet($offset)
     {
-        return $this->str[$offset];
+        return mb_substr($this->str, $offset, 1, $this->encoding);
     }
 
     /**
@@ -94,7 +97,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function offsetSet($offset, $value)
     {
-        $this->str[$offset] = $value;
+        $this->str = $this->getPrefix($offset) . $value . $this->getSuffix($offset);
     }
 
     /**
@@ -109,7 +112,17 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function offsetUnset($offset)
     {
-        $this->str[$offset] = null;
+        $this->str = $this->getPrefix($offset) . chr(0x00) . $this->getSuffix($offset);
+    }
+
+    private function getPrefix($length)
+    {
+        return mb_substr($this, 0, $length, $this->getEncoding());
+    }
+
+    private function getSuffix($start)
+    {
+        return mb_substr($this, $start + 1, $this->count() - $start, $this->getEncoding());
     }
 
     /**
@@ -139,7 +152,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         if (is_scalar($value)) {
             $this->str = unserialize($value);
         } elseif (is_null($value)) {
-            $this->str = null;
+            $this->str = "";
         } else {
             throw new \InvalidArgumentException(sprintf("HString cannot unserialize a %s", Helper::getType($value)));
         }
@@ -157,7 +170,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function count()
     {
-        return strlen($this->str);
+        return mb_strlen($this->str);
     }
 
     /**
@@ -169,7 +182,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function current()
     {
-        return $this->str[$this->ptr];
+        return mb_substr($this->str, $this->ptr, 1, $this->encoding);
     }
 
     /**
@@ -219,6 +232,11 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function rewind()
     {
         $this->ptr = 0;
+    }
+
+    public function getEncoding()
+    {
+        return $this->encoding;
     }
 
     /**

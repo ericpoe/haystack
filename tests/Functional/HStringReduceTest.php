@@ -17,7 +17,7 @@ class HStringReduceTest extends \PHPUnit_Framework_TestCase
     public function testReduce()
     {
         $fn = function ($carry, $item) {
-            $value = (ord(strtolower($item)) - 64);
+            $value = (ord(mb_strtolower($item)) - 64);
             return $carry + $value;
         };
 
