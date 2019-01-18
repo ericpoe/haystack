@@ -113,9 +113,9 @@ class HArraySliceTest extends TestCase
         $this->expectExceptionMessage($exceptionMsg);
 
         if ('list' === $type) {
-            $subArray = $this->arrList->slice($start, $length);
+            $this->arrList->slice($start, $length);
         } else {
-            $subArray = $this->arrDict->slice($start, $length);
+            $this->arrDict->slice($start, $length);
         }
     }
 

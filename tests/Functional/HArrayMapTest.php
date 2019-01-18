@@ -179,6 +179,6 @@ class HArrayMapTest extends TestCase
             return sprintf('%s:%s', $letterFromHaystack, $thingFromBadThings);
         };
 
-        $badMapping = $this->arrList->map($action, $badStr);
+        $this->arrList->map($action, $badStr);
     }
 }

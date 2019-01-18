@@ -203,6 +203,6 @@ class HStringMapTest extends TestCase
 
         $badStr = new \stdClass();
 
-        $badMapping = $this->aString->map($action, $badStr);
+        $this->aString->map($action, $badStr);
     }
 }

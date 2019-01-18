@@ -92,7 +92,7 @@ class HStringFilterTest extends TestCase
 
         $flag = 'bad_flag';
 
-        $even = $this->aString->filter(function ($key) {
+        $this->aString->filter(function ($key) {
             return $key % 2;
         }, $flag);
     }
