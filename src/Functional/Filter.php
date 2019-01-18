@@ -16,13 +16,13 @@ class Filter
     public function filter(callable $func = null, $flag = null)
     {
         // Default
-        if (is_null($func)) {
+        if ($func === null) {
             $filtered = new FilterWithDefaults($this->arr);
             return $filtered->filter();
         }
 
         // No flags are passed
-        if (is_null($flag)) {
+        if ($flag === null) {
             $filtered = new FilterWithValue($this->arr);
             return $filtered->filter($func);
         }

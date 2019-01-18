@@ -17,7 +17,7 @@ class HStringInsert
     public function insert($value, $key = null)
     {
         if (is_scalar($value) || $value instanceof HString) {
-            if (is_null($key)) {
+            if ($key === null) {
                 $key = $this->hString->count();
             } elseif (is_numeric($key)) {
                 $key = (int) $key;

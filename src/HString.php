@@ -34,7 +34,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         if (is_scalar($str) || $str instanceof self) {
             $this->str = mb_convert_encoding($str, $this->encoding);
             $this->rewind();
-        } elseif (is_null($str)) {
+        } elseif ($str === null) {
             $this->str = '';
         } else {
             throw new \ErrorException(sprintf('%s is not a proper String', Helper::getType($str)));
@@ -151,7 +151,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     {
         if (is_scalar($value)) {
             $this->str = unserialize($value);
-        } elseif (is_null($value)) {
+        } elseif ($value === null) {
             $this->str = '';
         } else {
             throw new \InvalidArgumentException(sprintf('HString cannot unserialize a %s', Helper::getType($value)));

@@ -35,12 +35,12 @@ class StringToArray
      */
     public function stringToArray($limit = null)
     {
-        if (is_null($this->delim) || '' === $this->delim) {
+        if ($this->delim === null || '' === $this->delim) {
             $this->arr = $this->noDelimExplode();
             return $this->arr;
         }
 
-        if (is_null($limit)) {
+        if ($limit === null) {
             $this->arr = $this->noLimitExplode();
             return $this->arr;
         }
