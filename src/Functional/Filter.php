@@ -27,17 +27,18 @@ class Filter
             return $filtered->filter($func);
         }
 
-        // Flags are USE_KEY or USE_BOTH
-        if ('key' === $flag || 'both' === $flag) {
-            // Flag of "USE_KEY" is passed
-            if ('key' === $flag) {
-                $filtered = new FilterWithKey($this->arr);
-                return $filtered->filter($func);
-            }
-            // Flag of "USE_BOTH is passed
+        // Flag of "USE_KEY" is passed
+        if ('key' === $flag) {
+            $filtered = new FilterWithKey($this->arr);
+            return $filtered->filter($func);
+        }
+
+        // Flag of "BOTH" is passed
+        if ('both' === $flag) {
             $filtered = new FilterWithValueAndKey($this->arr);
             return $filtered->filter($func);
         }
+
         throw new \InvalidArgumentException('Invalid flag name');
     }
 }
