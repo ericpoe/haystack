@@ -134,8 +134,7 @@ class HArrayReduceTest extends TestCase
     public function testReduceAsString()
     {
         $toString = function ($sentence, $word) {
-            $builtSentence = $sentence . $word . ' ';
-            return $builtSentence;
+            return sprintf('%s%s ', $sentence, $word);
         };
 
         $this->assertEquals(new HString('apple bobble cobble dobble'), trim($this->arrList->reduce($toString)));
