@@ -402,7 +402,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function filter(callable $func = null, $flag = null)
     {
         $answer = new Filter($this->toHArray());
-        return new static((new HArray(($answer->filter($func, $flag))))->toHString());
+        return new static((new HArray($answer->filter($func, $flag)))->toHString());
     }
 
     /**
