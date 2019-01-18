@@ -15,7 +15,7 @@ class ArrayToStringTest extends TestCase
      */
     public function testArrayToHstring(HArray $arr, $expected)
     {
-        $this->assertEquals($expected, $arr->ToHstring());
+        $this->assertEquals($expected, $arr->toHString());
     }
 
     public function arrayToHstringProvider()
@@ -38,7 +38,7 @@ class ArrayToStringTest extends TestCase
      */
     public function testArrayToHstringWithGlue(HArray $arr, $glue, $expected)
     {
-        $this->assertEquals($expected, $arr->ToHstring($glue));
+        $this->assertEquals($expected, $arr->toHString($glue));
     }
 
     public function arrayToHstringWithGlueProvider()
@@ -67,6 +67,6 @@ class ArrayToStringTest extends TestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('glue must be a string');
 
-        $arr->ToHstring(3);
+        $arr->toHString(3);
     }
 }
