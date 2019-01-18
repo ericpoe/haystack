@@ -3,8 +3,9 @@ namespace Haystack\Tests\Converter;
 
 use Haystack\HArray;
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class ArrayToStringTest extends \PHPUnit_Framework_TestCase
+class ArrayToStringTest extends TestCase
 {
     /**
      * @dataProvider arrayToHstringProvider

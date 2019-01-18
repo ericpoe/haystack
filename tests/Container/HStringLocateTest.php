@@ -2,8 +2,9 @@
 namespace Haystack\Tests\Container;
 
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HStringLocateTest extends \PHPUnit_Framework_TestCase
+class HStringLocateTest extends TestCase
 {
     /**
      * @dataProvider stringLocateProvider()

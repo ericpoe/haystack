@@ -2,8 +2,9 @@
 namespace Haystack\Tests\Container;
 
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HStringRemoveTest extends \PHPUnit_Framework_TestCase
+class HStringRemoveTest extends TestCase
 {
     /** @var HString */
     protected $aString;

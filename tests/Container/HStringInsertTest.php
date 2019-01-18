@@ -2,8 +2,9 @@
 namespace Haystack\Tests\Container;
 
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HStringInsertTest extends \PHPUnit_Framework_TestCase
+class HStringInsertTest extends TestCase
 {
     /**
      * @dataProvider stringInsertProvider()

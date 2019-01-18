@@ -3,8 +3,9 @@ namespace Haystack\Tests\Container;
 
 use Haystack\HArray;
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HArrayLocateTest extends \PHPUnit_Framework_TestCase
+class HArrayLocateTest extends TestCase
 {
     /** @var HArray */
     private $arrList;

@@ -2,8 +2,9 @@
 namespace Haystack\Tests\Container;
 
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HStringSliceTest extends \PHPUnit_Framework_TestCase
+class HStringSliceTest extends TestCase
 {
     /**
      * @dataProvider providerFirstPartOfTypesOfStringUsingSlice

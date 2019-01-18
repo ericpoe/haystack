@@ -3,8 +3,9 @@ namespace Haystack\Tests\Functional;
 
 use Haystack\HArray;
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HArrayReduceTest extends \PHPUnit_Framework_TestCase
+class HArrayReduceTest extends TestCase
 {
     /** @var HArray */
     private $arrList;

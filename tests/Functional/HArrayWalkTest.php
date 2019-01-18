@@ -2,8 +2,9 @@
 namespace Haystack\Tests\Functional;
 
 use Haystack\HArray;
+use PHPUnit\Framework\TestCase;
 
-class HArrayWalkTest extends \PHPUnit_Framework_TestCase
+class HArrayWalkTest extends TestCase
 {
     /** @var HArray */
     private $arrList;

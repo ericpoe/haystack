@@ -3,8 +3,9 @@ namespace Haystack\Tests\Functional;
 
 use Haystack\HArray;
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HStringReduceTest extends \PHPUnit_Framework_TestCase
+class HStringReduceTest extends TestCase
 {
     /** @var HString */
     protected $aString;

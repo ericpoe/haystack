@@ -2,8 +2,9 @@
 namespace Haystack\Tests\Functional;
 
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HStringFilterTest extends \PHPUnit_Framework_TestCase
+class HStringFilterTest extends TestCase
 {
     /** @var HString */
     protected $aString;
