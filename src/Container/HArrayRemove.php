@@ -32,6 +32,6 @@ class HArrayRemove
 
     private function allKeysNumeric(array $keys)
     {
-        return sizeof($keys) === sizeof(array_filter($keys, 'is_numeric'));
+        return count($keys) === count(array_filter($keys, 'is_numeric'));
     }
 }

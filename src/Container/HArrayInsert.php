@@ -44,7 +44,7 @@ class HArrayInsert
         }
 
         $first = $this->arr->slice(0, $length)->toArray();
-        $lastStartingPoint = sizeof($this->arr) - sizeof($first);
+        $lastStartingPoint = count($this->arr) - count($first);
         $last = $this->arr->slice($length, $lastStartingPoint)->toArray();
 
         return new HArray(array_merge_recursive($first, (array) $array, $last));
@@ -71,7 +71,7 @@ class HArrayInsert
     private function setSubarrayAndLengthForAssociativeArray($key, $value)
     {
         $array = [$key => $value];
-        $length = sizeof($this->arr);
+        $length = count($this->arr);
 
         return [$array, $length];
     }
@@ -83,7 +83,7 @@ class HArrayInsert
     private function setSubarrayAndLengthWhenNoKeyProvided($value)
     {
         $array = $value;
-        $length = sizeof($this->arr);
+        $length = count($this->arr);
 
         return [$array, $length];
     }

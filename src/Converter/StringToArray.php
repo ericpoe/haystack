@@ -45,7 +45,7 @@ class StringToArray
             return $this->arr;
         }
 
-        if (is_integer($limit)) {
+        if (is_int($limit)) {
             $this->arr = $this->explode($limit);
             return $this->arr;
         }
