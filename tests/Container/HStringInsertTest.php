@@ -60,7 +60,8 @@ class HStringInsertTest extends TestCase
      */
     public function testBadInsert($value, $key, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($exceptionMsg);
 
         (new HString("foobar"))->insert($value, $key);
     }

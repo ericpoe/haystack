@@ -87,10 +87,11 @@ class HStringFilterTest extends TestCase
 
     public function testInvalidFilterFlag()
     {
-        $flag = "bad_flag";
-        $exceptionMsg = "Invalid flag name";
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Invalid flag name');
 
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $flag = "bad_flag";
+
         $even = $this->aString->filter(function ($key) {
             return $key % 2;
         }, $flag);

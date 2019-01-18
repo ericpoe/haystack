@@ -170,7 +170,10 @@ class HArrayMapTest extends TestCase
     public function testErrorGetsThrown()
     {
         $badStr = new \stdClass();
-        $this->setExpectedException("InvalidArgumentException", "stdClass cannot be mapped");
+
+
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('stdClass cannot be mapped');
 
         $action = function ($letterFromHaystack, $thingFromBadThings) {
             return sprintf("%s:%s", $letterFromHaystack, $thingFromBadThings);

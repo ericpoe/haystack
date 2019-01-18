@@ -80,7 +80,8 @@ class HStringAppendTest extends TestCase
 
     public function testNonScalarTypeCannotBeAddedToFoobar()
     {
-        $this->setExpectedException("InvalidArgumentException", "Cannot concatenate an HString with a DateTime");
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Cannot concatenate an HString with a DateTime');
 
         (new HString("foobar"))->append(new \DateTime());
     }

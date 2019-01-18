@@ -70,7 +70,8 @@ class HArrayInsertTest extends TestCase
      */
     public function testObjectCannotBeUsedAsArrayKey($key, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($exceptionMsg);
 
         $this->arrDict->insert("yobbo", $key);
     }

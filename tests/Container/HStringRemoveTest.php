@@ -29,10 +29,8 @@ class HStringRemoveTest extends TestCase
 
     public function testCannotRemoveBadString()
     {
-        $this->setExpectedException(
-            "InvalidArgumentException",
-            "DateTime cannot be converted to a string; it cannot be used as a search value within an HString"
-        );
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('DateTime cannot be converted to a string; it cannot be used as a search value within an HString');
 
         $this->aString->remove(new \DateTime());
     }

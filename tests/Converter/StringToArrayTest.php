@@ -72,7 +72,8 @@ class StringToArrayTest extends TestCase
     {
         $hSTring = new HString("foobar");
 
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($exceptionMsg);
 
         $hSTring->toHArray($delim);
     }
@@ -93,7 +94,8 @@ class StringToArrayTest extends TestCase
     {
         $hString = new HString("foobar");
 
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($exceptionMsg);
 
         $hString->toHArray(" ", $limit);
     }

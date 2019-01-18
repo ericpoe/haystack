@@ -64,7 +64,8 @@ class ArrayToStringTest extends TestCase
     {
         $arr = new HArray(["apple", "banana"]);
 
-        $this->setExpectedException("InvalidArgumentException", "glue must be a string");
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('glue must be a string');
 
         $arr->ToHstring(3);
     }

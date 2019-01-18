@@ -1,6 +1,7 @@
 <?php
 namespace Haystack\Tests\Container;
 
+use Haystack\Container\ElementNotFoundException;
 use Haystack\HString;
 use PHPUnit\Framework\TestCase;
 
@@ -54,7 +55,8 @@ class HStringLocateTest extends TestCase
      */
     public function testCannotLocateTypesOfStringInFoober($checkString, $message)
     {
-        $this->setExpectedException("Haystack\\Container\\ElementNotFoundException", $message);
+        $this->expectException(ElementNotFoundException::class);
+        $this->expectExceptionMessage($message);
 
         (new HString("foobar"))->locate($checkString);
     }
@@ -77,7 +79,8 @@ class HStringLocateTest extends TestCase
      */
     public function testBadLocateTypesOfStringInFoobar($item, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($exceptionMsg);
 
         (new HString("foobar"))->locate($item);
     }

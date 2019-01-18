@@ -109,7 +109,8 @@ class HArraySliceTest extends TestCase
      */
     public function testBadArraySlice($type, $start, $length, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($exceptionMsg);
 
         if ("list" === $type) {
             $subArray = $this->arrList->slice($start, $length);

@@ -1,6 +1,7 @@
 <?php
 namespace Haystack\Tests\Container;
 
+use Haystack\Container\ElementNotFoundException;
 use Haystack\HArray;
 use Haystack\HString;
 use PHPUnit\Framework\TestCase;
@@ -56,7 +57,8 @@ class HArrayLocateTest extends TestCase
      */
     public function testElementNotFound($type, $checkThing, $message)
     {
-        $this->setExpectedException("Haystack\\Container\\ElementNotFoundException", $message);
+        $this->expectException(ElementNotFoundException::class);
+        $this->expectExceptionMessage($message);
 
         if ("list" === $type) {
             $this->arrList->locate($checkThing);
