@@ -48,9 +48,9 @@ class StringToArray
         if (is_integer($limit)) {
             $this->arr = $this->explode($limit);
             return $this->arr;
-        } else {
-            throw new \InvalidArgumentException('limit must be an integer');
         }
+
+        throw new \InvalidArgumentException('limit must be an integer');
     }
 
     /**
