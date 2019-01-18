@@ -45,7 +45,7 @@ class HStringReduceTest extends TestCase
 
         $this->assertEquals($codedMessage, $this->aString->reduce($encode));
         $this->assertEquals('foobar', $codedMessage->reduce($decode));
-        $this->assertTrue($this->aString->reduce($encode) instanceof HString);
+        $this->assertInstanceOf(HString::class, $this->aString->reduce($encode));
     }
 
     /**
@@ -55,7 +55,7 @@ class HStringReduceTest extends TestCase
      */
     public function testStringReduceAsArrayTypeReturnsHArray($freq, $message)
     {
-        $this->assertTrue($this->aString->reduce($freq) instanceof HArray, $message);
+        $this->assertInstanceOf(HArray::class, $this->aString->reduce($freq), $message);
     }
 
     public function stringReduceAsArrayTypeProvider()

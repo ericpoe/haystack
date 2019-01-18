@@ -84,8 +84,8 @@ class HArrayReduceTest extends TestCase
      */
     public function testReduceAsArrayType($freq)
     {
-        $this->assertTrue($this->arrList->reduce($freq) instanceof HArray);
-        $this->assertTrue($this->arrDict->reduce($freq) instanceof HArray);
+        $this->assertInstanceOf(HArray::class, $this->arrList->reduce($freq));
+        $this->assertInstanceOf(HArray::class, $this->arrDict->reduce($freq));
     }
 
     public function reduceAsArrayTypeProvider()
@@ -139,7 +139,7 @@ class HArrayReduceTest extends TestCase
 
         $this->assertEquals(new HString('apple bobble cobble dobble'), trim($this->arrList->reduce($toString)));
         $this->assertEquals(new HString('apple bobble cobble dobble'), trim($this->arrDict->reduce($toString)));
-        $this->assertTrue($this->arrList->reduce($toString) instanceof HString);
-        $this->assertTrue($this->arrDict->reduce($toString) instanceof HString);
+        $this->assertInstanceOf(HString::class, $this->arrList->reduce($toString));
+        $this->assertInstanceOf(HString::class, $this->arrDict->reduce($toString));
     }
 }
