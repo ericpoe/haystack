@@ -118,7 +118,7 @@ class HArrayTest extends TestCase
     {
         return [
             'Empty HArray' => [new HArray(), 0],
-            'List: Array of Strings' => [new HArray('apple', 'bobble', 'cobble'), 0],
+            'List: Array of Strings' => [new HArray(['apple', 'bobble', 'cobble']), 0],
             'List: Array of Ints' => [new HArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 3628800],
             'List: Array of Strings & Int' => [new HArray(['apple', 'bobble', 'cobble', 5]), 0],
             'List: Array of String Ints & Int' => [new HArray(['1', 2, '3', 4, '5', 6, '7', 8, '9', 10]), 3628800],
