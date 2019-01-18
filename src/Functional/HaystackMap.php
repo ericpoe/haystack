@@ -49,6 +49,6 @@ class HaystackMap
             return $item->toArray();
         }
 
-        throw new \InvalidArgumentException(sprintf("%s cannot be mapped", Helper::getType($item)));
+        throw new \InvalidArgumentException(sprintf('%s cannot be mapped', Helper::getType($item)));
     }
 }

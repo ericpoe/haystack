@@ -14,17 +14,17 @@ class HStringRemoveTest extends TestCase
 
     protected function setUp()
     {
-        $this->aString = new HString("foobar");
-        $this->utf8String = new HString("ɹɐqooɟ");
+        $this->aString = new HString('foobar');
+        $this->utf8String = new HString('ɹɐqooɟ');
     }
 
     public function testTypesOfStringRemove()
     {
-        $newString = $this->aString->remove("o");
-        $this->assertEquals(new HString("fobar"), $newString);
+        $newString = $this->aString->remove('o');
+        $this->assertEquals(new HString('fobar'), $newString);
 
-        $newString = $this->utf8String->remove("o");
-        $this->assertEquals(new HString("ɹɐqoɟ"), $newString);
+        $newString = $this->utf8String->remove('o');
+        $this->assertEquals(new HString('ɹɐqoɟ'), $newString);
     }
 
     public function testCannotRemoveBadString()

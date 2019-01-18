@@ -22,14 +22,14 @@ class HStringLocateTest extends TestCase
 
     public function stringLocateProvider()
     {
-        $aString = new HString("foobar");
-        $utf8String = new HString("ɹɐqooɟ");
+        $aString = new HString('foobar');
+        $utf8String = new HString('ɹɐqooɟ');
 
         return [
-            "ASCII: String known-present" => [$aString, "oob", 1],
-            "ASCII: HString known-present" => [$aString, new HString('oob'), 1],
-            "UTF-8: String known-present" => [$utf8String, "ɐqo", 1],
-            "UTF-8: HString known-present" => [$utf8String, new HString('ɐqo'), 1],
+            'ASCII: String known-present' => [$aString, 'oob', 1],
+            'ASCII: HString known-present' => [$aString, new HString('oob'), 1],
+            'UTF-8: String known-present' => [$utf8String, 'ɐqo', 1],
+            'UTF-8: HString known-present' => [$utf8String, new HString('ɐqo'), 1],
         ];
     }
 
@@ -37,13 +37,13 @@ class HStringLocateTest extends TestCase
     {
         $date = new \DateTime('now');
         $timeStamp = $date->format('c');
-        $timeSentence = new HString(sprintf("I have %s in me.", $timeStamp));
+        $timeSentence = new HString(sprintf('I have %s in me.', $timeStamp));
         $this->assertEquals(7, $timeSentence->locate($date->format('c')));
 
         // This would be a good use of a PHP7 anonymous class
         $obj = new ObjWithToString();
         $sampleString = "I'm a string";
-        $objSentence = new HString(sprintf("I have %s in me.", $sampleString));
+        $objSentence = new HString(sprintf('I have %s in me.', $sampleString));
         $this->assertEquals(7, $objSentence->locate($obj));
     }
 
@@ -58,16 +58,16 @@ class HStringLocateTest extends TestCase
         $this->expectException(ElementNotFoundException::class);
         $this->expectExceptionMessage($message);
 
-        (new HString("foobar"))->locate($checkString);
+        (new HString('foobar'))->locate($checkString);
     }
 
     public function stringBadLocateProvider()
     {
         return [
-            "String known-missing" => ["baz", "Element could not be found: baz"],
-            "HString known-missing" => [new HString('baz'), "Element could not be found: baz"],
-            "Integer known-missing" => [42, "Element could not be found: 42"],
-            "HString integer known-missing" => [new HString(42), "Element could not be found: 42"],
+            'String known-missing' => ['baz', 'Element could not be found: baz'],
+            'HString known-missing' => [new HString('baz'), 'Element could not be found: baz'],
+            'Integer known-missing' => [42, 'Element could not be found: 42'],
+            'HString integer known-missing' => [new HString(42), 'Element could not be found: 42'],
         ];
     }
 
@@ -82,19 +82,19 @@ class HStringLocateTest extends TestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage($exceptionMsg);
 
-        (new HString("foobar"))->locate($item);
+        (new HString('foobar'))->locate($item);
     }
 
     public function badLocateTypesOfStringInFoobarProvider()
     {
         return [
-            "DateTime" => [
+            'DateTime' => [
                 new \DateTime(),
-                "DateTime cannot be converted to a string; it cannot be used as a search value within an HString"
+                'DateTime cannot be converted to a string; it cannot be used as a search value within an HString'
             ],
-            "SplDoublyLinkedList" => [
+            'SplDoublyLinkedList' => [
                 new \SplDoublyLinkedList(),
-                "SplDoublyLinkedList cannot be converted to a string; it cannot be used as a search value within an HString"
+                'SplDoublyLinkedList cannot be converted to a string; it cannot be used as a search value within an HString'
             ],
         ];
     }

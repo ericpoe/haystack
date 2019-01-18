@@ -18,14 +18,14 @@ class StringToArray
      * @param string $str
      * @param string | HString $delim
      */
-    public function __construct($str, $delim = "")
+    public function __construct($str, $delim = '')
     {
         $this->str = $str;
 
         if (empty($delim) || is_string($delim) || $delim instanceof HString) {
             $this->delim = $delim;
         } else {
-            throw new \InvalidArgumentException("delimiter must be a string");
+            throw new \InvalidArgumentException('delimiter must be a string');
         }
     }
 
@@ -35,7 +35,7 @@ class StringToArray
      */
     public function stringToArray($limit = null)
     {
-        if (is_null($this->delim) || "" === $this->delim) {
+        if (is_null($this->delim) || '' === $this->delim) {
             $this->arr = $this->noDelimExplode();
             return $this->arr;
         }
@@ -49,7 +49,7 @@ class StringToArray
             $this->arr = $this->explode($limit);
             return $this->arr;
         } else {
-            throw new \InvalidArgumentException("limit must be an integer");
+            throw new \InvalidArgumentException('limit must be an integer');
         }
     }
 

@@ -13,8 +13,8 @@ class HArrayWalkTest extends TestCase
 
     protected function setUp()
     {
-        $this->arrList = new HArray(["apple", "bobble", "cobble", "dobble"]);
-        $this->arrDict = new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"]);
+        $this->arrList = new HArray(['apple', 'bobble', 'cobble', 'dobble']);
+        $this->arrDict = new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']);
     }
 
     public function testArrayWalk()
@@ -28,9 +28,9 @@ class HArrayWalkTest extends TestCase
         };
 
         $this->arrDict->walk($capitalizeDict);
-        $this->assertEquals("APPLE", $this->arrDict["a"]);
+        $this->assertEquals('APPLE', $this->arrDict['a']);
 
         $this->arrList->walk($capitalizeList);
-        $this->assertEquals("APPLE", $this->arrList[0]);
+        $this->assertEquals('APPLE', $this->arrList[0]);
     }
 }

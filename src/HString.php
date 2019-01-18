@@ -20,24 +20,24 @@ use Haystack\Math\MathInterface;
 
 class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, ContainerInterface, FunctionalInterface, MathInterface
 {
-    const USE_KEY = "key";
-    const USE_BOTH = "both";
+    const USE_KEY = 'key';
+    const USE_BOTH = 'both';
 
     protected $str;
     protected $ptr; // pointer for iterating through $str
     protected $encoding; // defaults to UTF-8 encoding
 
-    public function __construct($str = "")
+    public function __construct($str = '')
     {
-        $this->encoding = "UTF-8";
+        $this->encoding = 'UTF-8';
 
         if (is_scalar($str) || $str instanceof HString) {
             $this->str = mb_convert_encoding($str, $this->encoding);
             $this->rewind();
         } elseif (is_null($str)) {
-            $this->str = "";
+            $this->str = '';
         } else {
-            throw new \ErrorException(sprintf("%s is not a proper String", Helper::getType($str)));
+            throw new \ErrorException(sprintf('%s is not a proper String', Helper::getType($str)));
         }
     }
 
@@ -152,9 +152,9 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         if (is_scalar($value)) {
             $this->str = unserialize($value);
         } elseif (is_null($value)) {
-            $this->str = "";
+            $this->str = '';
         } else {
-            throw new \InvalidArgumentException(sprintf("HString cannot unserialize a %s", Helper::getType($value)));
+            throw new \InvalidArgumentException(sprintf('HString cannot unserialize a %s', Helper::getType($value)));
         }
     }
 
@@ -272,7 +272,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @return HArray
      * @throws \InvalidArgumentException
      */
-    public function toHArray($delim = "", $limit = null)
+    public function toHArray($delim = '', $limit = null)
     {
         if (empty($this->str)) {
             return new HArray();
@@ -445,7 +445,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function sum()
     {
-        $values = new HArray(str_getcsv(str_ireplace(" ", "", $this->str)));
+        $values = new HArray(str_getcsv(str_ireplace(' ', '', $this->str)));
 
         return $values->sum();
     }
@@ -457,7 +457,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function product()
     {
-        $values = new HArray(str_getcsv(str_ireplace(" ", "", $this->str)));
+        $values = new HArray(str_getcsv(str_ireplace(' ', '', $this->str)));
 
         return $values->product();
     }

@@ -15,7 +15,7 @@ class ArrayToString
      * @param array  $arr
      * @param string $glue
      */
-    public function __construct(array $arr, $glue = "")
+    public function __construct(array $arr, $glue = '')
     {
         $this->arr = $arr;
 

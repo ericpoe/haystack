@@ -13,34 +13,34 @@ class HStringFilterTest extends TestCase
 
     protected function setUp()
     {
-        $this->aString = new HString("foobar");
-        $this->utf8String = new HString("ɹɐqooɟ");
+        $this->aString = new HString('foobar');
+        $this->utf8String = new HString('ɹɐqooɟ');
     }
 
     public function testStringDefaultFilter()
     {
         $strangeString = $this->aString->insert(0, 3);
         $default = $strangeString->filter();
-        $this->assertEquals("foobar", $default->toString(), "Filter with defaults");
+        $this->assertEquals('foobar', $default->toString(), 'Filter with defaults');
 
         $strangeString = $this->utf8String->insert(0, 3);
         $default = $strangeString->filter();
-        $this->assertEquals("ɹɐqooɟ", $default->toString(), "Filter with defaults");
+        $this->assertEquals('ɹɐqooɟ', $default->toString(), 'Filter with defaults');
     }
 
     public function testStringValuesFilter()
     {
         $removeVowels = function ($letter) {
-            $vowels = new HString("aeiouᴉǝɐ");
+            $vowels = new HString('aeiouᴉǝɐ');
 
             return !$vowels->contains($letter);
         };
 
         $consonants = $this->aString->filter($removeVowels);
-        $this->assertEquals("fbr", $consonants->toString(), "Filter by Value");
+        $this->assertEquals('fbr', $consonants->toString(), 'Filter by Value');
 
         $consonants = $this->utf8String->filter($removeVowels);
-        $this->assertEquals("ɹqɟ", $consonants->toString(), "Filter by Value");
+        $this->assertEquals('ɹqɟ', $consonants->toString(), 'Filter by Value');
     }
 
     public function testStringKeyFilter()
@@ -53,13 +53,13 @@ class HStringFilterTest extends TestCase
 
         $even = $this->aString->filter($removeOdd, $flag);
         $utf8Even = $this->utf8String->filter($removeOdd, $flag);
-        $this->assertEquals("obr", $even->toString(), "Filter by Key");
-        $this->assertEquals("ɐoɟ", $utf8Even->toString(), "Filter by Key");
+        $this->assertEquals('obr', $even->toString(), 'Filter by Key');
+        $this->assertEquals('ɐoɟ', $utf8Even->toString(), 'Filter by Key');
 
         $even = $this->aString->filter(function ($key) {
             return $key % 2;
         }, $flag);
-        $this->assertEquals("obr", $even->toString(), "Filter by Key");
+        $this->assertEquals('obr', $even->toString(), 'Filter by Key');
     }
 
     public function testStringValueAndKeyFilter()
@@ -80,9 +80,9 @@ class HStringFilterTest extends TestCase
 
         $flag = HString::USE_BOTH;
         $funky = $this->aString->filter($thingBoth, $flag);
-        $this->assertEquals("fobr", $funky->toString(), "Filter by both Value & Key");
+        $this->assertEquals('fobr', $funky->toString(), 'Filter by both Value & Key');
         $utf8Funky = $this->utf8String->filter($thingBoth, $flag);
-        $this->assertEquals("ɐoɟ", $utf8Funky->toString(), "Filter by both Value & Key");
+        $this->assertEquals('ɐoɟ', $utf8Funky->toString(), 'Filter by both Value & Key');
     }
 
     public function testInvalidFilterFlag()
@@ -90,7 +90,7 @@ class HStringFilterTest extends TestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Invalid flag name');
 
-        $flag = "bad_flag";
+        $flag = 'bad_flag';
 
         $even = $this->aString->filter(function ($key) {
             return $key % 2;

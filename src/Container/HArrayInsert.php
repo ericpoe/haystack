@@ -37,7 +37,7 @@ class HArrayInsert
             } elseif (is_string($key)) {
                 list($array, $length) = $this->setSubarrayAndLengthForAssociativeArray($key, $valueArray);
             } else {
-                throw new \InvalidArgumentException("Invalid array key");
+                throw new \InvalidArgumentException('Invalid array key');
             }
         } else {
             list($array, $length) = $this->setSubarrayAndLengthWhenNoKeyProvided($valueArray);

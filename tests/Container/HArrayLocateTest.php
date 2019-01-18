@@ -16,8 +16,8 @@ class HArrayLocateTest extends TestCase
 
     protected function setUp()
     {
-        $this->arrList = new HArray(["apple", "bobble", "cobble", "dobble"]);
-        $this->arrDict = new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"]);
+        $this->arrList = new HArray(['apple', 'bobble', 'cobble', 'dobble']);
+        $this->arrDict = new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']);
     }
 
     /**
@@ -29,7 +29,7 @@ class HArrayLocateTest extends TestCase
      */
     public function testLocateStringTypeInHArray($type, $checkThing, $expected)
     {
-        if ("list" === $type) {
+        if ('list' === $type) {
             $var = $this->arrList->locate($checkThing);
         } else {
             $var = $this->arrDict->locate($checkThing);
@@ -41,10 +41,10 @@ class HArrayLocateTest extends TestCase
     public function arrayLocateProvider()
     {
         return [
-            "1st item in list" => ["list", "apple", 0],
-            "1st HString in list" => ["list", new HString("apple"), 0],
-            "1st item in dictionary" => ["dict", "apple", 'a'],
-            "1st HString in dictionary" => ["dict", new HString("apple"), 'a'],
+            '1st item in list' => ['list', 'apple', 0],
+            '1st HString in list' => ['list', new HString('apple'), 0],
+            '1st item in dictionary' => ['dict', 'apple', 'a'],
+            '1st HString in dictionary' => ['dict', new HString('apple'), 'a'],
         ];
     }
 
@@ -60,7 +60,7 @@ class HArrayLocateTest extends TestCase
         $this->expectException(ElementNotFoundException::class);
         $this->expectExceptionMessage($message);
 
-        if ("list" === $type) {
+        if ('list' === $type) {
             $this->arrList->locate($checkThing);
         } else {
             $this->arrDict->locate($checkThing);
@@ -70,10 +70,10 @@ class HArrayLocateTest extends TestCase
     public function elementNotFoundProvider()
     {
         return [
-            "String not in list" => ["list", "fobble", "Element could not be found: fobble"],
-            "HString not in list" => ["list", new HString("fobble"), "Element could not be found: fobble"],
-            "String not in dictionary" => ["dict", "fobble", "Element could not be found: fobble"],
-            "HString not in dictionary" => ["dict", new HString("fobble"), "Element could not be found: fobble"],
+            'String not in list' => ['list', 'fobble', 'Element could not be found: fobble'],
+            'HString not in list' => ['list', new HString('fobble'), 'Element could not be found: fobble'],
+            'String not in dictionary' => ['dict', 'fobble', 'Element could not be found: fobble'],
+            'HString not in dictionary' => ['dict', new HString('fobble'), 'Element could not be found: fobble'],
         ];
     }
 

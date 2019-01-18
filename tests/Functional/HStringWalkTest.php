@@ -11,7 +11,7 @@ class HStringWalkTest extends TestCase
 
     protected function setUp()
     {
-        $this->aString = new HString("foobar");
+        $this->aString = new HString('foobar');
     }
 
     public function testStringWalk()
@@ -20,6 +20,6 @@ class HStringWalkTest extends TestCase
             return $this->aString[$key] = strtoupper($letter);
         });
 
-        $this->assertEquals("FOOBAR", $this->aString->toString());
+        $this->assertEquals('FOOBAR', $this->aString->toString());
     }
 }

@@ -26,14 +26,14 @@ class HStringContains
      */
     public function contains($value)
     {
-        if (method_exists($value, "__toString")) {
+        if (method_exists($value, '__toString')) {
             $value = $value->__toString();
         }
 
         if (is_scalar($value)) {
             $this->value = (string) $value;
         } else {
-            throw new \InvalidArgumentException(sprintf("%s cannot be converted to a string; it cannot be used as a search value within an HString", Helper::getType($value)));
+            throw new \InvalidArgumentException(sprintf('%s cannot be converted to a string; it cannot be used as a search value within an HString', Helper::getType($value)));
         }
 
         return $this->containsValue();

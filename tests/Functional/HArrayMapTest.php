@@ -14,8 +14,8 @@ class HArrayMapTest extends TestCase
 
     protected function setUp()
     {
-        $this->arrList = new HArray(["apple", "bobble", "cobble", "dobble"]);
-        $this->arrDict = new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"]);
+        $this->arrList = new HArray(['apple', 'bobble', 'cobble', 'dobble']);
+        $this->arrDict = new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']);
     }
 
     public function testArrayMapWithNoExtra()
@@ -25,10 +25,10 @@ class HArrayMapTest extends TestCase
         };
 
         $newArrList = $this->arrList->map($capitalizeList);
-        $this->assertEquals("APPLE", $newArrList[0]);
+        $this->assertEquals('APPLE', $newArrList[0]);
 
         $newArrDict = $this->arrDict->map($capitalizeList);
-        $this->assertEquals("APPLE", $newArrDict["a"]);
+        $this->assertEquals('APPLE', $newArrDict['a']);
     }
 
     /**
@@ -40,7 +40,7 @@ class HArrayMapTest extends TestCase
     public function testArrayMapWithOneExtra(HArray $numArray, HArray $expected)
     {
         $action = function ($word, $numWord) {
-            return sprintf("I have %s %s", $numWord, $word);
+            return sprintf('I have %s %s', $numWord, $word);
         };
 
         $actual = $this->arrList->map($action, $numArray);
@@ -49,37 +49,37 @@ class HArrayMapTest extends TestCase
 
     public function oneExtraArraysProvider()
     {
-        $numFewer = new HArray(["one", "two", "three"]);
-        $numEqual = new HArray(["one", "two", "three", "four"]);
-        $numGreater = new HArray(["one", "two", "three", "four", "five"]);
+        $numFewer = new HArray(['one', 'two', 'three']);
+        $numEqual = new HArray(['one', 'two', 'three', 'four']);
+        $numGreater = new HArray(['one', 'two', 'three', 'four', 'five']);
 
         return [
-            "One-Extra array size of one fewer does meet expectations" => [
+            'One-Extra array size of one fewer does meet expectations' => [
                 $numFewer,
                 new HArray([
-                    "I have one apple",
-                    "I have two bobble",
-                    "I have three cobble",
-                    "I have  dobble" // extra space due to missing placeholder
+                    'I have one apple',
+                    'I have two bobble',
+                    'I have three cobble',
+                    'I have  dobble' // extra space due to missing placeholder
                 ]),
             ],
-            "One-Extra array size of equivalence does not meet expectations" => [
+            'One-Extra array size of equivalence does not meet expectations' => [
                 $numEqual,
                 new HArray([
-                    "I have one apple",
-                    "I have two bobble",
-                    "I have three cobble",
-                    "I have four dobble"
+                    'I have one apple',
+                    'I have two bobble',
+                    'I have three cobble',
+                    'I have four dobble'
                 ]),
             ],
-            "One-Extra array size of one greater does not meet expectations" => [
+            'One-Extra array size of one greater does not meet expectations' => [
                 $numGreater,
                 new HArray([
-                    "I have one apple",
-                    "I have two bobble",
-                    "I have three cobble",
-                    "I have four dobble",
-                    "I have five " // extra space due to missing placeholder
+                    'I have one apple',
+                    'I have two bobble',
+                    'I have three cobble',
+                    'I have four dobble',
+                    'I have five ' // extra space due to missing placeholder
                 ]),
             ],
         ];
@@ -95,7 +95,7 @@ class HArrayMapTest extends TestCase
     public function testArrayMapWithTwoExtras(HArray $numArray, HArray $adjArray, HArray $expected)
     {
         $action = function ($noun, $numWord, $adjective) {
-            return sprintf("I have %s %s %s", $numWord, $adjective, $noun);
+            return sprintf('I have %s %s %s', $numWord, $adjective, $noun);
         };
 
         $actual = $this->arrList->map($action, $numArray, $adjArray);
@@ -104,45 +104,45 @@ class HArrayMapTest extends TestCase
 
     public function twoExtraArraysProvider()
     {
-        $numFewer = new HArray(["one", "two", "three"]);
-        $numEqual = new HArray(["one", "two", "three", "four"]);
-        $numGreater = new HArray(["one", "two", "three", "four", "five"]);
+        $numFewer = new HArray(['one', 'two', 'three']);
+        $numEqual = new HArray(['one', 'two', 'three', 'four']);
+        $numGreater = new HArray(['one', 'two', 'three', 'four', 'five']);
 
-        $adjFewer = new HArray(["large", "small"]);
-        $adjEqual = new HArray(["large", "small", "ripe", "rotten"]);
-        $adjGreater = new HArray(["large", "small", "ripe", "rotten", "red", "green"]);
+        $adjFewer = new HArray(['large', 'small']);
+        $adjEqual = new HArray(['large', 'small', 'ripe', 'rotten']);
+        $adjGreater = new HArray(['large', 'small', 'ripe', 'rotten', 'red', 'green']);
 
         return [
-            "Two-Extra array size of fewer does not meet expectations" => [
+            'Two-Extra array size of fewer does not meet expectations' => [
                 $numFewer,
                 $adjFewer,
                 new HArray([
-                    "I have one large apple",
-                    "I have two small bobble",
-                    "I have three  cobble", // extra spaces due to missing placeholder
-                    "I have   dobble" // extra spaces due to missing placeholders
+                    'I have one large apple',
+                    'I have two small bobble',
+                    'I have three  cobble', // extra spaces due to missing placeholder
+                    'I have   dobble' // extra spaces due to missing placeholders
                 ]),
             ],
-            "Two-Extra array size of equivalence does not meet expectations" => [
+            'Two-Extra array size of equivalence does not meet expectations' => [
                 $numEqual,
                 $adjEqual,
                 new HArray([
-                    "I have one large apple",
-                    "I have two small bobble",
-                    "I have three ripe cobble",
-                    "I have four rotten dobble"
+                    'I have one large apple',
+                    'I have two small bobble',
+                    'I have three ripe cobble',
+                    'I have four rotten dobble'
                 ]),
             ],
-            "Two-Extra array size of greater does not meet expectations" => [
+            'Two-Extra array size of greater does not meet expectations' => [
                 $numGreater,
                 $adjGreater,
                 new HArray([
-                    "I have one large apple",
-                    "I have two small bobble",
-                    "I have three ripe cobble",
-                    "I have four rotten dobble",
-                    "I have five red ", // extra spaces due to missing placeholder
-                    "I have  green " // extra spaces due to missing placeholders
+                    'I have one large apple',
+                    'I have two small bobble',
+                    'I have three ripe cobble',
+                    'I have four rotten dobble',
+                    'I have five red ', // extra spaces due to missing placeholder
+                    'I have  green ' // extra spaces due to missing placeholders
                 ]),
             ],
         ];
@@ -150,19 +150,19 @@ class HArrayMapTest extends TestCase
 
     public function testArrayMapWithVariadicHString()
     {
-        $phrase = new HString("abcd");
+        $phrase = new HString('abcd');
 
         $sentence = function ($word, $letter) {
-            return sprintf("%s starts with %s", $word, $letter);
+            return sprintf('%s starts with %s', $word, $letter);
         };
 
         $oddThing = $this->arrList->map($sentence, $phrase);
 
         $expected = new HArray([
-            "apple starts with a",
-            "bobble starts with b",
-            "cobble starts with c",
-            "dobble starts with d",
+            'apple starts with a',
+            'bobble starts with b',
+            'cobble starts with c',
+            'dobble starts with d',
         ]);
         $this->assertEquals($expected, $oddThing);
     }
@@ -176,7 +176,7 @@ class HArrayMapTest extends TestCase
         $this->expectExceptionMessage('stdClass cannot be mapped');
 
         $action = function ($letterFromHaystack, $thingFromBadThings) {
-            return sprintf("%s:%s", $letterFromHaystack, $thingFromBadThings);
+            return sprintf('%s:%s', $letterFromHaystack, $thingFromBadThings);
         };
 
         $badMapping = $this->arrList->map($action, $badStr);

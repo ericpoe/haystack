@@ -28,9 +28,9 @@ class Filter
         }
 
         // Flags are USE_KEY or USE_BOTH
-        if ("key" === $flag || "both" === $flag) {
+        if ('key' === $flag || 'both' === $flag) {
             // Flag of "USE_KEY" is passed
-            if ("key" === $flag) {
+            if ('key' === $flag) {
                 $filtered = new FilterWithKey($this->arr);
                 return $filtered->filter($func);
             }
@@ -38,6 +38,6 @@ class Filter
             $filtered = new FilterWithValueAndKey($this->arr);
             return $filtered->filter($func);
         }
-        throw new \InvalidArgumentException("Invalid flag name");
+        throw new \InvalidArgumentException('Invalid flag name');
     }
 }

@@ -19,8 +19,8 @@ use Haystack\Math\MathInterface;
 
 class HArray extends \ArrayObject implements ContainerInterface, FunctionalInterface, MathInterface
 {
-    const USE_KEY = "key";
-    const USE_BOTH = "both";
+    const USE_KEY = 'key';
+    const USE_BOTH = 'both';
 
     /** @var array */
     protected $arr;
@@ -55,7 +55,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      * @param string $glue - defaults to an empty string
      * @return HString
      */
-    public function toHString($glue = "")
+    public function toHString($glue = '')
     {
         if (empty($this->arr)) {
             return new HString();
