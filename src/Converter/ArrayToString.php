@@ -19,7 +19,7 @@ class ArrayToString
     {
         $this->arr = $arr;
 
-        $this->glue = empty($glue) ? "" : $glue;
+        $this->glue = empty($glue) ? '' : $glue;
     }
 
     /**
@@ -31,7 +31,7 @@ class ArrayToString
             return $this->arrayImplode();
         }
 
-        throw new \InvalidArgumentException("glue must be a string");
+        throw new \InvalidArgumentException('glue must be a string');
     }
 
     /**
