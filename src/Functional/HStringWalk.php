@@ -13,7 +13,7 @@ class HStringWalk
     {
         $size = $hString->count();
 
-        for ($i = 0; $i < $size; $i++) {
+        foreach ($hString as $i => $iValue) {
             $hString[$i] = $func($hString[$i], $i);
         }
     }
