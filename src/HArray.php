@@ -35,7 +35,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
             $arr = [$arr->toString()];
         }
 
-        if (is_scalar($arr) || 'object' === gettype($arr)) {
+        if (is_scalar($arr) || is_object($arr)) {
             parent::__construct([$arr]);
             $this->arr = [$arr];
         } else {
