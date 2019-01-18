@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased - 2019-01-17
+## [2.1.0](https://github.com/ericpoe/haystack/tree/v2.1.0) - 2019-01-17
 
 ### Added
 * Now with UTF-8 strings!
