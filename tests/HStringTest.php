@@ -144,9 +144,9 @@ class HStringTest extends TestCase
     /**
      * @dataProvider iteratorValidProvider
      *
-     * @param string $toIterate
+     * @param HString $toIterate
      */
-    public function testIteratorValid($toIterate)
+    public function testIteratorValid(HString $toIterate)
     {
         $toIterate->next(); // "o"
         $toIterate->next(); // "o"
