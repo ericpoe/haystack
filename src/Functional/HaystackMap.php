@@ -32,7 +32,7 @@ class HaystackMap
             return $this->convertToArray($item);
         }, $variadicList);
 
-        return call_user_func_array('array_map', array_merge([$func], $sourceHaystack, $arrayOfVariadics));
+        return array_map(...array_merge([$func], $sourceHaystack, $arrayOfVariadics));
     }
 
     private function convertToArray($item)
