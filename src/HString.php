@@ -31,7 +31,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     {
         $this->encoding = 'UTF-8';
 
-        if (is_scalar($str) || $str instanceof HString) {
+        if (is_scalar($str) || $str instanceof self) {
             $this->str = mb_convert_encoding($str, $this->encoding);
             $this->rewind();
         } elseif (is_null($str)) {
