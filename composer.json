@@ -27,7 +27,7 @@
     "psr-4": {"Haystack\\Tests\\": "tests"}
   },
   "require-dev": {
-    "phpunit/phpunit": "^5"
+    "phpunit/phpunit": "^7.5"
   },
   "extra": {
     "branch-alias": {
