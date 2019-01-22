@@ -23,7 +23,7 @@ class HArraySlice
      */
     public function slice($start, $length)
     {
-        if ($start === null || !is_numeric($start)) {
+        if (!is_numeric($start)) {
             throw new \InvalidArgumentException('Slice parameter 1, $start, must be an integer');
         }
 
