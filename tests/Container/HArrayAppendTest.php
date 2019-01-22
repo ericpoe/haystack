@@ -1,5 +1,5 @@
 <?php
-namespace Haystack\Tests;
+namespace Haystack\Tests\Container;
 
 use Haystack\HArray;
 use PHPUnit\Framework\TestCase;
