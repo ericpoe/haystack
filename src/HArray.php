@@ -26,7 +26,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     protected $arr;
 
     /**
-     * @param null|array|object|\ArrayObject|HString|scalar $arr
+     * @param null|array|object|\ArrayObject|HString|bool|int|float|string $arr
      */
     public function __construct($arr = [])
     {
