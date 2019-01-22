@@ -299,7 +299,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @inheritdoc
      *
      * @param string $value
-     * @return int - location of $value in current object
+     * @return int key of $value in current object
      * @throws ElementNotFoundException
      * @throws \InvalidArgumentException
      */

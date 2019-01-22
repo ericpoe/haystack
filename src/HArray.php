@@ -84,7 +84,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      * @inheritdoc
      *
      * @param mixed $value
-     * @return int - array-notation location of $value in current object; "-1" if not found
+     * @return int|string - array-notation location of $value in current object; "-1" if not found
      * @throws ElementNotFoundException
      */
     public function locate($value)
