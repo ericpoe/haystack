@@ -24,7 +24,7 @@ class HStringLocate
             return mb_strpos($this->hString, (string) $value, null, $this->hString->getEncoding());
         }
 
-        throw new ElementNotFoundException($value);
+        throw new ElementNotFoundException((string) $value);
     }
 
 }
