@@ -2,8 +2,9 @@
 namespace Haystack\Tests;
 
 use Haystack\HArray;
+use PHPUnit\Framework\TestCase;
 
-class HArrayAppendTest extends \PHPUnit_Framework_TestCase
+class HArrayAppendTest extends TestCase
 {
     /** @var  HArray */
     private $arrList;
@@ -13,8 +14,8 @@ class HArrayAppendTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->arrList = new HArray(["apple", "bobble", "cobble", "dobble"]);
-        $this->arrDict = new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"]);
+        $this->arrList = new HArray(['apple', 'bobble', 'cobble', 'dobble']);
+        $this->arrDict = new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']);
     }
 
     /**
@@ -26,7 +27,7 @@ class HArrayAppendTest extends \PHPUnit_Framework_TestCase
      */
     public function testAppendStringInArray($type, $newThing, $expected)
     {
-        if ("list" === $type) {
+        if ('list' === $type) {
             $newArray = $this->arrList->append($newThing);
         } else {
             $newArray = $this->arrDict->append($newThing);
@@ -40,14 +41,14 @@ class HArrayAppendTest extends \PHPUnit_Framework_TestCase
         $dateTime = new \DateTime();
 
         return [
-            "String to list" => ["list", "ebble", new HArray(["apple", "bobble", "cobble", "dobble", "ebble"])],
-            "String array to list" => ["list", ["ebble"], new HArray(["apple", "bobble", "cobble", "dobble", ["ebble"]])],
-            "String HArray to list" => ["list", new HArray(["ebble"]), new HArray(["apple", "bobble", "cobble", "dobble", ["ebble"]])],
-            "Object to list" => ["list", $dateTime, new HArray(["apple", "bobble", "cobble", "dobble", $dateTime])],
-            "String to dictionary" => ["dict", "ebble", new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", "0" => "ebble"])],
-            "String array to dictionary" => ["dict", ["e" => "ebble"], new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", ["e" => "ebble"]])],
-            "String HArray to dictionary" => ["dict", new HArray(["e" => "ebble"]), new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", ["e" => "ebble"]])],
-            "Object to dictionary" => ["dict", $dateTime, new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble", 0 => $dateTime])],
+            'String to list' => ['list', 'ebble', new HArray(['apple', 'bobble', 'cobble', 'dobble', 'ebble'])],
+            'String array to list' => ['list', ['ebble'], new HArray(['apple', 'bobble', 'cobble', 'dobble', ['ebble']])],
+            'String HArray to list' => ['list', new HArray(['ebble']), new HArray(['apple', 'bobble', 'cobble', 'dobble', ['ebble']])],
+            'Object to list' => ['list', $dateTime, new HArray(['apple', 'bobble', 'cobble', 'dobble', $dateTime])],
+            'String to dictionary' => ['dict', 'ebble', new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble', '0' => 'ebble'])],
+            'String array to dictionary' => ['dict', ['e' => 'ebble'], new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble', ['e' => 'ebble']])],
+            'String HArray to dictionary' => ['dict', new HArray(['e' => 'ebble']), new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble', ['e' => 'ebble']])],
+            'Object to dictionary' => ['dict', $dateTime, new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble', 0 => $dateTime])],
         ];
     }
 }

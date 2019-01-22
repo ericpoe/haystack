@@ -169,8 +169,7 @@ $newArray = $myDictArray->slice(1, 1); // ["b" => "banana"]
 
 ### Functional Methods
 
-**map($callable, $variadic...)** - Returns a new HArray or HString that has had all elements run against the callback.
-  * **$variadic:** (*Optional*) This can be comprised of one or more `array`s, `HArray`s, and/or `HString`s
+**map($callable)** - Returns a new HArray or HString that has had all elements run against the callback.
 
 ```php
 use Haystack\HArray;

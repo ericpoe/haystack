@@ -2,8 +2,9 @@
 namespace Haystack\Tests;
 
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HStringTest extends \PHPUnit_Framework_TestCase
+class HStringTest extends TestCase
 {
     /** @var HString */
     protected $aString;
@@ -13,8 +14,8 @@ class HStringTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->aString = new HString("foobar");
-        $this->utf8String = new HString("ɹɐqooɟ");
+        $this->aString = new HString('foobar');
+        $this->utf8String = new HString('ɹɐqooɟ');
     }
 
     public function testCreateEmptyString()
@@ -40,19 +41,19 @@ class HStringTest extends \PHPUnit_Framework_TestCase
         $timeStamp = new \DateTime();
 
         return [
-            "Empty String" => [" ", " "],
-            "HString" => [new HString("abc"), "abc"],
-            "HString of HString of HString of..." => [new HString(new HString(new HString(new HString("abc")))), "abc"],
-            "Simple string" => ["abc", "abc"],
-            "UTF-8 string" => ["ɹɐqooɟ", "ɹɐqooɟ"],
-            "integer 1" => [1, "1"],
-            "integer 0" => [0, "0"],
-            "double 1.1" => [1.1, "1.1"],
-            "DateTime formatted timestamp" => [$timeStamp->format('c'), $timeStamp->format('c')],
-            "boolean true" => [true, "1"],
-            "boolean false" => [false, ""],
-            "Blank string" => ["", ""],
-            "Null string" => [null, ""],
+            'Empty String' => [' ', ' '],
+            'HString' => [new HString('abc'), 'abc'],
+            'HString of HString of HString of...' => [new HString(new HString(new HString(new HString('abc')))), 'abc'],
+            'Simple string' => ['abc', 'abc'],
+            'UTF-8 string' => ['ɹɐqooɟ', 'ɹɐqooɟ'],
+            'integer 1' => [1, '1'],
+            'integer 0' => [0, '0'],
+            'double 1.1' => [1.1, '1.1'],
+            'DateTime formatted timestamp' => [$timeStamp->format('c'), $timeStamp->format('c')],
+            'boolean true' => [true, '1'],
+            'boolean false' => [false, ''],
+            'Blank string' => ['', ''],
+            'Null string' => [null, ''],
         ];
     }
 
@@ -64,7 +65,8 @@ class HStringTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateBadHStringOfThings($item, $exceptionMsg)
     {
-        $this->setExpectedException("ErrorException", $exceptionMsg);
+        $this->expectException('ErrorException');
+        $this->expectExceptionMessage($exceptionMsg);
 
         $this->aString = new HString($item);
     }
@@ -72,8 +74,8 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function createBadHStringProvider()
     {
         return [
-            "DateTime" => [new \DateTime(), "DateTime is not a proper String"],
-            "SPL Object" => [new \SplDoublyLinkedList(), "SplDoublyLinkedList is not a proper String"],
+            'DateTime' => [new \DateTime(), 'DateTime is not a proper String'],
+            'SPL Object' => [new \SplDoublyLinkedList(), 'SplDoublyLinkedList is not a proper String'],
         ];
     }
 
@@ -101,11 +103,11 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function unserializeProvider()
     {
         return [
-            "String" => [serialize(new HString("foobar")), new HString("foobar")],
-            "String with spaces" => [serialize("The quick brown fox jumps"), new HString("The quick brown fox jumps")],
-            "UTF-8 string" => [serialize("ɹɐqooɟ"), new HString("ɹɐqooɟ")],
-            "Null string" => [serialize(null), new HString()],
-            "Unserialized null string" => [null, new HString()],
+            'String' => [serialize(new HString('foobar')), new HString('foobar')],
+            'String with spaces' => [serialize('The quick brown fox jumps'), new HString('The quick brown fox jumps')],
+            'UTF-8 string' => [serialize('ɹɐqooɟ'), new HString('ɹɐqooɟ')],
+            'Null string' => [serialize(null), new HString()],
+            'Unserialized null string' => [null, new HString()],
         ];
     }
 
@@ -116,7 +118,8 @@ class HStringTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadUnserialize($item, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($exceptionMsg);
 
         $this->aString->unserialize($item);
     }
@@ -124,26 +127,26 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function badUnserializeProvider()
     {
         return [
-            "Unserialized HString" => [new HString("The quick brown fox"), "HString cannot unserialize a Haystack\\HString"],
-            "DateTime object" => [new \DateTime(), "HString cannot unserialize a DateTime"],
+            'Unserialized HString' => [new HString('The quick brown fox'), "HString cannot unserialize a Haystack\\HString"],
+            'DateTime object' => [new \DateTime(), 'HString cannot unserialize a DateTime'],
         ];
     }
 
     public function testIteratorNext()
     {
         $this->aString->next();
-        $this->assertEquals("o", $this->aString->current());
+        $this->assertEquals('o', $this->aString->current());
 
         $this->utf8String->next();
-        $this->assertEquals("ɐ", $this->utf8String->current());
+        $this->assertEquals('ɐ', $this->utf8String->current());
     }
 
     /**
      * @dataProvider iteratorValidProvider
      *
-     * @param string $toIterate
+     * @param HString $toIterate
      */
-    public function testIteratorValid($toIterate)
+    public function testIteratorValid(HString $toIterate)
     {
         $toIterate->next(); // "o"
         $toIterate->next(); // "o"
@@ -158,8 +161,8 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function iteratorValidProvider()
     {
         return [
-            "ASCII string to iterate" => [new HString("foobar")],
-            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ")],
+            'ASCII string to iterate' => [new HString('foobar')],
+            'UTF-8 string to iterate' => [new HString('ɹɐqooɟ')],
         ];
     }
 
@@ -185,8 +188,8 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function iteratorRewindProvider()
     {
         return [
-            "ASCII string to iterate" => [new HString("foobar"), "f"],
-            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ"), "ɹ"],
+            'ASCII string to iterate' => [new HString('foobar'), 'f'],
+            'UTF-8 string to iterate' => [new HString('ɹɐqooɟ'), 'ɹ'],
         ];
     }
 
@@ -210,8 +213,8 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function iteratorKeyProvider()
     {
         return [
-            "ASCII string to iterate" => [new HString("foobar"), 3],
-            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ"), 3],
+            'ASCII string to iterate' => [new HString('foobar'), 3],
+            'UTF-8 string to iterate' => [new HString('ɹɐqooɟ'), 3],
         ];
     }
 
@@ -229,8 +232,8 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function arrayStyleCountProvider()
     {
         return [
-            "ASCII string to iterate" => [new HString("foobar"), 6],
-            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ"), 6],
+            'ASCII string to iterate' => [new HString('foobar'), 6],
+            'UTF-8 string to iterate' => [new HString('ɹɐqooɟ'), 6],
         ];
     }
 
@@ -250,8 +253,8 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function arrayStyleOffsetExistsProvider()
     {
         return [
-            "ASCII string to iterate" => [new HString("foobar")],
-            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ")],
+            'ASCII string to iterate' => [new HString('foobar')],
+            'UTF-8 string to iterate' => [new HString('ɹɐqooɟ')],
         ];
     }
 
@@ -270,8 +273,8 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function arrayStyleOffsetGetProvider()
     {
         return [
-            "ASCII string to iterate" => [new HString("foobar"), 3, "b"],
-            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ"), 3, "o"],
+            'ASCII string to iterate' => [new HString('foobar'), 3, 'b'],
+            'UTF-8 string to iterate' => [new HString('ɹɐqooɟ'), 3, 'o'],
         ];
     }
 
@@ -292,8 +295,8 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function arrayStyleOffsetSetProvider()
     {
         return [
-            "ASCII string to iterate" => [new HString("foobar"), 0, "r", new HString("roobar")],
-            "UTF-8 string to iterate" => [new HString("ɹɐqooɟ"), 0, "ɟ", new HString("ɟɐqooɟ")],
+            'ASCII string to iterate' => [new HString('foobar'), 0, 'r', new HString('roobar')],
+            'UTF-8 string to iterate' => [new HString('ɹɐqooɟ'), 0, 'ɟ', new HString('ɟɐqooɟ')],
         ];
     }
 
@@ -305,14 +308,14 @@ class HStringTest extends \PHPUnit_Framework_TestCase
 
     public function testArrayStyleAccess()
     {
-        $this->assertEquals("o", $this->aString[1]);
-        $this->assertEquals("ɐ", $this->utf8String[1]);
+        $this->assertEquals('o', $this->aString[1]);
+        $this->assertEquals('ɐ', $this->utf8String[1]);
     }
 
     public function testStringHead()
     {
-        $this->assertEquals("f", $this->aString->head()->toString());
-        $this->assertEquals("ɹ", $this->utf8String->head()->toString());
+        $this->assertEquals('f', $this->aString->head()->toString());
+        $this->assertEquals('ɹ', $this->utf8String->head()->toString());
 
         $emptyString = new HString();
         $this->assertEmpty(sprintf($emptyString->head()));
@@ -320,7 +323,7 @@ class HStringTest extends \PHPUnit_Framework_TestCase
 
     public function testStringTail()
     {
-        $this->assertEquals("oobar", $this->aString->tail()->toString());
+        $this->assertEquals('oobar', $this->aString->tail()->toString());
 
         $emptyString = new HString();
         $this->assertEmpty(sprintf($emptyString->tail()));
@@ -340,11 +343,11 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function sumStringProvider()
     {
         return [
-            "Empty HString" => [new HString(), 0],
-            "HString of chars" => [new HString($this->aString), 0],
-            "HString of chars & spaces" => [new HString("foo bar baz"), 0],
-            "HString of comma-delimited ints" => [new HString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10"), 55],
-            "HString of comma-delimited ints & doubles" => [new HString("1.1, 2, 3, 4, 5, 6, 7, 8, 9, 10"), 55.1],
+            'Empty HString' => [new HString(), 0],
+            'HString of chars' => [new HString($this->aString), 0],
+            'HString of chars & spaces' => [new HString('foo bar baz'), 0],
+            'HString of comma-delimited ints' => [new HString('1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), 55],
+            'HString of comma-delimited ints & doubles' => [new HString('1.1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), 55.1],
         ];
     }
 
@@ -362,12 +365,12 @@ class HStringTest extends \PHPUnit_Framework_TestCase
     public function productStringProvider()
     {
         return [
-            "Empty HString" => [new HString(), 0],
-            "HString of chars" => [new HString($this->aString), 0],
-            "HString of chars & spaces" => [new HString("foo bar baz"), 0],
-            "HString of chars & ints" => [new HString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10, apple"), 0],
-            "HString of comma-delimited ints" => [new HString("1, 2, 3, 4, 5, 6, 7, 8, 9, 10"), 3628800],
-            "HString of comma-delimited ints & doubles" => [new HString("1.1, 2, 3, 4, 5, 6, 7, 8, 9, 10"), 3991680],
+            'Empty HString' => [new HString(), 0],
+            'HString of chars' => [new HString($this->aString), 0],
+            'HString of chars & spaces' => [new HString('foo bar baz'), 0],
+            'HString of chars & ints' => [new HString('1, 2, 3, 4, 5, 6, 7, 8, 9, 10, apple'), 0],
+            'HString of comma-delimited ints' => [new HString('1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), 3628800],
+            'HString of comma-delimited ints & doubles' => [new HString('1.1, 2, 3, 4, 5, 6, 7, 8, 9, 10'), 3991680],
         ];
     }
 }

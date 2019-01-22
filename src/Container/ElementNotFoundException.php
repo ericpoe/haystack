@@ -13,7 +13,7 @@ class ElementNotFoundException extends \Exception
     public function __construct($element, $code = 0, \Exception $previous = null)
     {
         parent::__construct(
-            sprintf("Element could not be found: %s", $element),
+            sprintf('Element could not be found: %s', $element),
             $code,
             $previous
         );

@@ -3,15 +3,16 @@ namespace Haystack\Tests\Functional;
 
 use Haystack\HArray;
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HStringReduceTest extends \PHPUnit_Framework_TestCase
+class HStringReduceTest extends TestCase
 {
     /** @var HString */
     protected $aString;
 
     protected function setUp()
     {
-        $this->aString = new HString("foobar");
+        $this->aString = new HString('foobar');
     }
 
     public function testReduce()
@@ -40,11 +41,11 @@ class HStringReduceTest extends \PHPUnit_Framework_TestCase
             return $carry;
         };
 
-        $codedMessage = new HString("yhhutk");
+        $codedMessage = new HString('yhhutk');
 
         $this->assertEquals($codedMessage, $this->aString->reduce($encode));
-        $this->assertEquals("foobar", $codedMessage->reduce($decode));
-        $this->assertTrue($this->aString->reduce($encode) instanceof HString);
+        $this->assertEquals('foobar', $codedMessage->reduce($decode));
+        $this->assertInstanceOf(HString::class, $this->aString->reduce($encode));
     }
 
     /**
@@ -54,7 +55,7 @@ class HStringReduceTest extends \PHPUnit_Framework_TestCase
      */
     public function testStringReduceAsArrayTypeReturnsHArray($freq, $message)
     {
-        $this->assertTrue($this->aString->reduce($freq) instanceof HArray, $message);
+        $this->assertInstanceOf(HArray::class, $this->aString->reduce($freq), $message);
     }
 
     public function stringReduceAsArrayTypeProvider()
@@ -94,9 +95,9 @@ class HStringReduceTest extends \PHPUnit_Framework_TestCase
         };
 
         return [
-            "Array" => [$freqArray, "An Array"],
-            "ArrayObject" => [$freqArrayObject, "An ArrayObject"],
-            "HArray" => [$freqHArray, "An HArray"],
+            'Array' => [$freqArray, 'An Array'],
+            'ArrayObject' => [$freqArrayObject, 'An ArrayObject'],
+            'HArray' => [$freqHArray, 'An HArray'],
         ];
     }
 
@@ -121,8 +122,8 @@ class HStringReduceTest extends \PHPUnit_Framework_TestCase
     public function stringReduceWithInitialValueProvider()
     {
         return [
-            "Empty HString" => [new HString(), "alone", "alone"],
-            "HString" => [new HString("present"), "The ", "The present"],
+            'Empty HString' => [new HString(), 'alone', 'alone'],
+            'HString' => [new HString('present'), 'The ', 'The present'],
         ];
     }
 }

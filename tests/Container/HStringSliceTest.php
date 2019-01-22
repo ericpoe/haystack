@@ -2,8 +2,9 @@
 namespace Haystack\Tests\Container;
 
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HStringSliceTest extends \PHPUnit_Framework_TestCase
+class HStringSliceTest extends TestCase
 {
     /**
      * @dataProvider providerFirstPartOfTypesOfStringUsingSlice
@@ -19,9 +20,9 @@ class HStringSliceTest extends \PHPUnit_Framework_TestCase
     public function providerFirstPartOfTypesOfStringUsingSlice()
     {
         return [
-            "String" => [new HString("foobar"), "foob"],
-            "ASCII HString" => [new HString("foobar"), new HString("foob")],
-            "UTF-8 HString" => [new HString("ɹɐqooɟ"), new HString("ɹɐqo")],
+            'String' => [new HString('foobar'), 'foob'],
+            'ASCII HString' => [new HString('foobar'), new HString('foob')],
+            'UTF-8 HString' => [new HString('ɹɐqooɟ'), new HString('ɹɐqo')],
         ];
     }
 
@@ -39,8 +40,8 @@ class HStringSliceTest extends \PHPUnit_Framework_TestCase
     public function providerLastPartOfTypesOfStringUsingSlice()
     {
         return [
-            "HString" => [new HString("foobar"), new HString("obar")],
-            "UTF-8 HString" => [new HString("ɹɐqooɟ"), new HString("qooɟ")],
+            'HString' => [new HString('foobar'), new HString('obar')],
+            'UTF-8 HString' => [new HString('ɹɐqooɟ'), new HString('qooɟ')],
         ];
     }
 
@@ -60,16 +61,16 @@ class HStringSliceTest extends \PHPUnit_Framework_TestCase
     public function middlePartOfStringProvider()
     {
         return [
-            "ASCII HString: Negative finish, middle" => [new HString("foobar"), new HString("ob"), 2, -2],
-            "ASCII HString: Negative start & finish, middle" => [new HString("foobar"), new HString("ob"), -4, -2],
-            "ASCII HString: normal middle" => [new HString("foobar"), new HString("ob"), 2, 2],
-            "ASCII HString: null finish" => [new HString("foobar"), new HString("obar"), 2, null],
-            "ASCII HString: overflow finish" => [new HString("foobar"), new HString("obar"), 2, 2000],
-            "UTF-8 HString: Negative finish, middle" => [new HString("ɹɐqooɟ"), new HString("qo"), 2, -2],
-            "UTF-8 HString: Negative start & finish, middle" => [new HString("ɹɐqooɟ"), new HString("qo"), -4, -2],
-            "UTF-8 HString: normal middle" => [new HString("ɹɐqooɟ"), new HString("qo"), 2, 2],
-            "UTF-8 HString: null finish" => [new HString("ɹɐqooɟ"), new HString("qooɟ"), 2, null],
-            "UTF-8 HString: overflow finish" => [new HString("ɹɐqooɟ"), new HString("qooɟ"), 2, 2000],
+            'ASCII HString: Negative finish, middle' => [new HString('foobar'), new HString('ob'), 2, -2],
+            'ASCII HString: Negative start & finish, middle' => [new HString('foobar'), new HString('ob'), -4, -2],
+            'ASCII HString: normal middle' => [new HString('foobar'), new HString('ob'), 2, 2],
+            'ASCII HString: null finish' => [new HString('foobar'), new HString('obar'), 2, null],
+            'ASCII HString: overflow finish' => [new HString('foobar'), new HString('obar'), 2, 2000],
+            'UTF-8 HString: Negative finish, middle' => [new HString('ɹɐqooɟ'), new HString('qo'), 2, -2],
+            'UTF-8 HString: Negative start & finish, middle' => [new HString('ɹɐqooɟ'), new HString('qo'), -4, -2],
+            'UTF-8 HString: normal middle' => [new HString('ɹɐqooɟ'), new HString('qo'), 2, 2],
+            'UTF-8 HString: null finish' => [new HString('ɹɐqooɟ'), new HString('qooɟ'), 2, null],
+            'UTF-8 HString: overflow finish' => [new HString('ɹɐqooɟ'), new HString('qooɟ'), 2, 2000],
         ];
     }
 
@@ -83,7 +84,8 @@ class HStringSliceTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadSlicing(HString $target, $start, $length, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($exceptionMsg);
 
         $target->slice($start, $length);
     }
@@ -91,18 +93,18 @@ class HStringSliceTest extends \PHPUnit_Framework_TestCase
     public function badSlicingProvider()
     {
         return [
-            "ASCII HString: No start or length of slice" =>
-                [new HString("foobar"), null, null, "Slice parameter 1, \$start, must be an integer"],
-            "ASCII HString: Non-integer start of slice" =>
-                [new HString("foobar"), "cat", 4, "Slice parameter 1, \$start, must be an integer"],
-            "ASCII HString: Non-integer length of slice" =>
-                [new HString("foobar"), "1", "dog", "Slice parameter 2, \$length, must be null or an integer"],
-            "UTF-8 HString: No start or length of slice" =>
-                [new HString("ɹɐqooɟ"), null, null, "Slice parameter 1, \$start, must be an integer"],
-            "UTF-8 HString: Non-integer start of slice" =>
-                [new HString("ɹɐqooɟ"), "cat", 4, "Slice parameter 1, \$start, must be an integer"],
-            "UTF-8 HString: Non-integer length of slice" =>
-                [new HString("ɹɐqooɟ"), "1", "dog", "Slice parameter 2, \$length, must be null or an integer"],
+            'ASCII HString: No start or length of slice' =>
+                [new HString('foobar'), null, null, 'Slice parameter 1, $start, must be an integer'],
+            'ASCII HString: Non-integer start of slice' =>
+                [new HString('foobar'), 'cat', 4, 'Slice parameter 1, $start, must be an integer'],
+            'ASCII HString: Non-integer length of slice' =>
+                [new HString('foobar'), '1', 'dog', 'Slice parameter 2, $length, must be null or an integer'],
+            'UTF-8 HString: No start or length of slice' =>
+                [new HString('ɹɐqooɟ'), null, null, 'Slice parameter 1, $start, must be an integer'],
+            'UTF-8 HString: Non-integer start of slice' =>
+                [new HString('ɹɐqooɟ'), 'cat', 4, 'Slice parameter 1, $start, must be an integer'],
+            'UTF-8 HString: Non-integer length of slice' =>
+                [new HString('ɹɐqooɟ'), '1', 'dog', 'Slice parameter 2, $length, must be null or an integer'],
         ];
     }
 }

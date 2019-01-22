@@ -18,7 +18,7 @@ class HArrayAppend
 
     /**
      * @param HArray|array|numeric|string $value
-     * @return \ArrayObject
+     * @return array
      */
     public function append($value)
     {

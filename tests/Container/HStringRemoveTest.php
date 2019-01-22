@@ -2,8 +2,9 @@
 namespace Haystack\Tests\Container;
 
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HStringRemoveTest extends \PHPUnit_Framework_TestCase
+class HStringRemoveTest extends TestCase
 {
     /** @var HString */
     protected $aString;
@@ -13,25 +14,23 @@ class HStringRemoveTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->aString = new HString("foobar");
-        $this->utf8String = new HString("ɹɐqooɟ");
+        $this->aString = new HString('foobar');
+        $this->utf8String = new HString('ɹɐqooɟ');
     }
 
     public function testTypesOfStringRemove()
     {
-        $newString = $this->aString->remove("o");
-        $this->assertEquals(new HString("fobar"), $newString);
+        $newString = $this->aString->remove('o');
+        $this->assertEquals(new HString('fobar'), $newString);
 
-        $newString = $this->utf8String->remove("o");
-        $this->assertEquals(new HString("ɹɐqoɟ"), $newString);
+        $newString = $this->utf8String->remove('o');
+        $this->assertEquals(new HString('ɹɐqoɟ'), $newString);
     }
 
     public function testCannotRemoveBadString()
     {
-        $this->setExpectedException(
-            "InvalidArgumentException",
-            "DateTime cannot be converted to a string; it cannot be used as a search value within an HString"
-        );
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('DateTime cannot be converted to a string; it cannot be used as a search value within an HString');
 
         $this->aString->remove(new \DateTime());
     }

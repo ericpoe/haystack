@@ -19,12 +19,15 @@ use Haystack\Math\MathInterface;
 
 class HArray extends \ArrayObject implements ContainerInterface, FunctionalInterface, MathInterface
 {
-    const USE_KEY = "key";
-    const USE_BOTH = "both";
+    const USE_KEY = 'key';
+    const USE_BOTH = 'both';
 
     /** @var array */
     protected $arr;
 
+    /**
+     * @param null|array|object|\ArrayObject|HString|scalar $arr
+     */
     public function __construct($arr = [])
     {
         if ($arr instanceof \ArrayObject) {
@@ -35,7 +38,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
             $arr = [$arr->toString()];
         }
 
-        if (is_scalar($arr) || 'object' === gettype($arr)) {
+        if (is_scalar($arr) || is_object($arr)) {
             parent::__construct([$arr]);
             $this->arr = [$arr];
         } else {
@@ -55,7 +58,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      * @param string $glue - defaults to an empty string
      * @return HString
      */
-    public function toHString($glue = "")
+    public function toHString($glue = '')
     {
         if (empty($this->arr)) {
             return new HString();

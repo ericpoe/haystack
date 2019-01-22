@@ -7,12 +7,11 @@ class Helper
 {
     public static function getType($thing)
     {
-        $type = gettype($thing);
-        if ('object' === $type) {
-            $type = get_class($thing);
+        if (is_object($thing)) {
+            return get_class($thing);
         }
 
-        return $type;
+        return gettype($thing);
     }
 
     /**

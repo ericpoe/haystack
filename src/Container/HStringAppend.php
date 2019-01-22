@@ -19,6 +19,6 @@ class HStringAppend
         if (is_scalar($value) || $value instanceof HString) {
             return $this->hString . $value;
         }
-        throw new \InvalidArgumentException(sprintf("Cannot concatenate an HString with a %s", Helper::getType($value)));
+        throw new \InvalidArgumentException(sprintf('Cannot concatenate an HString with a %s', Helper::getType($value)));
     }
 }

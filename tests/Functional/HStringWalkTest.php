@@ -2,15 +2,16 @@
 namespace Haystack\Tests\Functional;
 
 use Haystack\HString;
+use PHPUnit\Framework\TestCase;
 
-class HStringWalkTest extends \PHPUnit_Framework_TestCase
+class HStringWalkTest extends TestCase
 {
     /** @var HString */
     protected $aString;
 
     protected function setUp()
     {
-        $this->aString = new HString("foobar");
+        $this->aString = new HString('foobar');
     }
 
     public function testStringWalk()
@@ -19,6 +20,6 @@ class HStringWalkTest extends \PHPUnit_Framework_TestCase
             return $this->aString[$key] = strtoupper($letter);
         });
 
-        $this->assertEquals("FOOBAR", $this->aString->toString());
+        $this->assertEquals('FOOBAR', $this->aString->toString());
     }
 }

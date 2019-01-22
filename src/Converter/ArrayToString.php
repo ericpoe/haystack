@@ -15,11 +15,11 @@ class ArrayToString
      * @param array  $arr
      * @param string $glue
      */
-    public function __construct(array $arr, $glue = "")
+    public function __construct(array $arr, $glue = '')
     {
         $this->arr = $arr;
 
-        $this->glue = empty($glue) ? "" : $glue;
+        $this->glue = empty($glue) ? '' : $glue;
     }
 
     /**
@@ -31,7 +31,7 @@ class ArrayToString
             return $this->arrayImplode();
         }
 
-        throw new \InvalidArgumentException("glue must be a string");
+        throw new \InvalidArgumentException('glue must be a string');
     }
 
     /**

@@ -2,8 +2,9 @@
 namespace Haystack\Tests\Container;
 
 use Haystack\HArray;
+use PHPUnit\Framework\TestCase;
 
-class HArraySliceTest extends \PHPUnit_Framework_TestCase
+class HArraySliceTest extends TestCase
 {
     /** @var HArray */
     private $arrList;
@@ -12,8 +13,8 @@ class HArraySliceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->arrList = new HArray(["apple", "bobble", "cobble", "dobble"]);
-        $this->arrDict = new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"]);
+        $this->arrList = new HArray(['apple', 'bobble', 'cobble', 'dobble']);
+        $this->arrDict = new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']);
     }
 
     /**
@@ -24,7 +25,7 @@ class HArraySliceTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFirstPartOfTypesOfArrayUsingSlice($type, $expected)
     {
-        if ("list" === $type) {
+        if ('list' === $type) {
             $subArray = $this->arrList->slice(0, 2);
         } else {
             $subArray = $this->arrDict->slice(0, 2);
@@ -36,8 +37,8 @@ class HArraySliceTest extends \PHPUnit_Framework_TestCase
     public function firstPartOfArraySliceProvider()
     {
         return [
-            "First two items of list" => ["list", new HArray(["apple", "bobble"])],
-            "First two items of dictionary" => ["dict", new HArray(["a" => "apple", "b" => "bobble"])],
+            'First two items of list' => ['list', new HArray(['apple', 'bobble'])],
+            'First two items of dictionary' => ['dict', new HArray(['a' => 'apple', 'b' => 'bobble'])],
         ];
     }
 
@@ -49,7 +50,7 @@ class HArraySliceTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLastPartOfTypesOfArrayUsingSlice($type, $expected)
     {
-        if ("list" === $type) {
+        if ('list' === $type) {
             $subArray = $this->arrList->slice(-2);
         } else {
             $subArray = $this->arrDict->slice(-2);
@@ -61,8 +62,8 @@ class HArraySliceTest extends \PHPUnit_Framework_TestCase
     public function lastPartOfArraySliceProvider()
     {
         return [
-            "Last two items of list" => ["list", new HArray(["cobble", "dobble"])],
-            "Last two items of dictionary" => ["dict", new HArray(["c" => "cobble", "d" => "dobble"])],
+            'Last two items of list' => ['list', new HArray(['cobble', 'dobble'])],
+            'Last two items of dictionary' => ['dict', new HArray(['c' => 'cobble', 'd' => 'dobble'])],
         ];
     }
 
@@ -76,7 +77,7 @@ class HArraySliceTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMiddlePartOfTypesOfArrayUsingSlice($type, $start, $length, $expected)
     {
-        if ("list" === $type) {
+        if ('list' === $type) {
             $subArray = $this->arrList->slice($start, $length);
         } else {
             $subArray = $this->arrDict->slice($start, $length);
@@ -88,14 +89,14 @@ class HArraySliceTest extends \PHPUnit_Framework_TestCase
     public function middlePartOfArraySliceProvider()
     {
         return [
-            "List: Start -3, length: -1" => ["list", "-3", "-1", new HArray(["bobble", "cobble"])],
-            "List: Start 1, length: -1" => ["list", "1", "-1", new HArray(["bobble", "cobble"])],
-            "List: Start 1, length: 2" => ["list", "1", "2", new HArray(["bobble", "cobble"])],
-            "List: Start 1, length: null" => ["list", "1", null, new HArray(["bobble", "cobble", "dobble"])],
-            "Dictionary: Start -3, length: -1" => ["dict", "-3", "-1", new HArray(["b" => "bobble", "c" => "cobble"])],
-            "Dictionary: Start 1, length: -1" => ["dict", "1", "-1", new HArray(["b" => "bobble", "c" => "cobble"])],
-            "Dictionary: Start 1, length: 2" => ["dict", "1", "2", new HArray(["b" => "bobble", "c" => "cobble"])],
-            "Dictionary: Start 1, length: null" => ["dict", "1", null, new HArray(["b" => "bobble", "c" => "cobble", "d" => "dobble"])],
+            'List: Start -3, length: -1' => ['list', '-3', '-1', new HArray(['bobble', 'cobble'])],
+            'List: Start 1, length: -1' => ['list', '1', '-1', new HArray(['bobble', 'cobble'])],
+            'List: Start 1, length: 2' => ['list', '1', '2', new HArray(['bobble', 'cobble'])],
+            'List: Start 1, length: null' => ['list', '1', null, new HArray(['bobble', 'cobble', 'dobble'])],
+            'Dictionary: Start -3, length: -1' => ['dict', '-3', '-1', new HArray(['b' => 'bobble', 'c' => 'cobble'])],
+            'Dictionary: Start 1, length: -1' => ['dict', '1', '-1', new HArray(['b' => 'bobble', 'c' => 'cobble'])],
+            'Dictionary: Start 1, length: 2' => ['dict', '1', '2', new HArray(['b' => 'bobble', 'c' => 'cobble'])],
+            'Dictionary: Start 1, length: null' => ['dict', '1', null, new HArray(['b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble'])],
         ];
     }
 
@@ -108,22 +109,23 @@ class HArraySliceTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadArraySlice($type, $start, $length, $exceptionMsg)
     {
-        $this->setExpectedException("InvalidArgumentException", $exceptionMsg);
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($exceptionMsg);
 
-        if ("list" === $type) {
-            $subArray = $this->arrList->slice($start, $length);
+        if ('list' === $type) {
+            $this->arrList->slice($start, $length);
         } else {
-            $subArray = $this->arrDict->slice($start, $length);
+            $this->arrDict->slice($start, $length);
         }
     }
 
     public function badArraySliceProvider()
     {
         return [
-            "List: non-integer start" => ["list", "b", "2", 'Slice parameter 1, $start, must be an integer'],
-            "Dictionary: non-integer start" => ["dict", "b", "2", 'Slice parameter 1, $start, must be an integer'],
-            "List: non-integer length" => ["list", "1", "b", 'Slice parameter 2, $length, must be null or an integer'],
-            "Dictionary: non-integer length" => ["dict", "1", "b", 'Slice parameter 2, $length, must be null or an integer'],
+            'List: non-integer start' => ['list', 'b', '2', 'Slice parameter 1, $start, must be an integer'],
+            'Dictionary: non-integer start' => ['dict', 'b', '2', 'Slice parameter 1, $start, must be an integer'],
+            'List: non-integer length' => ['list', '1', 'b', 'Slice parameter 2, $length, must be null or an integer'],
+            'Dictionary: non-integer length' => ['dict', '1', 'b', 'Slice parameter 2, $length, must be null or an integer'],
         ];
     }
 }

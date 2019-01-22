@@ -9,11 +9,11 @@ class HStringWalk
      * @param HString &$hString
      * @param callable $func
      */
-    public static function walk(HString &$hString, callable $func)
+    public static function walk(HString $hString, callable $func)
     {
         $size = $hString->count();
 
-        for ($i = 0; $i < $size; $i++) {
+        foreach ($hString as $i => $iValue) {
             $hString[$i] = $func($hString[$i], $i);
         }
     }

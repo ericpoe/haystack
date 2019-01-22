@@ -2,8 +2,9 @@
 namespace Haystack\Tests\Functional;
 
 use Haystack\HArray;
+use PHPUnit\Framework\TestCase;
 
-class HArrayWalkTest extends \PHPUnit_Framework_TestCase
+class HArrayWalkTest extends TestCase
 {
     /** @var HArray */
     private $arrList;
@@ -12,8 +13,8 @@ class HArrayWalkTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->arrList = new HArray(["apple", "bobble", "cobble", "dobble"]);
-        $this->arrDict = new HArray(["a" => "apple", "b" => "bobble", "c" => "cobble", "d" => "dobble"]);
+        $this->arrList = new HArray(['apple', 'bobble', 'cobble', 'dobble']);
+        $this->arrDict = new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']);
     }
 
     public function testArrayWalk()
@@ -27,9 +28,9 @@ class HArrayWalkTest extends \PHPUnit_Framework_TestCase
         };
 
         $this->arrDict->walk($capitalizeDict);
-        $this->assertEquals("APPLE", $this->arrDict["a"]);
+        $this->assertEquals('APPLE', $this->arrDict['a']);
 
         $this->arrList->walk($capitalizeList);
-        $this->assertEquals("APPLE", $this->arrList[0]);
+        $this->assertEquals('APPLE', $this->arrList[0]);
     }
 }
