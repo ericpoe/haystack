@@ -20,10 +20,10 @@ class HArrayInsertTest extends TestCase
 
     /**
      * @dataProvider arrayInsertProvider
-     * @param $type
-     * @param $babyArray
-     * @param $key
-     * @param $expected
+     * @param string $type
+     * @param int|string|array|\ArrayObject|HArray|HString $babyArray
+     * @param null|int $key
+     * @param HArray $expected
      */
     public function testTypesOfArrayInsert($type, $babyArray, $key, $expected)
     {
@@ -65,8 +65,8 @@ class HArrayInsertTest extends TestCase
     /**
      * @dataProvider badInsertKeyProvider
      *
-     * @param $key
-     * @param $exceptionMsg
+     * @param object $key
+     * @param string $exceptionMsg
      */
     public function testObjectCannotBeUsedAsArrayKey($key, $exceptionMsg)
     {

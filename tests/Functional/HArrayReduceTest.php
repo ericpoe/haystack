@@ -80,7 +80,7 @@ class HArrayReduceTest extends TestCase
     /**
      * @dataProvider reduceAsArrayTypeProvider
      *
-     * @param $freq
+     * @param callable $freq
      */
     public function testReduceAsArrayType($freq)
     {

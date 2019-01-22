@@ -11,7 +11,7 @@ class ArrayToStringTest extends TestCase
      * @dataProvider arrayToHstringProvider
      *
      * @param HArray $arr
-     * @param        $expected
+     * @param string $expected
      */
     public function testArrayToHstring(HArray $arr, $expected)
     {
@@ -33,8 +33,8 @@ class ArrayToStringTest extends TestCase
      * @dataProvider arrayToHstringWithGlueProvider
      *
      * @param HArray $arr
-     * @param        $glue
-     * @param        $expected
+     * @param string $glue
+     * @param string $expected
      */
     public function testArrayToHstringWithGlue(HArray $arr, $glue, $expected)
     {

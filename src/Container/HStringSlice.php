@@ -5,7 +5,7 @@ use Haystack\HString;
 
 class HStringSlice
 {
-    /** @var string */
+    /** @var HString */
     private $str;
 
     /**

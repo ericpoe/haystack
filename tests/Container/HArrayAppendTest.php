@@ -21,9 +21,9 @@ class HArrayAppendTest extends TestCase
     /**
      * @dataProvider appendProvider
      *
-     * @param $type
-     * @param $newThing
-     * @param $expected
+     * @param string $type
+     * @param mixed $newThing
+     * @param HArray $expected
      */
     public function testAppendStringInArray($type, $newThing, $expected)
     {

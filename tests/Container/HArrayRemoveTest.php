@@ -20,9 +20,9 @@ class HArrayRemoveTest extends TestCase
     /**
      * @dataProvider arrayRemoveProvider
      *
-     * @param $type
-     * @param $value
-     * @param $expected
+     * @param string $type
+     * @param string $value
+     * @param HArray $expected
      */
     public function testArrayTypeRemove($type, $value, $expected)
     {

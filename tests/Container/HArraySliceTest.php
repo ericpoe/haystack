@@ -20,10 +20,10 @@ class HArraySliceTest extends TestCase
     /**
      * @dataProvider firstPartOfArraySliceProvider
      *
-     * @param $type
-     * @param $expected
+     * @param string $type
+     * @param HArray $expected
      */
-    public function testGetFirstPartOfTypesOfArrayUsingSlice($type, $expected)
+    public function testGetFirstPartOfTypesOfArrayUsingSlice($type, HArray $expected)
     {
         if ('list' === $type) {
             $subArray = $this->arrList->slice(0, 2);
@@ -45,10 +45,10 @@ class HArraySliceTest extends TestCase
     /**
      * @dataProvider lastPartOfArraySliceProvider
      *
-     * @param $type
-     * @param $expected
+     * @param string $type
+     * @param HArray $expected
      */
-    public function testGetLastPartOfTypesOfArrayUsingSlice($type, $expected)
+    public function testGetLastPartOfTypesOfArrayUsingSlice($type, HArray $expected)
     {
         if ('list' === $type) {
             $subArray = $this->arrList->slice(-2);
@@ -70,12 +70,12 @@ class HArraySliceTest extends TestCase
     /**
      * @dataProvider middlePartOfArraySliceProvider
      *
-     * @param $type
-     * @param $start
-     * @param $length
-     * @param $expected
+     * @param string $type
+     * @param int $start
+     * @param int $length
+     * @param HArray $expected
      */
-    public function testGetMiddlePartOfTypesOfArrayUsingSlice($type, $start, $length, $expected)
+    public function testGetMiddlePartOfTypesOfArrayUsingSlice($type, $start, $length, HArray $expected)
     {
         if ('list' === $type) {
             $subArray = $this->arrList->slice($start, $length);
@@ -102,10 +102,10 @@ class HArraySliceTest extends TestCase
 
     /**
      * @dataProvider badArraySliceProvider
-     * @param $type
-     * @param $start
-     * @param $length
-     * @param $exceptionMsg
+     * @param string $type
+     * @param mixed $start
+     * @param mixed $length
+     * @param string $exceptionMsg
      */
     public function testBadArraySlice($type, $start, $length, $exceptionMsg)
     {

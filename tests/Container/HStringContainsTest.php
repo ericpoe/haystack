@@ -61,8 +61,8 @@ class HStringContainsTest extends TestCase
 
     /**
      * @dataProvider badTypesOfStringInFoobar
-     * @param $item
-     * @param $exceptionMsg
+     * @param object $item
+     * @param string $exceptionMsg
      * @throws \InvalidArgumentException
      */
     public function testBadTypesOfStringInFoobar($item, $exceptionMsg)

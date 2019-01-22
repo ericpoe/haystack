@@ -22,8 +22,8 @@ class StringToArrayTest extends TestCase
      * @dataProvider stringToHArrayProvider
      *
      * @param HString $hString
-     * @param $delim
-     * @param $limit
+     * @param string|null $delim
+     * @param int|null $limit
      * @param HArray $expected
      */
     public function testStringToHArray(HString $hString, $delim, $limit, HArray $expected)
@@ -65,8 +65,8 @@ class StringToArrayTest extends TestCase
     /**
      * @dataProvider badDelimInStringToArrayProvider
      *
-     * @param $delim
-     * @param $exceptionMsg
+     * @param string|null $delim
+     * @param string $exceptionMsg
      */
     public function testBadDelimInStringToArray($delim, $exceptionMsg)
     {
@@ -87,8 +87,8 @@ class StringToArrayTest extends TestCase
 
     /**
      * @dataProvider badLimitInStringToArrayProvider
-     * @param $limit
-     * @param $exceptionMsg
+     * @param int|null $limit
+     * @param string $exceptionMsg
      */
     public function testBadLimitInStringToArray($limit, $exceptionMsg)
     {

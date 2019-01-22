@@ -14,7 +14,7 @@ class HStringRemove
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @return HString
      */
     public function remove($value)

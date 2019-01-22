@@ -17,8 +17,8 @@ class HArraySlice
     }
 
     /**
-     * @param $start
-     * @param integer|null $length
+     * @param int      $start
+     * @param int|null $length
      * @return array
      */
     public function slice($start, $length)

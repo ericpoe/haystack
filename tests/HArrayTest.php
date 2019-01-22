@@ -9,8 +9,10 @@ class HArrayTest extends TestCase
 {
     /** @var HArray */
     private $arrList;
+
     /** @var HArray */
     private $arrDict;
+
     /** @var HArray */
     private $arrUtf8Dict;
 
@@ -34,7 +36,7 @@ class HArrayTest extends TestCase
     /**
      * @dataProvider goodArraysProvider
      *
-     * @param $item
+     * @param array $item
      */
     public function testCreateArrayOfThings($item)
     {
@@ -82,7 +84,7 @@ class HArrayTest extends TestCase
      * @dataProvider arraySumProvider
      *
      * @param \Haystack\HArray $testArr
-     * @param              $expected
+     * @param int $expected
      */
     public function testArraySum(HArray $testArr, $expected)
     {
@@ -107,7 +109,7 @@ class HArrayTest extends TestCase
      * @dataProvider arrayProductProvider()
      *
      * @param \Haystack\HArray $testArr
-     * @param              $expected
+     * @param int $expected
      */
     public function testArrayProduct(HArray $testArr, $expected)
     {

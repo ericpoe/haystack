@@ -50,7 +50,7 @@ class HStringLocateTest extends TestCase
     /**
      * @dataProvider stringBadLocateProvider()
      *
-     * @param        $checkString
+     * @param mixed $checkString
      * @param string $message
      */
     public function testCannotLocateTypesOfStringInFoober($checkString, $message)
@@ -73,8 +73,8 @@ class HStringLocateTest extends TestCase
 
     /**
      * @dataProvider badLocateTypesOfStringInFoobarProvider
-     * @param $item
-     * @param $exceptionMsg
+     * @param object $item
+     * @param string $exceptionMsg
      * @throws \InvalidArgumentException
      */
     public function testBadLocateTypesOfStringInFoobar($item, $exceptionMsg)

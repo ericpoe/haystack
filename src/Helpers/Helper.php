@@ -27,7 +27,7 @@ class Helper
     }
 
     /**
-     * @param $thing
+     * @param mixed $thing
      * @return bool
      */
     public static function canBeInArray($thing)

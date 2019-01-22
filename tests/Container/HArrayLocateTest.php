@@ -23,9 +23,9 @@ class HArrayLocateTest extends TestCase
     /**
      * @dataProvider arrayLocateProvider
      *
-     * @param $type
-     * @param $checkThing
-     * @param $expected
+     * @param string $type
+     * @param string|HString $checkThing
+     * @param int|string $expected
      */
     public function testLocateStringTypeInHArray($type, $checkThing, $expected)
     {
@@ -51,14 +51,14 @@ class HArrayLocateTest extends TestCase
     /**
      * @dataProvider elementNotFoundProvider
      *
-     * @param $type
-     * @param $checkThing
-     * @param $message
+     * @param string $type
+     * @param string|HString $checkThing
+     * @param string $exceptionMsg
      */
-    public function testElementNotFound($type, $checkThing, $message)
+    public function testElementNotFound($type, $checkThing, $exceptionMsg)
     {
         $this->expectException(ElementNotFoundException::class);
-        $this->expectExceptionMessage($message);
+        $this->expectExceptionMessage($exceptionMsg);
 
         if ('list' === $type) {
             $this->arrList->locate($checkThing);

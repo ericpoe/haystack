@@ -285,7 +285,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param $value
+     * @param string $value
      * @return bool
      * @throws \InvalidArgumentException
      */
@@ -298,7 +298,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param $value
+     * @param string $value
      * @return int - location of $value in current object
      * @throws ElementNotFoundException
      * @throws \InvalidArgumentException
@@ -312,7 +312,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param $value
+     * @param string $value
      * @return HString
      * @throws \InvalidArgumentException
      */
@@ -325,7 +325,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param          $value
+     * @param string $value
      * @param int|null $key
      * @return HString
      * @throws \InvalidArgumentException
@@ -339,7 +339,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param $value
+     * @param string $value
      * @return HString
      * @throws \InvalidArgumentException
      */
@@ -352,8 +352,8 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param $start
-     * @param $length
+     * @param int $start
+     * @param int $length
      * @return HString
      * @throws \InvalidArgumentException
      */

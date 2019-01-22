@@ -50,7 +50,7 @@ class HStringReduceTest extends TestCase
 
     /**
      * @dataProvider stringReduceAsArrayTypeProvider
-     * @param $freq
+     * @param callable $freq
      * @param string $message
      */
     public function testStringReduceAsArrayTypeReturnsHArray($freq, $message)
@@ -105,8 +105,8 @@ class HStringReduceTest extends TestCase
      * @dataProvider stringReduceWithInitialValueProvider
      *
      * @param HString $hString
-     * @param $initial
-     * @param $expected
+     * @param mixed $initial
+     * @param mixed $expected
      */
     public function testStringReduceWithInitialValue(HString $hString, $initial, $expected)
     {
