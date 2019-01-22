@@ -14,7 +14,7 @@ class HStringLocate
     }
 
     /**
-     * @param string $value
+     * @param HString|string $value
      * @return int
      * @throws ElementNotFoundException
      */

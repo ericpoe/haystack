@@ -142,7 +142,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * Constructs the object
      *
      * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $value <p>
+     * @param null|string $value <p>
      *                           The string representation of the object.
      *                           </p>
      * @return void
@@ -285,7 +285,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param string $value
+     * @param HString|string $value
      * @return bool
      * @throws \InvalidArgumentException
      */
@@ -298,7 +298,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param string $value
+     * @param HString|string $value
      * @return int key of $value in current object
      * @throws ElementNotFoundException
      * @throws \InvalidArgumentException
