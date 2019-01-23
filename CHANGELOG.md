@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.2](https://github.com/ericpoe/haystack/tree/v2.1.2) - 2019-01-22
+
+### Updated
+Added better docblock typehints
+
 ## [2.1.1](https://github.com/ericpoe/haystack/tree/v2.1.1) - 2019-01-22
 
 ### Changed
