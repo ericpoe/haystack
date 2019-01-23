@@ -26,7 +26,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     protected $arr;
 
     /**
-     * @param null|array|object|\ArrayObject|HString|scalar $arr
+     * @param null|array|object|\ArrayObject|HString|bool|int|float|string $arr
      */
     public function __construct($arr = [])
     {
@@ -71,7 +71,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     /**
      * @inheritdoc
      *
-     * @param $value
+     * @param mixed $value
      * @return boolean
      */
     public function contains($value)
@@ -83,8 +83,8 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     /**
      * @inheritdoc
      *
-     * @param $value
-     * @return int - array-notation location of $value in current object; "-1" if not found
+     * @param mixed $value
+     * @return int|string - array-notation location of $value in current object; "-1" if not found
      * @throws ElementNotFoundException
      */
     public function locate($value)
@@ -96,7 +96,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     /**
      * @inheritdoc
      *
-     * @param $value
+     * @param mixed $value
      * @return HArray
      */
     public function append($value)
@@ -108,7 +108,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     /**
      * @inheritdoc
      *
-     * @param          $value
+     * @param mixed    $value
      * @param int|null $key
      * @return HArray
      *
@@ -124,7 +124,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     /**
      * @inheritdoc
      *
-     * @param $value
+     * @param mixed $value
      * @return HArray
      */
     public function remove($value)
@@ -136,8 +136,8 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     /**
      * @inheritdoc
      *
-     * @param $start
-     * @param $length
+     * @param int $start
+     * @param int $length
      * @return HArray
      * @throws \InvalidArgumentException
      */
@@ -151,7 +151,6 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      * @inheritdoc
      *
      * @param callable $func
-     * @param array $containers - a variadic array
      * @return HArray
      */
     public function map(callable $func)

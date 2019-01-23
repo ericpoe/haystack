@@ -17,7 +17,7 @@ class HArrayAppend
     }
 
     /**
-     * @param HArray|array|numeric|string $value
+     * @param HArray|array|int|float|string $value
      * @return array
      */
     public function append($value)

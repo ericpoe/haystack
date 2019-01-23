@@ -10,7 +10,7 @@ class HStringAppendTest extends TestCase
      * @dataProvider stringAppendProvider()
      *
      * @param HString $target
-     * @param $babyString
+     * @param mixed $babyString
      * @param HString $expected
      */
     public function testTypesOfStringAppendToFoobar(HString $target, $babyString, HString $expected)

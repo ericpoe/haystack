@@ -53,9 +53,9 @@ class HStringInsertTest extends TestCase
     /**
      * @dataProvider badInsertProvider
      *
-     * @param $value
-     * @param $key
-     * @param $exceptionMsg
+     * @param mixed $value
+     * @param string|null $key
+     * @param string $exceptionMsg
      * @throws \InvalidArgumentException
      */
     public function testBadInsert($value, $key, $exceptionMsg)

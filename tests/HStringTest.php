@@ -27,8 +27,8 @@ class HStringTest extends TestCase
     /**
      * @dataProvider stringOfThingsProvider
      *
-     * @param $item
-     * @param $expected
+     * @param mixed $item
+     * @param HString $expected
      */
     public function testCreateHStringOfThings($item, $expected)
     {
@@ -60,8 +60,8 @@ class HStringTest extends TestCase
     /**
      * @dataProvider createBadHStringProvider
      *
-     * @param $item
-     * @param $exceptionMsg
+     * @param mixed $item
+     * @param string $exceptionMsg
      */
     public function testCreateBadHStringOfThings($item, $exceptionMsg)
     {
@@ -113,8 +113,8 @@ class HStringTest extends TestCase
 
     /**
      * @dataProvider badUnserializeProvider
-     * @param $item
-     * @param $exceptionMsg
+     * @param mixed $item
+     * @param string $exceptionMsg
      */
     public function testBadUnserialize($item, $exceptionMsg)
     {
@@ -332,8 +332,8 @@ class HStringTest extends TestCase
     /**
      * @dataProvider sumStringProvider
      *
-     * @param \Haystack\HString $hString
-     * @param               $expected
+     * @param HString $hString
+     * @param int|float $expected
      */
     public function testStringSum(HString $hString, $expected)
     {
@@ -355,7 +355,7 @@ class HStringTest extends TestCase
      * @dataProvider productStringProvider
      *
      * @param HString $hString
-     * @param $expected
+     * @param int|float $expected
      */
     public function testStringProvider(HString $hString, $expected)
     {

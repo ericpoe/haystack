@@ -10,7 +10,7 @@ class HStringSliceTest extends TestCase
      * @dataProvider providerFirstPartOfTypesOfStringUsingSlice
      *
      * @param HString $target
-     * @param $expected
+     * @param HString $expected
      */
     public function testGetFirstPartOfTypesOfStringUsingSlice(HString $target, $expected)
     {
@@ -30,7 +30,7 @@ class HStringSliceTest extends TestCase
      * @dataProvider providerLastPartOfTypesOfStringUsingSlice
      *
      * @param HString $target
-     * @param $expected
+     * @param HString $expected
      */
     public function testGetLastPartOfTypesOfStringUsingSlice(HString $target, $expected)
     {
@@ -80,7 +80,7 @@ class HStringSliceTest extends TestCase
      * @param HString $target
      * @param integer $start
      * @param integer $length
-     * @param $exceptionMsg
+     * @param string $exceptionMsg
      */
     public function testBadSlicing(HString $target, $start, $length, $exceptionMsg)
     {

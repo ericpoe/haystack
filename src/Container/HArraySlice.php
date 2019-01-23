@@ -17,13 +17,13 @@ class HArraySlice
     }
 
     /**
-     * @param $start
-     * @param integer|null $length
+     * @param int      $start
+     * @param int|null $length
      * @return array
      */
     public function slice($start, $length)
     {
-        if ($start === null || !is_numeric($start)) {
+        if (!is_numeric($start)) {
             throw new \InvalidArgumentException('Slice parameter 1, $start, must be an integer');
         }
 

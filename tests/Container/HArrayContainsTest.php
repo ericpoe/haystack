@@ -1,5 +1,5 @@
 <?php
-namespace Haystack\Tests;
+namespace Haystack\Tests\Container;
 
 use Haystack\HArray;
 use PHPUnit\Framework\TestCase;
@@ -8,6 +8,7 @@ class HArrayContainsTest extends TestCase
 {
     /** @var  \Haystack\HArray */
     private $arrList;
+
     /** @var  \Haystack\HArray */
     private $arrDict;
 
@@ -20,18 +21,18 @@ class HArrayContainsTest extends TestCase
     /**
      * @dataProvider arrayContainsProvider
      *
-     * @param $type
-     * @param $checkThing
-     * @param $expected
+     * @param string $type
+     * @param string|int $checkThing
+     * @param bool $expected
      */
     public function testContainsStringTypeInHArray($type, $checkThing, $expected)
     {
-        if ('list' == $type) {
-            $bool = $this->arrList->contains($checkThing);
+        if ('list' === $type) {
+            $contains = $this->arrList->contains($checkThing);
         } else {
-            $bool = $this->arrDict->contains($checkThing);
+            $contains = $this->arrDict->contains($checkThing);
         }
-        $expected ? $this->assertTrue($bool) : $this->assertFalse($bool);
+        $expected ? $this->assertTrue($contains) : $this->assertFalse($contains);
     }
 
     public function arrayContainsProvider()

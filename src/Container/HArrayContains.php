@@ -14,7 +14,7 @@ class HArrayContains
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return bool
      */
     public function contains($value)

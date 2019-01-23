@@ -14,7 +14,7 @@ class HArrayLocate
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return int|string
      * @throws ElementNotFoundException
      */

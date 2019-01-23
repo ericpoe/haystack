@@ -16,7 +16,7 @@ class HaystackReduce
 
     /**
      * @param callable $func
-     * @param $initial
+     * @param mixed $initial
      * @return bool|float|int|HString|HArray
      */
     public function reduce(callable $func, $initial)

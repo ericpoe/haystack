@@ -51,8 +51,8 @@ class HArrayInsert
     }
 
     /**
-     * @param $key
-     * @param $value
+     * @param mixed $key
+     * @param mixed $value
      * @return array
      */
     private function setSubarrayAndLengthForSequentialArray($key, $value)
@@ -65,7 +65,7 @@ class HArrayInsert
 
     /**
      * @param string $key
-     * @param        $value
+     * @param mixed  $value
      * @return array
      */
     private function setSubarrayAndLengthForAssociativeArray($key, $value)
@@ -77,7 +77,7 @@ class HArrayInsert
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return array
      */
     private function setSubarrayAndLengthWhenNoKeyProvided($value)

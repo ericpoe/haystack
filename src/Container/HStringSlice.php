@@ -5,7 +5,7 @@ use Haystack\HString;
 
 class HStringSlice
 {
-    /** @var string */
+    /** @var HString */
     private $str;
 
     /**
@@ -23,7 +23,7 @@ class HStringSlice
      */
     public function slice($start, $length = null)
     {
-        if ($start === null || !is_numeric($start)) {
+        if (!is_numeric($start)) {
             throw new \InvalidArgumentException('Slice parameter 1, $start, must be an integer');
         }
 

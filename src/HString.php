@@ -142,17 +142,15 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * Constructs the object
      *
      * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $value <p>
+     * @param null|string $value <p>
      *                           The string representation of the object.
      *                           </p>
      * @return void
      */
     public function unserialize($value)
     {
-        if (is_scalar($value)) {
+        if ($value === null || is_scalar($value)) {
             $this->str = unserialize($value);
-        } elseif ($value === null) {
-            $this->str = '';
         } else {
             throw new \InvalidArgumentException(sprintf('HString cannot unserialize a %s', Helper::getType($value)));
         }
@@ -285,7 +283,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param $value
+     * @param HString|string $value
      * @return bool
      * @throws \InvalidArgumentException
      */
@@ -298,8 +296,8 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param $value
-     * @return int - location of $value in current object
+     * @param HString|string $value
+     * @return int key of $value in current object
      * @throws ElementNotFoundException
      * @throws \InvalidArgumentException
      */
@@ -312,7 +310,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param $value
+     * @param string $value
      * @return HString
      * @throws \InvalidArgumentException
      */
@@ -325,7 +323,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param          $value
+     * @param string $value
      * @param int|null $key
      * @return HString
      * @throws \InvalidArgumentException
@@ -339,7 +337,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param $value
+     * @param string $value
      * @return HString
      * @throws \InvalidArgumentException
      */
@@ -352,8 +350,8 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @param $start
-     * @param $length
+     * @param int $start
+     * @param int $length
      * @return HString
      * @throws \InvalidArgumentException
      */

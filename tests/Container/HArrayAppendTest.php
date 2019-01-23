@@ -1,5 +1,5 @@
 <?php
-namespace Haystack\Tests;
+namespace Haystack\Tests\Container;
 
 use Haystack\HArray;
 use PHPUnit\Framework\TestCase;
@@ -21,9 +21,9 @@ class HArrayAppendTest extends TestCase
     /**
      * @dataProvider appendProvider
      *
-     * @param $type
-     * @param $newThing
-     * @param $expected
+     * @param string $type
+     * @param mixed $newThing
+     * @param HArray $expected
      */
     public function testAppendStringInArray($type, $newThing, $expected)
     {

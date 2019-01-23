@@ -6,7 +6,7 @@ interface ContainerInterface
     /**
      * Determines if a $value is in the current object.
      *
-     * @param $value
+     * @param mixed $value
      * @return boolean
      */
     public function contains($value);
@@ -14,8 +14,8 @@ interface ContainerInterface
     /**
      * Finds the location of $value in the current object. If it does not exist, the user will be notified
      *
-     * @param $value
-     * @return int - array-notation location of $value in current object
+     * @param mixed $value
+     * @return int|string key of $value in current object
      * @throws ElementNotFoundException
      */
     public function locate($value);
@@ -23,7 +23,7 @@ interface ContainerInterface
     /**
      * Concatenates two things of the same type.
      *
-     * @param $value
+     * @param mixed $value
      * @return mixed
      */
     public function append($value);
@@ -31,7 +31,7 @@ interface ContainerInterface
     /**
      * Inserts a $value at a specified location; if no key is provided, $value will be added to the back.
      *
-     * @param          $value
+     * @param mixed    $value
      * @param int|null $key
      * @return mixed
      */
@@ -40,7 +40,7 @@ interface ContainerInterface
     /**
      * Removes the first instance of the supplied value
      *
-     * @param $value
+     * @param mixed $value
      * @return mixed
      */
     public function remove($value);
