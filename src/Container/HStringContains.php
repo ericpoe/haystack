@@ -40,6 +40,6 @@ class HStringContains
      */
     private function containsValue()
     {
-        return false !== mb_strpos($this->str, $this->value, null, $this->encoding);
+        return false !== mb_strpos($this->str, $this->value, 0, $this->encoding);
     }
 }

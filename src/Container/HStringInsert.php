@@ -43,7 +43,7 @@ class HStringInsert
         $start = $key >= 0 ? $key : $this->hString->count() + $key;
         $length = $key >= 0 ? $this->hString->count() : $this->hString->count() + $key;
 
-        return mb_substr($this->hString, $start, $length, $this->hString->getEncoding());
+        return mb_substr($this->hString, $start, (int) $length, $this->hString->getEncoding());
     }
 
 }

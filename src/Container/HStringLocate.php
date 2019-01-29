@@ -21,7 +21,7 @@ class HStringLocate
     public function locate($value)
     {
         if ($this->hString->contains($value)) {
-            return mb_strpos($this->hString, (string) $value, null, $this->hString->getEncoding());
+            return mb_strpos($this->hString, (string) $value, 0, $this->hString->getEncoding());
         }
 
         throw new ElementNotFoundException((string) $value);
