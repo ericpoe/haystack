@@ -149,8 +149,13 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      */
     public function unserialize($value)
     {
-        if ($value === null || is_scalar($value)) {
-            $this->str = unserialize($value);
+        if ($value === null) {
+            $this->str = '';
+            return;
+        }
+
+        if (is_string($value)) {
+            $this->str = unserialize($value, [$this]);
         } else {
             throw new \InvalidArgumentException(sprintf('HString cannot unserialize a %s', Helper::getType($value)));
         }
