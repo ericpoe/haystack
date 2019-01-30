@@ -269,19 +269,15 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * Alias to PHP function `explode`
-     *
-     * @param string $delim
-     * @param null|int    $limit
-     * @return HArray
-     * @throws \InvalidArgumentException
      */
-    public function toHArray($delim = '', $limit = null)
+    public function toHArray(?string $delim = '', ?int $limit = 0): HArray
     {
         if (empty($this->str)) {
             return new HArray();
         }
 
-        $arr = new StringToArray($this->str, $delim);
+        $arr = new StringToArray($this->str, $delim ?? '');
+
         return new HArray($arr->stringToArray($limit));
     }
 

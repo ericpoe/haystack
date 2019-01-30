@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace Haystack\Converter;
 
-use Haystack\HString;
+use Haystack\Tests\Converter\HaystackConverterException;
 
 class StringToArray
 {
@@ -14,31 +16,21 @@ class StringToArray
     /** @var array */
     private $arr;
 
-    /**
-     * @param string | HString $str
-     * @param string | HString $delim
-     */
-    public function __construct($str, $delim = '')
+    public function __construct(string $str, ?string $delim = '')
     {
-        $this->str = (string) $str;
+        $this->str = $str;
 
-        if (empty($delim) || is_string($delim) || $delim instanceof HString) {
-            $this->delim = (string) $delim;
+        if (is_string($delim)) {
+            $this->delim = $delim;
         } else {
             throw new \InvalidArgumentException('delimiter must be a string');
         }
     }
 
     /**
-     * @param null|int $limit
-     * @return array
-     */
-    /**
-     * @param null $limit
-     * @return array
      * @throws \InvalidArgumentException
      */
-    public function stringToArray($limit = null)
+    public function stringToArray(?int $limit = 0): array
     {
         if ($this->delim === null || '' === $this->delim) {
             $this->arr = $this->noDelimExplode();
@@ -58,28 +50,36 @@ class StringToArray
         throw new \InvalidArgumentException('limit must be an integer');
     }
 
-    /**
-     * @return array
-     */
-    private function noDelimExplode()
+    private function noDelimExplode(): array
     {
-        return preg_split('//u', $this->str, -1, PREG_SPLIT_NO_EMPTY);
+        $arr = preg_split('//u', $this->str, -1, PREG_SPLIT_NO_EMPTY);
+
+        if (!$arr) {
+            throw new HaystackConverterException('Cannot convert this HString to an array');
+        }
+
+        return $arr;
     }
 
-    /**
-     * @return array
-     */
-    private function noLimitExplode()
+    private function noLimitExplode(): array
     {
-        return explode($this->delim, $this->str);
+        $arr = explode($this->delim, $this->str);
+
+        if (!$arr) {
+            throw new HaystackConverterException('Cannot convert this HString to an array');
+        }
+
+        return $arr;
     }
 
-    /**
-     * @param int $limit
-     * @return array
-     */
-    private function explode($limit)
+    private function explode(int $limit): array
     {
-        return explode($this->delim, $this->str, $limit);
+        $arr = explode($this->delim, $this->str, $limit);
+
+        if (!$arr) {
+            throw new HaystackConverterException('Cannot convert this HString to an array');
+        }
+
+        return $arr;
     }
 }
