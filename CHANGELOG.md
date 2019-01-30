@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2019-01-29
+
+### Added
+
+### Updated
+
+### Changed
+
+### Remove
+* Removed support for PHP 5.6, PHP 7.0, and HHVM
+
 ## [2.1.3](https://github.com/ericpoe/haystack/tree/v2.1.3) - 2019-01-29
 
 ### Updated
