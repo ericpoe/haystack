@@ -34,9 +34,5 @@
     "branch-alias": {
       "dev-master": "3.0-dev"
     }
-  },
-  "scripts": {
-    "test": "vendor/bin/phpunit",
-    "stanalyse": "vendor/bin/phpstan analyse"
   }
 }
