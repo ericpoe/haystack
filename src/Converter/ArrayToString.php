@@ -5,10 +5,9 @@ use Haystack\HString;
 
 class ArrayToString
 {
-    /** @var  array */
+    /** @var array */
     private $arr;
 
-    /** @var HString|string */
     private $glue;
 
     /**
@@ -39,6 +38,6 @@ class ArrayToString
      */
     private function arrayImplode()
     {
-        return implode($this->glue, $this->arr);
+        return implode((string) $this->glue, $this->arr);
     }
 }

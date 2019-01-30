@@ -32,7 +32,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
         $this->encoding = 'UTF-8';
 
         if (is_scalar($str) || $str instanceof self) {
-            $this->str = mb_convert_encoding($str, $this->encoding);
+            $this->str = mb_convert_encoding((string) $str, $this->encoding);
             $this->rewind();
         } elseif ($str === null) {
             $this->str = '';
@@ -117,12 +117,12 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     private function getPrefix($length)
     {
-        return mb_substr($this, 0, $length, $this->getEncoding());
+        return mb_substr((string) $this, 0, $length, $this->getEncoding());
     }
 
     private function getSuffix($start)
     {
-        return mb_substr($this, $start + 1, $this->count() - $start, $this->getEncoding());
+        return mb_substr((string) $this, $start + 1, $this->count() - $start, $this->getEncoding());
     }
 
     /**

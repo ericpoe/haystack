@@ -8,30 +8,35 @@ class StringToArray
     /** @var string */
     private $str;
 
-    /** @var HString|string */
+    /** @var string */
     private $delim;
 
     /** @var array */
     private $arr;
 
     /**
-     * @param string $str
+     * @param string | HString $str
      * @param string | HString $delim
      */
     public function __construct($str, $delim = '')
     {
-        $this->str = $str;
+        $this->str = (string) $str;
 
         if (empty($delim) || is_string($delim) || $delim instanceof HString) {
-            $this->delim = $delim;
+            $this->delim = (string) $delim;
         } else {
             throw new \InvalidArgumentException('delimiter must be a string');
         }
     }
 
     /**
-     * @param int $limit
+     * @param null|int $limit
      * @return array
+     */
+    /**
+     * @param null $limit
+     * @return array
+     * @throws \InvalidArgumentException
      */
     public function stringToArray($limit = null)
     {
