@@ -59,14 +59,4 @@ class ArrayToStringTest extends TestCase
             '2-item dict, HString glue' => [new HArray(['a' => 'apple', 'b' => 'banana']), new HString(' '), new HString('apple banana')],
         ];
     }
-
-    public function testBadGlueInToHstring()
-    {
-        $arr = new HArray(['apple', 'banana']);
-
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('glue must be a string');
-
-        $arr->toHString(3);
-    }
 }

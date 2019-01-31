@@ -44,18 +44,15 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
         $this->arr = (array) $arr;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return $this->arr;
     }
 
     /**
      * Alias to PHP function `implode`
-     *
-     * @param string $glue - defaults to an empty string
-     * @return HString
      */
-    public function toHString($glue = '')
+    public function toHString(?string $glue = ''): HString
     {
         if (empty($this->arr)) {
             return new HString();
@@ -67,11 +64,8 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
 
     /**
      * @inheritdoc
-     *
-     * @param mixed $value
-     * @return boolean
      */
-    public function contains($value)
+    public function contains($value): bool
     {
         $answer = new HArrayContains($this);
         return $answer->contains($value);
@@ -96,7 +90,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      * @param mixed $value
      * @return HArray
      */
-    public function append($value)
+    public function append($value): HArray
     {
         $answer = new HArrayAppend($this->toArray());
         return new static($answer->append($value));
@@ -111,7 +105,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      *
      * @throws \InvalidArgumentException
      */
-    public function insert($value, $key = null)
+    public function insert($value, $key = null): HArray
     {
         $answer = new HArrayInsert($this);
         return new static($answer->insert($value, $key));
@@ -124,7 +118,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      * @param mixed $value
      * @return HArray
      */
-    public function remove($value)
+    public function remove($value): HArray
     {
         $answer = new HArrayRemove($this);
         return new static($answer->remove($value));
@@ -138,7 +132,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      * @return HArray
      * @throws \InvalidArgumentException
      */
-    public function slice($start, $length = null)
+    public function slice(int $start, ?int $length = null): HArray
     {
         $answer = new HArraySlice($this);
         return new static($answer->slice($start, $length));
@@ -146,11 +140,8 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
 
     /**
      * @inheritdoc
-     *
-     * @param callable $func
-     * @return HArray
      */
-    public function map(callable $func)
+    public function map(callable $func): HArray
     {
         $containers = array_slice(func_get_args(), 1); // remove `$func`
 
@@ -172,8 +163,8 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     /**
      * @inheritdoc
      *
-     * @param callable $func   - If no callback is supplied, all entries of container equal to FALSE will be removed.
-     * @param null     $flag   - Flag determining what arguments are sent to callback
+     * @param callable      $func   - If no callback is supplied, all entries of container equal to FALSE will be removed.
+     * @param string|null   $flag   - Flag determining what arguments are sent to callback
      *                             - USE_KEY
      *                                 - pass key as the only argument to callback instead of the value
      *                             - USE_BOTH
@@ -207,7 +198,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      *
      * @return HArray
      */
-    public function head()
+    public function head(): HArray
     {
         return $this->slice(0, 1);
     }
@@ -217,27 +208,23 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      *
      * @return HArray
      */
-    public function tail()
+    public function tail(): HArray
     {
         return $this->slice(1);
     }
 
     /**
      * @inheritdoc
-     *
-     * @return number
      */
-    public function sum()
+    public function sum(): float
     {
         return array_sum($this->arr);
     }
 
     /**
      * @inheritdoc
-     *
-     * @return int|number
      */
-    public function product()
+    public function product(): float
     {
         if (empty($this->arr)) {
             return 0;

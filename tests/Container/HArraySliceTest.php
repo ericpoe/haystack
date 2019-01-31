@@ -99,33 +99,4 @@ class HArraySliceTest extends TestCase
             'Dictionary: Start 1, length: null' => ['dict', '1', null, new HArray(['b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble'])],
         ];
     }
-
-    /**
-     * @dataProvider badArraySliceProvider
-     * @param string $type
-     * @param mixed $start
-     * @param mixed $length
-     * @param string $exceptionMsg
-     */
-    public function testBadArraySlice($type, $start, $length, $exceptionMsg)
-    {
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage($exceptionMsg);
-
-        if ('list' === $type) {
-            $this->arrList->slice($start, $length);
-        } else {
-            $this->arrDict->slice($start, $length);
-        }
-    }
-
-    public function badArraySliceProvider()
-    {
-        return [
-            'List: non-integer start' => ['list', 'b', '2', 'Slice parameter 1, $start, must be an integer'],
-            'Dictionary: non-integer start' => ['dict', 'b', '2', 'Slice parameter 1, $start, must be an integer'],
-            'List: non-integer length' => ['list', '1', 'b', 'Slice parameter 2, $length, must be null or an integer'],
-            'Dictionary: non-integer length' => ['dict', '1', 'b', 'Slice parameter 2, $length, must be null or an integer'],
-        ];
-    }
 }
