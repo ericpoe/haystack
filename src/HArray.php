@@ -168,11 +168,8 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
 
     /**
      * @inheritdoc
-     *
-     * @param callable $func
-     * @return null
      */
-    public function walk(callable $func)
+    public function walk(callable $func): void
     {
         HArrayWalk::walk($this->arr, $func);
     }

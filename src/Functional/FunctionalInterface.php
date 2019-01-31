@@ -16,11 +16,8 @@ interface FunctionalInterface
      *
      * Since the update is in-place, this breaks the immutability of Haystack objects. This is useful for very large
      * implementation of the Haystack where cloning the object would be memory intensive.
-     *
-     * @param callable $func
-     * @return null
      */
-    public function walk(callable $func);
+    public function walk(callable $func): void;
 
     /**
      * Iterates over each value in the container passing them to the callback function. If the callback function returns
