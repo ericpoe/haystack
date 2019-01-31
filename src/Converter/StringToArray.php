@@ -64,7 +64,7 @@ class StringToArray
     {
         $arr = explode($this->delim, $this->str);
 
-        if (!$arr) {
+        if (false === $arr) {
             throw new HaystackConverterException('Cannot convert this HString to an array');
         }
 
@@ -75,7 +75,7 @@ class StringToArray
     {
         $arr = explode($this->delim, $this->str, $limit);
 
-        if (!$arr) {
+        if (false === $arr) {
             throw new HaystackConverterException('Cannot convert this HString to an array');
         }
 
