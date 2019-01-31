@@ -47,14 +47,8 @@ class HArrayTest extends TestCase
     public function goodArraysProvider()
     {
         return [
-            'bool: true' => [true],
-            'bool: false' => [false],
-            'integer' => [5],
-            'integer: 0' => [0],
-            'array' => [1, 2, 3],
+            'array' => [[1, 2, 3]],
             'ArrayObject' => [new \ArrayObject([0, 1, 2])],
-            'DateTime' => [new \DateTime()],
-            'string' => ['a'],
             'HString' => [new HString('a string')],
             'HString of HString of ... ' => [new HString(new HString(new HString(new HString('a string'))))],
         ];

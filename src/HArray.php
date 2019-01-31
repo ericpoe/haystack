@@ -30,7 +30,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     /**
      * @param null|array|object|\ArrayObject|HString|bool|int|float|string $arr
      */
-    public function __construct($arr = [])
+    public function __construct(?iterable $arr = [])
     {
         if ($arr instanceof \ArrayObject) {
             $arr = $arr->getArrayCopy();
@@ -40,13 +40,8 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
             $arr = [$arr->toString()];
         }
 
-        if (is_scalar($arr) || is_object($arr)) {
-            parent::__construct([$arr]);
-            $this->arr = [$arr];
-        } else {
-            parent::__construct((array) $arr);
-            $this->arr = (array) $arr;
-        }
+        parent::__construct((array) $arr);
+        $this->arr = (array) $arr;
     }
 
     public function toArray()
@@ -188,7 +183,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      *
      * @throws \InvalidArgumentException
      */
-    public function filter(callable $func = null, $flag = null)
+    public function filter(callable $func = null, ?string $flag = null): HArray
     {
         $answer = new Filter($this);
         return new static($answer->filter($func, $flag));

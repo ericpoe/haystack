@@ -10,7 +10,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Updated
 
 ### Changed
-* HString uses strict typing now.
+* HArray uses strict typing now
+  * If it's iterable, it can be turned into an HArray
+* HString uses strict typing now
+  * If it's a string, it can be turned into an HString
 
 ### Remove
 * Removed support for PHP 5.6, PHP 7.0, and HHVM
