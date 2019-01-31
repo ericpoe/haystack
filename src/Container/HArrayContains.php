@@ -19,6 +19,6 @@ class HArrayContains
      */
     public function contains($value)
     {
-        return in_array($value, $this->arr->toArray());
+        return in_array($value, $this->arr->toArray(), false);
     }
 }
