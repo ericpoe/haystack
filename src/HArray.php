@@ -81,6 +81,11 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
     public function locate($value)
     {
         $answer = new HArrayLocate($this);
+
+        if ($value instanceof HString) {
+            $value = (string) $value;
+        }
+
         return $answer->locate($value);
     }
 
