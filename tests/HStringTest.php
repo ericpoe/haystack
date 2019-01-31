@@ -48,34 +48,13 @@ class HStringTest extends TestCase
             'UTF-8 string' => ['ɹɐqooɟ', 'ɹɐqooɟ'],
             'integer 1' => [1, '1'],
             'integer 0' => [0, '0'],
+            'integer -1' => [-1, '-1'],
             'double 1.1' => [1.1, '1.1'],
             'DateTime formatted timestamp' => [$timeStamp->format('c'), $timeStamp->format('c')],
             'boolean true' => [true, '1'],
             'boolean false' => [false, ''],
             'Blank string' => ['', ''],
             'Null string' => [null, ''],
-        ];
-    }
-
-    /**
-     * @dataProvider createBadHStringProvider
-     *
-     * @param mixed $item
-     * @param string $exceptionMsg
-     */
-    public function testCreateBadHStringOfThings($item, $exceptionMsg)
-    {
-        $this->expectException('ErrorException');
-        $this->expectExceptionMessage($exceptionMsg);
-
-        $this->aString = new HString($item);
-    }
-
-    public function createBadHStringProvider()
-    {
-        return [
-            'DateTime' => [new \DateTime(), 'DateTime is not a proper String'],
-            'SPL Object' => [new \SplDoublyLinkedList(), 'SplDoublyLinkedList is not a proper String'],
         ];
     }
 

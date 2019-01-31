@@ -73,38 +73,4 @@ class HStringSliceTest extends TestCase
             'UTF-8 HString: overflow finish' => [new HString('ɹɐqooɟ'), new HString('qooɟ'), 2, 2000],
         ];
     }
-
-    /**
-     * @dataProvider badSlicingProvider()
-     *
-     * @param HString $target
-     * @param integer $start
-     * @param integer $length
-     * @param string $exceptionMsg
-     */
-    public function testBadSlicing(HString $target, $start, $length, $exceptionMsg)
-    {
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage($exceptionMsg);
-
-        $target->slice($start, $length);
-    }
-
-    public function badSlicingProvider()
-    {
-        return [
-            'ASCII HString: No start or length of slice' =>
-                [new HString('foobar'), null, null, 'Slice parameter 1, $start, must be an integer'],
-            'ASCII HString: Non-integer start of slice' =>
-                [new HString('foobar'), 'cat', 4, 'Slice parameter 1, $start, must be an integer'],
-            'ASCII HString: Non-integer length of slice' =>
-                [new HString('foobar'), '1', 'dog', 'Slice parameter 2, $length, must be null or an integer'],
-            'UTF-8 HString: No start or length of slice' =>
-                [new HString('ɹɐqooɟ'), null, null, 'Slice parameter 1, $start, must be an integer'],
-            'UTF-8 HString: Non-integer start of slice' =>
-                [new HString('ɹɐqooɟ'), 'cat', 4, 'Slice parameter 1, $start, must be an integer'],
-            'UTF-8 HString: Non-integer length of slice' =>
-                [new HString('ɹɐqooɟ'), '1', 'dog', 'Slice parameter 2, $length, must be null or an integer'],
-        ];
-    }
 }

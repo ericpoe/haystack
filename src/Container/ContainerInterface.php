@@ -52,7 +52,7 @@ interface ContainerInterface
      * @param int|null $length - the amount of items to slice. If this number is null, the length will be the rest of the HArray or HString; if the length is positive, the length will be the distance forward the HArray or HString will be sliced; if the length is negative, that is the length backwards the HArray or HString will be sliced
      * @return mixed
      */
-    public function slice($start, $length);
+    public function slice(int $start, ?int $length = null);
 
     /**
      * Converts the container into a simple array

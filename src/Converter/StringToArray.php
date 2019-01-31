@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Haystack\Converter;
 
-use Haystack\Tests\Converter\HaystackConverterException;
-
 class StringToArray
 {
     /** @var string */
@@ -28,6 +26,7 @@ class StringToArray
     }
 
     /**
+     * @throws HaystackConverterException
      * @throws \InvalidArgumentException
      */
     public function stringToArray(?int $limit = 0): array

@@ -139,7 +139,7 @@ class HArray extends \ArrayObject implements ContainerInterface, FunctionalInter
      * @inheritdoc
      *
      * @param int $start
-     * @param int $length
+     * @param int|null $length
      * @return HArray
      * @throws \InvalidArgumentException
      */

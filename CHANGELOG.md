@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Updated
 
 ### Changed
+* HString uses strict typing now.
 
 ### Remove
 * Removed support for PHP 5.6, PHP 7.0, and HHVM

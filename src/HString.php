@@ -11,6 +11,7 @@ use Haystack\Container\HStringInsert;
 use Haystack\Container\HStringLocate;
 use Haystack\Container\HStringRemove;
 use Haystack\Container\HStringSlice;
+use Haystack\Converter\HaystackConverterException;
 use Haystack\Converter\StringToArray;
 use Haystack\Functional\Filter;
 use Haystack\Functional\FunctionalInterface;
@@ -25,28 +26,38 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     const USE_KEY = 'key';
     const USE_BOTH = 'both';
 
+    /** @var string */
     protected $str;
-    protected $ptr; // pointer for iterating through $str
-    protected $encoding; // defaults to UTF-8 encoding
 
-    public function __construct($str = '')
+    /**
+     * @var int
+     *
+     * Pointer for iterating through $str
+     */
+    protected $ptr;
+
+    /**
+     * @var string
+     *
+     * Defaults to UTF-8 encoding
+     */
+    protected $encoding;
+
+    public function __construct(?string $str = '')
     {
         $this->encoding = 'UTF-8';
 
-        if (is_scalar($str) || $str instanceof self) {
-            $this->str = mb_convert_encoding((string) $str, $this->encoding);
-            $this->rewind();
-        } elseif ($str === null) {
-            $this->str = '';
-        } else {
-            throw new \ErrorException(sprintf('%s is not a proper String', Helper::getType($str)));
+        $stringy = mb_convert_encoding((string) $str, $this->encoding);
+
+        if ($stringy === false) {
+            throw new HaystackConverterException("Cannot convert $str to HString");
         }
+
+        $this->str = $stringy;
+        $this->rewind();
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->str;
     }
@@ -64,7 +75,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *                      <p>
      *                      The return value will be casted to boolean if non-boolean was returned.
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $offset >= 0 && $offset < $this->count();
     }
@@ -77,9 +88,9 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @param mixed $offset <p>
      *                      The offset to retrieve.
      *                      </p>
-     * @return mixed Can return all value types.
+     * @return string
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): string
     {
         return mb_substr($this->str, $offset, 1, $this->encoding);
     }
@@ -97,7 +108,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *                      </p>
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->str = $this->getPrefix($offset) . $value . $this->getSuffix($offset);
     }
@@ -112,17 +123,17 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *                      </p>
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         $this->str = $this->getPrefix($offset) . chr(0x00) . $this->getSuffix($offset);
     }
 
-    private function getPrefix($length)
+    private function getPrefix($length): string
     {
         return mb_substr((string) $this, 0, $length, $this->getEncoding());
     }
 
-    private function getSuffix($start)
+    private function getSuffix($start): string
     {
         return mb_substr((string) $this, $start + 1, $this->count() - $start, $this->getEncoding());
     }
@@ -134,7 +145,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @link http://php.net/manual/en/serializable.serialize.php
      * @return string the string representation of the object or null
      */
-    public function serialize()
+    public function serialize(): ?string
     {
         return serialize($this->__toString());
     }
@@ -149,7 +160,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *                           </p>
      * @return void
      */
-    public function unserialize($value)
+    public function unserialize($value): void
     {
         if ($value === null) {
             $this->str = '';
@@ -173,7 +184,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *       <p>
      *       The return value is cast to an integer.
      */
-    public function count()
+    public function count(): int
     {
         return mb_strlen($this->str);
     }
@@ -183,9 +194,9 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * Return the current element
      *
      * @link http://php.net/manual/en/iterator.current.php
-     * @return mixed Can return any type.
+     * @return string
      */
-    public function current()
+    public function current(): string
     {
         return mb_substr($this->str, $this->ptr, 1, $this->encoding);
     }
@@ -197,7 +208,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @link http://php.net/manual/en/iterator.next.php
      * @return void Any returned value is ignored.
      */
-    public function next()
+    public function next(): void
     {
         ++$this->ptr;
     }
@@ -209,7 +220,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @link http://php.net/manual/en/iterator.key.php
      * @return integer scalar on success, or null on failure.
      */
-    public function key()
+    public function key(): ?int
     {
         return $this->ptr;
     }
@@ -222,7 +233,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @return boolean The return value will be casted to boolean and then evaluated.
      *       Returns true on success or false on failure.
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->ptr < $this->count();
     }
@@ -234,12 +245,12 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @link http://php.net/manual/en/iterator.rewind.php
      * @return void Any returned value is ignored.
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->ptr = 0;
     }
 
-    public function getEncoding()
+    public function getEncoding(): string
     {
         return $this->encoding;
     }
@@ -249,9 +260,9 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
-        return $this->__toString();
+        return (string) $this;
     }
 
     /**
@@ -259,7 +270,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         if (empty($this->str)) {
             return [];
@@ -290,7 +301,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @return bool
      * @throws \InvalidArgumentException
      */
-    public function contains($value)
+    public function contains($value): bool
     {
         $answer = new HStringContains($this);
         return $answer->contains($value);
@@ -304,7 +315,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @throws ElementNotFoundException
      * @throws \InvalidArgumentException
      */
-    public function locate($value)
+    public function locate($value): int
     {
         $answer = new HStringLocate($this);
         return $answer->locate($value);
@@ -317,7 +328,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @return HString
      * @throws \InvalidArgumentException
      */
-    public function append($value)
+    public function append($value): HString
     {
         $answer = new HStringAppend($this);
         return new static($answer->append($value));
@@ -331,7 +342,7 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @return HString
      * @throws \InvalidArgumentException
      */
-    public function insert($value, $key = null)
+    public function insert($value, $key = null): HString
     {
         $answer = new HStringInsert($this);
         return new static($answer->insert($value, $key));
@@ -344,21 +355,21 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @return HString
      * @throws \InvalidArgumentException
      */
-    public function remove($value)
+    public function remove($value): HString
     {
         $answer = new HStringRemove($this);
-        return new static($answer->remove($value));
+        return new static($answer->remove($value)->toString());
     }
 
     /**
      * @inheritdoc
      *
      * @param int $start
-     * @param int $length
+     * @param int|null $length
      * @return HString
-     * @throws \InvalidArgumentException
+     * @throws HaystackConverterException
      */
-    public function slice($start, $length = null)
+    public function slice(int $start, ?int $length = null): HString
     {
         $answer = new HStringSlice($this);
         return new static($answer->slice($start, $length));
@@ -370,25 +381,22 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
      * @param callable $func
      * @return HString
      */
-    public function map(callable $func)
+    public function map(callable $func): HString
     {
         $containers = array_slice(func_get_args(), 1); // remove `$func`
         $haystack = $this->toHArray();
 
         if (empty($containers)) {
-            return new static((new HArray((new HaystackMap($haystack))->map($func)))->toHString());
+            return new static((new HArray((new HaystackMap($haystack))->map($func)))->toHString()->toString());
         }
 
-        return new static((new HArray((new HaystackMap($haystack))->map($func, $containers)))->toHString());
+        return new static((new HArray((new HaystackMap($haystack))->map($func, $containers)))->toHString()->toString());
     }
 
     /**
      * @inheritdoc
-     *
-     * @param callable $func
-     * @return null
      */
-    public function walk(callable $func)
+    public function walk(callable $func): void
     {
         HStringWalk::walk($this, $func);
     }
@@ -396,22 +404,20 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     /**
      * @inheritdoc
      *
-     * @return HString
-     *
-     * @throws \InvalidArgumentException
+     * @throws HaystackConverterException
      */
-    public function filter(callable $func = null, $flag = null)
+    public function filter(?callable $func = null, ?string $flag = null): HString
     {
         $answer = new Filter($this->toHArray());
-        return new static((new HArray($answer->filter($func, $flag)))->toHString());
+        return new static((new HArray($answer->filter($func, $flag)))->toHString()->toString());
     }
 
     /**
      * @inheritdoc
      *
-     * @param callable $func
-     * @param mixed $initial
-     * @return bool|float|int|HString|HArray
+     * @param callable      $func
+     * @param mixed|null    $initial
+     * @return bool|float|HArray|HString|int|mixed
      */
     public function reduce(callable $func, $initial = null)
     {
@@ -421,30 +427,24 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * @inheritdoc
-     *
-     * @return HString
      */
-    public function head()
+    public function head(): HString
     {
         return $this->slice(0, 1);
     }
 
     /**
      * @inheritdoc
-     *
-     * @return HString
      */
-    public function tail()
+    public function tail(): HString
     {
         return $this->slice(1);
     }
 
     /**
      * @inheritdoc
-     *
-     * @return number
      */
-    public function sum()
+    public function sum(): float
     {
         $values = new HArray(str_getcsv(str_ireplace(' ', '', $this->str)));
 
@@ -453,10 +453,8 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
 
     /**
      * @inheritdoc
-     *
-     * @return number
      */
-    public function product()
+    public function product(): float
     {
         $values = new HArray(str_getcsv(str_ireplace(' ', '', $this->str)));
 

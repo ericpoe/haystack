@@ -1,6 +1,6 @@
 <?php
 
-namespace Haystack\Tests\Converter;
+namespace Haystack\Converter;
 
 
 class HaystackConverterException extends \Exception

@@ -26,8 +26,8 @@ interface FunctionalInterface
      * Iterates over each value in the container passing them to the callback function. If the callback function returns
      * true, the current value from container is returned into the result container. Container keys are preserved.
      *
-     * @param callable $func   - If no callback is supplied, all entries of container equal to FALSE will be removed.
-     * @param null     $flag   - Flag determining what arguments are sent to callback
+     * @param callable|null $func   - If no callback is supplied, all entries of container equal to FALSE will be removed.
+     * @param string|null   $flag   - Flag determining what arguments are sent to callback
      *                             - USE_KEY
      *                                 - pass key as the only argument to callback instead of the value
      *                             - USE_BOTH
@@ -36,7 +36,7 @@ interface FunctionalInterface
      *
      * @throws \ErrorException
      */
-    public function filter(callable $func = null, $flag = null);
+    public function filter(?callable $func = null, ?string $flag = null);
 
     /**
      * Iteratively reduce the Haystack Collection to a single value using a callback function
@@ -45,8 +45,8 @@ interface FunctionalInterface
      *   * $item: Holds the value of the current iteration.
      * * $initial: If the optional initial is available, it will be used at the beginning of the process, or as a final result in case the array is empty.
      *
-     * @param callable $func
-     * @param null     $initial
+     * @param callable      $func
+     * @param mixed|null    $initial
      * @return mixed
      */
     public function reduce(callable $func, $initial = null);
