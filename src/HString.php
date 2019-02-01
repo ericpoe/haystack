@@ -46,10 +46,6 @@ class HString implements HaystackInterface
 
         $stringy = mb_convert_encoding((string) $str, $this->encoding);
 
-        if ($stringy === false) {
-            throw new HaystackConverterException("Cannot convert $str to HString");
-        }
-
         $this->str = $stringy;
         $this->rewind();
     }
