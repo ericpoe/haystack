@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [3.0.0] - 2019-01-29
 
 ### Added
+* Both HArray and HString implement a common `HaystackInterface` now
 
 ### Updated
 

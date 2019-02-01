@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Haystack;
 
-use Haystack\Container\ContainerInterface;
 use Haystack\Container\ElementNotFoundException;
 use Haystack\Container\HArrayAppend;
 use Haystack\Container\HArrayContains;
@@ -13,13 +12,11 @@ use Haystack\Container\HArrayRemove;
 use Haystack\Container\HArraySlice;
 use Haystack\Converter\ArrayToString;
 use Haystack\Functional\Filter;
-use Haystack\Functional\FunctionalInterface;
 use Haystack\Functional\HArrayWalk;
 use Haystack\Functional\HaystackMap;
 use Haystack\Functional\HaystackReduce;
-use Haystack\Math\MathInterface;
 
-class HArray extends \ArrayObject implements ContainerInterface, FunctionalInterface, MathInterface
+class HArray extends \ArrayObject implements HaystackInterface
 {
     const USE_KEY = 'key';
     const USE_BOTH = 'both';

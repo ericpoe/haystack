@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Haystack;
 
-use Haystack\Container\ContainerInterface;
 use Haystack\Container\ElementNotFoundException;
 use Haystack\Container\HStringAppend;
 use Haystack\Container\HStringContains;
@@ -14,14 +13,12 @@ use Haystack\Container\HStringSlice;
 use Haystack\Converter\HaystackConverterException;
 use Haystack\Converter\StringToArray;
 use Haystack\Functional\Filter;
-use Haystack\Functional\FunctionalInterface;
 use Haystack\Functional\HaystackMap;
 use Haystack\Functional\HaystackReduce;
 use Haystack\Functional\HStringWalk;
 use Haystack\Helpers\Helper;
-use Haystack\Math\MathInterface;
 
-class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, ContainerInterface, FunctionalInterface, MathInterface
+class HString implements HaystackInterface
 {
     const USE_KEY = 'key';
     const USE_BOTH = 'both';
@@ -60,6 +57,11 @@ class HString implements \Iterator, \ArrayAccess, \Serializable, \Countable, Con
     public function __toString(): string
     {
         return $this->str;
+    }
+
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->toArray());
     }
 
     /**
