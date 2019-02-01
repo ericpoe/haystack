@@ -53,7 +53,7 @@ class StringToArray
     {
         $arr = preg_split('//u', $this->str, -1, PREG_SPLIT_NO_EMPTY);
 
-        if (!$arr) {
+        if (false === $arr) {
             throw new HaystackConverterException('Cannot convert this HString to an array');
         }
 
