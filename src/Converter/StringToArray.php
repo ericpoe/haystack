@@ -17,12 +17,7 @@ class StringToArray
     public function __construct(string $str, ?string $delim = '')
     {
         $this->str = $str;
-
-        if (is_string($delim)) {
-            $this->delim = $delim;
-        } else {
-            throw new \InvalidArgumentException('delimiter must be a string');
-        }
+        $this->delim = $delim ?? '';
     }
 
     /**

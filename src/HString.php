@@ -348,7 +348,7 @@ class HString implements HaystackInterface
     public function remove($value): HaystackInterface
     {
         $answer = new HStringRemove($this);
-        return new static($answer->remove($value)->toString());
+        return new static($answer->remove($value));
     }
 
     /**

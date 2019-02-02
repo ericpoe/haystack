@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Haystack\Functional;
 
 use Haystack\HArray;
@@ -13,7 +15,7 @@ class Filter
         $this->arr = $array->toArray();
     }
 
-    public function filter(callable $func = null, $flag = null)
+    public function filter(callable $func = null, string $flag = null): array
     {
         // Default
         if ($func === null) {
