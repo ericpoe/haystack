@@ -1,15 +1,14 @@
 <?php
 namespace Haystack\Functional;
 
+use Haystack\HaystackInterface;
+
 interface FunctionalInterface
 {
     /**
      * Applies the callback to the elements of the given array
-     *
-     * @param callable $func
-     * @return mixed
      */
-    public function map(callable $func);
+    public function map(callable $func): HaystackInterface;
 
     /**
      * Walk does an in-place update of items in the object.
@@ -29,11 +28,9 @@ interface FunctionalInterface
      *                                 - pass key as the only argument to callback instead of the value
      *                             - USE_BOTH
      *                                 - pass both value and key as arguments to callback instead of the value
-     * @return mixed
-     *
-     * @throws \ErrorException
+     * @return HaystackInterface
      */
-    public function filter(?callable $func = null, ?string $flag = null);
+    public function filter(?callable $func = null, ?string $flag = null): HaystackInterface;
 
     /**
      * Iteratively reduce the Haystack Collection to a single value using a callback function
@@ -50,15 +47,11 @@ interface FunctionalInterface
 
     /**
      * Shows the first element of the collection
-     *
-     * @return mixed
      */
-    public function head();
+    public function head(): HaystackInterface;
 
     /**
      * Shows the collection that doesn't include the head
-     *
-     * @return mixed
      */
-    public function tail();
+    public function tail(): HaystackInterface;
 }

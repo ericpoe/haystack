@@ -10,7 +10,6 @@ use Haystack\Container\HStringInsert;
 use Haystack\Container\HStringLocate;
 use Haystack\Container\HStringRemove;
 use Haystack\Container\HStringSlice;
-use Haystack\Converter\HaystackConverterException;
 use Haystack\Converter\StringToArray;
 use Haystack\Functional\Filter;
 use Haystack\Functional\HaystackMap;
@@ -55,7 +54,7 @@ class HString implements HaystackInterface
         return $this->str;
     }
 
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         return new \ArrayIterator($this->toArray());
     }
@@ -265,8 +264,6 @@ class HString implements HaystackInterface
 
     /**
      * Converts a string into an array. Assumes a delimiter of "" to return an array of chars.
-     *
-     * @return array
      */
     public function toArray(): array
     {
@@ -297,7 +294,6 @@ class HString implements HaystackInterface
      *
      * @param HString|string $value
      * @return bool
-     * @throws \InvalidArgumentException
      */
     public function contains($value): bool
     {
@@ -311,7 +307,6 @@ class HString implements HaystackInterface
      * @param HString|string $value
      * @return int key of $value in current object
      * @throws ElementNotFoundException
-     * @throws \InvalidArgumentException
      */
     public function locate($value): int
     {
@@ -323,10 +318,9 @@ class HString implements HaystackInterface
      * @inheritdoc
      *
      * @param string $value
-     * @return HString
-     * @throws \InvalidArgumentException
+     * @return HaystackInterface
      */
-    public function append($value): HString
+    public function append($value): HaystackInterface
     {
         $answer = new HStringAppend($this);
         return new static($answer->append($value));
@@ -337,10 +331,9 @@ class HString implements HaystackInterface
      *
      * @param string $value
      * @param int|null $key
-     * @return HString
-     * @throws \InvalidArgumentException
+     * @return HaystackInterface
      */
-    public function insert($value, $key = null): HString
+    public function insert($value, $key = null): HaystackInterface
     {
         $answer = new HStringInsert($this);
         return new static($answer->insert($value, $key));
@@ -350,10 +343,9 @@ class HString implements HaystackInterface
      * @inheritdoc
      *
      * @param string $value
-     * @return HString
-     * @throws \InvalidArgumentException
+     * @return HaystackInterface
      */
-    public function remove($value): HString
+    public function remove($value): HaystackInterface
     {
         $answer = new HStringRemove($this);
         return new static($answer->remove($value)->toString());
@@ -361,13 +353,8 @@ class HString implements HaystackInterface
 
     /**
      * @inheritdoc
-     *
-     * @param int $start
-     * @param int|null $length
-     * @return HString
-     * @throws HaystackConverterException
      */
-    public function slice(int $start, ?int $length = null): HString
+    public function slice(int $start, ?int $length = null): HaystackInterface
     {
         $answer = new HStringSlice($this);
         return new static($answer->slice($start, $length));
@@ -375,11 +362,8 @@ class HString implements HaystackInterface
 
     /**
      * @inheritdoc
-     *
-     * @param callable $func
-     * @return HString
      */
-    public function map(callable $func): HString
+    public function map(callable $func): HaystackInterface
     {
         $containers = array_slice(func_get_args(), 1); // remove `$func`
         $haystack = $this->toHArray();
@@ -401,10 +385,8 @@ class HString implements HaystackInterface
 
     /**
      * @inheritdoc
-     *
-     * @throws HaystackConverterException
      */
-    public function filter(?callable $func = null, ?string $flag = null): HString
+    public function filter(?callable $func = null, ?string $flag = null): HaystackInterface
     {
         $answer = new Filter($this->toHArray());
         return new static((new HArray($answer->filter($func, $flag)))->toHString()->toString());
@@ -412,10 +394,6 @@ class HString implements HaystackInterface
 
     /**
      * @inheritdoc
-     *
-     * @param callable      $func
-     * @param mixed|null    $initial
-     * @return bool|float|HArray|HString|int|mixed
      */
     public function reduce(callable $func, $initial = null)
     {
@@ -426,7 +404,7 @@ class HString implements HaystackInterface
     /**
      * @inheritdoc
      */
-    public function head(): HString
+    public function head(): HaystackInterface
     {
         return $this->slice(0, 1);
     }
@@ -434,7 +412,7 @@ class HString implements HaystackInterface
     /**
      * @inheritdoc
      */
-    public function tail(): HString
+    public function tail(): HaystackInterface
     {
         return $this->slice(1);
     }
