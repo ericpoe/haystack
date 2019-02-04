@@ -300,12 +300,12 @@ class HStringTest extends TestCase
     /**
      * @dataProvider productStringProvider
      */
-    public function testStringProvider(HString $hString, float $expected)
+    public function testStringProduct(HString $hString, float $expected): void
     {
         $this->assertEquals($expected, $hString->product());
     }
 
-    public function productStringProvider()
+    public function productStringProvider(): array
     {
         return [
             'Empty HString' => [new HString(), 0],
