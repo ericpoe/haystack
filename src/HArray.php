@@ -53,10 +53,6 @@ class HArray extends \ArrayObject implements HaystackInterface
      */
     public function toHString(?string $glue = ''): HString
     {
-        if (empty($this->arr)) {
-            return new HString();
-        }
-
         $str = new ArrayToString($this->arr, (string) $glue);
         return new HString($str->toString());
     }
