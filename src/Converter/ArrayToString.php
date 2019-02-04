@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Haystack\Converter;
 
-use Haystack\HString;
-
 class ArrayToString
 {
     /** @var array */
