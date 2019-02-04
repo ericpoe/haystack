@@ -60,4 +60,9 @@ interface ContainerInterface
      * Converts the container into a simple array
      */
     public function toArray(): array;
+
+    /**
+     * Converts the container into a string
+     */
+    public function __toString(): string;
 }

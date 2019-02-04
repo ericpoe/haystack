@@ -37,6 +37,12 @@ class HArray extends \ArrayObject implements HaystackInterface
         $this->arr = (array) $arr;
     }
 
+    public function __toString(): string
+    {
+        $str = new ArrayToString($this->arr);
+        return $str->toString();
+    }
+
     public function toArray(): array
     {
         return $this->arr;

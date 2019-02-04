@@ -11,9 +11,6 @@ class ArrayToStringTest extends TestCase
 {
     /**
      * @dataProvider arrayToHstringProvider
-     *
-     * @param HArray $arr
-     * @param string $expected
      */
     public function testArrayToHstring(HArray $arr, string $expected): void
     {
@@ -28,6 +25,25 @@ class ArrayToStringTest extends TestCase
             '1-item dict' => [new HArray(['a' => 'apple']), new HString('apple')],
             '2-item list' => [new HArray(['apple', 'banana']), new HString('applebanana')],
             '2-item dict' => [new HArray(['a' => 'apple', 'b' => 'banana']), new HString('applebanana')],
+        ];
+    }
+
+    /**
+     * @dataProvider arrayToStringProvider
+     */
+    public function testArrayToStringCast(HArray $arr, string $expected): void
+    {
+        $this->assertEquals($expected, (string) $arr);
+    }
+
+    public function arrayToStringProvider()
+    {
+        return [
+            'Empty Array' => [new HArray(), ''],
+            '1-item list' => [new HArray(['apple']), 'apple'],
+            '1-item dict' => [new HArray(['a' => 'apple']), 'apple'],
+            '2-item list' => [new HArray(['apple', 'banana']), 'applebanana'],
+            '2-item dict' => [new HArray(['a' => 'apple', 'b' => 'banana']), 'applebanana'],
         ];
     }
 
