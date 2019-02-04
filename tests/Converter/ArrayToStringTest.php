@@ -48,6 +48,30 @@ class ArrayToStringTest extends TestCase
     }
 
     /**
+     * @dataProvider arrayToStringWithGlueProvider()
+     */
+    public function testArrayToStringWithGlue(Harray $arr, ?string $glue, string $expected): void
+    {
+        $this->assertEquals($expected, $arr->toString($glue));
+    }
+
+    public function arrayToStringWithGlueProvider(): array
+    {
+        return [
+            'Empty Array, null glue' => [new HArray(), null, ''],
+            '1-item list, null glue' => [new HArray(['apple']), null, 'apple'],
+            '1-item dict, null glue' => [new HArray(['a' => 'apple']), null, 'apple'],
+            '2-item list, null glue' => [new HArray(['apple', 'banana']), null, 'applebanana'],
+            '2-item dict, null glue' => [new HArray(['a' => 'apple', 'b' => 'banana']), null, 'applebanana'],
+            'Empty Array, space glue' => [new HArray(), ' ', ''],
+            '1-item list, space glue' => [new HArray(['apple']), ' ', 'apple'],
+            '1-item dict, space glue' => [new HArray(['a' => 'apple']), ' ', 'apple'],
+            '2-item list, space glue' => [new HArray(['apple', 'banana']), ' ', 'apple banana'],
+            '2-item dict, space glue' => [new HArray(['a' => 'apple', 'b' => 'banana']), ' ', 'apple banana'],
+        ];
+    }
+
+    /**
      * @dataProvider arrayToHstringWithGlueProvider
      */
     public function testArrayToHstringWithGlue(HArray $arr, ?string $glue, string $expected)

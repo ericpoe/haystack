@@ -252,14 +252,15 @@ class HString implements HaystackInterface
         return $this->encoding;
     }
 
-    /**
-     * alias to __toString()
-     *
-     * @return string
-     */
-    public function toString(): string
+    public function toString(string $glue = ''): string
     {
-        return (string) $this;
+        if ($glue === '') {
+            return (string) $this;
+        }
+
+        return $this
+            ->toHArray()
+            ->toString($glue);
     }
 
     /**

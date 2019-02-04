@@ -40,8 +40,18 @@ class HArray extends \ArrayObject implements HaystackInterface
     public function __toString(): string
     {
         $str = new ArrayToString($this->arr);
+
         return $str->toString();
     }
+
+    public function toString(?string $glue = ''): string
+    {
+        $str = new ArrayToString($this->arr, (string) $glue);
+
+        return $str->toString();
+
+    }
+
 
     public function toArray(): array
     {
@@ -54,6 +64,7 @@ class HArray extends \ArrayObject implements HaystackInterface
     public function toHString(?string $glue = ''): HString
     {
         $str = new ArrayToString($this->arr, (string) $glue);
+
         return new HString($str->toString());
     }
 

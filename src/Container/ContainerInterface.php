@@ -65,4 +65,9 @@ interface ContainerInterface
      * Converts the container into a string
      */
     public function __toString(): string;
+
+    /**
+     * Converts the container into a string using another string as the glue
+     */
+    public function toString(string $glue = ''): string;
 }

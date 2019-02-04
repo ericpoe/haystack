@@ -7,13 +7,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * Both HArray and HString implement a common `HaystackInterface` now
+* Anything that implements `HaystackInterface` can be cast to a `string` and can use `->toString(string $glue='')`
 
 ### Updated
+* `HString::toString()` is no longer an alias to `__toString()` since it can now take a `$glue` string as its parameter.
 
 ### Changed
-* HArray uses strict typing now
+* **BC Break** HArray uses strict typing now
   * If it's iterable, it can be turned into an HArray
-* HString uses strict typing now
+* **BC Break** HString uses strict typing now
   * If it's a string, it can be turned into an HString
 * Tests now use strict typing now
 
