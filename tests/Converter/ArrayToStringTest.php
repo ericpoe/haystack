@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Haystack\Tests\Converter;
 
 use Haystack\HArray;
@@ -13,7 +15,7 @@ class ArrayToStringTest extends TestCase
      * @param HArray $arr
      * @param string $expected
      */
-    public function testArrayToHstring(HArray $arr, $expected)
+    public function testArrayToHstring(HArray $arr, string $expected): void
     {
         $this->assertEquals($expected, $arr->toHString());
     }
@@ -31,17 +33,13 @@ class ArrayToStringTest extends TestCase
 
     /**
      * @dataProvider arrayToHstringWithGlueProvider
-     *
-     * @param HArray $arr
-     * @param string $glue
-     * @param string $expected
      */
-    public function testArrayToHstringWithGlue(HArray $arr, $glue, $expected)
+    public function testArrayToHstringWithGlue(HArray $arr, ?string $glue, string $expected)
     {
         $this->assertEquals($expected, $arr->toHString($glue));
     }
 
-    public function arrayToHstringWithGlueProvider()
+    public function arrayToHstringWithGlueProvider(): array
     {
         return [
             'Empty Array, null glue' => [new HArray(), null, new HString()],

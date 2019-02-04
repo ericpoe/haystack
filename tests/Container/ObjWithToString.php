@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Haystack\Tests\Container;
 
 /**
@@ -8,7 +10,7 @@ namespace Haystack\Tests\Container;
  */
 class ObjWithToString
 {
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf("I'm a string");
     }

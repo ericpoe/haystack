@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Haystack\Tests\Container;
 
 use Haystack\HArray;
@@ -8,10 +10,11 @@ class HArraySliceTest extends TestCase
 {
     /** @var HArray */
     private $arrList;
+
     /** @var HArray */
     private $arrDict;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->arrList = new HArray(['apple', 'bobble', 'cobble', 'dobble']);
         $this->arrDict = new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']);
@@ -19,11 +22,8 @@ class HArraySliceTest extends TestCase
 
     /**
      * @dataProvider firstPartOfArraySliceProvider
-     *
-     * @param string $type
-     * @param HArray $expected
      */
-    public function testGetFirstPartOfTypesOfArrayUsingSlice($type, HArray $expected)
+    public function testGetFirstPartOfTypesOfArrayUsingSlice(string $type, HArray $expected): void
     {
         if ('list' === $type) {
             $subArray = $this->arrList->slice(0, 2);
@@ -34,7 +34,7 @@ class HArraySliceTest extends TestCase
         $this->assertEquals($expected, $subArray);
     }
 
-    public function firstPartOfArraySliceProvider()
+    public function firstPartOfArraySliceProvider(): array
     {
         return [
             'First two items of list' => ['list', new HArray(['apple', 'bobble'])],
@@ -44,11 +44,8 @@ class HArraySliceTest extends TestCase
 
     /**
      * @dataProvider lastPartOfArraySliceProvider
-     *
-     * @param string $type
-     * @param HArray $expected
      */
-    public function testGetLastPartOfTypesOfArrayUsingSlice($type, HArray $expected)
+    public function testGetLastPartOfTypesOfArrayUsingSlice(string $type, HArray $expected): void
     {
         if ('list' === $type) {
             $subArray = $this->arrList->slice(-2);
@@ -59,7 +56,7 @@ class HArraySliceTest extends TestCase
         $this->assertEquals($expected, $subArray);
     }
 
-    public function lastPartOfArraySliceProvider()
+    public function lastPartOfArraySliceProvider(): array
     {
         return [
             'Last two items of list' => ['list', new HArray(['cobble', 'dobble'])],
@@ -69,14 +66,11 @@ class HArraySliceTest extends TestCase
 
     /**
      * @dataProvider middlePartOfArraySliceProvider
-     *
-     * @param string $type
-     * @param int $start
-     * @param int $length
-     * @param HArray $expected
      */
-    public function testGetMiddlePartOfTypesOfArrayUsingSlice($type, $start, $length, HArray $expected)
+    public function testGetMiddlePartOfTypesOfArrayUsingSlice(string $type, ?int $start, ?int $length, HArray $expected): void
     {
+        $start = $start ?? 0;
+
         if ('list' === $type) {
             $subArray = $this->arrList->slice($start, $length);
         } else {
@@ -86,7 +80,7 @@ class HArraySliceTest extends TestCase
         $this->assertEquals($expected, $subArray);
     }
 
-    public function middlePartOfArraySliceProvider()
+    public function middlePartOfArraySliceProvider(): array
     {
         return [
             'List: Start -3, length: -1' => ['list', '-3', '-1', new HArray(['bobble', 'cobble'])],

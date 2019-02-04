@@ -15,9 +15,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   * If it's iterable, it can be turned into an HArray
 * HString uses strict typing now
   * If it's a string, it can be turned into an HString
+* Tests now use strict typing now
 
 ### Remove
-* Removed support for PHP 5.6, PHP 7.0, and HHVM
+* Removed testing support for PHP 5.6, PHP 7.0, and HHVM
 
 ## [2.1.3](https://github.com/ericpoe/haystack/tree/v2.1.3) - 2019-01-29
 

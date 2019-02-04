@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Haystack\Tests\Container;
 
 use Haystack\HString;
@@ -12,12 +14,12 @@ class HStringSliceTest extends TestCase
      * @param HString $target
      * @param HString $expected
      */
-    public function testGetFirstPartOfTypesOfStringUsingSlice(HString $target, $expected)
+    public function testGetFirstPartOfTypesOfStringUsingSlice(HString $target, $expected): void
     {
         $this->assertEquals($expected, $target->slice(0, 4));
     }
 
-    public function providerFirstPartOfTypesOfStringUsingSlice()
+    public function providerFirstPartOfTypesOfStringUsingSlice(): array
     {
         return [
             'String' => [new HString('foobar'), 'foob'],

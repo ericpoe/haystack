@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Haystack\Tests\Converter;
 
 use Haystack\HArray;
@@ -7,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class StringToArrayTest extends TestCase
 {
-    public function testHStringToArray()
+    public function testHStringToArray(): void
     {
         $emptyString = new HString();
         $expected = [];
@@ -26,12 +28,12 @@ class StringToArrayTest extends TestCase
      * @param int|null $limit
      * @param HArray $expected
      */
-    public function testStringToHArray(HString $hString, $delim, $limit, HArray $expected)
+    public function testStringToHArray(HString $hString, ?string $delim, ?int $limit, HArray $expected): void
     {
         $this->assertEquals($expected, $hString->toHArray($delim, $limit));
     }
 
-    public function stringToHArrayProvider()
+    public function stringToHArrayProvider(): array
     {
         $jabberwocky = "'Twas brillig and the slithy toves";
         $jabberwockyColon = "'Twas:brillig:and:the:slithy:toves";

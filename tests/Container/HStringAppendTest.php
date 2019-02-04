@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Haystack\Tests\Container;
 
 use Haystack\HString;
@@ -13,14 +15,14 @@ class HStringAppendTest extends TestCase
      * @param mixed $babyString
      * @param HString $expected
      */
-    public function testTypesOfStringAppendToFoobar(HString $target, $babyString, HString $expected)
+    public function testTypesOfStringAppendToFoobar(HString $target, $babyString, HString $expected): void
     {
         $newString = $target->append($babyString);
 
-        $this->assertEquals(sprintf('%s', $expected), sprintf('%s', $newString));
+        $this->assertEquals($expected->toString(), $newString);
     }
 
-    public function stringAppendProvider()
+    public function stringAppendProvider(): array
     {
         $aString = new HString('foobar');
         $utf8String = new HString('ɹɐqooɟ');
@@ -78,7 +80,7 @@ class HStringAppendTest extends TestCase
         ];
     }
 
-    public function testNonScalarTypeCannotBeAddedToFoobar()
+    public function testNonScalarTypeCannotBeAddedToFoobar(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Cannot concatenate an HString with a DateTime');
