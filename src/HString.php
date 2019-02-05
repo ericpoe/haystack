@@ -19,8 +19,8 @@ use Haystack\Helpers\Helper;
 
 class HString implements HaystackInterface
 {
-    const USE_KEY = 'key';
-    const USE_BOTH = 'both';
+    public const USE_KEY = 'key';
+    public const USE_BOTH = 'both';
 
     /** @var string */
     protected $str;

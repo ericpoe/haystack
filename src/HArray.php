@@ -17,8 +17,8 @@ use Haystack\Functional\HaystackReduce;
 
 class HArray extends \ArrayObject implements HaystackInterface
 {
-    const USE_KEY = 'key';
-    const USE_BOTH = 'both';
+    public const USE_KEY = 'key';
+    public const USE_BOTH = 'both';
 
     /** @var array */
     protected $arr;
