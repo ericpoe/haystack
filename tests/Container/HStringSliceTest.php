@@ -34,12 +34,12 @@ class HStringSliceTest extends TestCase
      * @param HString $target
      * @param HString $expected
      */
-    public function testGetLastPartOfTypesOfStringUsingSlice(HString $target, $expected)
+    public function testGetLastPartOfTypesOfStringUsingSlice(HString $target, $expected): void
     {
         $this->assertEquals($expected, $target->slice(-4));
     }
 
-    public function providerLastPartOfTypesOfStringUsingSlice()
+    public function providerLastPartOfTypesOfStringUsingSlice(): array
     {
         return [
             'HString' => [new HString('foobar'), new HString('obar')],
@@ -55,12 +55,12 @@ class HStringSliceTest extends TestCase
      * @param integer $start
      * @param integer $finish
      */
-    public function testGetMiddlePartOfTypesOfStringUsingSlice(HString $target, HString $expected, $start, $finish)
+    public function testGetMiddlePartOfTypesOfStringUsingSlice(HString $target, HString $expected, $start, $finish): void
     {
         $this->assertEquals($expected, $target->slice($start, $finish));
     }
 
-    public function middlePartOfStringProvider()
+    public function middlePartOfStringProvider(): array
     {
         return [
             'ASCII HString: Negative finish, middle' => [new HString('foobar'), new HString('ob'), 2, -2],

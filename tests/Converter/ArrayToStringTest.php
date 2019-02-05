@@ -17,7 +17,7 @@ class ArrayToStringTest extends TestCase
         $this->assertEquals($expected, $arr->toHString());
     }
 
-    public function arrayToHstringProvider()
+    public function arrayToHstringProvider(): array
     {
         return [
             'Empty Array' => [new HArray(), new HString()],
@@ -36,7 +36,7 @@ class ArrayToStringTest extends TestCase
         $this->assertEquals($expected, (string) $arr);
     }
 
-    public function arrayToStringProvider()
+    public function arrayToStringProvider(): array
     {
         return [
             'Empty Array' => [new HArray(), ''],
@@ -74,7 +74,7 @@ class ArrayToStringTest extends TestCase
     /**
      * @dataProvider arrayToHstringWithGlueProvider
      */
-    public function testArrayToHstringWithGlue(HArray $arr, ?string $glue, string $expected)
+    public function testArrayToHstringWithGlue(HArray $arr, ?string $glue, string $expected): void
     {
         $this->assertEquals($expected, $arr->toHString($glue));
     }
