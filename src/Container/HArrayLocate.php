@@ -22,8 +22,10 @@ class HArrayLocate
      */
     public function locate($value)
     {
-        if ($this->arr->contains($value)) {
-            return array_search($value, $this->arr->toArray(), true);
+        $foundItem = array_search($value, $this->arr->toArray(), true);
+
+        if (false !== $foundItem) {
+            return $foundItem;
         }
 
         throw new ElementNotFoundException($value);
