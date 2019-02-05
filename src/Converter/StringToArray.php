@@ -22,7 +22,6 @@ class StringToArray
 
     /**
      * @throws HaystackConverterException
-     * @throws \InvalidArgumentException
      */
     public function stringToArray(?int $limit = 0): array
     {
@@ -36,12 +35,9 @@ class StringToArray
             return $this->arr;
         }
 
-        if (is_int($limit)) {
-            $this->arr = $this->explode($limit);
-            return $this->arr;
-        }
+        $this->arr = $this->explode($limit);
+        return $this->arr;
 
-        throw new \InvalidArgumentException('limit must be an integer');
     }
 
     private function noDelimExplode(): array
