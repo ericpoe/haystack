@@ -159,11 +159,6 @@ class HString implements HaystackInterface
      */
     public function unserialize($value): void
     {
-        if ($value === null) {
-            $this->str = '';
-            return;
-        }
-
         if (is_string($value)) {
             $this->str = unserialize($value, [$this]);
         } else {
