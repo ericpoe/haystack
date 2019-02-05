@@ -51,7 +51,7 @@ class HString implements HaystackInterface
 
     public function __toString(): string
     {
-        return $this->str;
+        return (string) $this->str;
     }
 
     public function getIterator(): \Iterator
