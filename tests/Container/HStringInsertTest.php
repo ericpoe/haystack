@@ -39,30 +39,4 @@ class HStringInsertTest extends TestCase
             'UTF-8 String: insert at end' => [$utf8String, 'baz', null, new HString('ɹɐqooɟbaz')],
         ];
     }
-
-    /**
-     * @dataProvider badInsertProvider
-     *
-     * @param mixed $value
-     * @param mixed |null $key
-     * @param string $exceptionMsg
-     * @throws \InvalidArgumentException
-     */
-    public function testBadInsert($value, $key, string $exceptionMsg): void
-    {
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage($exceptionMsg);
-
-        (new HString('foobar'))->insert($value, $key);
-    }
-
-    public function badInsertProvider()
-    {
-        return [
-            'Insert DateTime at end' => [new \DateTime(), null, 'Cannot insert DateTime into an HString'],
-            'Insert SPL object at end' => [new \SplDoublyLinkedList(), null, 'Cannot insert SplDoublyLinkedList into an HString'],
-            'Insert Array at end' => [['a' => 'apple'], null, 'Cannot insert array into an HString'],
-            'Insert at non-integer key' => ['apple', 'a', 'Invalid array key'],
-        ];
-    }
 }
