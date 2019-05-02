@@ -85,6 +85,9 @@ class HStringAppendTest extends TestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Cannot concatenate an HString with a DateTime');
 
-        (new HString('foobar'))->append(new \DateTime());
+        /** @var String $badString */
+        $badString = new \DateTime();
+
+        (new HString('foobar'))->append($badString);
     }
 }

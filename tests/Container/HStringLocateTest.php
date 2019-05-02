@@ -58,7 +58,7 @@ class HStringLocateTest extends TestCase
     /**
      * @dataProvider stringBadLocateProvider()
      *
-     * @param object $checkString
+     * @param HString $checkString
      * @param string $message
      * @throws ElementNotFoundException
      */
@@ -83,7 +83,7 @@ class HStringLocateTest extends TestCase
     /**
      * @dataProvider badLocateTypesOfStringInFoobarProvider
      *
-     * @param object $item
+     * @param HString $item
      * @param string $exceptionMsg
      * @throws ElementNotFoundException
      */
