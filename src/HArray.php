@@ -30,7 +30,7 @@ class HArray extends \ArrayObject implements HaystackInterface
         }
 
         if ($arr instanceof HString) {
-            $arr = [$arr->toString()];
+            $arr = $arr->toArray();
         }
 
         parent::__construct((array) $arr);
