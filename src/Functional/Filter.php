@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace Haystack\Functional;
 
-use Haystack\HArray;
+use Haystack\HaystackInterface;
 
 class Filter
 {
     /** @var array */
     private $arr;
 
-    public function __construct(HArray $array)
+    public function __construct(HaystackInterface $array)
     {
         $this->arr = $array->toArray();
     }
