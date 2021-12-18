@@ -76,6 +76,7 @@ class HArrayInsertTest extends TestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage($exceptionMsg);
 
+        /** @phpstan-ignore-next-line */
         $this->arrDict->insert('yobbo', $key);
     }
 

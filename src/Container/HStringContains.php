@@ -14,6 +14,7 @@ class HStringContains
     /** @var string */
     private $value;
 
+    /** @var string */
     private $encoding;
 
     public function __construct(HString $hString)

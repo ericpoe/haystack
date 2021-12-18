@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Haystack\Container;
 
 use Haystack\HArray;
+use Haystack\Helpers\Helper;
 
 class HArrayLocate
 {
@@ -28,6 +29,15 @@ class HArrayLocate
             return $foundItem;
         }
 
-        throw new ElementNotFoundException($value);
+        $stringValue = Helper::getType($value);
+        if (
+            is_string($value) ||
+            is_numeric($value) ||
+            method_exists($value, '__toString')
+        ) {
+            $stringValue = (string) $value;
+        }
+
+        throw new ElementNotFoundException($stringValue);
     }
 }

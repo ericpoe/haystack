@@ -13,12 +13,12 @@ class HStringLocateTest extends TestCase
      * @dataProvider stringLocateProvider()
      *
      * @param HString $target
+     * @param HString|string $checkString
      * @param int $expected
      * @throws ElementNotFoundException
      */
     public function testLocateTypesOfStringInFoobar(HString $target, $checkString, int $expected): void
     {
-        $checkString = $checkString instanceof HString ? (string) $checkString : $checkString;
         $var = $target->locate($checkString);
         $this->assertEquals($expected, $var);
     }

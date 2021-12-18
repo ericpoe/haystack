@@ -44,12 +44,11 @@ class HArray extends \ArrayObject implements HaystackInterface
         return $str->toString();
     }
 
-    public function toString(?string $glue = ''): string
+    public function toString(string $glue = ''): string
     {
         $str = new ArrayToString($this->arr, (string) $glue);
 
         return $str->toString();
-
     }
 
 
@@ -93,11 +92,14 @@ class HArray extends \ArrayObject implements HaystackInterface
 
     /**
      * @inheritdoc
+     *
+     * @param HaystackInterface|array|int|float|string|object $value
+     * @return HaystackInterface
      */
     public function append($value): HaystackInterface
     {
         $answer = new HArrayAppend($this->toArray());
-        return new static($answer->append($value));
+        return new self($answer->append($value));
     }
 
     /**
@@ -106,7 +108,7 @@ class HArray extends \ArrayObject implements HaystackInterface
     public function insert($value, $key = null): HaystackInterface
     {
         $answer = new HArrayInsert($this);
-        return new static($answer->insert($value, $key));
+        return new self($answer->insert($value, $key));
     }
 
 
@@ -116,7 +118,7 @@ class HArray extends \ArrayObject implements HaystackInterface
     public function remove($value): HaystackInterface
     {
         $answer = new HArrayRemove($this);
-        return new static($answer->remove($value));
+        return new self($answer->remove($value));
     }
 
     /**
@@ -125,7 +127,7 @@ class HArray extends \ArrayObject implements HaystackInterface
     public function slice(int $start, ?int $length = null): HaystackInterface
     {
         $answer = new HArraySlice($this);
-        return new static($answer->slice($start, $length));
+        return new self($answer->slice($start, $length));
     }
 
     /**
@@ -136,10 +138,10 @@ class HArray extends \ArrayObject implements HaystackInterface
         $containers = array_slice(func_get_args(), 1); // remove `$func`
 
         if (empty($containers)) {
-            return new static((new HaystackMap($this))->map($func));
+            return new self((new HaystackMap($this))->map($func));
         }
 
-        return new static((new HaystackMap($this))->map($func, $containers));
+        return new self((new HaystackMap($this))->map($func, $containers));
     }
 
     /**
@@ -156,7 +158,7 @@ class HArray extends \ArrayObject implements HaystackInterface
     public function filter(callable $func = null, ?string $flag = null): HaystackInterface
     {
         $answer = new Filter($this);
-        return new static($answer->filter($func, $flag));
+        return new self($answer->filter($func, $flag));
     }
 
     /**

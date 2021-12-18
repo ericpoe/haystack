@@ -16,7 +16,7 @@ class HArrayLocateTest extends TestCase
     /** @var HArray */
     private $arrDict;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->arrList = new HArray(['apple', 'bobble', 'cobble', 'dobble']);
         $this->arrDict = new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']);
@@ -76,8 +76,10 @@ class HArrayLocateTest extends TestCase
         return [
             'String not in list' => ['list', 'fobble', 'Element could not be found: fobble'],
             'HString not in list' => ['list', new HString('fobble'), 'Element could not be found: fobble'],
+            'DateTime not in list' => ['list', new \DateTime(), 'Element could not be found: DateTime'],
             'String not in dictionary' => ['dict', 'fobble', 'Element could not be found: fobble'],
             'HString not in dictionary' => ['dict', new HString('fobble'), 'Element could not be found: fobble'],
+            'DateTime not in dictionary' => ['dict', new \DateTime(), 'Element could not be found: DateTime'],
         ];
     }
 

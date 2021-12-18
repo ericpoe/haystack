@@ -52,17 +52,21 @@ class ArrayToStringTest extends TestCase
      */
     public function testArrayToStringWithGlue(Harray $arr, ?string $glue, string $expected): void
     {
-        $this->assertEquals($expected, $arr->toString($glue));
+        if ($glue) {
+            $this->assertEquals($expected, $arr->toString($glue));
+        } else {
+            $this->assertEquals($expected, $arr->toString());
+        }
     }
 
     public function arrayToStringWithGlueProvider(): array
     {
         return [
-            'Empty Array, null glue' => [new HArray(), null, ''],
-            '1-item list, null glue' => [new HArray(['apple']), null, 'apple'],
-            '1-item dict, null glue' => [new HArray(['a' => 'apple']), null, 'apple'],
-            '2-item list, null glue' => [new HArray(['apple', 'banana']), null, 'applebanana'],
-            '2-item dict, null glue' => [new HArray(['a' => 'apple', 'b' => 'banana']), null, 'applebanana'],
+            'Empty Array, no glue' => [new HArray(), null, ''],
+            '1-item list, no glue' => [new HArray(['apple']), null, 'apple'],
+            '1-item dict, no glue' => [new HArray(['a' => 'apple']), null, 'apple'],
+            '2-item list, no glue' => [new HArray(['apple', 'banana']), null, 'applebanana'],
+            '2-item dict, no glue' => [new HArray(['a' => 'apple', 'b' => 'banana']), null, 'applebanana'],
             'Empty Array, space glue' => [new HArray(), ' ', ''],
             '1-item list, space glue' => [new HArray(['apple']), ' ', 'apple'],
             '1-item dict, space glue' => [new HArray(['a' => 'apple']), ' ', 'apple'],

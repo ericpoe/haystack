@@ -7,6 +7,10 @@ use Haystack\HString;
 
 class Helper
 {
+    /**
+     * @param mixed $thing
+     * @return string
+     */
     public static function getType($thing): string
     {
         if (is_object($thing)) {
@@ -26,6 +30,10 @@ class Helper
         return (bool)count(array_filter(array_keys($array), 'is_string'));
     }
 
+    /**
+     * @param mixed $thing
+     * @return bool
+     */
     public static function canBeInArray($thing): bool
     {
         $possibility = is_array($thing)

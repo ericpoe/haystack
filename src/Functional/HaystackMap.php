@@ -19,11 +19,11 @@ class HaystackMap
     }
 
     /**
-     * @param callable $func
+     * @param ?callable $func
      * @param array $variadicList Variadic list of arrays to invoke array_map with
      * @return array
      */
-    public function map(callable $func, array $variadicList = []): array
+    public function map(?callable $func, array $variadicList = []): array
     {
         $sourceHaystack = [$this->arr];
 
@@ -31,9 +31,13 @@ class HaystackMap
             return $this->convertToArray($item);
         }, $variadicList);
 
-        return array_map(...array_merge([$func], $sourceHaystack, $arrayOfVariadics));
+        return array_map($func, ...array_merge($sourceHaystack, $arrayOfVariadics));
     }
 
+    /**
+     * @param array|string|ContainerInterface|mixed $item
+     * @return array
+     */
     private function convertToArray($item): array
     {
         if (is_array($item)) {

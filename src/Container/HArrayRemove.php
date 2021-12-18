@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Haystack\Container;
 
 use Haystack\HArray;
+use Haystack\HaystackInterface;
 
 class HArrayRemove
 {
@@ -15,6 +16,11 @@ class HArrayRemove
         $this->arr = $arr;
     }
 
+    /**
+     * @param int|string|HaystackInterface $value
+     * @return array
+     * @throws ElementNotFoundException
+     */
     public function remove($value): array
     {
         if (false === $this->arr->contains($value)) {

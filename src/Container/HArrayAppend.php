@@ -10,16 +10,13 @@ class HArrayAppend
     /** @var \ArrayObject */
     private $arr;
 
-    /**
-     * @param array $array
-     */
     public function __construct(array $array)
     {
         $this->arr = new \ArrayObject($array);
     }
 
     /**
-     * @param HArray|array|int|float|string $value
+     * @param HArray|array|int|float|string|object $value
      * @return array
      */
     public function append($value): array

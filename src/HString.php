@@ -125,12 +125,12 @@ class HString implements HaystackInterface
         $this->str = $this->getPrefix($offset) . chr(0x00) . $this->getSuffix($offset);
     }
 
-    private function getPrefix($length): string
+    private function getPrefix(int $length): string
     {
         return mb_substr((string) $this, 0, $length, $this->getEncoding());
     }
 
-    private function getSuffix($start): string
+    private function getSuffix(int $start): string
     {
         return mb_substr((string) $this, $start + 1, $this->count() - $start, $this->getEncoding());
     }
@@ -313,13 +313,13 @@ class HString implements HaystackInterface
     /**
      * @inheritdoc
      *
-     * @param string $value
+     * @param HaystackInterface|int|float|string $value
      * @return HaystackInterface
      */
     public function append($value): HaystackInterface
     {
         $answer = new HStringAppend($this);
-        return new static($answer->append($value));
+        return new self($answer->append($value));
     }
 
     /**
@@ -332,7 +332,7 @@ class HString implements HaystackInterface
     public function insert($value, $key = null): HaystackInterface
     {
         $answer = new HStringInsert($this);
-        return new static($answer->insert($value, $key));
+        return new self($answer->insert($value, $key));
     }
 
     /**
@@ -344,7 +344,7 @@ class HString implements HaystackInterface
     public function remove($value): HaystackInterface
     {
         $answer = new HStringRemove($this);
-        return new static($answer->remove($value));
+        return new self($answer->remove($value));
     }
 
     /**
@@ -353,7 +353,7 @@ class HString implements HaystackInterface
     public function slice(int $start, ?int $length = null): HaystackInterface
     {
         $answer = new HStringSlice($this);
-        return new static($answer->slice($start, $length));
+        return new self($answer->slice($start, $length));
     }
 
     /**
@@ -365,10 +365,10 @@ class HString implements HaystackInterface
         $haystack = $this->toHArray();
 
         if (empty($containers)) {
-            return new static((new HArray((new HaystackMap($haystack))->map($func)))->toHString()->toString());
+            return new self((new HArray((new HaystackMap($haystack))->map($func)))->toHString()->toString());
         }
 
-        return new static((new HArray((new HaystackMap($haystack))->map($func, $containers)))->toHString()->toString());
+        return new self((new HArray((new HaystackMap($haystack))->map($func, $containers)))->toHString()->toString());
     }
 
     /**
@@ -385,7 +385,7 @@ class HString implements HaystackInterface
     public function filter(?callable $func = null, ?string $flag = null): HaystackInterface
     {
         $answer = new Filter($this->toHArray());
-        return new static((new HArray($answer->filter($func, $flag)))->toHString()->toString());
+        return new self((new HArray($answer->filter($func, $flag)))->toHString()->toString());
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Haystack\Container;
 
 use Haystack\HArray;
+use Haystack\HaystackInterface;
 use Haystack\Helpers\Helper;
 use Haystack\HString;
 
@@ -17,6 +18,11 @@ class HArrayInsert
         $this->arr = $array;
     }
 
+    /**
+     * @param int|string|HaystackInterface $value
+     * @param null|int|string $key
+     * @return array
+     */
     public function insert($value, $key): array
     {
         if ($value instanceof HArray) {
@@ -53,7 +59,7 @@ class HArrayInsert
     }
 
     /**
-     * @param mixed $key
+     * @param int|string $key
      * @param mixed $value
      * @return array
      */

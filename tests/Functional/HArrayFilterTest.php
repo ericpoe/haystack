@@ -4,12 +4,13 @@ declare(strict_types=1);
 namespace Haystack\Tests\Functional;
 
 use Haystack\HArray;
+use Haystack\HaystackInterface;
 use Haystack\HString;
 use PHPUnit\Framework\TestCase;
 
 class HArrayFilterTest extends TestCase
 {
-    /** @var HArray */
+    /** @var HaystackInterface */
     private $arrList;
 
     /** @var HArray */
