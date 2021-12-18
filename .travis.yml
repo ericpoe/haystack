@@ -18,6 +18,7 @@ before_script:
 
 script:
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - vendor/bin/phpstan
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
