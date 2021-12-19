@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This change log follows ideas put forth in [Keep a CHANGELOG](http://keepachangelog.com/).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.0.0] - 2019-01-29
+## [3.0.0] - 2021-12-xx
 
 ### Added
 * Both HArray and HString implement a common `HaystackInterface` now

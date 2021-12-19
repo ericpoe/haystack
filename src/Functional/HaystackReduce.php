@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack\Functional;
@@ -10,7 +11,7 @@ class HaystackReduce
 {
     /** @var array */
     private $arr;
-    
+
     public function __construct(array $arr)
     {
         $this->arr = $arr;

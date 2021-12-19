@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack\Container;
@@ -27,5 +28,4 @@ class HArrayAppend
 
         return $this->arr->getArrayCopy();
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Haystack\Functional;
 
 use Haystack\HaystackInterface;

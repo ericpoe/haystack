@@ -1,4 +1,5 @@
 <?php
+
 namespace Haystack\Container;
 
 class ElementNotFoundException extends \Exception

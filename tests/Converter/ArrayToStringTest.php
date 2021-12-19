@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack\Tests\Converter;
@@ -80,7 +81,11 @@ class ArrayToStringTest extends TestCase
      */
     public function testArrayToHstringWithGlue(HArray $arr, ?string $glue, string $expected): void
     {
-        $this->assertEquals($expected, $arr->toHString($glue));
+        if ($glue) {
+            $this->assertEquals($expected, $arr->toHString($glue));
+        } else {
+            $this->assertEquals($expected, $arr->toHString());
+        }
     }
 
     public function arrayToHstringWithGlueProvider(): array

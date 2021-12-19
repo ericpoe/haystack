@@ -1,4 +1,5 @@
 <?php
+
 namespace Haystack\Container;
 
 use Haystack\HString;
@@ -29,7 +30,7 @@ class HStringInsert
 
     private function getPrefix(int $key): string
     {
-        $length = $key >= 0 ? $key: $this->hString->count() - 1;
+        $length = $key >= 0 ? $key : $this->hString->count() - 1;
 
         return mb_substr($this->hString, 0, $length, $this->hString->getEncoding());
     }

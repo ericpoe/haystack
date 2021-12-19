@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=0);
 
 namespace Haystack\Container;
@@ -32,5 +33,4 @@ class HStringLocate
 
         throw new ElementNotFoundException((string) $value);
     }
-
 }

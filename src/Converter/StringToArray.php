@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack\Converter;
@@ -14,10 +15,10 @@ class StringToArray
     /** @var array */
     private $arr;
 
-    public function __construct(string $str, ?string $delim = '')
+    public function __construct(string $str, string $delim = '')
     {
         $this->str = $str;
-        $this->delim = $delim ?? '';
+        $this->delim = $delim;
     }
 
     /**
@@ -37,7 +38,6 @@ class StringToArray
 
         $this->arr = $this->explode($limit);
         return $this->arr;
-
     }
 
     private function noDelimExplode(): array

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack\Tests\Container;
@@ -43,7 +44,7 @@ class HStringLocateTest extends TestCase
         $timeSentence = new HString(sprintf('I have %s in me.', $timeStamp));
         $this->assertEquals(7, $timeSentence->locate($date->format('c')));
 
-        $obj = new class() {
+        $obj = new class () {
             public function __toString(): string
             {
                 return sprintf("I'm a string");

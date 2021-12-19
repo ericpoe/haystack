@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack\Tests\Converter;
@@ -16,7 +17,7 @@ class StringToStringTest extends TestCase
         $this->assertEquals($expected, (string) $arr);
     }
 
-    public function StringToStringCastProvider(): array
+    public function stringToStringCastProvider(): array
     {
         return [
             'Empty Array' => [new HString(), ''],
@@ -39,7 +40,7 @@ class StringToStringTest extends TestCase
         $this->assertEquals($expected, $arr->toString($glue));
     }
 
-    public function StringToStringWithGlueProvider(): array
+    public function stringToStringWithGlueProvider(): array
     {
         return [
             'Empty Array, null glue' => [new HString(), null, ''],

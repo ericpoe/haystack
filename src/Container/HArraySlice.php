@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack\Container;
@@ -24,5 +25,4 @@ class HArraySlice
 
         return array_slice($this->arr, $start, $length, $maintainIndices);
     }
-
 }

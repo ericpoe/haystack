@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack\Tests;
@@ -32,7 +33,7 @@ class HStringTest extends TestCase
      * @param mixed $item
      * @param string $expected
      */
-    public function testCreateHStringOfThings($item, string $expected):void
+    public function testCreateHStringOfThings($item, string $expected): void
     {
         $this->aString = new HString($item);
         $this->assertEquals($expected, $this->aString);
@@ -264,7 +265,7 @@ class HStringTest extends TestCase
     public function testStringHead(): void
     {
         $this->assertEquals('f', (string) $this->aString->head());
-        $this->assertEquals('ɹ', (string ) $this->utf8String->head());
+        $this->assertEquals('ɹ', (string) $this->utf8String->head());
 
         $emptyString = new HString();
         $this->assertEmpty((string) $emptyString->head());

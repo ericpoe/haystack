@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack\Tests\Functional;
@@ -27,7 +28,6 @@ class HArrayFilterTest extends TestCase
         $this->arrList = $this->arrList->insert(0, 2);
         $this->assertEquals(new HArray(['apple', 'bobble', 'cobble', 'dobble']), $this->arrList->filter(), 'List - Default Filter');
         $this->assertEquals(new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']), $this->arrDict->filter(), 'Dict - Default Filter');
-
     }
 
     public function testArrayWithValueFilter(): void

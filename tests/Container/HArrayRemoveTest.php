@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack\Tests\Container;
@@ -36,7 +37,6 @@ class HArrayRemoveTest extends TestCase
         }
 
         $this->assertEquals($expected, $newArr);
-
     }
 
     public function arrayRemoveProvider(): array
@@ -61,5 +61,4 @@ class HArrayRemoveTest extends TestCase
         $this->assertEquals($this->arrDict, $arrDict->remove($timestamp), 'Object removed from dict');
         $this->assertEquals($arrDict, $arrDict->remove(new \SplDoublyLinkedList()), 'Object not removed from dict');
     }
-
 }

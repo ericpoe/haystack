@@ -1,4 +1,5 @@
 <?php
+
 namespace Haystack\Math;
 
 interface MathInterface

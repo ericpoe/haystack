@@ -8,5 +8,4 @@ use Haystack\Math\MathInterface;
 
 interface HaystackInterface extends \IteratorAggregate, \ArrayAccess, \Serializable, \Countable, ContainerInterface, FunctionalInterface, MathInterface
 {
-
 }

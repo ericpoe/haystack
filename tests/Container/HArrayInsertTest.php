@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack\Tests\Container;
@@ -87,5 +88,4 @@ class HArrayInsertTest extends TestCase
             'SPL Object' => [new \SplDoublyLinkedList(), 'Invalid array key'],
         ];
     }
-
 }

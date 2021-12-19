@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack;
@@ -39,16 +40,13 @@ class HArray extends \ArrayObject implements HaystackInterface
 
     public function __toString(): string
     {
-        $str = new ArrayToString($this->arr);
-
-        return $str->toString();
+        return $this->toString();
     }
 
     public function toString(string $glue = ''): string
     {
-        $str = new ArrayToString($this->arr, (string) $glue);
-
-        return $str->toString();
+        return (new ArrayToString($this->arr, $glue))
+            ->toString();
     }
 
 
@@ -60,9 +58,9 @@ class HArray extends \ArrayObject implements HaystackInterface
     /**
      * Alias to PHP function `implode`
      */
-    public function toHString(?string $glue = ''): HString
+    public function toHString(string $glue = ''): HString
     {
-        $str = new ArrayToString($this->arr, (string) $glue);
+        $str = new ArrayToString($this->arr, $glue);
 
         return new HString($str->toString());
     }
@@ -72,8 +70,8 @@ class HArray extends \ArrayObject implements HaystackInterface
      */
     public function contains($value): bool
     {
-        $answer = new HArrayContains($this);
-        return $answer->contains($value);
+        return (new HArrayContains($this))
+            ->contains($value);
     }
 
     /**
@@ -99,6 +97,7 @@ class HArray extends \ArrayObject implements HaystackInterface
     public function append($value): HaystackInterface
     {
         $answer = new HArrayAppend($this->toArray());
+
         return new self($answer->append($value));
     }
 
@@ -108,6 +107,7 @@ class HArray extends \ArrayObject implements HaystackInterface
     public function insert($value, $key = null): HaystackInterface
     {
         $answer = new HArrayInsert($this);
+
         return new self($answer->insert($value, $key));
     }
 
@@ -118,6 +118,7 @@ class HArray extends \ArrayObject implements HaystackInterface
     public function remove($value): HaystackInterface
     {
         $answer = new HArrayRemove($this);
+
         return new self($answer->remove($value));
     }
 
@@ -127,6 +128,7 @@ class HArray extends \ArrayObject implements HaystackInterface
     public function slice(int $start, ?int $length = null): HaystackInterface
     {
         $answer = new HArraySlice($this);
+
         return new self($answer->slice($start, $length));
     }
 
@@ -158,6 +160,7 @@ class HArray extends \ArrayObject implements HaystackInterface
     public function filter(callable $func = null, ?string $flag = null): HaystackInterface
     {
         $answer = new Filter($this);
+
         return new self($answer->filter($func, $flag));
     }
 
@@ -166,8 +169,8 @@ class HArray extends \ArrayObject implements HaystackInterface
      */
     public function reduce(callable $func, $initial = null)
     {
-        $answer = new HaystackReduce($this->arr);
-        return $answer->reduce($func, $initial);
+        return (new HaystackReduce($this->arr))
+            ->reduce($func, $initial);
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Haystack;
@@ -293,8 +294,8 @@ class HString implements HaystackInterface
      */
     public function contains($value): bool
     {
-        $answer = new HStringContains($this);
-        return $answer->contains($value);
+        return (new HStringContains($this))
+            ->contains($value);
     }
 
     /**
@@ -306,8 +307,8 @@ class HString implements HaystackInterface
      */
     public function locate($value): int
     {
-        $answer = new HStringLocate($this);
-        return $answer->locate($value);
+        return (new HStringLocate($this))
+            ->locate($value);
     }
 
     /**
@@ -319,6 +320,7 @@ class HString implements HaystackInterface
     public function append($value): HaystackInterface
     {
         $answer = new HStringAppend($this);
+
         return new self($answer->append($value));
     }
 
@@ -332,6 +334,7 @@ class HString implements HaystackInterface
     public function insert($value, $key = null): HaystackInterface
     {
         $answer = new HStringInsert($this);
+
         return new self($answer->insert($value, $key));
     }
 
@@ -344,6 +347,7 @@ class HString implements HaystackInterface
     public function remove($value): HaystackInterface
     {
         $answer = new HStringRemove($this);
+
         return new self($answer->remove($value));
     }
 
@@ -353,6 +357,7 @@ class HString implements HaystackInterface
     public function slice(int $start, ?int $length = null): HaystackInterface
     {
         $answer = new HStringSlice($this);
+
         return new self($answer->slice($start, $length));
     }
 
@@ -385,7 +390,10 @@ class HString implements HaystackInterface
     public function filter(?callable $func = null, ?string $flag = null): HaystackInterface
     {
         $answer = new Filter($this->toHArray());
-        return new self((new HArray($answer->filter($func, $flag)))->toHString()->toString());
+
+        return new self((new HArray($answer->filter($func, $flag)))
+            ->toHString()
+            ->toString());
     }
 
     /**
@@ -393,8 +401,8 @@ class HString implements HaystackInterface
      */
     public function reduce(callable $func, $initial = null)
     {
-        $answer = new HaystackReduce($this->toArray());
-        return $answer->reduce($func, $initial);
+        return (new HaystackReduce($this->toArray()))
+            ->reduce($func, $initial);
     }
 
     /**
@@ -418,9 +426,8 @@ class HString implements HaystackInterface
      */
     public function sum(): float
     {
-        $values = new HArray(str_getcsv(str_ireplace(' ', '', $this->str)));
-
-        return $values->sum();
+        return (new HArray(str_getcsv(str_ireplace(' ', '', $this->str))))
+            ->sum();
     }
 
     /**
@@ -428,8 +435,7 @@ class HString implements HaystackInterface
      */
     public function product(): float
     {
-        $values = new HArray(str_getcsv(str_ireplace(' ', '', $this->str)));
-
-        return $values->product();
+        return (new HArray(str_getcsv(str_ireplace(' ', '', $this->str))))
+            ->product();
     }
 }
