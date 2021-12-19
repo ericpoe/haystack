@@ -1,6 +1,6 @@
 # https://docs.github.com/en/actions
 
-name: Static Code Testing
+name: Code Testing
 
 on:
   pull_request: null
@@ -47,3 +47,6 @@ jobs:
 
       - name: Run PhpStan
         run: vendor/bin/phpstan
+
+      - name: Run PhpCS
+        run: vendor/bin/phpcs --no-cache --parallel=1 --report-full
