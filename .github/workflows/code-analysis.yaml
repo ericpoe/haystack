@@ -38,7 +38,7 @@ jobs:
           php-version: 8.0
           extensions: mbstring
           coverage: none
-          tools: composer:v2
+          tools: composer:v2, cs2pr
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -46,7 +46,7 @@ jobs:
         run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
 
       - name: Run PhpStan
-        run: vendor/bin/phpstan
+        run: vendor/bin/phpstan --error-format=checkstyle | cs2pr
 
       - name: Run PhpCS
-        run: vendor/bin/phpcs --no-cache --parallel=1 --report-full
+        run: vendor/bin/phpcs --no-cache --parallel=1 --report-full --report-checkstyle --graceful-warnings --notices-as-warnings | cs2pr
