@@ -1,6 +1,6 @@
 # https://docs.github.com/en/actions
 
-name: Code Testing
+name: Code Analysis
 
 on:
   pull_request: null

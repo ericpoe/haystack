@@ -1,4 +1,5 @@
-[![Build Status](https://img.shields.io/github/workflow/status/ericpoe/haystack/unit-testing.yaml?style=flat-square)]()
+![GitHub Workflow Status for Code Testing (master branch)](https://img.shields.io/github/workflow/status/ericpoe/haystack/Unit%20Testing/master?label=Unit%20Testing&style=flat-square)
+![GitHub Workflow Status for Code Analysis (master branch)](https://img.shields.io/github/workflow/status/ericpoe/haystack/Code%20Analysis/master?label=Code%20Analysis&style=flat-square)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Packagist Version](https://img.shields.io/packagist/v/ericpoe/haystack.svg?style=flat-square)](https://packagist.org/packages/ericpoe/haystack)
 
