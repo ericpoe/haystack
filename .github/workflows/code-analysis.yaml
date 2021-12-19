@@ -49,4 +49,4 @@ jobs:
         run: vendor/bin/phpstan --error-format=checkstyle | cs2pr
 
       - name: Run PhpCS
-        run: vendor/bin/phpcs --no-cache --parallel=1 --report-full --report-checkstyle --graceful-warnings --notices-as-warnings | cs2pr
+        run: vendor/bin/phpcs --no-cache --parallel=1 --report-full --report-checkstyle | cs2pr
