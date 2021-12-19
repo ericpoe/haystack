@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Haystack\Tests\Container;
 
 use Haystack\HArray;
@@ -8,10 +11,11 @@ class HArrayRemoveTest extends TestCase
 {
     /** @var  HArray */
     private $arrList;
+
     /** @var  HArray */
     private $arrDict;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->arrList = new HArray(['apple', 'bobble', 'cobble', 'dobble']);
         $this->arrDict = new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']);
@@ -24,7 +28,7 @@ class HArrayRemoveTest extends TestCase
      * @param string $value
      * @param HArray $expected
      */
-    public function testArrayTypeRemove($type, $value, $expected)
+    public function testArrayTypeRemove(string $type, string $value, HArray $expected): void
     {
         if ('list' === $type) {
             $newArr = $this->arrList->remove($value);
@@ -33,10 +37,9 @@ class HArrayRemoveTest extends TestCase
         }
 
         $this->assertEquals($expected, $newArr);
-
     }
 
-    public function arrayRemoveProvider()
+    public function arrayRemoveProvider(): array
     {
         return [
             'List: Basic list' => ['list', 'bobble', new HArray(['apple', 'cobble', 'dobble'])],
@@ -46,7 +49,7 @@ class HArrayRemoveTest extends TestCase
         ];
     }
 
-    public function testArrayTypeRemoveObject()
+    public function testArrayTypeRemoveObject(): void
     {
         $timestamp = new \DateTime();
 
@@ -58,5 +61,4 @@ class HArrayRemoveTest extends TestCase
         $this->assertEquals($this->arrDict, $arrDict->remove($timestamp), 'Object removed from dict');
         $this->assertEquals($arrDict, $arrDict->remove(new \SplDoublyLinkedList()), 'Object not removed from dict');
     }
-
 }

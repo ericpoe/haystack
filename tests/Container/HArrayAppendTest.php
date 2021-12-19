@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Haystack\Tests\Container;
 
 use Haystack\HArray;
@@ -12,7 +15,7 @@ class HArrayAppendTest extends TestCase
     /** @var  HArray */
     private $arrDict;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->arrList = new HArray(['apple', 'bobble', 'cobble', 'dobble']);
         $this->arrDict = new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']);
@@ -25,7 +28,7 @@ class HArrayAppendTest extends TestCase
      * @param mixed $newThing
      * @param HArray $expected
      */
-    public function testAppendStringInArray($type, $newThing, $expected)
+    public function testAppendStringInArray(string $type, $newThing, HArray $expected): void
     {
         if ('list' === $type) {
             $newArray = $this->arrList->append($newThing);
@@ -36,7 +39,7 @@ class HArrayAppendTest extends TestCase
         $this->assertEquals($expected, $newArray);
     }
 
-    public function appendProvider()
+    public function appendProvider(): array
     {
         $dateTime = new \DateTime();
 

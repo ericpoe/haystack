@@ -1,7 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Haystack\Container;
 
 use Haystack\HArray;
+use Haystack\HaystackInterface;
 use Haystack\Helpers\Helper;
 use Haystack\HString;
 
@@ -15,7 +19,12 @@ class HArrayInsert
         $this->arr = $array;
     }
 
-    public function insert($value, $key)
+    /**
+     * @param int|string|HaystackInterface $value
+     * @param null|int|string $key
+     * @return array
+     */
+    public function insert($value, $key): array
     {
         if ($value instanceof HArray) {
             $value = $value->toArray();
@@ -47,15 +56,15 @@ class HArrayInsert
         $lastStartingPoint = count($this->arr) - count($first);
         $last = $this->arr->slice($length, $lastStartingPoint)->toArray();
 
-        return new HArray(array_merge_recursive($first, (array) $array, $last));
+        return array_merge_recursive($first, (array) $array, $last);
     }
 
     /**
-     * @param mixed $key
+     * @param int|string $key
      * @param mixed $value
      * @return array
      */
-    private function setSubarrayAndLengthForSequentialArray($key, $value)
+    private function setSubarrayAndLengthForSequentialArray($key, $value): array
     {
         $array = $value;
         $length = (int) $key;
@@ -68,7 +77,7 @@ class HArrayInsert
      * @param mixed  $value
      * @return array
      */
-    private function setSubarrayAndLengthForAssociativeArray($key, $value)
+    private function setSubarrayAndLengthForAssociativeArray(string $key, $value): array
     {
         $array = [$key => $value];
         $length = count($this->arr);
@@ -80,7 +89,7 @@ class HArrayInsert
      * @param mixed $value
      * @return array
      */
-    private function setSubarrayAndLengthWhenNoKeyProvided($value)
+    private function setSubarrayAndLengthWhenNoKeyProvided($value): array
     {
         $array = $value;
         $length = count($this->arr);

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Haystack\Container;
 
 use Haystack\Helpers\Helper;
@@ -12,6 +15,7 @@ class HStringContains
     /** @var string */
     private $value;
 
+    /** @var string */
     private $encoding;
 
     public function __construct(HString $hString)
@@ -24,7 +28,7 @@ class HStringContains
      * @param HString|string $value
      * @return bool
      */
-    public function contains($value)
+    public function contains($value): bool
     {
         if (is_scalar($value) || method_exists($value, '__toString')) {
             $this->value = (string) $value;
@@ -35,11 +39,8 @@ class HStringContains
         return $this->containsValue();
     }
 
-    /**
-     * @return bool
-     */
-    private function containsValue()
+    private function containsValue(): bool
     {
-        return false !== mb_strpos($this->str, $this->value, null, $this->encoding);
+        return false !== mb_strpos($this->str, $this->value, 0, $this->encoding);
     }
 }

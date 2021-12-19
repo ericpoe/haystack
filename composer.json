@@ -1,37 +1,44 @@
 {
-  "name": "ericpoe/haystack",
-  "description": "Forget Haystack vs Needle order, the object IS the Haystack. Haystack is a library that allows for pipelining and immutable structures.",
-  "minimum-stability": "stable",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Eric Poe",
-      "email": "eric.poe@gmail.com",
-      "homepage": "http://ericpoe.com"
-    }
-  ],
-  "config": {
-    "platform": {
-      "php": "5.6.0"
+    "name": "ericpoe/haystack",
+    "description": "Forget Haystack vs Needle order, the object IS the Haystack. Haystack is a library that allows for pipelining and immutable structures.",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric Poe",
+            "email": "eric.poe@gmail.com",
+            "homepage": "http://ericpoe.com"
+        }
+    ],
+    "config": {
+        "platform": {
+            "php": "7.1.0"
+        },
+        "sort-packages": true
     },
-    "sort-packages": true
-  },
-  "require": {
-    "ext-mbstring": "*",
-    "php": "^5.6 || ^7.0"
-  },
-  "autoload": {
-    "psr-4": {"Haystack\\": "src"}
-  },
-  "autoload-dev": {
-    "psr-4": {"Haystack\\Tests\\": "tests"}
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^5"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "3.0-dev"
+    "require": {
+        "ext-mbstring": "*",
+        "php": "^7.1 || ~8.0.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.2",
+        "phpstan/phpstan-strict-rules": "^1.1",
+        "phpunit/phpunit": "^7.5",
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Haystack\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Haystack\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0-dev"
+        }
     }
-  }
 }

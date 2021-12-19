@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Haystack\Container;
 
 use Haystack\HArray;
@@ -8,19 +11,16 @@ class HArrayAppend
     /** @var \ArrayObject */
     private $arr;
 
-    /**
-     * @param array $array
-     */
     public function __construct(array $array)
     {
         $this->arr = new \ArrayObject($array);
     }
 
     /**
-     * @param HArray|array|int|float|string $value
+     * @param HArray|array|int|float|string|object $value
      * @return array
      */
-    public function append($value)
+    public function append($value): array
     {
         $value = $value instanceof HArray ? $value->toArray() : $value;
 
@@ -28,5 +28,4 @@ class HArrayAppend
 
         return $this->arr->getArrayCopy();
     }
-
 }

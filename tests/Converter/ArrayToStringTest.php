@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Haystack\Tests\Converter;
 
 use Haystack\HArray;
@@ -9,16 +12,13 @@ class ArrayToStringTest extends TestCase
 {
     /**
      * @dataProvider arrayToHstringProvider
-     *
-     * @param HArray $arr
-     * @param string $expected
      */
-    public function testArrayToHstring(HArray $arr, $expected)
+    public function testArrayToHstring(HArray $arr, string $expected): void
     {
         $this->assertEquals($expected, $arr->toHString());
     }
 
-    public function arrayToHstringProvider()
+    public function arrayToHstringProvider(): array
     {
         return [
             'Empty Array' => [new HArray(), new HString()],
@@ -30,18 +30,65 @@ class ArrayToStringTest extends TestCase
     }
 
     /**
-     * @dataProvider arrayToHstringWithGlueProvider
-     *
-     * @param HArray $arr
-     * @param string $glue
-     * @param string $expected
+     * @dataProvider arrayToStringProvider
      */
-    public function testArrayToHstringWithGlue(HArray $arr, $glue, $expected)
+    public function testArrayToStringCast(HArray $arr, string $expected): void
     {
-        $this->assertEquals($expected, $arr->toHString($glue));
+        $this->assertEquals($expected, (string) $arr);
     }
 
-    public function arrayToHstringWithGlueProvider()
+    public function arrayToStringProvider(): array
+    {
+        return [
+            'Empty Array' => [new HArray(), ''],
+            '1-item list' => [new HArray(['apple']), 'apple'],
+            '1-item dict' => [new HArray(['a' => 'apple']), 'apple'],
+            '2-item list' => [new HArray(['apple', 'banana']), 'applebanana'],
+            '2-item dict' => [new HArray(['a' => 'apple', 'b' => 'banana']), 'applebanana'],
+        ];
+    }
+
+    /**
+     * @dataProvider arrayToStringWithGlueProvider()
+     */
+    public function testArrayToStringWithGlue(Harray $arr, ?string $glue, string $expected): void
+    {
+        if ($glue) {
+            $this->assertEquals($expected, $arr->toString($glue));
+        } else {
+            $this->assertEquals($expected, $arr->toString());
+        }
+    }
+
+    public function arrayToStringWithGlueProvider(): array
+    {
+        return [
+            'Empty Array, no glue' => [new HArray(), null, ''],
+            '1-item list, no glue' => [new HArray(['apple']), null, 'apple'],
+            '1-item dict, no glue' => [new HArray(['a' => 'apple']), null, 'apple'],
+            '2-item list, no glue' => [new HArray(['apple', 'banana']), null, 'applebanana'],
+            '2-item dict, no glue' => [new HArray(['a' => 'apple', 'b' => 'banana']), null, 'applebanana'],
+            'Empty Array, space glue' => [new HArray(), ' ', ''],
+            '1-item list, space glue' => [new HArray(['apple']), ' ', 'apple'],
+            '1-item dict, space glue' => [new HArray(['a' => 'apple']), ' ', 'apple'],
+            '2-item list, space glue' => [new HArray(['apple', 'banana']), ' ', 'apple banana'],
+            '2-item dict, space glue' => [new HArray(['a' => 'apple', 'b' => 'banana']), ' ', 'apple banana'],
+        ];
+    }
+
+    /**
+     * @dataProvider arrayToHstringWithGlueProvider
+     */
+    public function testArrayToHstringWithGlue(HArray $arr, ?string $glue, string $expected): void
+    {
+        if ($glue) {
+            $this->assertEquals($expected, $arr->toHString($glue));
+        } else {
+            $this->assertEquals($expected, $arr->toHString());
+        }
+    }
+
+    public function arrayToHstringWithGlueProvider(): array
     {
         return [
             'Empty Array, null glue' => [new HArray(), null, new HString()],
@@ -58,15 +105,5 @@ class ArrayToStringTest extends TestCase
             '2-item list, HString glue' => [new HArray(['apple', 'banana']), new HString(' '), new HString('apple banana')],
             '2-item dict, HString glue' => [new HArray(['a' => 'apple', 'b' => 'banana']), new HString(' '), new HString('apple banana')],
         ];
-    }
-
-    public function testBadGlueInToHstring()
-    {
-        $arr = new HArray(['apple', 'banana']);
-
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('glue must be a string');
-
-        $arr->toHString(3);
     }
 }

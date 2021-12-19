@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Haystack\Functional;
 
 class FilterWithValue
@@ -6,19 +9,12 @@ class FilterWithValue
     /** @var array*/
     protected $arr;
 
-    /**
-     * @param array $arr
-     */
     public function __construct(array $arr)
     {
         $this->arr = $arr;
     }
 
-    /**
-     * @param callable $func
-     * @return array
-     */
-    public function filter(callable $func)
+    public function filter(callable $func): array
     {
         return array_filter($this->arr, $func);
     }

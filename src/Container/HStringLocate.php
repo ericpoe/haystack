@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=0);
+
 namespace Haystack\Container;
 
 use Haystack\HString;
@@ -18,13 +21,16 @@ class HStringLocate
      * @return int
      * @throws ElementNotFoundException
      */
-    public function locate($value)
+    public function locate($value): int
     {
         if ($this->hString->contains($value)) {
-            return mb_strpos($this->hString, (string) $value, null, $this->hString->getEncoding());
+            $location = mb_strpos($this->hString, (string) $value, 0, $this->hString->getEncoding());
+
+            if ($location !== false) {
+                return $location;
+            }
         }
 
         throw new ElementNotFoundException((string) $value);
     }
-
 }

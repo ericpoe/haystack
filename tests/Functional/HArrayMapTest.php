@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Haystack\Tests\Functional;
 
 use Haystack\HArray;
@@ -9,16 +12,17 @@ class HArrayMapTest extends TestCase
 {
     /** @var HArray */
     private $arrList;
+
     /** @var HArray */
     private $arrDict;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->arrList = new HArray(['apple', 'bobble', 'cobble', 'dobble']);
         $this->arrDict = new HArray(['a' => 'apple', 'b' => 'bobble', 'c' => 'cobble', 'd' => 'dobble']);
     }
 
-    public function testArrayMapWithNoExtra()
+    public function testArrayMapWithNoExtra(): void
     {
         $capitalizeList = function ($word) {
             return strtoupper($word);
@@ -37,7 +41,7 @@ class HArrayMapTest extends TestCase
      * @param HArray   $expected
      * @param HArray   $numArray - variadic array
      */
-    public function testArrayMapWithOneExtra(HArray $numArray, HArray $expected)
+    public function testArrayMapWithOneExtra(HArray $numArray, HArray $expected): void
     {
         $action = function ($word, $numWord) {
             return sprintf('I have %s %s', $numWord, $word);
@@ -47,7 +51,7 @@ class HArrayMapTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function oneExtraArraysProvider()
+    public function oneExtraArraysProvider(): array
     {
         $numFewer = new HArray(['one', 'two', 'three']);
         $numEqual = new HArray(['one', 'two', 'three', 'four']);
@@ -92,7 +96,7 @@ class HArrayMapTest extends TestCase
      * @param HArray   $numArray - variadic array
      * @param HArray   $adjArray - variadic array
      */
-    public function testArrayMapWithTwoExtras(HArray $numArray, HArray $adjArray, HArray $expected)
+    public function testArrayMapWithTwoExtras(HArray $numArray, HArray $adjArray, HArray $expected): void
     {
         $action = function ($noun, $numWord, $adjective) {
             return sprintf('I have %s %s %s', $numWord, $adjective, $noun);
@@ -102,7 +106,7 @@ class HArrayMapTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function twoExtraArraysProvider()
+    public function twoExtraArraysProvider(): array
     {
         $numFewer = new HArray(['one', 'two', 'three']);
         $numEqual = new HArray(['one', 'two', 'three', 'four']);
@@ -148,7 +152,7 @@ class HArrayMapTest extends TestCase
         ];
     }
 
-    public function testArrayMapWithVariadicHString()
+    public function testArrayMapWithVariadicHString(): void
     {
         $phrase = new HString('abcd');
 
@@ -167,7 +171,7 @@ class HArrayMapTest extends TestCase
         $this->assertEquals($expected, $oddThing);
     }
 
-    public function testErrorGetsThrown()
+    public function testErrorGetsThrown(): void
     {
         $badStr = new \stdClass();
 

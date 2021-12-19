@@ -1,7 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Haystack\Container;
 
 use Haystack\HArray;
+use Haystack\Helpers\Helper;
 
 class HArrayLocate
 {
@@ -20,10 +24,21 @@ class HArrayLocate
      */
     public function locate($value)
     {
-        if ($this->arr->contains($value)) {
-            return array_search($value, $this->arr->toArray());
+        $foundItem = array_search($value, $this->arr->toArray(), true);
+
+        if (false !== $foundItem) {
+            return $foundItem;
         }
 
-        throw new ElementNotFoundException($value);
+        $stringValue = Helper::getType($value);
+        if (
+            is_string($value) ||
+            is_numeric($value) ||
+            method_exists($value, '__toString')
+        ) {
+            $stringValue = (string) $value;
+        }
+
+        throw new ElementNotFoundException($stringValue);
     }
 }
